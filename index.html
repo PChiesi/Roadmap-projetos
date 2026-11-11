@@ -636,7 +636,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Com filtro ligado não dá para mudar a ordem arrastando. <b>Limpar filtros</b> volta ao normal.</li>
       </ul></div></details>
       <details><summary>Ler o cronograma</summary><div><ul>
-        <li><b>Detalhada</b> mostra uma linha por tarefa, com grupos e dependências. <b>Linha única</b> põe todas as barras na mesma faixa, com a cor do grupo, o nome e as datas. Quando o nome não cabe na barra, ele aparece acima ou abaixo, ligado por um fio. Tarefas no mesmo período ficam uma embaixo da outra para nenhuma esconder a outra.</li>
+        <li><b>Detalhada</b> mostra uma linha por tarefa, com grupos e dependências. <b>Linha única</b> põe todas as barras na mesma faixa, com a cor do grupo, o nome e as datas. Quando o nome não cabe na barra, ele aparece acima ou abaixo, ligado por um fio. Tarefas no mesmo período dividem a altura da linha, uma sobre a outra, sem sair dela.</li>
         <li><b>Semana, Mês e Trimestre</b> mudam o zoom da linha do tempo. <b>Ir para hoje</b> rola o cronograma até o dia atual.</li>
         <li>O próximo marco pisca de leve, e as tarefas em andamento têm um brilho passando na barra.</li>
         <li>A linha vermelha é o dia de hoje. Tarefas vencidas e não concluídas ficam marcadas como <b>Atrasada</b>; as marcadas como em risco aparecem tracejadas.</li>
@@ -1212,16 +1212,21 @@ function renderLine({ p, a, W, X, dw, LW, top, bot, grid, hasToday, tx, fx, fo, 
 
   if (drag) {
     // durante o arraste cada tarefa mantém o lugar, para nada pular de nível
-    items.forEach(it => Object.assign(it, lineMemo[it.t.id] || { lane: 0, side: 1, row: 0 }));
+    items.forEach(it => Object.assign(it, lineMemo[it.t.id] || { lane: 0, nl: 1, side: 1, row: 0, inside: false }));
   } else {
     lineMemo = {};
     // 1) barras: só descem de nível se coincidirem no tempo
-    const ends = [];
+    // 1) tarefas no mesmo período dividem a altura da linha (a faixa continua uma só); o resto ocupa a altura inteira
+    let ends = [], grp = [];
+    const close = () => { const n = Math.max(1, ...grp.map(x => x.lane + 1)); grp.forEach(x => { x.nl = n; }); };
     for (const it of items) {
-      if (it.t.milestone) { it.lane = 0; continue; } // marco é um losango pequeno: fica sempre na linha principal, por cima
+      if (it.t.milestone) { it.lane = 0; it.nl = 1; continue; } // marco é um losango pequeno: fica no meio da linha, por cima
+      if (ends.every(x => x <= it.x0)) { close(); ends = []; grp = []; }
       let l = ends.findIndex(x => x <= it.x0); if (l < 0) l = ends.length;
-      ends[l] = it.x0 + it.w; it.lane = l;
+      ends[l] = it.x0 + it.w; it.lane = l; grp.push(it);
     }
+    close();
+    items.forEach(it => { if (it.nl > 1) it.inside = false; });
     // 2) etiquetas: alterna acima e abaixo; cada uma no nível mais perto da faixa onde caiba sem que o fio atravesse outra
     const occ = { [-1]: [], [1]: [] };
     let k = 0;
@@ -1235,25 +1240,24 @@ function renderLine({ p, a, W, X, dw, LW, top, bot, grid, hasToday, tx, fx, fo, 
       else { it.side = ro < rp ? -pref : pref; it.row = Math.min(rp, ro); }
       (occ[it.side][it.row] = occ[it.side][it.row] || []).push([x0, x1]);
     }
-    items.forEach(it => { lineMemo[it.t.id] = { lane: it.lane, side: it.side, row: it.row }; });
+    items.forEach(it => { lineMemo[it.t.id] = { lane: it.lane, nl: it.nl, side: it.side, row: it.row, inside: it.inside }; });
   }
-  const lanes = Math.max(1, ...items.map(it => it.lane + 1));
   const nUp = Math.max(0, ...items.filter(it => it.side === -1).map(it => it.row + 1));
   const nDn = Math.max(0, ...items.filter(it => it.side === 1).map(it => it.row + 1));
-  const trackY = 10 + nUp * LROW + (nUp ? LGAP : 0), trackH = lanes * LANE;
+  const trackY = 10 + nUp * LROW + (nUp ? LGAP : 0), trackH = LANE;
   const HH = Math.max(trackY + trackH + (nDn ? LGAP + nDn * LROW : 0) + 10, 3 * H);
 
   let bars = `<div class="ltrack" style="top:${trackY - 4}px;height:${trackH}px"></div>`;
   items.forEach((it, n) => {
-    const { t, s } = it, st = status(t), c = gOf(t).color, y = trackY + it.lane * LANE;
+    const { t, s } = it, st = status(t), c = gOf(t).color, bh = (LBH - (it.nl - 1) * 3) / it.nl, y = t.milestone ? trackY : trackY + it.lane * (bh + 3);
     const txt = `<b>${esc(t.name)}</b><small>${it.dt}${st === 'late' ? ' · atrasada' : ''}</small>`;
     if (t.milestone) bars += `<div class="ms st-${st}${t === nextMs ? ' next' : ''}" data-task="${t.id}" style="left:${X(s) + dw / 2 - 8}px;top:${y + LBH / 2 - 8}px;--c:${c};--i:${n}"></div>`;
-    else bars += `<div class="lb st-${st}${t.risk ? ' risk' : ''}" data-task="${t.id}" style="left:${it.x0 + 1}px;width:${Math.max(4, it.w - 2)}px;top:${y}px;height:${LBH}px;--c:${c};--tx:${inkOn(c)};--i:${n}">`
+    else bars += `<div class="lb st-${st}${t.risk ? ' risk' : ''}" data-task="${t.id}" style="left:${it.x0 + 1}px;width:${Math.max(4, it.w - 2)}px;top:${y}px;height:${bh}px;--c:${c};--tx:${inkOn(c)};--i:${n}">`
       + (it.inside ? `<span class="lbt">${txt}</span>` : '') + `<i style="width:${t.progress}%"></i></div>`;
     if (it.inside) return;
     const cx = it.x0 + (t.milestone ? 10 : 5);
     const ly = it.side === -1 ? trackY - LGAP - (it.row + 1) * LROW : trackY + trackH - (LANE - LBH) + LGAP + it.row * LROW;
-    const [f0, f1] = it.side === -1 ? [ly + LROW - 4, y] : [y + LBH, ly + 2];
+    const [f0, f1] = it.side === -1 ? [ly + LROW - 4, t.milestone ? y + LBH / 2 - 10 : y] : [t.milestone ? y + LBH / 2 + 10 : y + bh, ly + 2];
     bars += `<i class="lfio" style="left:${cx}px;top:${f0}px;height:${Math.max(0, f1 - f0)}px;--c:${c}"></i>`
       + `<span class="lbo st-${st}" data-task="${t.id}" style="left:${it.x0}px;top:${ly}px;height:${LROW - 4}px;--c:${c};--i:${n}">${txt}</span>`;
   });
@@ -1262,7 +1266,7 @@ function renderLine({ p, a, W, X, dw, LW, top, bot, grid, hasToday, tx, fx, fo, 
     : p.tasks.length ? '' : `<div class="g-empty"><b>Projeto sem tarefas</b><span>${RO ? 'Nada planejado ainda.' : 'Use Nova tarefa para começar.'}</span></div>`;
   $('#btnHoje').disabled = !hasToday;
   const nT = `${fo ? shown + ' de ' : ''}${p.tasks.length} ${p.tasks.length === 1 ? 'tarefa' : 'tarefas'}`;
-  const label = `<div class="g-row one" style="height:${HH}px"><div class="g-label"><div class="tmain" style="margin-top:${trackY + LBH / 2 - 18}px"><b class="one-t">Todas as tarefas</b><small class="to">${nT}${lanes > 1 ? `<br>${lanes} níveis (tarefas no mesmo período)` : ''}</small></div></div></div>`;
+  const label = `<div class="g-row one" style="height:${HH}px"><div class="g-label"><div class="tmain" style="margin-top:${trackY + LBH / 2 - 18}px"><b class="one-t">Todas as tarefas</b><small class="to">${nT}</small></div></div></div>`;
 
   const g = $('#gantt');
   g.innerHTML = `<div class="g-inner one${fx === 'load' ? ' anim' : fx === 'zoom' ? ' zoomfx' : ''}" style="width:${LW + W}px;--lw:${LW}px;--H:${H}px">
