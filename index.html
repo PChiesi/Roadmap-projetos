@@ -286,6 +286,12 @@ button.tn:hover{color:var(--green-txt)}
 @keyframes lsIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.ls.anim .ls-i{animation:none}}
 @media print{.ls-row{min-width:0}}
+.bar.picked{outline:2.5px solid var(--green-l);outline-offset:2px}
+.ms.picked{outline:2.5px solid var(--green-l);outline-offset:3px}
+.g-row.t.picked .g-label{background:color-mix(in srgb,var(--green-l) 16%,var(--surface))}
+.lasso{position:absolute;z-index:5;border:1.5px dashed var(--green-l);background:color-mix(in srgb,var(--green-l) 12%,transparent);border-radius:4px;pointer-events:none}
+.sel-info{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--green-txt, var(--green))}
+.sel-info[hidden]{display:none}
 .ms{position:absolute;width:16px;height:16px;background:color-mix(in srgb,var(--c),#fff var(--lift));transform:rotate(45deg);border-radius:3px;z-index:2;cursor:grab;box-shadow:0 0 0 3px var(--surface);touch-action:none}
 .ms.st-late{background:var(--red)}
 .ms.next::after{content:"";position:absolute;inset:-5px;border-radius:5px;border:2px solid color-mix(in srgb,var(--c),#fff var(--lift));animation:msPing 1.9s ease-out infinite}
@@ -529,6 +535,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       <select id="fSt" aria-label="Filtrar por status"></select>
       <button class="btn slim" id="fClear" data-act="fClear" hidden>Limpar filtros</button>
       <span class="f-info" id="fInfo" aria-live="polite"></span>
+      <span class="sel-info" id="selInfo" hidden aria-live="polite"><b></b><button class="btn slim" data-act="selClear">Limpar seleção</button></span>
       <button class="btn slim" id="btnHoje" data-act="hoje" title="Rolar o cronograma até o dia de hoje">Ir para hoje</button>
     </div>
     <div class="gantt" id="gantt"></div>
@@ -598,6 +605,13 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Segure a alça e arraste para cima ou para baixo. A linha verde mostra onde vai cair.</li>
         <li>Soltar uma tarefa dentro de outro grupo muda o grupo dela.</li>
         <li>Pelo teclado: Tab até a alça e as setas para cima e para baixo.</li>
+      </ul></div></details>
+      <details><summary>Selecionar e mover várias tarefas juntas</summary><div><ul>
+        <li><b>Ctrl+clique</b> (ou Shift+clique) numa barra ou no nome da tarefa marca e desmarca a tarefa.</li>
+        <li>Arraste no fundo do cronograma para desenhar um retângulo: as barras que ele tocar ficam selecionadas. Com Ctrl, soma à seleção que já existe.</li>
+        <li><b>Ctrl+clique no nome de um grupo</b> seleciona todas as tarefas dele. <b>Ctrl+A</b> seleciona todas as tarefas visíveis.</li>
+        <li>Arraste qualquer barra selecionada: todas andam juntas, pela mesma quantidade de dias.</li>
+        <li><b>Esc</b>, um clique no fundo ou <b>Limpar seleção</b> desfazem a seleção.</li>
       </ul></div></details>
       <details><summary>Mudar datas arrastando</summary><div><ul>
         <li>Arraste a barra para mover a tarefa inteira.</li>
@@ -917,6 +931,16 @@ const cur = () => state.projects.find(p => p.id === state.currentId);
 const allTpls = () => TPLS.concat(state.templates);
 // filtros da tela: valem só para a visualização, não mudam o projeto
 const flt = { q: '', owner: '', st: '' };
+// seleção de várias tarefas para mover juntas (só na tela, não vai para o projeto)
+const SEL = new Set();
+let lasso = null;
+const multiKey = e => e.ctrlKey || e.metaKey || e.shiftKey;
+function toggleSel(ids, on) { ids.forEach(id => { (on ?? !SEL.has(id)) ? SEL.add(id) : SEL.delete(id); }); renderGantt(); }
+function renderSel() {
+  const el = $('#selInfo'); if (!el) return;
+  el.hidden = RO || SEL.size < 1 || state.view === 'line';
+  el.querySelector('b').textContent = SEL.size === 1 ? '1 tarefa selecionada' : `${SEL.size} tarefas selecionadas, arraste uma para mover todas`;
+}
 const fltOn = () => !!(flt.q || flt.owner || flt.st);
 const fltOk = t => (!flt.q || norm(t.name + ' ' + t.owner + ' ' + t.note).includes(norm(flt.q))) && (!flt.owner || t.owner === flt.owner) && (!flt.st || status(t) === flt.st);
 
@@ -1079,6 +1103,8 @@ function highlight(id) {
 }
 
 function renderGantt(fx) {
+  [...SEL].forEach(id => { if (!cur().tasks.some(t => t.id === id)) SEL.delete(id); });
+  renderSel();
   const p = cur(), z = state.zoom, dw = ZOOM[z].dw, LW = innerWidth < 700 ? 170 : 300;
   const [a, b] = range(p), W = (b - a + 1) * dw, X = n => (n - a) * dw;
   const seg = (s, e, txt, cls = '') => `<div class="sc ${cls}" style="left:${X(s)}px;width:${(e - s + 1) * dw}px">${txt}</div>`;
@@ -1139,12 +1165,13 @@ function renderGantt(fx) {
     const t = r.t, s = d2n(t.start), e = d2n(t.end), st = status(t), n = k++;
     const nm = esc(t.name);
     if (t.bs) { const bs = d2n(t.bs), be = d2n(t.be); bars += `<i class="base" style="left:${X(bs)}px;width:${(be - bs + 1) * dw}px;top:${y + H - 8}px"></i>`; }
-    labels += `<div class="g-row t" data-row="${t.id}"><div class="g-label">${grip ? `<span class="grip" data-grip="t:${t.id}" tabindex="0" role="button" title="Arraste para mudar a ordem ou o grupo" aria-label="Mover ${nm}: arraste ou use as setas para cima e para baixo"></span>` : ''}<span class="st st-${st}" title="${STL[st]}"></span><div class="tmain">${RO ? `<span class="tn">${nm}</span>` : `<button class="tn" data-open="${t.id}">${nm}</button>`}${t.owner ? `<small class="to">${esc(t.owner)}</small>` : ''}</div>${RO ? '' : `<span class="ra"><button data-dup="${t.id}" title="Duplicar tarefa" aria-label="Duplicar ${nm}">${ICON.dup}</button><button class="del" data-del="${t.id}" title="Excluir tarefa" aria-label="Excluir ${nm}">${ICON.del}</button></span>`}</div></div>`;
+    const pk = SEL.has(t.id) ? ' picked' : '';
+    labels += `<div class="g-row t${pk}" data-row="${t.id}"><div class="g-label">${grip ? `<span class="grip" data-grip="t:${t.id}" tabindex="0" role="button" title="Arraste para mudar a ordem ou o grupo" aria-label="Mover ${nm}: arraste ou use as setas para cima e para baixo"></span>` : ''}<span class="st st-${st}" title="${STL[st]}"></span><div class="tmain">${RO ? `<span class="tn">${nm}</span>` : `<button class="tn" data-open="${t.id}">${nm}</button>`}${t.owner ? `<small class="to">${esc(t.owner)}</small>` : ''}</div>${RO ? '' : `<span class="ra"><button data-dup="${t.id}" title="Duplicar tarefa" aria-label="Duplicar ${nm}">${ICON.dup}</button><button class="del" data-del="${t.id}" title="Excluir tarefa" aria-label="Excluir ${nm}">${ICON.del}</button></span>`}</div></div>`;
     if (t.milestone) {
-      bars += `<div class="ms st-${st}${t === nextMs ? ' next' : ''}" data-task="${t.id}" style="left:${X(s) + dw / 2 - 8}px;top:${y + H / 2 - 8}px;--c:${r.g.color};--i:${n}"></div><span class="bl st-${st}" style="left:${X(s) + dw / 2 + 14}px;top:${y}px;--i:${n}">${esc(t.name)}<em>${fmtCurto(s)}</em></span>`;
+      bars += `<div class="ms st-${st}${t === nextMs ? ' next' : ''}${pk}" data-task="${t.id}" style="left:${X(s) + dw / 2 - 8}px;top:${y + H / 2 - 8}px;--c:${r.g.color};--i:${n}"></div><span class="bl st-${st}" style="left:${X(s) + dw / 2 + 14}px;top:${y}px;--i:${n}">${esc(t.name)}<em>${fmtCurto(s)}</em></span>`;
     } else {
       const w = (e - s + 1) * dw;
-      bars += `<div class="bar st-${st}${t.risk ? ' risk' : ''}" data-task="${t.id}" style="left:${X(s)}px;width:${w}px;top:${y + (H - 22) / 2}px;--c:${r.g.color};--i:${n}"><i style="width:${t.progress}%"></i></div><span class="bl st-${st}" style="left:${X(s) + w + 8}px;top:${y}px;--i:${n}">${esc(t.name)}<em>${st === 'late' ? 'atrasada, ' : ''}${t.progress}%</em></span>`;
+      bars += `<div class="bar st-${st}${t.risk ? ' risk' : ''}${pk}" data-task="${t.id}" style="left:${X(s)}px;width:${w}px;top:${y + (H - 22) / 2}px;--c:${r.g.color};--i:${n}"><i style="width:${t.progress}%"></i></div><span class="bl st-${st}" style="left:${X(s) + w + 8}px;top:${y}px;--i:${n}">${esc(t.name)}<em>${st === 'late' ? 'atrasada, ' : ''}${t.progress}%</em></span>`;
     }
   });
 
@@ -1334,39 +1361,78 @@ const G = $('#gantt');
 G.addEventListener('pointerdown', e => {
   if (RO || e.button !== 0) return;
   const gr = e.target.closest('[data-grip]'); if (gr) return startReorder(gr, e);
-  const el = e.target.closest('[data-task]'); if (!el) return;
+  const el = e.target.closest('[data-task]');
+  if (!el) {
+    // fundo do cronograma: desenha um retângulo para selecionar várias barras
+    const cv = e.target.closest('.g-canvas');
+    if (cv && state.view !== 'line') {
+      const r = cv.getBoundingClientRect(), box = document.createElement('div');
+      box.className = 'lasso'; cv.appendChild(box);
+      lasso = { cv, box, x0: e.clientX - r.left, y0: e.clientY - r.top, add: multiKey(e), moved: false, base: new Set(SEL) };
+      e.preventDefault();
+    }
+    return;
+  }
   const t = cur().tasks.find(x => x.id === el.dataset.task), r = el.getBoundingClientRect();
+  if (multiKey(e)) { toggleSel([t.id]); e.preventDefault(); return; }
   let mode = 'move';
   if (!t.milestone) { if (e.clientX - r.left < 8) mode = 'l'; else if (r.right - e.clientX < 8) mode = 'r'; }
-  drag = { t, mode, x0: e.clientX, s0: d2n(t.start), e0: d2n(t.end), dd: 0, moved: false };
+  if (!SEL.has(t.id) && SEL.size) { SEL.clear(); renderSel(); G.querySelectorAll('.picked').forEach(x => x.classList.remove('picked')); }
+  // várias selecionadas: arrastar uma move todas pela mesma quantidade de dias (as pontas continuam ajustando só a própria)
+  const group = mode === 'move' && SEL.size > 1 && SEL.has(t.id) ? cur().tasks.filter(x => SEL.has(x.id)).map(x => ({ t: x, s0: d2n(x.start), e0: d2n(x.end) })) : null;
+  drag = { t, mode, x0: e.clientX, s0: d2n(t.start), e0: d2n(t.end), dd: 0, moved: false, group };
   document.body.classList.add('dragging');
   e.preventDefault();
 });
 addEventListener('pointermove', e => {
   if (reo) return reoMove(e);
+  if (lasso) return lassoMove(e);
   if (!drag) return;
   const dd = Math.round((e.clientX - drag.x0) / ZOOM[state.zoom].dw);
   if (dd !== drag.dd) {
     const { t, s0, e0 } = drag;
     drag.dd = dd; drag.moved = true;
-    if (drag.mode === 'move') { t.start = n2d(s0 + dd); t.end = n2d(e0 + dd); }
+    if (drag.group) drag.group.forEach(g => { g.t.start = n2d(g.s0 + dd); g.t.end = n2d(g.e0 + dd); });
+    else if (drag.mode === 'move') { t.start = n2d(s0 + dd); t.end = n2d(e0 + dd); }
     else if (drag.mode === 'l') t.start = n2d(Math.min(s0 + dd, e0));
     else t.end = n2d(Math.max(e0 + dd, s0));
     propagate(cur());
     renderGantt();
-    const b = G.querySelector(`[data-task="${t.id}"]`); if (b) b.classList.add('drag');
+    (drag.group ? drag.group.map(g => g.t) : [t]).forEach(x => { const b = G.querySelector(`[data-task="${x.id}"]`); if (b) b.classList.add('drag'); });
     highlight(t.id);
   }
   showTip(drag.t, e);
 });
+function lassoMove(e) {
+  const r = lasso.cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  const L = Math.min(x, lasso.x0), T = Math.min(y, lasso.y0), W = Math.abs(x - lasso.x0), Hh = Math.abs(y - lasso.y0);
+  if (W + Hh > 4) lasso.moved = true;
+  Object.assign(lasso.box.style, { left: L + 'px', top: T + 'px', width: W + 'px', height: Hh + 'px' });
+  // marca ao vivo as barras tocadas pelo retângulo
+  const hit = new Set();
+  lasso.cv.querySelectorAll('[data-task]').forEach(b => {
+    const q = b.getBoundingClientRect(), bx = q.left - r.left, by = q.top - r.top;
+    if (bx < L + W && bx + q.width > L && by < T + Hh && by + q.height > T) hit.add(b.dataset.task);
+  });
+  SEL.clear(); if (lasso.add) lasso.base.forEach(id => SEL.add(id)); hit.forEach(id => SEL.add(id));
+  lasso.cv.querySelectorAll('[data-task]').forEach(b => b.classList.toggle('picked', SEL.has(b.dataset.task)));
+  G.querySelectorAll('.g-row.t').forEach(rw => rw.classList.toggle('picked', SEL.has(rw.dataset.row)));
+  renderSel();
+}
+function lassoEnd() {
+  const { box, moved, add } = lasso; lasso = null; box.remove();
+  if (!moved && !add) SEL.clear(); // clique simples no fundo desfaz a seleção
+  renderGantt();
+}
 const endDrag = () => {
   if (reo) return reoEnd();
+  if (lasso) return lassoEnd();
   if (!drag) return;
-  const { t, moved } = drag;
+  const { t, moved, group } = drag;
   drag = null;
   document.body.classList.remove('dragging');
   hideTip();
-  if (moved) { save(); renderSide(); renderSummary(); renderGantt(); if (openId === t.id) openTask(t.id); }
+  if (moved) { save(); renderSide(); renderSummary(); renderGantt(); if (openId === t.id) openTask(t.id); if (group) toast(`${group.length} tarefas movidas juntas`); }
   else openTask(t.id);
 };
 addEventListener('pointerup', endDrag);
@@ -1382,7 +1448,14 @@ G.addEventListener('pointerleave', () => { if (!drag) { hideTip(); highlight(nul
 G.addEventListener('click', e => {
   const del = e.target.closest('[data-del]'); if (del) return deleteTask(del.dataset.del);
   const dup = e.target.closest('[data-dup]'); if (dup) return duplicateTask(dup.dataset.dup);
-  const o = e.target.closest('[data-open]'); if (o) return openTask(o.dataset.open);
+  const o = e.target.closest('[data-open]');
+  if (o && multiKey(e) && state.view !== 'line') return toggleSel([o.dataset.open]);
+  if (o) return openTask(o.dataset.open);
+  const gl = e.target.closest('.g-row.g'); 
+  if (gl && multiKey(e) && !e.target.closest('button')) {
+    const ids = cur().tasks.filter(t => t.groupId === gl.dataset.grow).map(t => t.id);
+    return toggleSel(ids, !ids.every(id => SEL.has(id)));
+  }
   const c = e.target.closest('[data-col]');
   if (c) { const g = cur().groups.find(x => x.id === c.dataset.col); setCol(g, !isCol(g)); persist(); renderGantt(); return; }
   const a = e.target.closest('[data-add]'); if (a) newTask(a.dataset.add);
@@ -1739,6 +1812,7 @@ async function parseXlsx(buf, name) {
 /* ---------- ações ---------- */
 const ACT = {
   newTask: () => newTask(cur().groups[0].id),
+  selClear: () => { SEL.clear(); renderGantt(); },
   groups: () => { renderGroups(); $('#dlgGrupos').showModal(); },
   saveTpl: async () => {
     const n = await ask({ title: 'Salvar como modelo', text: 'O modelo guarda grupos, cores, tarefas, durações e dependências. As datas se ajustam quando você criar um projeto a partir dele.', label: 'Nome do modelo', value: cur().name, ok: 'Salvar modelo' });
@@ -1808,12 +1882,14 @@ document.addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   if (document.querySelector('dialog[open]')) return;
   if (e.key === 'Escape' && openId) return closeDrawer();
+  if (e.key === 'Escape' && SEL.size) { SEL.clear(); return renderGantt(); }
   // dentro de um campo de texto, Ctrl+Z e "/" continuam sendo do próprio campo
   if (RO || e.target.closest('input,textarea,select')) return;
   const k = e.key.toLowerCase();
   if ((e.ctrlKey || e.metaKey) && k === 'z') { e.preventDefault(); e.shiftKey ? redo() : undo(); }
   else if ((e.ctrlKey || e.metaKey) && k === 'y') { e.preventDefault(); redo(); }
   else if (k === '/') { e.preventDefault(); $('#fQ').focus(); }
+  else if ((e.ctrlKey || e.metaKey) && k === 'a' && state.view !== 'line') { e.preventDefault(); toggleSel(cur().tasks.filter(fltOk).map(t => t.id), true); }
 });
 $('#tools').addEventListener('input', () => { flt.q = $('#fQ').value.trim(); flt.owner = $('#fOwner').value; flt.st = $('#fSt').value; renderGantt(); });
 $('#dlgAll').addEventListener('close', () => {
