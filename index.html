@@ -263,6 +263,56 @@ button.tn:hover{color:var(--green-txt)}
 .bar.risk{outline:1.5px dashed var(--amber);outline-offset:2px}
 .bar.drag{box-shadow:inset 0 0 0 1px var(--cc),0 8px 18px -6px rgba(11,42,60,.4)}
 .dragging,.dragging *{cursor:grabbing!important;user-select:none}
+.ls{padding:0 24px 22px}
+.ls-tl{position:relative;display:flex;flex-direction:column;gap:14px;min-width:100%;background:linear-gradient(90deg,var(--line-2) 1px,transparent 1px) 0 0/var(--cw) 100%}
+.ls-now{position:absolute;top:0;bottom:0;background:color-mix(in srgb,var(--red) 6%,transparent);pointer-events:none}
+.ls-ru{position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.ls-yr,.ls-mo{display:flex;height:24px}
+.ls-yr span,.ls-mo span{flex:none;display:flex;align-items:center;padding:0 8px;font-size:12px;white-space:nowrap;overflow:hidden;border-left:1px solid var(--line-2)}
+.ls-yr span{font-weight:700;color:var(--ink);border-bottom:1px solid var(--line-2)}
+.ls-mo span{color:var(--ink-3)}
+.ls-mo span.now{color:var(--red);font-weight:700}
+.ls-p{display:flex;flex-direction:column;gap:20px;position:relative}
+.ls-ph{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding-top:16px}
+.ls-ph b{font:700 14px var(--f-d);color:var(--ink)}
+.ls-ph span{font-size:12px;color:var(--ink-3)}
+.ls-none{font-size:13px;color:var(--ink-3);padding:6px 0}
+.ls-row{display:flex;align-items:stretch}
+.ls-i{position:relative;min-width:0;margin-left:-8px;display:flex}
+.ls-i:first-child{margin-left:0}
+.ls-b{position:relative;flex:1;min-width:0;min-height:44px;padding:5px 14px 6px 20px;display:flex;flex-direction:column;justify-content:center;gap:1px;background:color-mix(in srgb,var(--c),#fff var(--lift));color:var(--tx);clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%,10px 50%);transition:filter .15s}
+.ls-i:first-child .ls-b{clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%);border-radius:7px 0 0 7px;padding-left:12px}
+.ls-b[data-open]{cursor:pointer}
+.ls-b:hover,.ls-b:focus-visible{filter:brightness(1.08) saturate(1.05);outline:none}
+.ls-b b{font-size:11.5px;font-weight:700;line-height:1.15;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;hyphens:auto}
+.ls-b small{font-size:10.5px;font-weight:500;opacity:.9;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ls-b em{font-style:normal;font-weight:700}
+.ls-b.st-late em{background:var(--red);color:#fff;padding:0 4px;border-radius:3px}
+.ls-b.risk em{text-decoration:underline dashed;text-underline-offset:2px}
+.ls-b.ms-b b::before{content:"";display:inline-block;width:7px;height:7px;margin-right:5px;background:currentColor;transform:rotate(45deg) translateY(-1px)}
+.ls-b>i{position:absolute;left:0;bottom:0;height:3px;background:currentColor;opacity:.45}
+.ls-i.now .ls-b>i{display:none}
+.ls-hoje{position:absolute;top:-17px;left:18px;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:99px;line-height:1.3}
+.ls-i.now .ls-b{box-shadow:inset 0 -3px 0 var(--red)}
+.ls.anim .ls-i{animation:lsIn .45s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 30ms)}
+@keyframes lsIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.ls.anim .ls-i{animation:none}}
+.lp-pop{min-width:260px;max-height:60vh;overflow:auto}
+.lp-h{font-size:11.5px;font-weight:600;color:var(--ink-3);padding:6px 10px 4px;text-transform:uppercase;letter-spacing:.04em}
+.lp-i{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;font-size:13.5px;cursor:pointer}
+.lp-i:hover{background:var(--line-2)}
+.lp-i input{accent-color:var(--green);width:16px;height:16px}
+.lp-i em{font-style:normal;font-size:11.5px;color:var(--ink-3);margin-left:4px}
+.lp-f{display:flex;gap:4px;border-top:1px solid var(--line);margin-top:4px;padding-top:4px}
+.lp-f button{flex:1;text-align:center!important}
+.lp-n:not(:empty){display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:99px;background:var(--green);color:#fff;font-size:11px;font-weight:700;margin-left:2px}
+@media print{.ls-row{min-width:0}.ls-p{break-inside:avoid}}
+.bar.picked{outline:2.5px solid var(--green-l);outline-offset:2px}
+.ms.picked{outline:2.5px solid var(--green-l);outline-offset:3px}
+.g-row.t.picked .g-label{background:color-mix(in srgb,var(--green-l) 16%,var(--surface))}
+.lasso{position:absolute;z-index:5;border:1.5px dashed var(--green-l);background:color-mix(in srgb,var(--green-l) 12%,transparent);border-radius:4px;pointer-events:none}
+.sel-info{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--green-txt, var(--green))}
+.sel-info[hidden]{display:none}
 .ms{position:absolute;width:16px;height:16px;background:color-mix(in srgb,var(--c),#fff var(--lift));transform:rotate(45deg);border-radius:3px;z-index:2;cursor:grab;box-shadow:0 0 0 3px var(--surface);touch-action:none}
 .ms.st-late{background:var(--red)}
 .ms.next::after{content:"";position:absolute;inset:-5px;border-radius:5px;border:2px solid color-mix(in srgb,var(--c),#fff var(--lift));animation:msPing 1.9s ease-out infinite}
@@ -492,6 +542,12 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
           <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
           <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
         </button>
+        <div class="seg" id="view" role="group" aria-label="Visão do cronograma">
+          <button data-v="detail" title="Uma linha por tarefa, com grupos e dependências">Detalhada</button><button data-v="line" title="Resumo executivo: todas as tarefas numa faixa contínua, com cores, nomes e datas">Linha única</button>
+        </div>
+        <details class="menu" id="lpMenu" hidden><summary class="btn" title="Escolher os projetos que aparecem na Linha única">Projetos <span class="lp-n" id="lpN"></span></summary>
+          <div class="menu-pop lp-pop" id="lpPop"></div>
+        </details>
         <div class="seg" id="zoom" role="group" aria-label="Escala do Gantt">
           <button data-z="week">Semana</button><button data-z="month">Mês</button><button data-z="quarter">Trimestre</button>
         </div>
@@ -523,6 +579,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       <select id="fSt" aria-label="Filtrar por status"></select>
       <button class="btn slim" id="fClear" data-act="fClear" hidden>Limpar filtros</button>
       <span class="f-info" id="fInfo" aria-live="polite"></span>
+      <span class="sel-info" id="selInfo" hidden aria-live="polite"><b></b><button class="btn slim" data-act="selClear">Limpar seleção</button></span>
       <button class="btn slim" id="btnHoje" data-act="hoje" title="Rolar o cronograma até o dia de hoje">Ir para hoje</button>
     </div>
     <div class="gantt" id="gantt"></div>
@@ -593,6 +650,13 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Soltar uma tarefa dentro de outro grupo muda o grupo dela.</li>
         <li>Pelo teclado: Tab até a alça e as setas para cima e para baixo.</li>
       </ul></div></details>
+      <details><summary>Selecionar e mover várias tarefas juntas</summary><div><ul>
+        <li><b>Ctrl+clique</b> (ou Shift+clique) numa barra ou no nome da tarefa marca e desmarca a tarefa.</li>
+        <li>Arraste no fundo do cronograma para desenhar um retângulo: as barras que ele tocar ficam selecionadas. Com Ctrl, soma à seleção que já existe.</li>
+        <li><b>Ctrl+clique no nome de um grupo</b> seleciona todas as tarefas dele. <b>Ctrl+A</b> seleciona todas as tarefas visíveis.</li>
+        <li>Arraste qualquer barra selecionada: todas andam juntas, pela mesma quantidade de dias.</li>
+        <li><b>Esc</b>, um clique no fundo ou <b>Limpar seleção</b> desfazem a seleção.</li>
+      </ul></div></details>
       <details><summary>Mudar datas arrastando</summary><div><ul>
         <li>Arraste a barra para mover a tarefa inteira.</li>
         <li>Arraste a ponta esquerda ou direita da barra para mudar o início ou o fim.</li>
@@ -634,6 +698,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Com filtro ligado não dá para mudar a ordem arrastando. <b>Limpar filtros</b> volta ao normal.</li>
       </ul></div></details>
       <details><summary>Ler o cronograma</summary><div><ul>
+        <li><b>Detalhada</b> mostra uma linha por tarefa, com grupos e dependências. <b>Linha única</b> põe todas as tarefas numa faixa só, encostadas e em ordem de início, cada uma com a cor do grupo, o nome e as datas. O selo vermelho marca o que está acontecendo hoje. A faixa é contínua, sem espaços entre as tarefas; o comprimento de cada bloco dá a ideia da duração. No topo fica uma régua de meses e anos, igual para todos os projetos: cada projeto ocupa as colunas dos meses em que tem tarefa (basta um dia no mês) e o mês atual fica destacado, então dá para ver em que meses os projetos se cruzam. No botão <b>Projetos</b> você escolhe outros projetos para ver juntos, um abaixo do outro; o HTML para envio leva todos os que estiverem na tela.</li>
         <li><b>Semana, Mês e Trimestre</b> mudam o zoom da linha do tempo. <b>Ir para hoje</b> rola o cronograma até o dia atual.</li>
         <li>O próximo marco pisca de leve, e as tarefas em andamento têm um brilho passando na barra.</li>
         <li>A linha vermelha é o dia de hoje. Tarefas vencidas e não concluídas ficam marcadas como <b>Atrasada</b>; as marcadas como em risco aparecem tracejadas.</li>
@@ -890,8 +955,8 @@ try { teamName = localStorage.getItem(TK + '-nome'); } catch (e) { /* sem armaze
 const stKey = () => teamName ? TK : KEY;
 const TEAM = { h: null, ok: false, seen: 0, base: new Map(), busy: false, again: false, err: '', at: '', t: 0 };
 if (RO) {
-  const p = normP(RO.project);
-  state = { projects: [p], templates: [], currentId: p.id, zoom: 'month' };
+  const p = normP(RO.project), more = Array.isArray(RO.projects) ? RO.projects.map(normP).filter(x => x.id !== p.id) : [];
+  state = { projects: [p, ...more], templates: [], currentId: p.id, zoom: 'month', view: RO.view === 'line' ? 'line' : 'detail', lineSel: more.map(x => x.id) };
 } else {
   try { state = JSON.parse(localStorage.getItem(stKey())); } catch (e) { state = null; }
   if (!state || !Array.isArray(state.projects)) state = { projects: [], templates: [], zoom: 'month' };
@@ -902,6 +967,11 @@ if (RO) {
   if (!ZOOM[state.zoom]) state.zoom = 'month';
   state.templates = state.templates.filter(okTpl);
 }
+// Visão do cronograma também é preferência de tela: "detail" (uma linha por tarefa) ou "line" (todas as barras numa faixa só)
+if (state.view !== 'line') state.view = 'detail';
+// Projetos que aparecem juntos na Linha única (o aberto sempre aparece)
+if (!Array.isArray(state.lineSel)) state.lineSel = [];
+const lineProjects = () => state.projects.filter(p => p.id === state.currentId || state.lineSel.includes(p.id));
 // Grupos recolhidos são preferência de tela de cada pessoa: ficam fora do projeto para não virar "alteração" no arquivo da equipe
 if (!Array.isArray(state.collapsed)) state.collapsed = [];
 const isCol = g => state.collapsed.includes(g.id);
@@ -910,6 +980,16 @@ const cur = () => state.projects.find(p => p.id === state.currentId);
 const allTpls = () => TPLS.concat(state.templates);
 // filtros da tela: valem só para a visualização, não mudam o projeto
 const flt = { q: '', owner: '', st: '' };
+// seleção de várias tarefas para mover juntas (só na tela, não vai para o projeto)
+const SEL = new Set();
+let lasso = null;
+const multiKey = e => e.ctrlKey || e.metaKey || e.shiftKey;
+function toggleSel(ids, on) { ids.forEach(id => { (on ?? !SEL.has(id)) ? SEL.add(id) : SEL.delete(id); }); renderGantt(); }
+function renderSel() {
+  const el = $('#selInfo'); if (!el) return;
+  el.hidden = RO || SEL.size < 1 || state.view === 'line';
+  el.querySelector('b').textContent = SEL.size === 1 ? '1 tarefa selecionada' : `${SEL.size} tarefas selecionadas, arraste uma para mover todas`;
+}
 const fltOn = () => !!(flt.q || flt.owner || flt.st);
 const fltOk = t => (!flt.q || norm(t.name + ' ' + t.owner + ' ' + t.note).includes(norm(flt.q))) && (!flt.owner || t.owner === flt.owner) && (!flt.st || status(t) === flt.st);
 
@@ -966,6 +1046,16 @@ function renderTop() {
   if (document.activeElement !== $('#pSub')) $('#pSub').value = p.area;
   document.title = p.name + ' | Roadmap';
   document.querySelectorAll('#zoom button').forEach(b => b.setAttribute('aria-pressed', b.dataset.z === state.zoom));
+  document.querySelectorAll('#view button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === state.view));
+  $('#zoom').hidden = $('#btnHoje').hidden = state.view === 'line';
+  const lm = $('#lpMenu'); lm.hidden = state.view !== 'line' || state.projects.length < 2;
+  if (!lm.hidden) {
+    const n = lineProjects().length; $('#lpN').textContent = n > 1 ? n : '';
+    $('#lpPop').innerHTML = `<div class="lp-h">Mostrar na Linha única</div>` + state.projects.map(p => {
+      const on = p.id === state.currentId || state.lineSel.includes(p.id), here = p.id === state.currentId;
+      return `<label class="lp-i"><input type="checkbox" data-lp="${p.id}"${on ? ' checked' : ''}${here ? ' disabled' : ''}><span>${esc(p.name)}${here ? ' <em>aberto</em>' : ''}</span></label>`;
+    }).join('') + `<div class="lp-f"><button data-lpall="1">Todos</button><button data-lpall="0">Só o aberto</button></div>`;
+  }
 }
 
 const varTxt = d => d ? `${d > 0 ? '+' : '−'}${Math.abs(d)} d` : 'no plano';
@@ -1070,6 +1160,8 @@ function highlight(id) {
 }
 
 function renderGantt(fx) {
+  [...SEL].forEach(id => { if (!cur().tasks.some(t => t.id === id)) SEL.delete(id); });
+  renderSel();
   const p = cur(), z = state.zoom, dw = ZOOM[z].dw, LW = innerWidth < 700 ? 170 : 300;
   const [a, b] = range(p), W = (b - a + 1) * dw, X = n => (n - a) * dw;
   const seg = (s, e, txt, cls = '') => `<div class="sc ${cls}" style="left:${X(s)}px;width:${(e - s + 1) * dw}px">${txt}</div>`;
@@ -1111,6 +1203,7 @@ function renderGantt(fx) {
     }
   }
   const hasToday = todayN >= a && todayN <= b, tx = X(todayN) + dw / 2;
+  if (state.view === 'line') return renderLine({ fx, fo });
 
   // coluna de nomes, barras e marcos
   let labels = '', bars = '', k = 0;
@@ -1129,12 +1222,13 @@ function renderGantt(fx) {
     const t = r.t, s = d2n(t.start), e = d2n(t.end), st = status(t), n = k++;
     const nm = esc(t.name);
     if (t.bs) { const bs = d2n(t.bs), be = d2n(t.be); bars += `<i class="base" style="left:${X(bs)}px;width:${(be - bs + 1) * dw}px;top:${y + H - 8}px"></i>`; }
-    labels += `<div class="g-row t" data-row="${t.id}"><div class="g-label">${grip ? `<span class="grip" data-grip="t:${t.id}" tabindex="0" role="button" title="Arraste para mudar a ordem ou o grupo" aria-label="Mover ${nm}: arraste ou use as setas para cima e para baixo"></span>` : ''}<span class="st st-${st}" title="${STL[st]}"></span><div class="tmain">${RO ? `<span class="tn">${nm}</span>` : `<button class="tn" data-open="${t.id}">${nm}</button>`}${t.owner ? `<small class="to">${esc(t.owner)}</small>` : ''}</div>${RO ? '' : `<span class="ra"><button data-dup="${t.id}" title="Duplicar tarefa" aria-label="Duplicar ${nm}">${ICON.dup}</button><button class="del" data-del="${t.id}" title="Excluir tarefa" aria-label="Excluir ${nm}">${ICON.del}</button></span>`}</div></div>`;
+    const pk = SEL.has(t.id) ? ' picked' : '';
+    labels += `<div class="g-row t${pk}" data-row="${t.id}"><div class="g-label">${grip ? `<span class="grip" data-grip="t:${t.id}" tabindex="0" role="button" title="Arraste para mudar a ordem ou o grupo" aria-label="Mover ${nm}: arraste ou use as setas para cima e para baixo"></span>` : ''}<span class="st st-${st}" title="${STL[st]}"></span><div class="tmain">${RO ? `<span class="tn">${nm}</span>` : `<button class="tn" data-open="${t.id}">${nm}</button>`}${t.owner ? `<small class="to">${esc(t.owner)}</small>` : ''}</div>${RO ? '' : `<span class="ra"><button data-dup="${t.id}" title="Duplicar tarefa" aria-label="Duplicar ${nm}">${ICON.dup}</button><button class="del" data-del="${t.id}" title="Excluir tarefa" aria-label="Excluir ${nm}">${ICON.del}</button></span>`}</div></div>`;
     if (t.milestone) {
-      bars += `<div class="ms st-${st}${t === nextMs ? ' next' : ''}" data-task="${t.id}" style="left:${X(s) + dw / 2 - 8}px;top:${y + H / 2 - 8}px;--c:${r.g.color};--i:${n}"></div><span class="bl st-${st}" style="left:${X(s) + dw / 2 + 14}px;top:${y}px;--i:${n}">${esc(t.name)}<em>${fmtCurto(s)}</em></span>`;
+      bars += `<div class="ms st-${st}${t === nextMs ? ' next' : ''}${pk}" data-task="${t.id}" style="left:${X(s) + dw / 2 - 8}px;top:${y + H / 2 - 8}px;--c:${r.g.color};--i:${n}"></div><span class="bl st-${st}" style="left:${X(s) + dw / 2 + 14}px;top:${y}px;--i:${n}">${esc(t.name)}<em>${fmtCurto(s)}</em></span>`;
     } else {
       const w = (e - s + 1) * dw;
-      bars += `<div class="bar st-${st}${t.risk ? ' risk' : ''}" data-task="${t.id}" style="left:${X(s)}px;width:${w}px;top:${y + (H - 22) / 2}px;--c:${r.g.color};--i:${n}"><i style="width:${t.progress}%"></i></div><span class="bl st-${st}" style="left:${X(s) + w + 8}px;top:${y}px;--i:${n}">${esc(t.name)}<em>${st === 'late' ? 'atrasada, ' : ''}${t.progress}%</em></span>`;
+      bars += `<div class="bar st-${st}${t.risk ? ' risk' : ''}${pk}" data-task="${t.id}" style="left:${X(s)}px;width:${w}px;top:${y + (H - 22) / 2}px;--c:${r.g.color};--i:${n}"><i style="width:${t.progress}%"></i></div><span class="bl st-${st}" style="left:${X(s) + w + 8}px;top:${y}px;--i:${n}">${esc(t.name)}<em>${st === 'late' ? 'atrasada, ' : ''}${t.progress}%</em></span>`;
     }
   });
 
@@ -1174,6 +1268,74 @@ function renderGantt(fx) {
   }
   hlId = null;
   markSel();
+}
+
+/* ---------- visão em linha única (resumo executivo) ---------- */
+// Uma faixa contínua, em ordem de início: cada tarefa é um bloco encostado no próximo, com a cor do grupo, o nome e as datas.
+// A largura dá a ideia da duração, mas sem espaços vazios entre as tarefas; o zoom não se aplica aqui.
+// Texto escuro em cor clara, branco em cor escura
+function inkOn(hex) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex || ''); if (!m) return '#fff';
+  const n = parseInt(m[1], 16), L = c => { c /= 255; return c <= .03928 ? c / 12.92 : Math.pow((c + .055) / 1.055, 2.4); };
+  const lum = .2126 * L(n >> 16) + .7152 * L(n >> 8 & 255) + .0722 * L(n & 255);
+  return lum > .36 ? '#0B2A3C' : '#fff';
+}
+const lineDates = (s, e, ms) => ms ? fmtLong(s) : new Date(s * DAY).getUTCFullYear() === new Date(e * DAY).getUTCFullYear() ? `${fmtCurto(s)} a ${fmtCurto(e)}` : `${fmtLong(s)} a ${fmtLong(e)}`;
+
+function renderLine({ fx, fo }) {
+  const MINW = 92, MSW = 104, OV = 8, days = t => d2n(t.end) - d2n(t.start) + 1;
+  const full = ($('#gantt').clientWidth || 1000) - 50;
+  // Régua por mês: colunas iguais e cada projeto ocupa os meses inteiros em que tem tarefa (1 dia no mês já conta)
+  const ps = lineProjects(), vis = p => p.tasks.filter(fltOk);
+  const mOf = n => { const d = new Date(n * DAY); return d.getUTCFullYear() * 12 + d.getUTCMonth(); };
+  const spans = ps.map(p => { const ts = vis(p); return ts.length ? [mOf(Math.min(...ts.map(t => d2n(t.start)))), mOf(Math.max(...ts.map(t => d2n(t.end))))] : null; });
+  const sp = spans.filter(Boolean), m0 = sp.length ? Math.min(...sp.map(x => x[0])) : 0, M = sp.length ? Math.max(...sp.map(x => x[1])) - m0 + 1 : 0;
+  // a coluna cresce até caber o texto mínimo das tarefas do projeto mais apertado; se passar da tela, rola para o lado
+  const need = (p, x) => { const ts = vis(p); return (ts.reduce((a, t) => a + (t.milestone ? MSW : MINW), 0) - OV * (ts.length - 1)) / (x[1] - x[0] + 1); };
+  const CW = M ? Math.max(64, Math.floor(full / M), ...ps.map((p, i) => spans[i] ? Math.ceil(need(p, spans[i])) : 0)) : 0;
+  const strip = (p, pi) => {
+    const gOf = t => p.groups.find(g => g.id === t.groupId) || p.groups[0];
+    const ts = p.tasks.filter(fltOk).slice().sort((x, y) => x.start < y.start ? -1 : x.start > y.start ? 1 : x.end < y.end ? -1 : 1);
+    // larguras: a faixa é repartida pelos dias de cada tarefa; quem ficaria estreita demais para o texto sobe até o mínimo
+    // e o resto é repartido de novo entre as demais. Se nem assim couber, a faixa rola para o lado.
+    const x = spans[pi], span = x ? (x[1] - x[0] + 1) * CW : full;
+    const avail = span + OV * Math.max(0, ts.length - 1);
+    const wid = {}; let rest = ts.filter(t => !t.milestone), room = avail - ts.filter(t => t.milestone).length * MSW;
+    for (let k = 0; k < 50 && rest.length; k++) {
+      const kd = room / rest.reduce((a, t) => a + days(t), 0), small = rest.filter(t => days(t) * kd < MINW);
+      if (!small.length) { rest.forEach(t => { wid[t.id] = Math.floor(days(t) * kd); }); break; }
+      small.forEach(t => { wid[t.id] = MINW; }); room -= small.length * MINW; rest = rest.filter(t => !small.includes(t));
+      if (room <= 0) { rest.forEach(t => { wid[t.id] = MINW; }); break; }
+    }
+    const segs = ts.map((t, n) => {
+      const s = d2n(t.start), e = d2n(t.end), st = status(t), c = gOf(t).color, now = s <= todayN && todayN <= e;
+      const tag = st === 'late' ? 'Atrasada' : t.risk && st !== 'done' ? 'Em risco' : st === 'done' ? 'Concluída' : t.milestone ? '' : t.progress ? t.progress + '%' : '';
+      return `<div class="ls-i${now ? ' now' : ''}${t.milestone ? ' ms-i' : ''}" style="flex:0 0 ${t.milestone ? MSW : wid[t.id] || MINW}px;--c:${c};--tx:${inkOn(c)};--i:${n}">${now ? '<span class="ls-hoje">hoje</span>' : ''}`
+        + `<div class="ls-b st-${st}${t.risk ? ' risk' : ''}${t.milestone ? ' ms-b' : ''}" ${RO ? '' : `data-open="${t.id}" data-pj="${p.id}" role="button" tabindex="0"`} data-tt="${t.id}">`
+        + `<b>${esc(t.name)}</b><small>${lineDates(s, e, t.milestone)}${tag ? ` <em>${tag}</em>` : ''}</small>`
+        + (t.milestone ? '' : `<i style="width:${t.progress}%"></i>`) + `</div></div>`;
+    }).join('');
+    const all = p.tasks.length, sh = ts.length;
+    const per = all ? `${fmtLong(Math.min(...p.tasks.map(t => d2n(t.start))))} a ${fmtLong(Math.max(...p.tasks.map(t => d2n(t.end))))}` : 'sem tarefas';
+    const pct = all ? Math.round(p.tasks.reduce((a, t) => a + (t.milestone ? (t.progress >= 100 ? 100 : 0) : t.progress) * Math.max(1, t.milestone ? 1 : days(t)), 0) / p.tasks.reduce((a, t) => a + Math.max(1, t.milestone ? 1 : days(t)), 0)) : 0;
+    const empty = !all ? `<div class="ls-none">${RO ? 'Nada planejado ainda.' : 'Projeto sem tarefas. Use Nova tarefa para começar.'}</div>`
+      : !sh ? '<div class="ls-none">Nenhuma tarefa com esse filtro.</div>' : '';
+    return `<section class="ls-p"><header class="ls-ph"><b>${esc(p.name)}</b><span>${per}${all ? ` · ${fo ? sh + ' de ' : ''}${all} ${all === 1 ? 'tarefa' : 'tarefas'} · ${pct}%` : ''}</span></header>`
+      + (segs ? `<div class="ls-row" style="margin-left:${(x[0] - m0) * CW}px;width:${span}px">${segs}</div>` : '') + empty + `</section>`;
+  };
+  $('#btnHoje').disabled = true;
+  let yr = '', mo = '', nowCol = '';
+  for (let k = 0; k < M; k++) {
+    const m = m0 + k, y = Math.floor(m / 12);
+    mo += `<span style="width:${CW}px"${m === mOf(todayN) ? ' class="now"' : ''}>${MES[m % 12]}</span>`;
+    if (k === 0 || m % 12 === 0) yr += `<span style="width:${Math.min(12 - m % 12, M - k) * CW}px">${y}</span>`;
+  }
+  const kn = mOf(todayN) - m0;
+  if (M && kn >= 0 && kn < M) nowCol = `<i class="ls-now" style="left:${kn * CW}px;width:${CW}px"></i>`;
+  const ruler = M ? `<div class="ls-ru"><div class="ls-yr">${yr}</div><div class="ls-mo">${mo}</div></div>` : '';
+  $('#gantt').innerHTML = `<div class="ls${ps.length > 1 ? ' multi' : ''}${fx === 'load' || fx === 'zoom' ? ' anim' : ''}"><div class="ls-tl" style="--cw:${CW}px;width:${M * CW || full}px">${nowCol}${ruler}${ps.map(strip).join('')}</div></div>`;
+  $('#gantt').scrollLeft = 0;
+  hlId = null;
 }
 
 function markSel() { document.querySelectorAll('.g-row.t').forEach(r => r.classList.toggle('sel', r.dataset.row === openId)); }
@@ -1281,55 +1443,108 @@ const G = $('#gantt');
 G.addEventListener('pointerdown', e => {
   if (RO || e.button !== 0) return;
   const gr = e.target.closest('[data-grip]'); if (gr) return startReorder(gr, e);
-  const el = e.target.closest('[data-task]'); if (!el) return;
+  const el = e.target.closest('[data-task]');
+  if (!el) {
+    // fundo do cronograma: desenha um retângulo para selecionar várias barras
+    const cv = e.target.closest('.g-canvas');
+    if (cv && state.view !== 'line') {
+      const r = cv.getBoundingClientRect(), box = document.createElement('div');
+      box.className = 'lasso'; cv.appendChild(box);
+      lasso = { cv, box, x0: e.clientX - r.left, y0: e.clientY - r.top, add: multiKey(e), moved: false, base: new Set(SEL) };
+      e.preventDefault();
+    }
+    return;
+  }
   const t = cur().tasks.find(x => x.id === el.dataset.task), r = el.getBoundingClientRect();
+  if (multiKey(e)) { toggleSel([t.id]); e.preventDefault(); return; }
   let mode = 'move';
   if (!t.milestone) { if (e.clientX - r.left < 8) mode = 'l'; else if (r.right - e.clientX < 8) mode = 'r'; }
-  drag = { t, mode, x0: e.clientX, s0: d2n(t.start), e0: d2n(t.end), dd: 0, moved: false };
+  if (!SEL.has(t.id) && SEL.size) { SEL.clear(); renderSel(); G.querySelectorAll('.picked').forEach(x => x.classList.remove('picked')); }
+  // várias selecionadas: arrastar uma move todas pela mesma quantidade de dias (as pontas continuam ajustando só a própria)
+  const group = mode === 'move' && SEL.size > 1 && SEL.has(t.id) ? cur().tasks.filter(x => SEL.has(x.id)).map(x => ({ t: x, s0: d2n(x.start), e0: d2n(x.end) })) : null;
+  drag = { t, mode, x0: e.clientX, s0: d2n(t.start), e0: d2n(t.end), dd: 0, moved: false, group };
   document.body.classList.add('dragging');
   e.preventDefault();
 });
 addEventListener('pointermove', e => {
   if (reo) return reoMove(e);
+  if (lasso) return lassoMove(e);
   if (!drag) return;
   const dd = Math.round((e.clientX - drag.x0) / ZOOM[state.zoom].dw);
   if (dd !== drag.dd) {
     const { t, s0, e0 } = drag;
     drag.dd = dd; drag.moved = true;
-    if (drag.mode === 'move') { t.start = n2d(s0 + dd); t.end = n2d(e0 + dd); }
+    if (drag.group) drag.group.forEach(g => { g.t.start = n2d(g.s0 + dd); g.t.end = n2d(g.e0 + dd); });
+    else if (drag.mode === 'move') { t.start = n2d(s0 + dd); t.end = n2d(e0 + dd); }
     else if (drag.mode === 'l') t.start = n2d(Math.min(s0 + dd, e0));
     else t.end = n2d(Math.max(e0 + dd, s0));
     propagate(cur());
     renderGantt();
-    const b = G.querySelector(`[data-task="${t.id}"]`); if (b) b.classList.add('drag');
+    (drag.group ? drag.group.map(g => g.t) : [t]).forEach(x => { const b = G.querySelector(`[data-task="${x.id}"]`); if (b) b.classList.add('drag'); });
     highlight(t.id);
   }
   showTip(drag.t, e);
 });
+function lassoMove(e) {
+  const r = lasso.cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  const L = Math.min(x, lasso.x0), T = Math.min(y, lasso.y0), W = Math.abs(x - lasso.x0), Hh = Math.abs(y - lasso.y0);
+  if (W + Hh > 4) lasso.moved = true;
+  Object.assign(lasso.box.style, { left: L + 'px', top: T + 'px', width: W + 'px', height: Hh + 'px' });
+  // marca ao vivo as barras tocadas pelo retângulo
+  const hit = new Set();
+  lasso.cv.querySelectorAll('[data-task]').forEach(b => {
+    const q = b.getBoundingClientRect(), bx = q.left - r.left, by = q.top - r.top;
+    if (bx < L + W && bx + q.width > L && by < T + Hh && by + q.height > T) hit.add(b.dataset.task);
+  });
+  SEL.clear(); if (lasso.add) lasso.base.forEach(id => SEL.add(id)); hit.forEach(id => SEL.add(id));
+  lasso.cv.querySelectorAll('[data-task]').forEach(b => b.classList.toggle('picked', SEL.has(b.dataset.task)));
+  G.querySelectorAll('.g-row.t').forEach(rw => rw.classList.toggle('picked', SEL.has(rw.dataset.row)));
+  renderSel();
+}
+function lassoEnd() {
+  const { box, moved, add } = lasso; lasso = null; box.remove();
+  if (!moved && !add) SEL.clear(); // clique simples no fundo desfaz a seleção
+  renderGantt();
+}
 const endDrag = () => {
   if (reo) return reoEnd();
+  if (lasso) return lassoEnd();
   if (!drag) return;
-  const { t, moved } = drag;
+  const { t, moved, group } = drag;
   drag = null;
   document.body.classList.remove('dragging');
   hideTip();
-  if (moved) { save(); renderSide(); renderSummary(); renderGantt(); if (openId === t.id) openTask(t.id); }
+  if (moved) { save(); renderSide(); renderSummary(); renderGantt(); if (openId === t.id) openTask(t.id); if (group) toast(`${group.length} tarefas movidas juntas`); }
   else openTask(t.id);
 };
 addEventListener('pointerup', endDrag);
 addEventListener('pointercancel', endDrag);
 G.addEventListener('pointermove', e => {
   if (drag || reo) return;
-  const el = e.target.closest('[data-task]');
-  if (el) showTip(cur().tasks.find(x => x.id === el.dataset.task), e); else hideTip();
-  const row = el || e.target.closest('[data-row]');
+  const el = e.target.closest('[data-task],[data-tt]');
+  const tid = el && (el.dataset.task || el.dataset.tt), tt = el && (cur().tasks.find(x => x.id === tid) || state.projects.flatMap(p => p.tasks).find(x => x.id === tid));
+  if (tt) showTip(tt, e); else hideTip();
+  const row = (el && el.dataset.task ? el : null) || e.target.closest('[data-row]');
   highlight(row ? row.dataset.task || row.dataset.row : null);
 });
 G.addEventListener('pointerleave', () => { if (!drag) { hideTip(); highlight(null); } });
 G.addEventListener('click', e => {
   const del = e.target.closest('[data-del]'); if (del) return deleteTask(del.dataset.del);
   const dup = e.target.closest('[data-dup]'); if (dup) return duplicateTask(dup.dataset.dup);
-  const o = e.target.closest('[data-open]'); if (o) return openTask(o.dataset.open);
+  const o = e.target.closest('[data-open]');
+  if (o && multiKey(e) && state.view !== 'line') return toggleSel([o.dataset.open]);
+  // bloco de outro projeto na Linha única: abre aquele projeto (os demais continuam na tela) e a tarefa
+  if (o && o.dataset.pj && o.dataset.pj !== state.currentId) {
+    const prev = state.currentId; state.currentId = o.dataset.pj;
+    if (!state.lineSel.includes(prev)) state.lineSel.push(prev);
+    persist(); closeDrawer(); render(); return openTask(o.dataset.open);
+  }
+  if (o) return openTask(o.dataset.open);
+  const gl = e.target.closest('.g-row.g'); 
+  if (gl && multiKey(e) && !e.target.closest('button')) {
+    const ids = cur().tasks.filter(t => t.groupId === gl.dataset.grow).map(t => t.id);
+    return toggleSel(ids, !ids.every(id => SEL.has(id)));
+  }
   const c = e.target.closest('[data-col]');
   if (c) { const g = cur().groups.find(x => x.id === c.dataset.col); setCol(g, !isCol(g)); persist(); renderGantt(); return; }
   const a = e.target.closest('[data-add]'); if (a) newTask(a.dataset.add);
@@ -1686,6 +1901,7 @@ async function parseXlsx(buf, name) {
 /* ---------- ações ---------- */
 const ACT = {
   newTask: () => newTask(cur().groups[0].id),
+  selClear: () => { SEL.clear(); renderGantt(); },
   groups: () => { renderGroups(); $('#dlgGrupos').showModal(); },
   saveTpl: async () => {
     const n = await ask({ title: 'Salvar como modelo', text: 'O modelo guarda grupos, cores, tarefas, durações e dependências. As datas se ajustam quando você criar um projeto a partir dele.', label: 'Nome do modelo', value: cur().name, ok: 'Salvar modelo' });
@@ -1749,7 +1965,8 @@ const ACT = {
   },
   xlsx: () => { download(buildXlsx(cur()), slug(cur().name) + '.xlsx'); toast('Planilha exportada'); },
   html: () => {
-    const p = cur(), data = JSON.stringify({ project: p, geradoEm: n2d(todayN) }).replace(/</g, '\\u003c');
+    const p = cur(), multi = state.view === 'line' && lineProjects().length > 1;
+    const data = JSON.stringify({ project: p, geradoEm: n2d(todayN), ...(multi ? { projects: lineProjects(), view: 'line' } : {}) }).replace(/</g, '\\u003c');
     download(new Blob([SRC.replace(RO_TAG + 'null<', () => RO_TAG + data + '<')], { type: 'text/html' }), slug(p.name) + '-roadmap.html');
     toast('HTML para envio gerado');
   },
@@ -1764,12 +1981,14 @@ document.addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   if (document.querySelector('dialog[open]')) return;
   if (e.key === 'Escape' && openId) return closeDrawer();
+  if (e.key === 'Escape' && SEL.size) { SEL.clear(); return renderGantt(); }
   // dentro de um campo de texto, Ctrl+Z e "/" continuam sendo do próprio campo
   if (RO || e.target.closest('input,textarea,select')) return;
   const k = e.key.toLowerCase();
   if ((e.ctrlKey || e.metaKey) && k === 'z') { e.preventDefault(); e.shiftKey ? redo() : undo(); }
   else if ((e.ctrlKey || e.metaKey) && k === 'y') { e.preventDefault(); redo(); }
   else if (k === '/') { e.preventDefault(); $('#fQ').focus(); }
+  else if ((e.ctrlKey || e.metaKey) && k === 'a' && state.view !== 'line') { e.preventDefault(); toggleSel(cur().tasks.filter(fltOk).map(t => t.id), true); }
 });
 $('#tools').addEventListener('input', () => { flt.q = $('#fQ').value.trim(); flt.owner = $('#fOwner').value; flt.st = $('#fSt').value; renderGantt(); });
 // linha tracejada que segue o mouse na visão geral, com a data: mostra onde os projetos se cruzam
@@ -1806,6 +2025,20 @@ function confetti() {
   toast('Projeto 100% concluído');
 }
 document.querySelectorAll('#drawer [data-close]').forEach(b => b.addEventListener('click', closeDrawer));
+$('#lpPop').addEventListener('change', e => {
+  const c = e.target.closest('[data-lp]'); if (!c) return;
+  state.lineSel = state.lineSel.filter(id => id !== c.dataset.lp); if (c.checked) state.lineSel.push(c.dataset.lp);
+  if (!RO) persist(); renderTop(); renderGantt('zoom'); $('#lpMenu').open = true;
+});
+$('#lpPop').addEventListener('click', e => {
+  const b = e.target.closest('[data-lpall]'); if (!b) return;
+  state.lineSel = b.dataset.lpall === '1' ? state.projects.map(p => p.id).filter(id => id !== state.currentId) : [];
+  if (!RO) persist(); renderTop(); renderGantt('zoom'); $('#lpMenu').open = true;
+});
+$('#view').addEventListener('click', e => {
+  const b = e.target.closest('[data-v]'); if (!b || b.dataset.v === state.view) return;
+  state.view = b.dataset.v; persist(); renderTop(); renderGantt('zoom');
+});
 $('#zoom').addEventListener('click', e => {
   const b = e.target.closest('[data-z]'); if (!b || b.dataset.z === state.zoom) return;
   state.zoom = b.dataset.z; save(); renderTop(); renderGantt('zoom');
