@@ -187,6 +187,15 @@ button.lg:hover{color:var(--green-txt);border-color:var(--ink-3)}
 .k-crit{width:16px;height:9px;border-radius:3px;box-shadow:0 0 0 2px var(--title)}
 .k-crit-b{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);color:inherit;font:inherit;padding:3px 10px 3px 9px;border-radius:99px;cursor:pointer;transition:background .15s,border-color .15s}
 .k-crit-b:hover{border-color:var(--title)}
+.k-hol{width:14px;height:12px;border-radius:2px;background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--amber) 75%,transparent) 0 2px,transparent 2px 4px);box-shadow:0 0 0 1px color-mix(in srgb,var(--amber) 65%,transparent)}
+.k-crit-b[aria-pressed=false] .k-hol{filter:grayscale(1);opacity:.6}
+.mk .mk-hn{display:none}
+.hol-on .mk-fer{background:color-mix(in srgb,var(--amber) 17%,transparent);box-shadow:inset 1px 0 0 color-mix(in srgb,var(--amber) 65%,transparent),inset -1px 0 0 color-mix(in srgb,var(--amber) 65%,transparent)}
+.hol-on .mk .mk-hn{display:block;top:8px;left:50%;z-index:3;transform:translateX(-50%) rotate(180deg);writing-mode:vertical-rl;font-size:11px;font-weight:700;letter-spacing:.01em;color:color-mix(in srgb,var(--amber) 35%,var(--ink));line-height:1;padding:6px 2px;border-radius:5px;background:color-mix(in srgb,var(--amber) 24%,var(--surface));box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.hol-on .mk-s.mk-fer{background:var(--amber)}
+.ls-tl .mk .mk-hn{display:none!important}
+.ls-holl{font-size:12.5px;color:var(--ink-2);padding:8px 2px 0}
+.ls-holl b{color:color-mix(in srgb,var(--amber) 35%,var(--ink))}
 .k-crit-b[aria-pressed=true]{background:color-mix(in srgb,var(--title) 9%,var(--surface));border-color:color-mix(in srgb,var(--title) 45%,var(--line));color:var(--title);font-weight:600}
 .k-crit-b[aria-pressed=false]{color:var(--ink-3)}.k-crit-b[aria-pressed=false] .k-crit{box-shadow:0 0 0 2px var(--line)}
 .k-crit-b:focus-visible{outline:2px solid var(--green-l);outline-offset:2px}
@@ -879,6 +888,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Na barra lateral, <b>Datas da empresa</b> guarda datas que valem para todos os projetos, como congelamento de produção ou fechamento do mês: nome, início e fim.</li>
         <li>Elas aparecem como faixas azuis em todos os cronogramas, na Linha única, na Visão geral e no PowerPoint. Passe o mouse na marca da régua para ver o nome e as datas.</li>
         <li>Os feriados nacionais (incluindo Carnaval, Sexta-feira Santa e Corpus Christi) são calculados sozinhos e aparecem como faixas listradas. Dá para desligar em <b>Mostrar feriados nacionais</b>.</li>
+        <li>O botão <b>Feriados</b> na legenda, ao lado de Caminho crítico, destaca os feriados no cronograma em amarelo e escreve o nome de cada um na faixa. Clique de novo para voltar ao normal; a escolha fica salva.</li>
         <li>No modo equipe, as datas da empresa vão para o arquivo compartilhado: todo mundo vê as mesmas. Os feriados não mudam nenhuma data de tarefa, só aparecem para ajudar a planejar.</li>
       </ul></div></details>
       <details><summary>Relatório executivo e PowerPoint</summary><div><ul>
@@ -1413,6 +1423,7 @@ if (RO) {
 state.marks = (RO ? (Array.isArray(RO.marks) ? RO.marks : []) : Array.isArray(state.marks) ? state.marks : []).map(normMark).filter(Boolean);
 state.showHol = (RO ? RO.showHol : state.showHol) !== false;
 state.showCrit = state.showCrit !== false;
+state.hlHol = state.hlHol === true;
 // Visão do cronograma também é preferência de tela: "detail" (uma linha por tarefa) ou "line" (todas as barras numa faixa só)
 if (state.view !== 'line') state.view = 'detail';
 // Projetos que aparecem juntos na Linha única (o aberto sempre aparece)
@@ -1546,7 +1557,7 @@ function countUp() {
 function renderLegend() {
   const p = cur(), tag = RO ? 'span' : 'button';
   $('#legend').innerHTML = p.groups.map(g => `<${tag} class="lg"${RO ? '' : ' data-act="groups" title="Editar grupos e cores"'}><i style="--c:${g.color}"></i>${esc(g.name)}<span>${p.tasks.filter(t => t.groupId === g.id).length}</span></${tag}>`).join('') +
-    `<span class="lg-keys"><button class="k-crit-b" data-act="crit" aria-pressed="${state.showCrit}" title="Destacar a sequência de tarefas que define a data final"><i class="k-crit"></i>Caminho crítico</button><span><i class="k-ms"></i>Marco</span>${p.baseAt ? '<span><i class="k-base"></i>Plano</span>' : ''}<span><i class="k-late"></i>Atrasada</span><span><i class="k-risk"></i>Em risco</span><span><i class="k-today"></i>Hoje</span></span>`;
+    `<span class="lg-keys"><button class="k-crit-b" data-act="hol" aria-pressed="${state.hlHol}" title="Destacar os feriados nacionais no cronograma, com o nome"><i class="k-hol"></i>Feriados</button><button class="k-crit-b" data-act="crit" aria-pressed="${state.showCrit}" title="Destacar a sequência de tarefas que define a data final"><i class="k-crit"></i>Caminho crítico</button><span><i class="k-ms"></i>Marco</span>${p.baseAt ? '<span><i class="k-base"></i>Plano</span>' : ''}<span><i class="k-late"></i>Atrasada</span><span><i class="k-risk"></i>Em risco</span><span><i class="k-today"></i>Hoje</span></span>`;
 }
 
 function renderTools() {
@@ -1704,11 +1715,11 @@ function renderGantt(fx) {
   const mks = marksIn(a, b);
 
   const g = $('#gantt');
-  g.innerHTML = `<div class="g-inner${fx === 'load' ? ' anim' : fx === 'zoom' ? ' zoomfx' : ''}" style="width:${LW + W}px;--lw:${LW}px;--H:${H}px">
+  g.innerHTML = `<div class="g-inner${fx === 'load' ? ' anim' : fx === 'zoom' ? ' zoomfx' : ''}${state.hlHol ? ' hol-on' : ''}" style="width:${LW + W}px;--lw:${LW}px;--H:${H}px">
     <div class="g-head"><div class="g-corner"><span>Tarefa e responsável</span></div>
       <div class="g-scale" style="width:${W}px"><div class="sc-top">${top}</div><div class="sc-bot">${bot}</div>${mks.map(k => `<i class="mk-s mk-${k.kind}" style="left:${X(Math.max(k.s, a))}px;width:${Math.max(4, (Math.min(k.e, b) - Math.max(k.s, a) + 1) * dw)}px" title="${esc(mkTip(k))}"></i>`).join('')}${hasToday ? `<div class="today-flag" style="left:${tx}px">hoje</div>` : ''}</div></div>
     <div class="g-body" style="height:${HH}px">${labels}
-      <div class="g-canvas" style="left:${LW}px;width:${W}px;height:${HH}px">${mks.map(k => `<i class="mk mk-${k.kind}" style="left:${X(Math.max(k.s, a))}px;width:${Math.max(2, (Math.min(k.e, b) - Math.max(k.s, a) + 1) * dw)}px">${k.kind === 'eq' ? `<span>${esc(k.name)}</span>` : ''}</i>`).join('')}${grid}${hasToday ? `<div class="today" style="left:${tx}px"></div>` : ''}<svg class="arrows" width="${W}" height="${HH}" aria-hidden="true">${defs}${arrows}</svg>${bars}</div>${empty}
+      <div class="g-canvas" style="left:${LW}px;width:${W}px;height:${HH}px">${mks.map(k => `<i class="mk mk-${k.kind}" style="left:${X(Math.max(k.s, a))}px;width:${Math.max(2, (Math.min(k.e, b) - Math.max(k.s, a) + 1) * dw)}px">${k.kind === 'eq' ? `<span>${esc(k.name)}</span>` : `<span class="mk-hn">${esc(k.name)}</span>`}</i>`).join('')}${grid}${hasToday ? `<div class="today" style="left:${tx}px"></div>` : ''}<svg class="arrows" width="${W}" height="${HH}" aria-hidden="true">${defs}${arrows}</svg>${bars}</div>${empty}
     </div></div>`;
   // abre mostrando o começo do projeto; se o "hoje" ficar fora da tela, prioriza o hoje
   if (fx === 'load' || fx === 'zoom') {
@@ -1783,9 +1794,11 @@ function renderLine({ fx, fo }) {
   if (M && kn >= 0 && kn < M) nowCol = `<i class="ls-now" style="left:${kn * CW}px;width:${CW}px"></i>`;
   // faixas das datas da empresa e feriados: posição proporcional ao dia dentro da coluna do mês
   const lsX = n => { const m = mOfN(n), f = mFirst(m); return (m - m0) * CW + (n - f) / (mFirst(m + 1) - f) * CW; }, la = M ? mFirst(m0) : 0, lb = M ? mFirst(m0 + M) - 1 : -1;
-  if (M) nowCol += marksIn(la, lb).map(k => { const l = lsX(Math.max(k.s, la)); return `<i class="mk mk-${k.kind}" style="left:${l}px;width:${Math.max(2, lsX(Math.min(k.e, lb) + 1) - l)}px" title="${esc(mkTip(k))}">${k.kind === 'eq' ? `<span>${esc(k.name)}</span>` : ''}</i>`; }).join('');
+  if (M) nowCol += marksIn(la, lb).map(k => { const l = lsX(Math.max(k.s, la)); return `<i class="mk mk-${k.kind}" style="left:${l}px;width:${Math.max(2, lsX(Math.min(k.e, lb) + 1) - l)}px" title="${esc(mkTip(k))}">${k.kind === 'eq' ? `<span>${esc(k.name)}</span>` : `<span class="mk-hn">${esc(k.name)}</span>`}</i>`; }).join('');
+  const hl = state.hlHol && M ? marksIn(la, lb).filter(k => k.kind === 'fer') : [];
+  const holl = hl.length ? `<div class="ls-holl"><b>Feriados no período:</b> ${hl.map(k => `${esc(k.name)} (${k.s === k.e ? fmtBR(k.s).slice(0, 5) : `${fmtBR(k.s).slice(0, 5)} e ${fmtBR(k.e).slice(0, 5)}`})`).join(', ')}</div>` : '';
   const ruler = M ? `<div class="ls-ru"><div class="ls-yr">${yr}</div><div class="ls-mo">${mo}</div></div>` : '';
-  $('#gantt').innerHTML = `<div class="ls${ps.length > 1 ? ' multi' : ''}${fx === 'load' || fx === 'zoom' ? ' anim' : ''}"><div class="ls-tl" style="--cw:${CW}px;width:${M * CW || full}px">${nowCol}${ruler}${ps.map(strip).join('')}</div></div>`;
+  $('#gantt').innerHTML = `<div class="ls${ps.length > 1 ? ' multi' : ''}${fx === 'load' || fx === 'zoom' ? ' anim' : ''}${state.hlHol ? ' hol-on' : ''}"><div class="ls-tl" style="--cw:${CW}px;width:${M * CW || full}px">${nowCol}${ruler}${holl}${ps.map(strip).join('')}</div></div>`;
   $('#gantt').scrollLeft = 0;
   hlId = null;
 }
@@ -2512,6 +2525,8 @@ const ACT = {
     F.late.value = T.late; F.slip.value = T.slip; $('#ragRule').innerHTML = ragList(p, T);
     const d = $('#dlgRag'); d.returnValue = ''; d.showModal();
   },
+  // destacar feriados liga também a exibição deles (se estiver desligada em Datas da empresa)
+  hol: () => { state.hlHol = !state.hlHol; if (state.hlHol) state.showHol = true; if (!RO) persist(); renderLegend(); renderGantt(); },
   crit: () => { state.showCrit = !state.showCrit; if (!RO) persist(); renderLegend(); renderGantt(); },
   dm: () => openDm(null),
   dmRe: () => openDm(cur()),
