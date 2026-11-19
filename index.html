@@ -384,33 +384,35 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 #dlgGrupos{width:min(640px,calc(100vw - 32px))}
 #dlgRep{width:min(1180px,calc(100vw - 32px))}
 .hb-w{display:inline-flex;align-items:center;flex-wrap:wrap;gap:2px 0}
-.tr{display:inline-flex;align-items:center;margin-left:6px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.tr{display:inline-flex;align-items:center;gap:3px;margin-left:7px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.tr svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .tr-up{color:var(--green-txt)}.tr-down{color:var(--red)}.tr-flat{color:var(--ink-3)}
 .rag-rule{list-style:none;margin:0;padding:12px 14px;display:flex;flex-direction:column;gap:7px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:13px;color:var(--ink-2)}
-.rag-rule .hb{margin-right:6px}
+.rag-rule li{display:grid;grid-template-columns:104px minmax(0,1fr);gap:10px;align-items:baseline;line-height:1.4}
+.rag-rule .hb{justify-self:start}
 .rp{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
 .rp-h{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--line)}
 .rp-h h3{margin:0;font:700 19px var(--f-d);color:var(--title)}
-.rp-h p{margin:2px 0 0;font-size:12.5px;color:var(--ink-3)}
+.rp-h p{margin:2px 0 0;font-size:12.5px;color:var(--ink-2)}
 .rp-k{display:flex;gap:6px;flex-wrap:wrap}
-.rp-row{display:grid;grid-template-columns:1.25fr 1fr 1.1fr 1.1fr 1.5fr;gap:14px;padding:10px 16px 10px 13px;border-bottom:1px solid var(--line-2);border-left:3px solid transparent;align-items:start}
+.rp-row{display:grid;grid-template-columns:1.25fr 1fr 1.1fr 1.1fr 1.5fr;gap:14px;padding:11px 16px;border-bottom:1px solid var(--line-2);align-items:start}
 .rp-row>div{display:flex;flex-direction:column;gap:3px;min-width:0}
-.rp-head{font-size:11px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;padding-top:8px;padding-bottom:8px;background:var(--surface-2,var(--line-2))}
-.rp-p{border-left-color:var(--h)}
+.rp-head{font-size:11px;font-weight:700;color:var(--ink-2);text-transform:uppercase;letter-spacing:.04em;padding-top:8px;padding-bottom:8px;background:var(--surface-2,var(--line-2))}
 .rp-p b{font:700 14px/1.25 var(--f-d);color:var(--title)}
 .rp-p small{font-size:12px;color:var(--ink-2);line-height:1.35;overflow-wrap:anywhere}
 .rp-p small b{font:inherit;font-weight:700;color:var(--ink)}
+.rp-p small,.rp-h p{font-variant-numeric:tabular-nums}
 .rp-p .hb-w{margin-bottom:2px}
-.rp-0{color:var(--ink-3)!important}
+.rp-0{color:var(--ink-2)!important}
 .rp-p i{font-style:normal;font-size:10.5px;font-weight:700;padding:0 5px;border-radius:4px;margin-right:3px}
 .rp-l{background:var(--red);color:#fff}.rp-r{background:color-mix(in srgb,var(--amber) 30%,transparent);color:var(--ink)}
 .rp-p textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--surface);font:400 13px/1.35 var(--f-t);color:var(--ink);resize:vertical;min-height:52px}
 .rp-p textarea:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18)}
 .rp-ex{margin:0;font-size:12.5px;line-height:1.4;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere}
-.rp-f{padding:10px 16px;font-size:11px;color:var(--ink-3);line-height:1.4}
+.rp-f{padding:10px 16px;font-size:11px;color:var(--ink-2);line-height:1.45}
 #repBody{max-height:60vh;overflow:auto;border-radius:14px}
 #repPrint{display:none}
-@media (max-width:860px){.rp-row{grid-template-columns:1fr}.rp-head{display:none}}
+@media (max-width:860px){.rp-row{grid-template-columns:1fr;gap:10px}.rp-head{display:none}.rp-p>[data-l]::before{content:attr(data-l);font-size:10.5px;font-weight:700;color:var(--ink-2);text-transform:uppercase;letter-spacing:.04em}#dlgRep .dlg-foot{flex-wrap:wrap}#dlgRep .dlg-foot .btn{flex:1 1 auto}}
 @media print{body.rep-print .app,body.rep-print dialog,body.rep-print .toast{display:none!important}body.rep-print #repPrint{display:block}html:has(body.rep-print),body.rep-print{background:#fff!important;min-height:0!important}body.rep-print .rp{border:0}.rp-row{break-inside:avoid}.rp-row{grid-template-columns:1.25fr 1fr 1.1fr 1.1fr 1.5fr!important}.rp-head{display:grid!important}}
 #dlgAbas{width:min(620px,calc(100vw - 32px))}
 .ab-list{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow:auto}
@@ -859,8 +861,8 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 <dialog id="dlgRag" aria-labelledby="rgT">
   <form method="dialog" class="dlg-in" id="fRag">
     <h2 id="rgT">Critério das cores</h2>
-    <p class="muted">Quanto atraso este projeto tolera antes de mudar de cor. Com 0, qualquer atraso já conta. A regra aparece no relatório executivo e no PowerPoint.</p>
-    <div class="two"><label class="fld">Tarefa vencida fica vermelha depois de (dias)<input type="number" name="late" min="0" max="365" step="1" inputmode="numeric"></label><label class="fld">Desvio da linha de base tolerado (dias)<input type="number" name="slip" min="0" max="365" step="1" inputmode="numeric"></label></div>
+    <p class="muted">Quantos dias de atraso este projeto aceita antes de mudar de cor. Com 0, qualquer atraso já conta. A regra vale para a tela, o relatório executivo e o PowerPoint.</p>
+    <div class="two"><label class="fld">Dias de atraso tolerados<input type="number" name="late" min="0" max="365" step="1" inputmode="numeric"></label><label class="fld">Dias de desvio do plano tolerados<input type="number" name="slip" min="0" max="365" step="1" inputmode="numeric"></label></div>
     <ul class="rag-rule" id="ragRule"></ul>
     <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok">Salvar critério</button></div>
   </form>
@@ -1028,7 +1030,7 @@ function normP(p) {
   const out = { id: sid(p.id) || uid(), name: String(p.name || 'Projeto'), area: String(p.area || ''), groups, tasks };
   if (okd(p.baseAt) && tasks.some(t => t.bs)) out.baseAt = p.baseAt;
   if (p.tol) { const tol = { late: tolN(p.tol.late), slip: tolN(p.tol.slip) }; if (tol.late || tol.slip) out.tol = tol; }
-  if (Array.isArray(p.hist)) out.hist = p.hist.filter(x => Array.isArray(x) && okd(x[0]) && Object.prototype.hasOwnProperty.call(HRANK, x[1])).slice(-120).map(x => [x[0], x[1], tolN(x[2]), Math.round(+x[3] || 0)]);
+
   if (p.exec) out.exec = String(p.exec).slice(0, 1500);
   return out;
 }
@@ -1060,21 +1062,29 @@ function ragRule(p) {
 }
 // Tendência: uma foto por dia da situação de cada projeto, para dizer se melhorou ou piorou
 const HRANK = { done: 0, none: 0, ok: 1, risk: 2, late: 3 };
-const hsnap = p => [n2d(todayN), health(p)[0], p.tasks.filter(t => status(t) === 'late').length, slipDays(p)];
+// foto: [data, cor, nº atrasadas, desvio do plano, maior atraso em dias, nº em risco]; os números brutos deixam recalcular a cor antiga com a regra atual
+const hsnap = p => {
+  const open = p.tasks.filter(t => t.progress < 100), lt = open.filter(t => status(t) === 'late');
+  return [n2d(todayN), health(p)[0], lt.length, slipDays(p), lt.length ? Math.max(...lt.map(t => todayN - d2n(t.end))) : 0, open.filter(t => t.risk).length];
+};
+const normHist = h => Array.isArray(h) ? h.filter(x => Array.isArray(x) && /^\d{4}-\d{2}-\d{2}$/.test(x[0]) && Object.prototype.hasOwnProperty.call(HRANK, x[1])).slice(-120).map(x => [x[0], x[1], ...x.slice(2, 6).map(v => Math.round(+v || 0))]) : [];
+// cor da foto antiga pela regra de hoje (fotos antigas, sem os números, ficam com a cor gravada)
+const kAt = (x, p) => { if (x.length < 6 || x[1] === 'done' || x[1] === 'none') return x[1]; const T = tolOf(p); return x[4] > T.late ? 'late' : x[4] > 0 || x[5] > 0 || x[3] > T.slip ? 'risk' : 'ok'; };
 function recordHist(p) {
-  const s = hsnap(p), h = p.hist || (p.hist = []), last = h[h.length - 1];
+  const s = hsnap(p), h = state.hist[p.id] || (state.hist[p.id] = []), last = h[h.length - 1];
   if (last && last[0] === s[0]) h[h.length - 1] = s; else h.push(s);
   if (h.length > 120) h.splice(0, h.length - 120);
 }
 // compara com a foto de 7 dias atrás; se o histórico for mais curto, com a mais antiga (nunca com a de hoje)
 function trend(p) {
-  const h = (p.hist || []).filter(x => x[0] < n2d(todayN)); if (!h.length) return null;
+  const h = (state.hist[p.id] || []).filter(x => x[0] < n2d(todayN)); if (!h.length) return null;
   const lim = n2d(todayN - 7), ref = h.slice().reverse().find(x => x[0] <= lim) || h[0], now = hsnap(p);
-  const c = (HRANK[now[1]] - HRANK[ref[1]]) || (now[2] - ref[2]) || Math.sign(now[3] - ref[3]);
+  const c = (HRANK[now[1]] - HRANK[kAt(ref, p)]) || (now[2] - ref[2]) || Math.sign(now[3] - ref[3]);
   return { dir: c < 0 ? 'up' : c > 0 ? 'down' : 'flat', since: ref[0] };
 }
-const TRT = { up: 'Melhorou', down: 'Piorou', flat: 'Estável' }, TRA = { up: '↑', down: '↓', flat: '→' };
-const tb = p => { const t = trend(p); return t ? `<span class="tr tr-${t.dir}" title="${TRT[t.dir]} desde ${fmtCurto(d2n(t.since))}">${TRA[t.dir]} ${TRT[t.dir]}</span>` : ''; };
+const TRT = { up: 'Melhorou', down: 'Piorou', flat: 'Estável' };
+const TRI = { up: 'M8 13V3M3.5 7.5 8 3l4.5 4.5', down: 'M8 3v10M3.5 8.5 8 13l4.5-4.5', flat: 'M3 8h10M8.5 3.5 13 8l-4.5 4.5' };
+const tb = p => { const t = trend(p); return t ? `<span class="tr tr-${t.dir}" title="${TRT[t.dir]} desde ${fmtCurto(d2n(t.since))}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="${TRI[t.dir]}"/></svg>${TRT[t.dir]}</span>` : ''; };
 const pctOf = p => {
   const w = t => t.milestone ? 1 : d2n(t.end) - d2n(t.start) + 1, tw = p.tasks.reduce((a, t) => a + w(t), 0);
   return tw ? Math.round(p.tasks.reduce((a, t) => a + w(t) * t.progress, 0) / tw) : 0;
@@ -1103,20 +1113,29 @@ let teamName = null;
 try { teamName = localStorage.getItem(TK + '-nome'); } catch (e) { /* sem armazenamento: fica no modo local */ }
 const stKey = () => teamName ? TK : KEY;
 const TEAM = { h: null, ok: false, seen: 0, base: new Map(), busy: false, again: false, err: '', at: '', t: 0 };
+const RAWH = {}, keepH = x => { if (x && x.id && x.hist) RAWH[String(x.id).replace(/[^\w-]/g, '').slice(0, 40)] = x.hist; return x; };
 if (RO) {
-  const p = normP(RO.project), more = Array.isArray(RO.projects) ? RO.projects.map(normP).filter(x => x.id !== p.id) : [];
+  const p = normP(keepH(RO.project)), more = Array.isArray(RO.projects) ? RO.projects.map(x => normP(keepH(x))).filter(x => x.id !== p.id) : [];
   state = { projects: [p, ...more], templates: [], currentId: p.id, zoom: 'month', view: RO.view === 'line' ? 'line' : 'detail', lineSel: more.map(x => x.id) };
 } else {
   try { state = JSON.parse(localStorage.getItem(stKey())); } catch (e) { state = null; }
   if (!state || !Array.isArray(state.projects)) state = { projects: [], templates: [], zoom: 'month' };
-  state.projects = state.projects.flatMap(p => { try { return [normP(p)]; } catch (e) { return []; } });
+  state.projects = state.projects.flatMap(p => { try { return [normP(keepH(p))]; } catch (e) { return []; } });
   if (!Array.isArray(state.templates)) state.templates = [];
   if (!state.projects.length) state.projects.push(teamName ? blank('Novo projeto') : demo());
   if (!state.projects.some(p => p.id === state.currentId)) state.currentId = state.projects[0].id;
   if (!ZOOM[state.zoom]) state.zoom = 'month';
   state.templates = state.templates.filter(okTpl);
-  state.projects.forEach(recordHist);
 }
+// Fotos diárias da tendência: ficam fora do projeto (como os grupos recolhidos) para não virar "alteração" no arquivo da equipe
+{ const h0 = state.hist && typeof state.hist === 'object' && !Array.isArray(state.hist) ? state.hist : {};
+  state.hist = {};
+  // junta as duas origens dia a dia (a local vence no mesmo dia)
+  state.projects.forEach(p => {
+    const day = new Map([...(Array.isArray(RAWH[p.id]) ? RAWH[p.id] : []), ...(Array.isArray(h0[p.id]) ? h0[p.id] : [])].filter(Array.isArray).map(x => [x[0], x]));
+    const h = normHist([...day.values()].sort((a, b) => a[0] < b[0] ? -1 : 1)); if (h.length) state.hist[p.id] = h;
+  });
+  if (!RO) state.projects.forEach(recordHist); }
 // Visão do cronograma também é preferência de tela: "detail" (uma linha por tarefa) ou "line" (todas as barras numa faixa só)
 if (state.view !== 'line') state.view = 'detail';
 // Projetos que aparecem juntos na Linha única (o aberto sempre aparece)
@@ -2203,7 +2222,8 @@ const ACT = {
   xlsx: () => { download(buildXlsx(cur()), slug(cur().name) + '.xlsx'); toast('Planilha exportada'); },
   html: () => {
     const p = cur(), multi = state.view === 'line' && lineProjects().length > 1;
-    const data = JSON.stringify({ project: p, geradoEm: n2d(todayN), ...(multi ? { projects: lineProjects(), view: 'line' } : {}) }).replace(/</g, '\\u003c');
+    const wh = x => ({ ...x, hist: state.hist[x.id] });
+    const data = JSON.stringify({ project: wh(p), geradoEm: n2d(todayN), ...(multi ? { projects: lineProjects().map(wh), view: 'line' } : {}) }).replace(/</g, '\\u003c');
     download(new Blob([SRC.replace(RO_TAG + 'null<', () => RO_TAG + data + '<')], { type: 'text/html' }), slug(p.name) + '-roadmap.html');
     toast('HTML para envio gerado');
   },
@@ -2364,7 +2384,8 @@ const perOf = p => p.tasks.length ? [Math.min(...p.tasks.map(t => d2n(t.start)))
 const nextMs = (p, k) => p.tasks.filter(t => t.milestone && t.progress < 100 && d2n(t.start) >= todayN).sort((a, b) => a.start < b.start ? -1 : 1).slice(0, k);
 const lateOf = p => p.tasks.filter(t => status(t) === 'late');
 const riskOf = p => p.tasks.filter(t => t.risk && t.progress < 100 && status(t) !== 'late');
-const ragFoot = ps => 'Critério das cores: ' + ragRule(ps[0] || { tasks: [] }).map(([, l, t]) => `${l}, ${t}`).join('; ') + '.' + (new Set(ps.map(p => JSON.stringify(tolOf(p)))).size > 1 ? ' Alguns projetos usam tolerâncias próprias (menu Projeto › Critério das cores).' : '');
+const tolTxt = p => [p.tol.late && `atraso até ${p.tol.late} d`, p.tol.slip && `desvio até ${p.tol.slip} d`].filter(Boolean).join(' e ');
+const ragFoot = ps => { const own = ps.filter(p => p.tol); return 'Critério das cores: ' + ragRule({ tasks: [] }).map(([, l, t]) => `${l}, ${t}`).join('; ') + '.' + (own.length ? ' Com tolerância própria: ' + own.map(p => `${p.name} (${tolTxt(p)})`).join('; ') + '.' : ''); };
 function repHTML(edit) {
   const ps = repProjects(), cnt = k => ps.filter(p => health(p)[0] === k).length;
   const chips = HCNT.filter(([k]) => cnt(k)).map(([k, a, b]) => `<span class="hb hb-${k}">${cnt(k)} ${cnt(k) === 1 ? a : b}</span>`).join('');
@@ -2372,10 +2393,10 @@ function repHTML(edit) {
     const per = perOf(p), sl = slipDays(p), ms = nextMs(p, 2), lt = lateOf(p), rk = riskOf(p), ar = [...lt.map(t => ['l', 'atrasada', t]), ...rk.map(t => ['r', 'em risco', t])];
     return `<section class="rp-row rp-p hb-${health(p)[0]}">
       <div><b>${esc(p.name)}</b>${p.area ? `<small>${esc(p.area)}</small>` : ''}</div>
-      <div><span class="hb-w">${hb(p)}${tb(p)}</span><small>${pctOf(p)}% concluído${per ? `, termina ${fmtCurto(per[1])}` : ''}${p.baseAt && sl ? `, ${sl > 0 ? '+' : '−'}${Math.abs(sl)} d do plano` : ''}</small></div>
-      <div>${ms.length ? ms.map(t => `<small><b>${fmtCurto(d2n(t.start))}</b> ${esc(t.name)}</small>`).join('') : '<small class="rp-0">Nenhum marco pela frente</small>'}</div>
-      <div>${ar.length ? ar.slice(0, 3).map(([c, l, t]) => `<small><i class="rp-${c}">${l}</i>${esc(t.name)}</small>`).join('') + (ar.length > 3 ? `<small class="rp-0">e mais ${ar.length - 3}</small>` : '') : '<small class="rp-0">Nenhuma</small>'}</div>
-      <div>${edit ? `<textarea data-ex="${p.id}" rows="2" maxlength="1500" aria-label="Decisões e pontos de atenção de ${esc(p.name)}" placeholder="Ex.: aprovar o orçamento da fase 2 até 30/11">${esc(p.exec || '')}</textarea>` : p.exec ? `<p class="rp-ex">${esc(p.exec)}</p>` : '<small class="rp-0">Nada a decidir</small>'}</div>
+      <div data-l="Situação"><span class="hb-w">${hb(p)}${tb(p)}</span><small>${pctOf(p)}% concluído${per ? `, termina ${fmtCurto(per[1])}` : ''}${p.baseAt && sl ? `, ${sl > 0 ? '+' : '−'}${Math.abs(sl)} d do plano` : ''}</small></div>
+      <div data-l="Próximos marcos">${ms.length ? ms.map(t => `<small><b>${fmtCurto(d2n(t.start))}</b> ${esc(t.name)}</small>`).join('') : '<small class="rp-0">Nenhum marco pela frente</small>'}</div>
+      <div data-l="Atrasadas e em risco">${ar.length ? ar.slice(0, 3).map(([c, l, t]) => `<small><i class="rp-${c}">${l}</i>${esc(t.name)}</small>`).join('') + (ar.length > 3 ? `<small class="rp-0">e mais ${ar.length - 3}</small>` : '') : '<small class="rp-0">Nenhuma</small>'}</div>
+      <div data-l="Decisões e pontos de atenção">${edit ? `<textarea data-ex="${p.id}" rows="2" maxlength="1500" aria-label="Decisões e pontos de atenção de ${esc(p.name)}" placeholder="Ex.: aprovar o orçamento da fase 2 até 30/11">${esc(p.exec || '')}</textarea>` : p.exec ? `<p class="rp-ex">${esc(p.exec)}</p>` : '<small class="rp-0">Nada a decidir</small>'}</div>
     </section>`;
   }).join('');
   return `<div class="rp"><header class="rp-h"><div><h3>Situação dos projetos</h3><p>Atualizado em ${fmtLong(todayN)}, ${ps.length} ${ps.length === 1 ? 'projeto' : 'projetos'}</p></div><div class="rp-k">${chips}</div></header>
@@ -2408,7 +2429,7 @@ const cut = (s, n) => { s = String(s ?? '').replace(/\s+/g, ' ').trim(); return 
 const chunk = (a, n) => a.length ? Array.from({ length: Math.ceil(a.length / n) }, (_, i) => a.slice(i * n, i * n + n)) : [[]];
 const mOfN = n => { const d = new Date(n * DAY); return d.getUTCFullYear() * 12 + d.getUTCMonth(); };
 const mFirst = m => Math.round(Date.UTC(Math.floor(m / 12), m % 12, 1) / DAY);
-const SW = 960, SH = 540, SM = 36;
+const SW = 960, SH = 540, SM = 36, TRG = { up: 'upArrow', down: 'downArrow', flat: 'rightArrow' }, TRC = { up: '006729', down: 'E60018', flat: '5B6770' };
 function pSlide() {
   let id = 1; const out = [], E = v => Math.round(v * 12700);
   // paras: [[texto, { sz, b, c }], ...]
@@ -2426,7 +2447,7 @@ function sHead(s, title, sub, pg) {
   s.sp({ x: 0, y: 0, w: SW, h: 6, f: '006729' });
   s.sp({ x: SM, y: 18, w: SW - 2 * SM, h: 36, paras: [[cut(title, 64), { sz: 24, b: 1, c: '003960' }]], ins: 0 });
   if (sub) s.sp({ x: SM, y: 54, w: SW - 2 * SM, h: 20, paras: [[cut(sub, 150), { sz: 12, c: '46606F' }]], ins: 0 });
-  s.sp({ x: SM, y: SH - 24, w: SW - 2 * SM, h: 14, paras: [[`Gerado em ${fmtBR(todayN)}  ·  ${pg}`, { sz: 9, c: '8496A2' }]], ins: 0, al: 'r' });
+  s.sp({ x: SM, y: SH - 24, w: SW - 2 * SM, h: 14, paras: [[`Gerado em ${fmtBR(todayN)}  ·  ${pg}`, { sz: 9, c: '5B6770' }]], ins: 0, al: 'r' });
 }
 // régua de anos e meses entre os meses ma e mb; devolve a posição x de um dia
 function sRuler(s, x0, x1, y, ma, mb, gridTo) {
@@ -2434,7 +2455,7 @@ function sRuler(s, x0, x1, y, ma, mb, gridTo) {
   for (let m = ma; m <= mb; m++) {
     const l = X(mFirst(m)), r = X(mFirst(m + 1));
     if (m === ma || m % 12 === 0) s.sp({ x: l, y, w: X(mFirst(Math.min(mb + 1, (Math.floor(m / 12) + 1) * 12))) - l, h: 15, paras: [[String(Math.floor(m / 12)), { sz: 10, b: 1 }]], ins: 3 });
-    s.sp({ x: l, y: y + 15, w: r - l, h: 15, paras: [[r - l > 16 ? MES[m % 12] : '', { sz: 9, b: m === mNow, c: m === mNow ? 'E60018' : '8496A2' }]], ins: 3 });
+    s.sp({ x: l, y: y + 15, w: r - l, h: 15, paras: [[r - l > 16 ? MES[m % 12] : '', { sz: 9, b: m === mNow, c: m === mNow ? 'E60018' : '5B6770' }]], ins: 3 });
     s.sp({ x: l, y: y + 2, w: 0.75, h: gridTo - y - 2, f: 'DCE4DF' });
   }
   if (todayN >= a && todayN < b) { s.sp({ x: X(todayN) - 0.75, y: y + 30, w: 1.5, h: gridTo - y - 30, f: 'E60018' }); }
@@ -2444,20 +2465,21 @@ function slResumo(ps, pg, all) {
   const s = pSlide(), cnt = k => all.filter(p => health(p)[0] === k).length;
   sHead(s, 'Situação dos projetos', HCNT.filter(([k]) => cnt(k)).map(([k, a, b]) => `${cnt(k)} ${cnt(k) === 1 ? a : b}`).join(', ') || 'Nenhum projeto', pg);
   const C = [[SM, 226, 'PROJETO'], [266, 128, 'SITUAÇÃO'], [398, 92, 'ANDAMENTO'], [494, 176, 'PRÓXIMOS MARCOS'], [674, SW - SM - 674, 'DECISÕES E PONTOS DE ATENÇÃO']];
-  C.forEach(([x, w, l]) => s.sp({ x, y: 86, w, h: 16, paras: [[l, { sz: 8.5, b: 1, c: '8496A2' }]], ins: x === SM ? 10 : 2 }));
+  C.forEach(([x, w, l]) => s.sp({ x, y: 86, w, h: 16, paras: [[l, { sz: 8.5, b: 1, c: '5B6770' }]], ins: x === SM ? 10 : 2 }));
   const y0 = 104, rh = Math.min(58, (SH - 40 - y0) / Math.max(1, ps.length));
   ps.forEach((p, i) => {
     const y = y0 + i * rh, k = health(p)[0], tr = trend(p), per = perOf(p), ms = nextMs(p, 2);
     s.sp({ x: SM, y: y + 2, w: SW - 2 * SM, h: rh - 4, f: i % 2 ? 'FFFFFF' : 'F3F7F4' });
-    s.sp({ x: SM, y: y + 2, w: 4, h: rh - 4, f: HC[k] });
     s.sp({ x: SM + 6, y: y + 2, w: 220, h: rh - 4, paras: [[cut(p.name, 34), { sz: 12, b: 1, c: '003960' }], ...(p.area ? [[cut(p.area, 44), { sz: 9, c: '46606F' }]] : [])] });
     s.sp({ x: 268, y: y + rh / 2 - (tr ? 14 : 9), w: 92, h: 18, g: 'roundRect', f: HC[k], paras: [[HLB[k], { sz: 9.5, b: 1, c: k === 'risk' ? '0B2A3C' : 'FFFFFF' }]], al: 'ctr', ins: 2 });
-    if (tr) s.sp({ x: 268, y: y + rh / 2 + 5, w: 124, h: 14, paras: [[`${TRA[tr.dir]} ${TRT[tr.dir]} desde ${fmtCurto(d2n(tr.since))}`, { sz: 8.5, b: 1, c: tr.dir === 'up' ? '006729' : tr.dir === 'down' ? 'E60018' : '8496A2' }]], ins: 0 });
+    if (tr) { const tc = TRC[tr.dir];
+      s.sp({ x: 269, y: y + rh / 2 + 7, w: 9, h: 10, g: TRG[tr.dir], f: tc });
+      s.sp({ x: 281, y: y + rh / 2 + 5, w: 112, h: 14, paras: [[`${TRT[tr.dir]} desde ${fmtCurto(d2n(tr.since))}`, { sz: 8.5, b: 1, c: tc }]], ins: 0 }); }
     s.sp({ x: 398, y: y + 2, w: 92, h: rh - 4, paras: [[pctOf(p) + '%', { sz: 15, b: 1 }], [per ? 'termina ' + fmtCurto(per[1]) : 'sem tarefas', { sz: 8.5, c: '46606F' }]], ins: 2 });
-    s.sp({ x: 494, y: y + 2, w: 176, h: rh - 4, paras: ms.length ? ms.map(t => [`${fmtCurto(d2n(t.start))}  ${cut(t.name, 30)}`, { sz: 9.5 }]) : [['Nenhum marco pela frente', { sz: 9.5, c: '8496A2' }]], ins: 2 });
+    s.sp({ x: 494, y: y + 2, w: 176, h: rh - 4, paras: ms.length ? ms.map(t => [`${fmtCurto(d2n(t.start))}  ${cut(t.name, 30)}`, { sz: 9.5 }]) : [['Nenhum marco pela frente', { sz: 9.5, c: '5B6770' }]], ins: 2 });
     s.sp({ x: 674, y: y + 2, w: SW - SM - 674, h: rh - 4, paras: [[p.exec ? cut(p.exec, Math.round(rh * 3.2)) : 'Nada a decidir', { sz: 9.5, c: p.exec ? '0B2A3C' : '8496A2' }]], ins: 2 });
   });
-  s.sp({ x: SM, y: SH - 50, w: SW - 2 * SM, h: 24, paras: [[cut(ragFoot(all), 400), { sz: 7.5, c: '8496A2' }]], ins: 0, an: 't' });
+  s.sp({ x: SM, y: SH - 50, w: SW - 2 * SM, h: 24, paras: [[cut(ragFoot(all), 400), { sz: 7.5, c: '5B6770' }]], ins: 0, an: 't' });
   return s.xml();
 }
 function slTempo(ps, pg) {
@@ -2487,7 +2509,7 @@ function slProj(p, ts, part, parts, pg) {
   ts.forEach((t, i) => {
     const y = y0 + i * rh, c = gOf(t).color.slice(1).toUpperCase(), st = status(t), a = d2n(t.start), e = d2n(t.end);
     s.sp({ x: SM, y: y + 3, w: 3, h: rh - 6, f: c });
-    s.sp({ x: SM + 6, y, w: 238, h: rh, paras: [[cut(t.name, 40), { sz: 9.5, b: t.milestone, c: '0B2A3C' }], ...(rh >= 22 ? [[cut([gOf(t).name, t.owner].filter(Boolean).join(' · '), 48), { sz: 7.5, c: '8496A2' }]] : [])], ins: 0 });
+    s.sp({ x: SM + 6, y, w: 238, h: rh, paras: [[cut(t.name, 40), { sz: 9.5, b: t.milestone, c: '0B2A3C' }], ...(rh >= 22 ? [[cut([gOf(t).name, t.owner].filter(Boolean).join(' · '), 48), { sz: 7.5, c: '5B6770' }]] : [])], ins: 0 });
     if (t.milestone) { s.sp({ x: X(a + 0.5) - 6, y: y + rh / 2 - 6, w: 12, h: 12, g: 'diamond', f: c, ln: ['003960', 0.75] }); return; }
     const bx = X(a), bw = Math.max(3, X(e + 1) - bx), bh = Math.min(12, rh * 0.5), by = y + rh / 2 - bh / 2;
     s.sp({ x: bx, y: by, w: bw, h: bh, g: 'roundRect', f: tint(c, 0.6), ln: st === 'late' ? ['E60018', 1.5] : t.risk && st !== 'done' ? ['E8A317', 1.5] : null });
@@ -2799,11 +2821,17 @@ async function selfTest() {
     hp.tasks[0].end = n2d(todayN - 5); ok(health(hp)[0] === 'late', 'cores: atraso além da tolerância');
     ok(normP(hp).tol.late === 3 && normP({ ...hp, tol: { late: 0, slip: 0 } }).tol === undefined, 'cores: tolerância guardada');
     const tp = { id: 'tp', name: 'T', area: '', groups: g, tasks: [tk(5)] };
-    tp.hist = [[n2d(todayN - 10), 'late', 2, 0]]; ok(trend(tp).dir === 'up', 'tendência: melhorou');
-    tp.hist = [[n2d(todayN - 10), 'ok', 0, 0]]; tp.tasks[0].end = n2d(todayN - 1); ok(trend(tp).dir === 'down', 'tendência: piorou');
-    tp.hist = [[n2d(todayN), 'ok', 0, 0]]; ok(trend(tp) === null, 'tendência: sem foto antiga');
-    tp.hist = [[n2d(todayN - 30), 'ok', 0, 0], [n2d(todayN - 8), 'late', 1, 0], [n2d(todayN - 2), 'ok', 0, 0]]; ok(trend(tp).since === n2d(todayN - 8), 'tendência: compara com 7 dias atrás');
-    ok(normP({ ...tp, hist: [...tp.hist, ['x', 'ok'], [n2d(todayN), 'zzz']], exec: 'decidir' }).hist.length === 3 && normP({ ...tp, exec: 'decidir' }).exec === 'decidir', 'tendência e decisões guardadas');
+    tp.id = '__teste_tendencia'; const H = v => { state.hist[tp.id] = v; };
+    try {
+      H([[n2d(todayN - 10), 'late', 2, 0]]); ok(trend(tp).dir === 'up', 'tendência: melhorou');
+      H([[n2d(todayN - 10), 'ok', 0, 0]]); tp.tasks[0].end = n2d(todayN - 1); ok(trend(tp).dir === 'down', 'tendência: piorou');
+      H([[n2d(todayN), 'ok', 0, 0]]); ok(trend(tp) === null, 'tendência: sem foto antiga');
+      H([[n2d(todayN - 30), 'ok', 0, 0], [n2d(todayN - 8), 'late', 1, 0], [n2d(todayN - 2), 'ok', 0, 0]]); ok(trend(tp).since === n2d(todayN - 8), 'tendência: compara com 7 dias atrás');
+      // mudar a tolerância não inventa melhora: a foto antiga (1 dia de atraso) é recalculada com a regra nova
+      tp.tasks[0].end = n2d(todayN - 1); tp.tol = { late: 3 }; H([[n2d(todayN - 9), 'late', 1, 0, 1, 0]]); ok(trend(tp).dir === 'flat', 'tendência: tolerância nova não vira melhora');
+      ok(normHist([[n2d(todayN), 'ok', 0, 0], ['x', 'ok'], [n2d(todayN), 'zzz'], [n2d(todayN), 'toString']]).length === 1, 'tendência: fotos inválidas descartadas');
+    } finally { delete state.hist[tp.id]; }
+    ok(normP({ ...tp, exec: 'decidir' }).exec === 'decidir' && /Com tolerância própria: T \(atraso até 3 d\)/.test(ragFoot([hp, tp].map(x => ({ ...x, tol: x === tp ? { late: 3 } : undefined })))), 'decisões guardadas e rodapé do critério');
     const z = await unzip(await buildPptx([hp, tp, normP(hp)]).arrayBuffer()), dec = new TextDecoder();
     const sl = Object.keys(z).filter(n => /^ppt\/slides\/slide\d+\.xml$/.test(n));
     ok(sl.length >= 4 && Object.keys(z).filter(n => n.endsWith('.xml') || n.endsWith('.rels')).every(n => !new DOMParser().parseFromString(dec.decode(z[n]), 'application/xml').querySelector('parsererror')), 'PowerPoint: XML válido');
