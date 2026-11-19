@@ -405,7 +405,7 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 .dm-head{display:flex;gap:14px;align-items:flex-start}
 .dm-ic{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--title);color:#fff;font:700 17px var(--f-d);letter-spacing:-.02em}
 .dm-head h2{margin-bottom:4px}
-.dm-top{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:12px}
+.dm-top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1.25fr) minmax(0,.9fr);gap:12px}
 .dm-warn{margin:0;padding:9px 12px;border-radius:10px;font-size:13px;background:color-mix(in srgb,var(--amber) 16%,var(--surface));border:1px solid color-mix(in srgb,var(--amber) 45%,var(--line));color:var(--ink)}
 .dm-wrap{max-height:46vh;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
 .dm{width:100%;min-width:720px;border-collapse:collapse;font-variant-numeric:tabular-nums}
@@ -687,7 +687,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       <div><b>Roadmaps</b><small>Projetos e entregas</small></div>
     </div>
     <button class="btn-new" id="btnNovo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Novo projeto</button>
-    <button class="btn-dm edit-only" data-act="dm" title="Planejar de trás para frente a partir do início da TI, em dias úteis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M15 15.5h-6M11.5 13 9 15.5l2.5 2.5"/></svg><span>Planejar D−<small>a partir da data da TI</small></span></button>
+    <button class="btn-dm edit-only" data-act="dm" title="Planejar de trás para frente a partir de um marco, em dias úteis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M15 15.5h-6M11.5 13 9 15.5l2.5 2.5"/></svg><span>Planejar D−<small>a partir de um marco</small></span></button>
     <div><h3>Projetos</h3><button class="side-btn all" data-act="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>Visão geral</button><button class="side-btn all" data-act="marks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15h6"/></svg>Datas da empresa</button><button class="side-btn all" data-act="load"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.2 3.2 0 0 1 0 6.4M21 20c0-2.6-1.6-4.8-4-5.6"/></svg>Carga da equipe</button><nav class="plist" id="plist" aria-label="Projetos"></nav></div>
     <div class="side-sec"><h3>Modelos</h3><ul class="tlist" id="tlist"></ul></div>
     <div class="side-foot">
@@ -858,11 +858,11 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ul></div></details>
       <details><summary>Planejar D− (de trás para frente)</summary><div><ol>
         <li>Na barra lateral, clique em <b>Planejar D−</b> (logo abaixo de Novo projeto).</li>
-        <li>Informe o nome do projeto e a data de <b>início do desenvolvimento da TI</b>.</li>
+        <li>Informe o nome do projeto, o <b>nome do marco</b> (por exemplo, "Início do desenvolvimento (TI)" ou "Go-live") e a <b>data do marco</b>.</li>
         <li>A tabela já vem com as atividades de Produto: Discovery, Escrita da especificação, Validação com negócio, Refinamento com TI + Negócio, Ajustes do refinamento e Validação final com TI. Digite os <b>dias úteis</b> de cada uma; Enter pula para a próxima.</li>
         <li>As datas aparecem ao lado enquanto você digita, e o resumo diz quando o trabalho precisa começar. Em vermelho: não cabe, porque precisaria ter começado antes de hoje.</li>
-        <li>Clique em <b>Criar cronograma</b>: o projeto nasce com as atividades em sequência (cada uma depende da anterior) e o marco da TI no fim.</li>
-      </ol>A conta usa só dias úteis: não conta sábado, domingo nem feriado nacional (o Carnaval entra como feriado). Se a data da TI cair num dia sem trabalho, o marco fica nela e a última atividade termina no dia útil anterior. Dá para renomear, mudar a ordem (setas), tirar ou acrescentar atividades; linha com 0 dias fica de fora. Se a TI mudar a data, use <b>Projeto › Replanejar D−</b>: as tarefas se reorganizam para trás e mantêm o % concluído e as observações.</div></details>
+        <li>Clique em <b>Criar cronograma</b>: o projeto nasce com as atividades em sequência (cada uma depende da anterior) e o marco no fim, com o nome que você deu.</li>
+      </ol>A conta usa só dias úteis: não conta sábado, domingo nem feriado nacional (o Carnaval entra como feriado). Se a data do marco cair num dia sem trabalho, o marco fica nela e a última atividade termina no dia útil anterior. Dá para renomear, mudar a ordem (setas), tirar ou acrescentar atividades; linha com 0 dias fica de fora. Se o marco mudar de data (ou de nome), use <b>Projeto › Replanejar D−</b>: as tarefas se reorganizam para trás e mantêm o % concluído e as observações.</div></details>
       <details><summary>Carga da equipe</summary><div><ul>
         <li>Na barra lateral, <b>Carga da equipe</b> mostra uma linha por pessoa e uma coluna por semana, somando as tarefas abertas de <b>todos</b> os projetos.</li>
         <li>O número é quantas tarefas a pessoa tem naquela semana. Amarelo: duas ao mesmo tempo. Vermelho: três ou mais. A coluna da semana atual fica marcada.</li>
@@ -1019,11 +1019,11 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 
 <dialog id="dlgDm" aria-labelledby="dmT">
   <form method="dialog" class="dlg-in" id="fDm">
-    <div class="dm-head"><span class="dm-ic" aria-hidden="true">D−</span><div><h2 id="dmT">Planejar D−</h2><p class="muted">Planejamento de trás para frente. Informe quando a TI começa a desenvolver e quantos <b>dias úteis</b> cada atividade leva: o programa encaixa tudo antes dessa data, sem contar fins de semana e feriados nacionais.</p></div></div>
-    <div class="dm-top"><label class="fld">Nome do projeto<input name="nome" maxlength="120" autocomplete="off" placeholder="Ex.: Especificação Auto 2027"></label><label class="fld">Início do desenvolvimento (TI)<input type="date" name="anchor"></label></div>
+    <div class="dm-head"><span class="dm-ic" aria-hidden="true">D−</span><div><h2 id="dmT">Planejar D−</h2><p class="muted">Planejamento de trás para frente. Dê um nome ao marco (por exemplo, o início do desenvolvimento da TI), informe a data dele e quantos <b>dias úteis</b> cada atividade leva: o programa encaixa tudo antes dessa data, sem contar fins de semana e feriados nacionais.</p></div></div>
+    <div class="dm-top"><label class="fld">Nome do projeto<input name="nome" maxlength="120" autocomplete="off" placeholder="Ex.: Especificação Auto 2027"></label><label class="fld">Nome do marco<input name="msName" maxlength="120" autocomplete="off" placeholder="Ex.: Início do desenvolvimento (TI)"></label><label class="fld">Data do marco<input type="date" name="anchor"></label></div>
     <p class="dm-warn" id="dmWarn" hidden></p>
     <div class="dm-wrap"><table class="dm"><thead><tr><th class="dm-n">#</th><th>Atividade</th><th class="dm-dh">Dias úteis</th><th class="dm-oh">Responsável</th><th class="dm-th">Datas calculadas</th><th><span class="vh">Ações</span></th></tr></thead><tbody id="dmBody"></tbody>
-      <tfoot><tr class="dm-ms"><td class="dm-n"><i></i></td><td colspan="3"><b>Início do desenvolvimento (TI)</b></td><td id="dmMsD" colspan="2"></td></tr></tfoot></table></div>
+      <tfoot><tr class="dm-ms"><td class="dm-n"><i></i></td><td colspan="3"><b id="dmMsN"></b></td><td id="dmMsD" colspan="2"></td></tr></tfoot></table></div>
     <div class="dm-bar"><button class="btn" type="button" id="btnDmAdd">Adicionar atividade</button><div class="dm-sum" id="dmSum" aria-live="polite"></div></div>
     <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok" id="dmOk">Criar cronograma</button></div>
   </form>
@@ -1205,7 +1205,7 @@ function normP(p) {
   if (p.tol) { const tol = { late: tolN(p.tol.late), slip: tolN(p.tol.slip) }; if (tol.late || tol.slip) out.tol = tol; }
 
   if (p.exec) out.exec = String(p.exec).slice(0, 1500);
-  if (p.dplan && okd(p.dplan.anchor) && Array.isArray(p.dplan.rows)) out.dplan = { anchor: p.dplan.anchor, ms: sid(p.dplan.ms), gp: sid(p.dplan.gp), gt: sid(p.dplan.gt),
+  if (p.dplan && okd(p.dplan.anchor) && Array.isArray(p.dplan.rows)) out.dplan = { anchor: p.dplan.anchor, msName: String(p.dplan.msName || '').slice(0, 120), ms: sid(p.dplan.ms), gp: sid(p.dplan.gp), gt: sid(p.dplan.gt),
     rows: p.dplan.rows.slice(0, 30).filter(r => r && typeof r === 'object').map(r => ({ name: String(r.name || '').slice(0, 200), days: Math.max(0, Math.min(365, Math.floor(+r.days || 0))), owner: String(r.owner || '').slice(0, 120), tid: sid(r.tid) })) };
   return out;
 }
@@ -1276,13 +1276,13 @@ function holidays(y) {
     one(E + 60, 'Corpus Christi'), one(f(9, 7), 'Independência'), one(f(10, 12), 'Nossa Senhora Aparecida'), one(f(11, 2), 'Finados'), one(f(11, 15), 'Proclamação da República'),
     one(f(11, 20), 'Consciência Negra'), one(f(12, 25), 'Natal')];
 }
-// Dias úteis: sem sábado, domingo e feriado nacional (as datas da empresa não contam: valem para a TI, não para Produto)
+// Dias úteis: sem sábado, domingo e feriado nacional (as datas da empresa, como congelamento, não bloqueiam o planejamento)
 const HOLS = new Map();
 const holDays = y => { if (!HOLS.has(y)) { const st = new Set(); holidays(y).forEach(h => { for (let n = h.s; n <= h.e; n++) st.add(n); }); HOLS.set(y, st); } return HOLS.get(y); };
 const isWork = n => { const w = dow(n); return w !== 0 && w !== 6 && !holDays(new Date(n * DAY).getUTCFullYear()).has(n); };
 const prevWork = n => { do n--; while (!isWork(n)); return n; };
 const DSEM = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
-// D−: encaixa as atividades para trás a partir do início da TI. days = dias úteis por linha, na ordem; devolve [{ s, e }] ou null (0 dias)
+// D−: encaixa as atividades para trás a partir da data do marco. days = dias úteis por linha, na ordem; devolve [{ s, e }] ou null (0 dias)
 function dminus(anchor, days) {
   const out = []; let next = anchor;
   for (let i = days.length - 1; i >= 0; i--) {
@@ -1293,13 +1293,12 @@ function dminus(anchor, days) {
   return out;
 }
 const DM_ROWS = ['Discovery', 'Escrita da especificação', 'Validação da especificação com negócio', 'Refinamento com TI + Negócio', 'Ajustes da especificação do refinamento anterior', 'Validação final com TI'];
-const DM_MS = 'Início do desenvolvimento (TI)';
 // cria (p sem dplan) ou replaneja (p com dplan) o projeto: rows = [{ name, days, owner, tid? }]
-function applyDPlan(p, anchor, rows) {
+function applyDPlan(p, anchor, rows, msName) {
   const span = dminus(anchor, rows.map(r => r.days));
   let gP = p.groups.find(g => g.id === p.dplan?.gp), gT = p.groups.find(g => g.id === p.dplan?.gt);
-  if (!gP) { gP = { id: uid(), name: 'Produto (pré-desenvolvimento)', color: PAL[0] }; p.groups.push(gP); }
-  if (!gT) { gT = { id: uid(), name: 'TI', color: PAL[1] }; p.groups.push(gT); }
+  if (!gP) { gP = { id: uid(), name: 'Preparação até o marco', color: PAL[0] }; p.groups.push(gP); }
+  if (!gT) { gT = { id: uid(), name: 'Marco', color: PAL[1] }; p.groups.push(gT); }
   const old = new Set((p.dplan?.rows || []).map(r => r.tid).concat(p.dplan?.ms || [])), keep = new Set(), planIds = new Set();
   let prev = null; const saved = [];
   rows.forEach((r, i) => {
@@ -1311,13 +1310,13 @@ function applyDPlan(p, anchor, rows) {
     keep.add(t.id); planIds.add(t.id); prev = t.id; saved.push({ name: t.name, days: Math.floor(+r.days), owner: t.owner, tid: t.id });
   });
   let ms = p.tasks.find(x => x.id === p.dplan?.ms);
-  if (!ms) { ms = { id: uid(), name: DM_MS, groupId: gT.id, owner: '', progress: 0, milestone: true, risk: false, deps: [], note: '' }; p.tasks.push(ms); }
-  Object.assign(ms, { start: n2d(anchor), end: n2d(anchor), milestone: true, deps: [...(prev ? [prev] : []), ...(ms.deps || []).filter(id => !old.has(id))] });
+  if (!ms) { ms = { id: uid(), name: '', groupId: gT.id, owner: '', progress: 0, milestone: true, risk: false, deps: [], note: '' }; p.tasks.push(ms); }
+  Object.assign(ms, { name: String(msName || '').trim() || ms.name || 'Marco', start: n2d(anchor), end: n2d(anchor), milestone: true, deps: [...(prev ? [prev] : []), ...(ms.deps || []).filter(id => !old.has(id))] });
   keep.add(ms.id);
   // linhas tiradas da tabela saem do projeto; tarefas criadas à mão fora do plano ficam
   p.tasks = p.tasks.filter(t => !old.has(t.id) || keep.has(t.id));
   const ids = new Set(p.tasks.map(t => t.id)); p.tasks.forEach(t => { t.deps = t.deps.filter(d => ids.has(d)); });
-  p.dplan = { anchor: n2d(anchor), rows: saved, ms: ms.id, gp: gP.id, gt: gT.id };
+  p.dplan = { anchor: n2d(anchor), msName: ms.name, rows: saved, ms: ms.id, gp: gP.id, gt: gT.id };
   return p;
 }
 // Datas da empresa (congelamento, fechamento...): valem para todos os projetos e vão para o arquivo da equipe
@@ -2674,9 +2673,10 @@ const dmRows = () => [...$('#dmBody').children].map(tr => ({ name: tr.querySelec
 // recalcula as datas na tela a cada tecla
 function dmCalc() {
   const F = $('#fDm').elements, a = F.anchor.value ? d2n(F.anchor.value) : NaN, rows = dmRows(), trs = [...$('#dmBody').children];
+  $('#dmMsN').textContent = F.msName.value.trim() || 'Marco (dê um nome acima)';
   trs.forEach((tr, i) => { tr.querySelector('.dm-n').textContent = i + 1; tr.querySelector('[data-dm=up]').disabled = i === 0; tr.querySelector('[data-dm=down]').disabled = i === trs.length - 1; });
   const w = $('#dmWarn'), sum = $('#dmSum'); sum.classList.remove('bad');
-  if (isNaN(a)) { trs.forEach(tr => { const c = tr.querySelector('.dm-dt'); c.className = 'dm-dt off'; c.textContent = 'informe a data da TI'; }); $('#dmMsD').textContent = ''; w.hidden = true; sum.textContent = 'Comece pela data de início do desenvolvimento.'; return; }
+  if (isNaN(a)) { trs.forEach(tr => { const c = tr.querySelector('.dm-dt'); c.className = 'dm-dt off'; c.textContent = 'informe a data do marco'; }); $('#dmMsD').textContent = ''; w.hidden = true; sum.textContent = 'Comece pelo nome e pela data do marco.'; return; }
   const sp = dminus(a, rows.map(r => r.days)), total = rows.reduce((t, r) => t + Math.max(0, Math.min(365, Math.floor(+r.days || 0))), 0);
   sp.forEach((x, i) => { const c = trs[i].querySelector('.dm-dt'); c.className = 'dm-dt' + (x ? '' : ' off'); c.innerHTML = x ? `<b>${fmtDia(x.s)}</b> a <b>${fmtDia(x.e)}</b>` : 'sem dias, fica de fora'; });
   $('#dmMsD').innerHTML = `<b>${DSEM[dow(a)]} ${fmtBR(a)}</b>`;
@@ -2687,12 +2687,13 @@ function dmCalc() {
   if (!first) { sum.textContent = 'Preencha os dias úteis de pelo menos uma atividade.'; return; }
   const late = first.s < todayN;
   sum.classList.toggle('bad', late);
-  sum.innerHTML = late ? `Não cabe: precisaria ter começado em <b>${fmtDia(first.s)}/${new Date(first.s * DAY).getUTCFullYear()}</b>. Reduza os dias ou converse sobre a data da TI.`
-    : `Comece em <b>${DSEM[dow(first.s)]} ${fmtBR(first.s)}</b>: ${total} ${total === 1 ? 'dia útil' : 'dias úteis'} de preparação até a TI.`;
+  sum.innerHTML = late ? `Não cabe: precisaria ter começado em <b>${fmtDia(first.s)}/${new Date(first.s * DAY).getUTCFullYear()}</b>. Reduza os dias ou reveja a data do marco.`
+    : `Comece em <b>${DSEM[dow(first.s)]} ${fmtBR(first.s)}</b>: ${total} ${total === 1 ? 'dia útil' : 'dias úteis'} de preparação até o marco.`;
 }
 function openDm(p) {
   dmFor = p || null; const F = $('#fDm').elements, pl = p && p.dplan;
   F.nome.value = p ? p.name : ''; F.anchor.value = pl ? pl.anchor : '';
+  F.msName.value = pl ? pl.msName || (p.tasks.find(t => t.id === pl.ms) || {}).name || '' : '';
   $('#dmBody').innerHTML = (pl ? pl.rows : DM_ROWS.map(name => ({ name, days: '', owner: '' }))).map(dmRow).join('');
   $('#dmT').textContent = p ? 'Replanejar D−' : 'Planejar D−'; $('#dmOk').textContent = p ? 'Replanejar' : 'Criar cronograma';
   dmCalc(); const d = $('#dlgDm'); d.returnValue = ''; d.showModal(); (p ? F.anchor : F.nome).focus();
@@ -2716,20 +2717,20 @@ $('#fDm').addEventListener('keydown', e => {
 // faltando dado, a janela não fecha: o aviso fica no resumo e o cursor vai para o campo
 $('#fDm').addEventListener('submit', e => {
   if (e.submitter?.value !== 'ok') return;
-  const F = $('#fDm').elements, sum = $('#dmSum'), miss = !F.anchor.value ? [F.anchor, 'Informe a data de início do desenvolvimento da TI.'] : !dmRows().some(r => Math.floor(+r.days || 0) > 0) ? [$('#dmBody .dm-d'), 'Preencha os dias úteis de pelo menos uma atividade.'] : null;
+  const F = $('#fDm').elements, sum = $('#dmSum'), miss = !F.msName.value.trim() ? [F.msName, 'Dê um nome ao marco, por exemplo "Início do desenvolvimento (TI)".'] : !F.anchor.value ? [F.anchor, 'Informe a data do marco.'] : !dmRows().some(r => Math.floor(+r.days || 0) > 0) ? [$('#dmBody .dm-d'), 'Preencha os dias úteis de pelo menos uma atividade.'] : null;
   if (!miss) return;
   e.preventDefault(); sum.textContent = miss[1]; sum.classList.add('bad'); if (miss[0]) miss[0].focus();
 });
 $('#dlgDm').addEventListener('close', () => {
   if ($('#dlgDm').returnValue !== 'ok') return;
-  const F = $('#fDm').elements, rows = dmRows(), a = d2n(F.anchor.value);
-  const name = F.nome.value.trim() || `D− TI ${fmtBR(a)}`;
+  const F = $('#fDm').elements, rows = dmRows(), a = d2n(F.anchor.value), msName = F.msName.value.trim();
+  const name = F.nome.value.trim() || `D− ${msName}`;
   let p = dmFor && state.projects.includes(dmFor) ? dmFor : null;
-  if (!p) { p = { id: uid(), name, area: 'Planejado em D− a partir do início da TI', groups: [], tasks: [] }; applyDPlan(p, a, rows); state.projects.push(normP(p)); p = state.projects[state.projects.length - 1]; }
-  else { p.name = name; applyDPlan(p, a, rows); }
+  if (!p) { p = { id: uid(), name, area: `Planejado em D− a partir do marco ${msName}`, groups: [], tasks: [] }; applyDPlan(p, a, rows, msName); state.projects.push(normP(p)); p = state.projects[state.projects.length - 1]; }
+  else { p.name = name; applyDPlan(p, a, rows, msName); }
   state.currentId = p.id; save(); closeDrawer(); render('load');
   const s0 = Math.min(...p.tasks.filter(t => !t.milestone).map(t => d2n(t.start)));
-  toast(`${dmFor ? 'Cronograma replanejado' : 'Cronograma criado'}: começa ${DSEM[dow(s0)]} ${fmtBR(s0)} e termina antes da TI, em ${fmtBR(a)}.`);
+  toast(`${dmFor ? 'Cronograma replanejado' : 'Cronograma criado'}: começa ${DSEM[dow(s0)]} ${fmtBR(s0)} e termina antes do marco "${msName}", em ${fmtBR(a)}.`);
 });
 
 /* ---------- carga da equipe ---------- */
@@ -3240,18 +3241,18 @@ async function selfTest() {
     const A = d2n('2027-02-20'); // sábado; Carnaval de 2027 em 8 e 9/2
     ok(!isWork(A) && !isWork(d2n('2027-02-08')) && !isWork(d2n('2027-02-09')) && isWork(d2n('2027-02-10')) && prevWork(A) === d2n('2027-02-19'), 'D−: dias úteis');
     const sp = dminus(A, [2, 0, 5, 3]);
-    ok(sp[3].e === d2n('2027-02-19') && sp[3].s === d2n('2027-02-17'), 'D−: última termina no dia útil antes da TI');
+    ok(sp[3].e === d2n('2027-02-19') && sp[3].s === d2n('2027-02-17'), 'D−: última termina no dia útil antes do marco');
     ok(sp[2].e === d2n('2027-02-16') && sp[2].s === d2n('2027-02-10') && sp[1] === null, 'D−: anterior termina antes da seguinte, linha com 0 fica de fora');
     ok(sp[0].e === d2n('2027-02-05') && sp[0].s === d2n('2027-02-04'), 'D−: pula o Carnaval');
     const rows = DM_ROWS.map((name, i) => ({ name, days: [3, 5, 2, 2, 3, 1][i], owner: i === 0 ? 'Ana' : '', tid: '' }));
-    const dp = normP(applyDPlan({ id: 'dp', name: 'D', area: '', groups: [], tasks: [] }, A, rows)), ts = dp.tasks.filter(t => !t.milestone), ms = dp.tasks.find(t => t.milestone);
-    ok(ts.length === 6 && ms.start === '2027-02-20' && ms.deps[0] === ts[5].id && ts.every((t, i) => i === 0 ? !t.deps.length : t.deps[0] === ts[i - 1].id) && ts[0].owner === 'Ana', 'D−: projeto encadeado com marco');
+    const dp = normP(applyDPlan({ id: 'dp', name: 'D', area: '', groups: [], tasks: [] }, A, rows, 'Início do desenvolvimento (TI)')), ts = dp.tasks.filter(t => !t.milestone), ms = dp.tasks.find(t => t.milestone);
+    ok(ts.length === 6 && ms.start === '2027-02-20' && ms.deps[0] === ts[5].id && ts.every((t, i) => i === 0 ? !t.deps.length : t.deps[0] === ts[i - 1].id) && ts[0].owner === 'Ana' && ms.name === 'Início do desenvolvimento (TI)' && dp.dplan.msName === ms.name, 'D−: projeto encadeado com o marco nomeado');
     ok(ts.every(t => isWork(d2n(t.start)) && isWork(d2n(t.end))) && dp.dplan.rows.length === 6 && dp.dplan.anchor === '2027-02-20', 'D−: tudo em dia útil e plano guardado');
-    // replanejar: TI foi para 05/03, a 2ª atividade já está em 50%, a 4ª sai, uma tarefa feita à mão continua
+    // replanejar: o marco foi para 05/03 e mudou de nome, a 2ª atividade já está em 50%, a 4ª sai, uma tarefa feita à mão continua
     ts[1].progress = 50; ts[1].note = 'nota'; dp.tasks.push({ id: 'manual', name: 'Extra', groupId: dp.groups[0].id, owner: '', start: '2027-01-04', end: '2027-01-05', progress: 0, milestone: false, risk: false, deps: [], note: '' });
-    const r2 = dp.dplan.rows.filter((_, i) => i !== 3); applyDPlan(dp, d2n('2027-03-05'), r2);
+    const r2 = dp.dplan.rows.filter((_, i) => i !== 3); applyDPlan(dp, d2n('2027-03-05'), r2, 'Go-live');
     const t2 = dp.tasks.find(t => t.id === ts[1].id);
-    ok(dp.tasks.length === 7 && t2.progress === 50 && t2.note === 'nota' && !dp.tasks.some(t => t.id === ts[3].id) && dp.tasks.some(t => t.id === 'manual') && dp.tasks.find(t => t.milestone).start === '2027-03-05', 'D−: replanejar mantém progresso e tira a linha removida');
+    ok(dp.tasks.length === 7 && t2.progress === 50 && t2.note === 'nota' && !dp.tasks.some(t => t.id === ts[3].id) && dp.tasks.some(t => t.id === 'manual') && dp.tasks.find(t => t.milestone).start === '2027-03-05' && dp.tasks.find(t => t.milestone).name === 'Go-live', 'D−: replanejar mantém progresso e tira a linha removida');
     ok(dp.tasks.find(t => t.id === ts[4].id).deps[0] === ts[2].id, 'D−: dependências refeitas sem a linha removida'); }
   { // reparos da revisão
     let e1 = ''; try { teamParse('  ', true); } catch (e) { e1 = e.message; }
