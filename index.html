@@ -382,16 +382,24 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 .muted{color:var(--ink-2);margin:0;font-size:13.5px}
 .dlg-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:6px}
 #dlgGrupos{width:min(640px,calc(100vw - 32px))}
-#dlgLote{width:min(860px,calc(100vw - 32px))}
+#dlgLote{width:min(1000px,calc(100vw - 32px))}
 .lt-wrap{max-height:52vh;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
-.lt{width:100%;min-width:600px;border-collapse:collapse}
+.lt{width:100%;min-width:760px;border-collapse:collapse}
 .lt th{position:sticky;top:0;z-index:1;background:var(--surface);text-align:left;font-size:12px;font-weight:600;color:var(--ink-3);padding:8px 12px;border-bottom:1px solid var(--line)}
-.lt th:nth-child(1){width:26%}
-.lt th:nth-child(3),.lt th:nth-child(4){width:150px}
+.lt th:nth-child(1){width:22%}
+.lt th:nth-child(3){width:17%}
+.lt th:nth-child(4),.lt th:nth-child(5){width:146px}
+.lt th:nth-child(6){width:64px;text-align:center}
+.lt td:nth-child(6){text-align:center}
+.lt input[type=checkbox]{width:18px;height:18px;vertical-align:middle;accent-color:var(--green)}
 .lt td{padding:3px 4px;border-bottom:1px solid var(--line-2)}
 .lt tr:last-child td{border-bottom:0}
 .lt input{width:100%;height:34px;border:1px solid transparent;border-radius:7px;padding:0 8px;background:none;font-size:14px;color:var(--ink)}
 .lt input:hover{border-color:var(--line)}
+.lt-h{font-weight:400;color:var(--ink-3)}
+.lt td{position:relative}
+.lt td[data-novo]::after{content:"nova";position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:10.5px;font-weight:700;color:#fff;background:var(--green);padding:1px 7px;border-radius:99px;pointer-events:none}
+.lt td[data-novo] input{padding-right:52px}
 .lt input:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18);background:var(--surface)}
 #dlgManual{width:min(680px,calc(100vw - 32px))}
 .man{max-height:min(62vh,560px);overflow:auto;display:flex;flex-direction:column;gap:6px;margin:0 -6px;padding:0 6px}
@@ -718,10 +726,10 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ul></div></details>
       <details><summary>Inserir várias tarefas de uma vez</summary><div><ol>
         <li>Clique em <b>Inserir em lote</b>, ao lado de Nova tarefa.</li>
-        <li>Preencha uma linha por atividade: <b>Seção</b>, <b>Atividade</b>, <b>Início</b> e <b>Fim</b>. Enter desce para a linha de baixo; <b>Mais 5 linhas</b> abre espaço.</li>
+        <li>Preencha uma linha por atividade: <b>Seção</b>, <b>Atividade</b>, <b>Responsável</b>, <b>Início</b>, <b>Fim</b> e, se for o caso, marque <b>Marco</b> (data única). Enter desce para a linha de baixo; <b>Mais 5 linhas</b> abre espaço.</li>
         <li>Também dá para copiar as colunas no Excel e colar na primeira célula: cada linha vira uma tarefa. Datas como 05/03/2027 são entendidas.</li>
         <li>Clique em <b>Inserir tarefas</b>. Elas entram no projeto aberto; Ctrl+Z desfaz.</li>
-      </ol>O que ficar vazio o programa assume: sem seção, repete a da linha de cima (seção que não existe é criada); sem início, começa no dia seguinte ao fim da linha de cima; sem fim, termina no mesmo dia. Responsável, % e o resto ficam em branco para ajustar depois, se quiser.</div></details>
+      </ol>O que ficar vazio o programa assume: sem seção, repete a da linha de cima. Para criar uma seção, basta digitar um nome que ainda não existe: a linha mostra o selo <b>nova</b> e a seção é criada ao inserir. Uma linha só com a seção, sem atividade, cria a seção vazia, e as linhas de baixo sem seção entram nela. Se a cópia do Excel trouxer o cabeçalho, ele é ignorado; sem início, começa no dia seguinte ao fim da linha de cima; sem fim, termina no mesmo dia. Marco usa a data de início (sem ela, a de fim; sem nenhuma, o dia seguinte à linha de cima). Ao colar do Excel, a coluna Marco aceita Sim, X ou 1. Responsável vazio fica sem responsável; % e o resto ficam no padrão para ajustar depois.</div></details>
       <details><summary>Importar de uma planilha</summary><div><ol>
         <li>Clique em <b>Baixar planilha modelo</b> na barra lateral.</li>
         <li>Preencha uma linha por tarefa: Grupo, Tarefa, Responsável, Início e Fim. As datas podem ser no formato 31/12/2026.</li>
@@ -781,8 +789,8 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 <dialog id="dlgLote" aria-labelledby="ltT">
   <form method="dialog" class="dlg-in">
     <h2 id="ltT">Inserir tarefas em lote</h2>
-    <p class="muted">Uma linha por atividade. Só a atividade é obrigatória: sem seção, repete a da linha de cima; sem início, começa no dia seguinte ao fim da linha de cima; sem fim, termina no mesmo dia. Dá para colar várias linhas copiadas do Excel.</p>
-    <div class="lt-wrap"><table class="lt"><thead><tr><th>Seção</th><th>Atividade</th><th>Início</th><th>Fim</th></tr></thead><tbody id="ltBody"></tbody></table></div>
+    <p class="muted">Uma linha por atividade. Só a atividade é obrigatória: sem seção, repete a da linha de cima; sem início, começa no dia seguinte ao fim da linha de cima; sem fim, termina no mesmo dia. Marco tem data única (a de início ou, se faltar, a de fim). Uma linha só com a seção cria a seção vazia. Dá para colar várias linhas copiadas do Excel, com ou sem o cabeçalho.</p>
+    <div class="lt-wrap"><table class="lt"><thead><tr><th>Seção <span class="lt-h">escolha ou digite uma nova</span></th><th>Atividade</th><th>Responsável</th><th>Início</th><th>Fim</th><th>Marco</th></tr></thead><tbody id="ltBody"></tbody></table></div>
     <datalist id="ltGroups"></datalist>
     <div><button class="btn" type="button" id="btnLtMais">Mais 5 linhas</button></div>
     <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok">Inserir tarefas</button></div>
@@ -1928,25 +1936,28 @@ async function parseXlsx(buf, name) {
 }
 
 /* ---------- inserir em lote ---------- */
-// rows = [[seção, atividade, início, fim]] com datas aaaa-mm-dd ou ''. Vazios: seção repete a de cima,
+// rows = [[seção, atividade, responsável, início, fim, marco]] com datas aaaa-mm-dd ou ''. Vazios: seção repete a de cima,
 // início = dia seguinte ao fim da linha de cima (a primeira começa hoje), fim = mesmo dia do início.
 function batchAdd(p, rows) {
-  let g = null, prev = null, n = 0, skip = 0;
-  for (const [gn0, nome0, si, ei] of rows) {
-    const gn = String(gn0 || '').trim(), nome = String(nome0 || '').trim();
-    if (!nome) { if (gn || si || ei) skip++; continue; }
+  let g = null, prev = null, n = 0, skip = 0; const novas = [];
+  for (const [gn0, nome0, ow, si, ei, ms] of rows) {
+    const gn = String(gn0 || '').trim(), nome = String(nome0 || '').trim(), owner = String(ow || '').trim();
+    // linha só com seção cria a seção (vazia); sem seção e sem atividade não serve para nada
+    if (!nome && !gn) { if (owner || si || ei || ms) skip++; continue; }
     if (gn) {
       g = p.groups.find(x => norm(x.name) === norm(gn));
-      if (!g) { g = { id: uid(), name: gn.slice(0, 120), color: PAL[p.groups.length % PAL.length] }; p.groups.push(g); }
+      if (!g) { g = { id: uid(), name: gn.slice(0, 120), color: PAL[p.groups.length % PAL.length] }; p.groups.push(g); novas.push(g.name); }
     }
     g = g || p.groups[0];
+    if (!nome) continue;
     let s = si ? d2n(si) : NaN, e = ei ? d2n(ei) : NaN;
+    if (ms && isNaN(s)) s = e;
     if (isNaN(s)) { s = prev != null ? prev + 1 : isNaN(e) ? todayN : e; if (e < s) s = e; }
-    if (isNaN(e)) e = s; if (e < s) [s, e] = [e, s];
-    p.tasks.push({ id: uid(), name: nome.slice(0, 300), groupId: g.id, owner: '', start: n2d(s), end: n2d(e), progress: 0, milestone: false, risk: false, deps: [], note: '' });
+    if (isNaN(e) || ms) e = s; if (e < s) [s, e] = [e, s];
+    p.tasks.push({ id: uid(), name: nome.slice(0, 300), groupId: g.id, owner: owner.slice(0, 120), start: n2d(s), end: n2d(e), progress: 0, milestone: !!ms, risk: false, deps: [], note: '' });
     prev = e; n++;
   }
-  return { n, skip };
+  return { n, skip, novas };
 }
 // datas coladas do Excel: dd/mm/aaaa, dd/mm/aa ou aaaa-mm-dd; data que não existe vira vazio
 function ltDate(v) {
@@ -1955,8 +1966,12 @@ function ltDate(v) {
   if (m) { const y = m[3].length === 2 ? 2000 + +m[3] : +m[3], n = Math.round(Date.UTC(y, m[2] - 1, +m[1]) / DAY); return new Date(n * DAY).getUTCDate() === +m[1] && +m[2] <= 12 ? n2d(n) : ''; }
   return /^\d{4}-\d{2}-\d{2}$/.test(v) && !isNaN(d2n(v)) ? v : '';
 }
-const ltAdd = k => $('#ltBody').insertAdjacentHTML('beforeend', '<tr><td><input aria-label="Seção" list="ltGroups" autocomplete="off"></td><td><input aria-label="Atividade" autocomplete="off"></td><td><input type="date" aria-label="Início"></td><td><input type="date" aria-label="Fim"></td></tr>'.repeat(k));
+const ltAdd = k => $('#ltBody').insertAdjacentHTML('beforeend', '<tr><td><input aria-label="Seção" list="ltGroups" autocomplete="off"></td><td><input aria-label="Atividade" autocomplete="off"></td><td><input aria-label="Responsável" list="owners" autocomplete="off"></td><td><input type="date" aria-label="Início"></td><td><input type="date" aria-label="Fim"></td><td><input type="checkbox" aria-label="Marco"></td></tr>'.repeat(k));
 $('#btnLtMais').addEventListener('click', () => ltAdd(5));
+// marca "nova" na seção que ainda não existe no projeto (ela é criada ao inserir)
+const ltMark = () => { const ex = new Set(cur().groups.map(g => norm(g.name)));
+  $('#ltBody').querySelectorAll('tr').forEach(tr => { const i = tr.querySelector('input'), td = i.parentElement, v = norm(i.value); td.toggleAttribute('data-novo', !!v && !ex.has(v)); }); };
+$('#ltBody').addEventListener('input', ltMark);
 // colar várias linhas/colunas do Excel a partir da célula clicada
 $('#ltBody').addEventListener('paste', e => {
   const txt = e.clipboardData.getData('text').replace(/\r/g, '').replace(/\n+$/, '');
@@ -1964,12 +1979,16 @@ $('#ltBody').addEventListener('paste', e => {
   e.preventDefault();
   const td = e.target.closest('td'), tr = td.parentElement, c0 = [...tr.children].indexOf(td);
   let r = [...$('#ltBody').children].indexOf(tr);
-  for (const line of txt.split('\n')) {
+  const lines = txt.split('\n');
+  // se a cópia trouxe o cabeçalho do Excel (Seção, Atividade...), pula essa linha
+  if (lines[0].split('\t').some(v => /^(secao|atividade|tarefa|responsavel|inicio)$/.test(norm(v)))) lines.shift();
+  for (const line of lines) {
     while (r >= $('#ltBody').children.length) ltAdd(5);
     const ins = $('#ltBody').children[r].querySelectorAll('input');
-    line.split('\t').forEach((v, k) => { const i = ins[c0 + k]; if (i) i.value = i.type === 'date' ? ltDate(v) : v.trim(); });
+    line.split('\t').forEach((v, k) => { const i = ins[c0 + k]; if (!i) return; if (i.type === 'checkbox') i.checked = /^(sim|s|x|1|true|marco)$/i.test(v.trim()); else i.value = i.type === 'date' ? ltDate(v) : v.trim(); });
     r++;
   }
+  ltMark();
 });
 // Enter desce para a linha de baixo (como no Excel) em vez de fechar a janela
 $('#ltBody').addEventListener('keydown', e => {
@@ -1980,11 +1999,11 @@ $('#ltBody').addEventListener('keydown', e => {
 });
 $('#dlgLote').addEventListener('close', () => {
   if ($('#dlgLote').returnValue !== 'ok') return;
-  const rows = [...$('#ltBody').children].map(tr => [...tr.querySelectorAll('input')].map(i => i.value));
-  const { n, skip } = batchAdd(cur(), rows);
-  if (!n) return toast('Nada foi inserido: preencha pelo menos a atividade.');
+  const rows = [...$('#ltBody').children].map(tr => [...tr.querySelectorAll('input')].map(i => i.type === 'checkbox' ? i.checked : i.value));
+  const { n, skip, novas } = batchAdd(cur(), rows);
+  if (!n && !novas.length) return toast('Nada foi inserido: preencha pelo menos a atividade ou uma seção nova.');
   save(); render();
-  toast(`${n} ${n === 1 ? 'tarefa inserida' : 'tarefas inseridas'}${skip ? `. ${skip} ${skip === 1 ? 'linha sem atividade foi ignorada' : 'linhas sem atividade foram ignoradas'}` : ''}. Ctrl+Z desfaz.`);
+  toast(`${n ? `${n} ${n === 1 ? 'tarefa inserida' : 'tarefas inseridas'}` : 'Nenhuma tarefa inserida'}${novas.length ? `${n ? ' e' : ';'} ${novas.length === 1 ? 'seção nova criada' : `${novas.length} seções novas criadas`}: ${novas.slice(0, 5).join(', ')}${novas.length > 5 ? ` e mais ${novas.length - 5}` : ''}` : ''}${skip ? `. ${skip} ${skip === 1 ? 'linha sem atividade foi ignorada' : 'linhas sem atividade foram ignoradas'}` : ''}. Ctrl+Z desfaz.`);
 });
 
 /* ---------- ações ---------- */
@@ -2416,9 +2435,11 @@ async function selfTest() {
     ok(tp.tasks.length === p.tasks.length && tp.tasks.every((t, i) => t.end === p.tasks[i].end), 'modelo salvo de ' + tpl.name);
   }
   { const bp = { id: 'b', name: 'L', area: '', groups: [{ id: 'g0', name: 'Especificação', color: PAL[0] }], tasks: [] };
-    const r = batchAdd(bp, [['especificacao', 'A', '2027-01-04', '2027-01-08'], ['', 'B', '', '2027-01-15'], ['Testes', 'C', '', ''], ['', 'D', '2027-02-10', '2027-02-01'], ['X', '', '', ''], ['', '', '', '']]);
-    const [a, b, c, d] = bp.tasks;
-    ok(r.n === 4 && r.skip === 1 && bp.groups.length === 2, 'lote: contagem e seção nova');
+    const r = batchAdd(bp, [['especificacao', 'A', 'Ana', '2027-01-04', '2027-01-08'], ['', 'B', '', '', '2027-01-15'], ['Testes', 'C', '', '', ''], ['', 'D', '', '2027-02-10', '2027-02-01'], ['', '', 'Bia', '', ''], ['X', '', '', '', ''], ['Testes', '', '', '', ''], ['Y', '', '', '', ''], ['', '', '', '', ''], ['x', '', '', '', ''], ['', 'Go-live', '', '', '2027-02-20', true]]);
+    const [a, b, c, d, m] = bp.tasks;
+    ok(m.milestone && m.start === '2027-02-20' && m.end === m.start && !d.milestone && a.owner === 'Ana' && b.owner === '', 'lote: marco e responsável');
+    ok(r.n === 5 && r.skip === 1 && bp.groups.length === 4 && r.novas.join() === 'Testes,X,Y', 'lote: contagem e seções novas (linha só com seção cria a seção)');
+    ok(m.groupId === bp.groups[2].id, 'lote: linha abaixo herda a seção criada sozinha');
     ok(a.groupId === 'g0' && b.groupId === 'g0' && c.groupId === d.groupId && c.groupId !== 'g0', 'lote: seção repete a de cima');
     ok(b.start === '2027-01-09' && c.start === '2027-01-16' && c.end === c.start && d.start === '2027-02-01' && d.end === '2027-02-10', 'lote: datas assumidas');
     ok(ltDate('05/03/2027') === '2027-03-05' && ltDate('5/3/27') === '2027-03-05' && ltDate('31/02/2027') === '' && ltDate('2027-03-05') === '2027-03-05' && ltDate('x') === '', 'lote: datas coladas'); }
