@@ -17,6 +17,10 @@ Ferramenta para montar cronogramas e roadmaps de projetos no navegador. É um ú
 - O relatório executivo mostra todos os projetos numa página, do mais crítico para o mais tranquilo, com um campo para as decisões que a diretoria precisa tomar. Dá para imprimir ou salvar em PDF.
 - A exportação para PowerPoint gera slides editáveis (formas nativas, não imagem): resumo dos projetos, linha do tempo de todos na mesma régua e um cronograma por projeto.
 - Ao lado da situação aparece a tendência (melhorou, piorou ou estável em relação a 7 dias atrás), e o critério das cores pode ter tolerância em dias por projeto.
+- A carga da equipe mostra, por pessoa e por semana, quantas tarefas abertas ela tem somando todos os projetos, com amarelo para duas ao mesmo tempo e vermelho para três ou mais.
+- O caminho crítico destaca a sequência de tarefas que define a data final, calculada pelas dependências.
+- Datas da empresa (congelamento, fechamento) e feriados nacionais, calculados sem internet, aparecem como faixas em todos os cronogramas e no PowerPoint.
+- O Manual marca o que mudou na última versão, e o botão avisa quem ainda não viu.
 - O HTML para envio é uma cópia só para leitura, que abre com dois cliques em qualquer computador.
 - No modo equipe, várias pessoas editam o mesmo roadmap por um arquivo .json numa pasta do SharePoint ou OneDrive sincronizada.
 - Também tem busca e filtros, desfazer e refazer (Ctrl+Z / Ctrl+Y), modelos de projeto, tema claro e escuro e um Manual dentro do programa.

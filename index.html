@@ -184,6 +184,15 @@ button.lg:hover{color:var(--green-txt);border-color:var(--ink-3)}
 .k-late{width:18px;height:9px;border-radius:3px;box-shadow:inset 0 0 0 1.5px var(--red)}
 .k-risk{width:18px;height:9px;border-radius:3px;outline:1.5px dashed var(--amber)}
 .k-today{width:2px;height:13px;background:var(--red)}
+.k-crit{width:16px;height:9px;border-radius:3px;box-shadow:0 0 0 2px var(--title)}
+.k-crit-b{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);color:inherit;font:inherit;padding:3px 10px 3px 9px;border-radius:99px;cursor:pointer;transition:background .15s,border-color .15s}
+.k-crit-b:hover{border-color:var(--title)}
+.k-crit-b[aria-pressed=true]{background:color-mix(in srgb,var(--title) 9%,var(--surface));border-color:color-mix(in srgb,var(--title) 45%,var(--line));color:var(--title);font-weight:600}
+.k-crit-b[aria-pressed=false]{color:var(--ink-3)}.k-crit-b[aria-pressed=false] .k-crit{box-shadow:0 0 0 2px var(--line)}
+.k-crit-b:focus-visible{outline:2px solid var(--green-l);outline-offset:2px}
+.bar.crit{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--title)}
+.ms.crit{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--title)}
+.arrows path.crit{stroke:var(--title);stroke-width:2}
 
 /* gantt */
 .gantt{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--sh);overflow:auto;flex:1;min-height:340px;max-height:calc(100vh - 300px);position:relative;overscroll-behavior:contain}
@@ -383,6 +392,48 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 .dlg-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:6px}
 #dlgGrupos{width:min(640px,calc(100vw - 32px))}
 #dlgRep{width:min(1180px,calc(100vw - 32px))}
+#dlgMarks{width:min(640px,calc(100vw - 32px))}
+#dlgLoad{width:min(1180px,calc(100vw - 32px))}
+.ld-wrap{max-height:52vh;overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.ld{min-width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px;font-variant-numeric:tabular-nums}
+.ld th,.ld td{padding:0;border-bottom:1px solid var(--line-2)}
+.ld thead th{position:sticky;top:0;z-index:2;background:var(--surface);font-weight:600;color:var(--ink-2);font-size:11.5px;padding:8px 4px;white-space:nowrap;text-align:center;min-width:46px}
+.ld thead th.now{color:var(--red)}
+.ld th.ld-p{position:sticky;left:0;z-index:1;background:var(--surface);text-align:left;padding:6px 14px;min-width:190px;max-width:240px;font-weight:600;color:var(--ink);border-right:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ld thead th.ld-p{z-index:3;color:var(--ink-2)}
+.ld td.now{background:color-mix(in srgb,var(--red) 5%,transparent)}
+.ld td button{display:grid;place-items:center;width:100%;min-width:46px;height:34px;border:0;background:none;font:inherit;color:var(--ink-2);cursor:pointer;border-radius:0}
+.ld td button:disabled{cursor:default}
+.ld td button i{display:grid;place-items:center;min-width:26px;height:22px;padding:0 6px;border-radius:7px;font-style:normal;font-weight:700}
+.ld .c1 i{background:var(--line-2);color:var(--ink-2)}
+.ld .c2 i{background:color-mix(in srgb,var(--amber) 32%,transparent);color:var(--ink)}
+.ld .c3 i{background:var(--red);color:#fff}
+.ld td button:not(:disabled):hover i,.ld td button[aria-pressed=true] i{box-shadow:0 0 0 2px var(--title)}
+.ld td button:focus-visible{outline:2px solid var(--green-l);outline-offset:-2px}
+.ld-det{font-size:13px;color:var(--ink-2);min-height:20px}
+.ld-det b{color:var(--title)}
+.ld-det ul{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+.ld-det li{display:flex;gap:8px;flex-wrap:wrap}
+.ld-det li span{color:var(--ink)}
+.ld-0{padding:18px;font-size:13.5px;color:var(--ink-2)}
+@media (max-width:560px){.ld th.ld-p{min-width:104px;max-width:120px;padding:6px 10px}}
+.mk{position:absolute;top:0;bottom:0;pointer-events:none;z-index:0}
+.mk-fer{background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--ink) 8%,transparent) 0 3px,transparent 3px 7px)}
+.mk-eq{background:color-mix(in srgb,#0083A9 12%,transparent);box-shadow:inset 1px 0 0 color-mix(in srgb,#0083A9 50%,transparent),inset -1px 0 0 color-mix(in srgb,#0083A9 50%,transparent)}
+.mk span{position:absolute;top:4px;left:5px;font-size:10.5px;font-weight:700;line-height:1.2;color:color-mix(in srgb,#0083A9 70%,var(--ink));white-space:nowrap}
+.ls-tl .mk span{top:54px}
+.mk-s{position:absolute;bottom:0;height:5px;border-radius:3px 3px 0 0;cursor:help;z-index:3}
+.mk-s.mk-fer{background:color-mix(in srgb,var(--ink) 35%,transparent)}
+.mk-s.mk-eq{background:#0083A9}
+.mk-list{display:flex;flex-direction:column;gap:6px}
+.mk-i{display:grid;grid-template-columns:minmax(0,1fr) 150px 150px 34px;gap:8px;align-items:center}
+.mk-i input{height:36px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--surface);font-size:14px;color:var(--ink);width:100%}
+.mk-i input:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18)}
+.mk-i .x{width:34px;height:34px}
+.mk-0{font-size:13px;color:var(--ink-2);padding:10px 12px;border:1px dashed var(--line);border-radius:10px}
+.mk-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.mk-next{font-size:12.5px}
+@media (max-width:560px){.mk-i{grid-template-columns:1fr 1fr 34px}.mk-i .mk-n{grid-column:1/-1}}
 .hb-w{display:inline-flex;align-items:center;flex-wrap:wrap;gap:2px 0}
 .tr{display:inline-flex;align-items:center;gap:3px;margin-left:7px;font-size:11.5px;font-weight:700;white-space:nowrap}
 .tr svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -453,6 +504,11 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 .man details > div{padding:0 16px 12px 30px;font-size:13.5px;line-height:1.55;color:var(--ink-2)}
 .man ol,.man ul{margin:4px 0;padding-left:18px}
 .man b{color:var(--ink)}
+.man-new{margin-left:auto;font-size:10.5px;font-weight:700;color:#fff;background:var(--green);padding:2px 8px;border-radius:99px;white-space:nowrap}
+.man-nov{margin:0 0 2px;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--green) 9%,var(--surface));border:1px solid color-mix(in srgb,var(--green) 25%,var(--line));font-size:13px;color:var(--ink-2);line-height:1.55}
+.man-nov b{color:var(--title)}
+.man-nov button{border:0;background:none;padding:0;font:inherit;color:var(--green-txt);font-weight:600;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+#btnManual.has-new::after{content:"Novo";margin-left:6px;font-size:10px;font-weight:700;color:#fff;background:var(--green);padding:1px 7px;border-radius:99px;line-height:1.5}
 .grow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line-2);flex-wrap:wrap}
 .grow input[type=color]{width:38px;height:38px;border:1px solid var(--line);border-radius:8px;padding:3px;background:var(--surface);cursor:pointer}
 .grow .gname{flex:1;min-width:140px;width:auto}
@@ -574,7 +630,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       <div><b>Roadmaps</b><small>Projetos e entregas</small></div>
     </div>
     <button class="btn-new" id="btnNovo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Novo projeto</button>
-    <div><h3>Projetos</h3><button class="side-btn all" data-act="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>Visão geral</button><nav class="plist" id="plist" aria-label="Projetos"></nav></div>
+    <div><h3>Projetos</h3><button class="side-btn all" data-act="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>Visão geral</button><button class="side-btn all" data-act="marks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15h6"/></svg>Datas da empresa</button><button class="side-btn all" data-act="load"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.2 3.2 0 0 1 0 6.4M21 20c0-2.6-1.6-4.8-4-5.6"/></svg>Carga da equipe</button><nav class="plist" id="plist" aria-label="Projetos"></nav></div>
     <div class="side-sec"><h3>Modelos</h3><ul class="tlist" id="tlist"></ul></div>
     <div class="side-foot">
       <h3>Equipe</h3>
@@ -741,6 +797,24 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Ao passar o mouse na barra aparece o desvio em dias. O cartão <b>Período</b> mostra quanto o fim do projeto se afastou do plano, e os próximos marcos mostram o desvio de cada um.</li>
         <li>Salvar de novo troca a linha de base pelas datas atuais. <b>Remover linha de base</b> apaga a comparação.</li>
       </ul></div></details>
+      <details><summary>Carga da equipe</summary><div><ul>
+        <li>Na barra lateral, <b>Carga da equipe</b> mostra uma linha por pessoa e uma coluna por semana, somando as tarefas abertas de <b>todos</b> os projetos.</li>
+        <li>O número é quantas tarefas a pessoa tem naquela semana. Amarelo: duas ao mesmo tempo. Vermelho: três ou mais. A coluna da semana atual fica marcada.</li>
+        <li>Clique numa semana para ver quais tarefas e de quais projetos. Tarefa atrasada continua contando até ser concluída; marcos e tarefas em 100% não contam.</li>
+        <li>O nome do responsável é comparado sem diferenciar maiúsculas, acentos e espaços: "Ana Ribeiro" e "ana ribeiro" contam como a mesma pessoa.</li>
+      </ul></div></details>
+      <details><summary>Caminho crítico</summary><div><ul>
+        <li>É a sequência de tarefas que define a data final: se uma delas atrasar, o projeto inteiro atrasa. O programa calcula sozinho a partir das dependências (<b>Depende de</b>).</li>
+        <li>Na visão Detalhada, essas barras ganham um contorno escuro, e as setas entre elas ficam mais grossas. O botão <b>Caminho crítico</b> na legenda liga e desliga o destaque.</li>
+        <li>Sem dependências cadastradas, o caminho crítico é só a tarefa que termina por último. Quanto mais dependências reais você marcar, mais útil ele fica.</li>
+        <li>No PowerPoint, o cronograma de cada projeto mostra o mesmo contorno.</li>
+      </ul></div></details>
+      <details><summary>Datas da empresa e feriados</summary><div><ul>
+        <li>Na barra lateral, <b>Datas da empresa</b> guarda datas que valem para todos os projetos, como congelamento de produção ou fechamento do mês: nome, início e fim.</li>
+        <li>Elas aparecem como faixas azuis em todos os cronogramas, na Linha única, na Visão geral e no PowerPoint. Passe o mouse na marca da régua para ver o nome e as datas.</li>
+        <li>Os feriados nacionais (incluindo Carnaval, Sexta-feira Santa e Corpus Christi) são calculados sozinhos e aparecem como faixas listradas. Dá para desligar em <b>Mostrar feriados nacionais</b>.</li>
+        <li>No modo equipe, as datas da empresa vão para o arquivo compartilhado: todo mundo vê as mesmas. Os feriados não mudam nenhuma data de tarefa, só aparecem para ajudar a planejar.</li>
+      </ul></div></details>
       <details><summary>Relatório executivo e PowerPoint</summary><div><ul>
         <li><b>Exportar › Relatório executivo</b> mostra todos os projetos numa página, do mais crítico para o mais tranquilo: situação e tendência, % concluído, próximos marcos, tarefas atrasadas e em risco.</li>
         <li>Na coluna <b>Decisões e pontos de atenção</b>, escreva o que a diretoria precisa decidir ou saber. O texto fica salvo no projeto.</li>
@@ -874,6 +948,27 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
     <p class="muted"><span class="edit-only">A situação de todos os projetos numa página. Escreva em cada projeto as decisões que a diretoria precisa tomar: o texto fica salvo no projeto e vai também para o PowerPoint.</span><span class="ro-only">A situação de todos os projetos numa página.</span></p>
     <div id="repBody"></div>
     <div class="dlg-foot"><button class="btn" type="button" id="btnRepPptx">Baixar PowerPoint</button><button class="btn" type="button" id="btnRepPrint">Imprimir ou salvar PDF</button><button class="btn primary" value="">Fechar</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgLoad" aria-labelledby="ldT">
+  <form method="dialog" class="dlg-in">
+    <h2 id="ldT">Carga da equipe</h2>
+    <p class="muted">Quantas tarefas abertas cada pessoa tem por semana, somando todos os projetos. Amarelo: duas ao mesmo tempo. Vermelho: três ou mais. Clique numa semana para ver quais são.</p>
+    <div class="ld-wrap" id="ldGrid"></div>
+    <div class="ld-det" id="ldDet" aria-live="polite"></div>
+    <div class="dlg-foot"><button class="btn primary" value="" autofocus>Fechar</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgMarks" aria-labelledby="mkT">
+  <form method="dialog" class="dlg-in">
+    <h2 id="mkT">Datas da empresa</h2>
+    <p class="muted">Datas que valem para todos os projetos, como congelamento de produção ou fechamento do mês. Aparecem como faixas em todos os cronogramas, na Visão geral e no PowerPoint. No modo equipe, vão para o arquivo compartilhado.</p>
+    <div class="mk-list" id="mkList"></div>
+    <div class="mk-bar"><button class="btn" type="button" id="btnMkAdd">Adicionar data</button><label class="chk"><input type="checkbox" id="mkHol"> Mostrar feriados nacionais</label></div>
+    <p class="muted mk-next" id="mkNext"></p>
+    <div class="dlg-foot"><button class="btn primary" value="">Pronto</button></div>
   </form>
 </dialog>
 
@@ -1060,6 +1155,62 @@ function ragRule(p) {
     ['done', 'Concluído', 'todas as tarefas em 100%']
   ];
 }
+// Caminho crítico: a sequência que, se atrasar, empurra o fim do projeto. Parte das tarefas que terminam por último
+// e volta pelas dependências, sempre pela que termina mais tarde (a que "segura" a seguinte).
+// shortcut: usa só as dependências cadastradas, sem folga em dias úteis; trocar por CPM completo se surgirem recursos compartilhados.
+function critical(p) {
+  const out = new Set(); if (!p.tasks.length) return out;
+  const by = new Map(p.tasks.map(t => [t.id, t])), end = Math.max(...p.tasks.map(t => d2n(t.end)));
+  const walk = t => {
+    if (out.has(t.id)) return; out.add(t.id);
+    const ds = t.deps.map(id => by.get(id)).filter(Boolean); if (!ds.length) return;
+    const m = Math.max(...ds.map(d => d2n(d.end))); ds.filter(d => d2n(d.end) === m).forEach(walk);
+  };
+  p.tasks.filter(t => d2n(t.end) === end).forEach(walk);
+  return out;
+}
+// Carga da equipe: por pessoa e por semana (segunda a domingo), quantas tarefas abertas ela tem somando todos os projetos.
+// Tarefa atrasada continua contando até hoje (ainda é trabalho na mesa); marco e tarefa concluída não contam.
+const monday = n => n - ((dow(n) + 6) % 7);
+function loadGrid(ps) {
+  const open = ps.flatMap(p => p.tasks.filter(t => !t.milestone && t.progress < 100).map(t => ({ t, p, s: d2n(t.start), e: status(t) === 'late' ? Math.max(d2n(t.end), todayN) : d2n(t.end) })));
+  const w0 = monday(todayN) - 28, last = open.length ? Math.max(...open.map(x => x.e)) : todayN, weeks = [];
+  for (let w = w0; w <= last && weeks.length < 26; w += 7) weeks.push(w);
+  const people = new Map();
+  for (const x of open) {
+    const key = norm(x.t.owner).replace(/\s+/g, ' ');
+    if (!people.has(key)) people.set(key, { name: x.t.owner.trim().replace(/\s+/g, ' ') || 'Sem responsável', none: !key, cells: weeks.map(() => []) });
+    const pr = people.get(key); weeks.forEach((w, i) => { if (x.s <= w + 6 && x.e >= w) pr.cells[i].push(x); });
+  }
+  return { weeks, people: [...people.values()].filter(q => q.cells.some(c => c.length)).sort((a, b) => a.none - b.none || a.name.localeCompare(b.name, 'pt-BR')) };
+}
+// Feriados nacionais, calculados sem internet. Páscoa pelo algoritmo de Meeus/Butcher (calendário gregoriano)
+function easter(y) {
+  const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451), x = h + l - 7 * m + 114;
+  return Math.round(Date.UTC(y, Math.floor(x / 31) - 1, (x % 31) + 1) / DAY);
+}
+function holidays(y) {
+  const f = (m, d) => Math.round(Date.UTC(y, m - 1, d) / DAY), E = easter(y), one = (n, name) => ({ s: n, e: n, name });
+  return [one(f(1, 1), 'Confraternização Universal'), { s: E - 48, e: E - 47, name: 'Carnaval' }, one(E - 2, 'Sexta-feira Santa'), one(f(4, 21), 'Tiradentes'), one(f(5, 1), 'Dia do Trabalho'),
+    one(E + 60, 'Corpus Christi'), one(f(9, 7), 'Independência'), one(f(10, 12), 'Nossa Senhora Aparecida'), one(f(11, 2), 'Finados'), one(f(11, 15), 'Proclamação da República'),
+    one(f(11, 20), 'Consciência Negra'), one(f(12, 25), 'Natal')];
+}
+// Datas da empresa (congelamento, fechamento...): valem para todos os projetos e vão para o arquivo da equipe
+function normMark(m) {
+  if (!m || typeof m !== 'object') return null;
+  const okd = v => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v) && !isNaN(d2n(v));
+  let a = m.start, b = okd(m.end) ? m.end : m.start; if (!okd(a)) return null; if (b < a) [a, b] = [b, a];
+  return { id: String(m.id ?? '').replace(/[^\w-]/g, '').slice(0, 40) || uid(), name: String(m.name || '').trim().slice(0, 80) || 'Data da empresa', start: a, end: b };
+}
+// tudo que cai entre os dias a e b: feriados (se ligados) e datas da empresa
+function marksIn(a, b) {
+  const y0 = new Date(a * DAY).getUTCFullYear(), y1 = new Date(b * DAY).getUTCFullYear(), out = [];
+  if (state.showHol) for (let y = y0; y <= y1 && y - y0 < 12; y++) holidays(y).forEach(h => out.push({ ...h, kind: 'fer' }));
+  state.marks.forEach(m => out.push({ s: d2n(m.start), e: d2n(m.end), name: m.name, kind: 'eq' }));
+  return out.filter(m => m.e >= a && m.s <= b);
+}
+const mkTip = k => `${k.name}: ${k.s === k.e ? fmtLong(k.s) : `${fmtLong(k.s)} a ${fmtLong(k.e)}`}${k.kind === 'fer' ? ' (feriado)' : ''}`;
 // Tendência: uma foto por dia da situação de cada projeto, para dizer se melhorou ou piorou
 const HRANK = { done: 0, none: 0, ok: 1, risk: 2, late: 3 };
 // foto: [data, cor, nº atrasadas, desvio do plano, maior atraso em dias, nº em risco]; os números brutos deixam recalcular a cor antiga com a regra atual
@@ -1136,6 +1287,9 @@ if (RO) {
     const h = normHist([...day.values()].sort((a, b) => a[0] < b[0] ? -1 : 1)); if (h.length) state.hist[p.id] = h;
   });
   if (!RO) state.projects.forEach(recordHist); }
+state.marks = (RO ? (Array.isArray(RO.marks) ? RO.marks : []) : Array.isArray(state.marks) ? state.marks : []).map(normMark).filter(Boolean);
+state.showHol = (RO ? RO.showHol : state.showHol) !== false;
+state.showCrit = state.showCrit !== false;
 // Visão do cronograma também é preferência de tela: "detail" (uma linha por tarefa) ou "line" (todas as barras numa faixa só)
 if (state.view !== 'line') state.view = 'detail';
 // Projetos que aparecem juntos na Linha única (o aberto sempre aparece)
@@ -1163,7 +1317,7 @@ const fltOn = () => !!(flt.q || flt.owner || flt.st);
 const fltOk = t => (!flt.q || norm(t.name + ' ' + t.owner + ' ' + t.note).includes(norm(flt.q))) && (!flt.owner || t.owner === flt.owner) && (!flt.st || status(t) === flt.st);
 
 /* ---------- desfazer e refazer ---------- */
-const snap = () => JSON.stringify([state.projects, state.templates]);
+const snap = () => JSON.stringify([state.projects, state.templates, state.marks]);
 const HIST = { past: [], future: [], last: snap(), at: 0 };
 function persist() {
   try { localStorage.setItem(stKey(), JSON.stringify(state)); }
@@ -1186,7 +1340,7 @@ function timeTravel(from, to, msg) {
   if (!from.length) return;
   to.push(HIST.last);
   HIST.last = from.pop(); HIST.at = 0;
-  [state.projects, state.templates] = JSON.parse(HIST.last);
+  [state.projects, state.templates, state.marks] = JSON.parse(HIST.last); state.marks = state.marks || [];
   if (!cur()) state.currentId = state.projects[0].id;
   persist(); closeDrawer(); render(); renderHist();
   toast(msg);
@@ -1269,7 +1423,7 @@ function countUp() {
 function renderLegend() {
   const p = cur(), tag = RO ? 'span' : 'button';
   $('#legend').innerHTML = p.groups.map(g => `<${tag} class="lg"${RO ? '' : ' data-act="groups" title="Editar grupos e cores"'}><i style="--c:${g.color}"></i>${esc(g.name)}<span>${p.tasks.filter(t => t.groupId === g.id).length}</span></${tag}>`).join('') +
-    `<span class="lg-keys"><span><i class="k-ms"></i>Marco</span>${p.baseAt ? '<span><i class="k-base"></i>Plano</span>' : ''}<span><i class="k-late"></i>Atrasada</span><span><i class="k-risk"></i>Em risco</span><span><i class="k-today"></i>Hoje</span></span>`;
+    `<span class="lg-keys"><button class="k-crit-b" data-act="crit" aria-pressed="${state.showCrit}" title="Destacar a sequência de tarefas que define a data final"><i class="k-crit"></i>Caminho crítico</button><span><i class="k-ms"></i>Marco</span>${p.baseAt ? '<span><i class="k-base"></i>Plano</span>' : ''}<span><i class="k-late"></i>Atrasada</span><span><i class="k-risk"></i>Em risco</span><span><i class="k-today"></i>Hoje</span></span>`;
 }
 
 function renderTools() {
@@ -1335,7 +1489,7 @@ function renderGantt(fx) {
   const p = cur(), z = state.zoom, dw = ZOOM[z].dw, LW = innerWidth < 700 ? 170 : 300;
   const [a, b] = range(p), W = (b - a + 1) * dw, X = n => (n - a) * dw;
   const seg = (s, e, txt, cls = '') => `<div class="sc ${cls}" style="left:${X(s)}px;width:${(e - s + 1) * dw}px">${txt}</div>`;
-  const rows = [], idx = {}, fo = fltOn(), grip = !RO && !fo;
+  const rows = [], idx = {}, fo = fltOn(), grip = !RO && !fo, CR = state.showCrit ? critical(p) : new Set();
   let shown = 0;
   for (const g of p.groups) {
     const ts = p.tasks.filter(t => t.groupId === g.id && fltOk(t));
@@ -1395,10 +1549,10 @@ function renderGantt(fx) {
     const pk = SEL.has(t.id) ? ' picked' : '';
     labels += `<div class="g-row t${pk}" data-row="${t.id}"><div class="g-label">${grip ? `<span class="grip" data-grip="t:${t.id}" tabindex="0" role="button" title="Arraste para mudar a ordem ou o grupo" aria-label="Mover ${nm}: arraste ou use as setas para cima e para baixo"></span>` : ''}<span class="st st-${st}" title="${STL[st]}"></span><div class="tmain">${RO ? `<span class="tn">${nm}</span>` : `<button class="tn" data-open="${t.id}">${nm}</button>`}${t.owner ? `<small class="to">${esc(t.owner)}</small>` : ''}</div>${RO ? '' : `<span class="ra"><button data-dup="${t.id}" title="Duplicar tarefa" aria-label="Duplicar ${nm}">${ICON.dup}</button><button class="del" data-del="${t.id}" title="Excluir tarefa" aria-label="Excluir ${nm}">${ICON.del}</button></span>`}</div></div>`;
     if (t.milestone) {
-      bars += `<div class="ms st-${st}${t === nextMs ? ' next' : ''}${pk}" data-task="${t.id}" style="left:${X(s) + dw / 2 - 8}px;top:${y + H / 2 - 8}px;--c:${r.g.color};--i:${n}"></div><span class="bl st-${st}" style="left:${X(s) + dw / 2 + 14}px;top:${y}px;--i:${n}">${esc(t.name)}<em>${fmtCurto(s)}</em></span>`;
+      bars += `<div class="ms st-${st}${t === nextMs ? ' next' : ''}${pk}${CR.has(t.id) ? ' crit' : ''}" data-task="${t.id}" style="left:${X(s) + dw / 2 - 8}px;top:${y + H / 2 - 8}px;--c:${r.g.color};--i:${n}"></div><span class="bl st-${st}" style="left:${X(s) + dw / 2 + 14}px;top:${y}px;--i:${n}">${esc(t.name)}<em>${fmtCurto(s)}</em></span>`;
     } else {
       const w = (e - s + 1) * dw;
-      bars += `<div class="bar st-${st}${t.risk ? ' risk' : ''}${pk}" data-task="${t.id}" style="left:${X(s)}px;width:${w}px;top:${y + (H - 22) / 2}px;--c:${r.g.color};--i:${n}"><i style="width:${t.progress}%"></i></div><span class="bl st-${st}" style="left:${X(s) + w + 8}px;top:${y}px;--i:${n}">${esc(t.name)}<em>${st === 'late' ? 'atrasada, ' : ''}${t.progress}%</em></span>`;
+      bars += `<div class="bar st-${st}${t.risk ? ' risk' : ''}${pk}${CR.has(t.id) ? ' crit' : ''}" data-task="${t.id}" style="left:${X(s)}px;width:${w}px;top:${y + (H - 22) / 2}px;--c:${r.g.color};--i:${n}"><i style="width:${t.progress}%"></i></div><span class="bl st-${st}" style="left:${X(s) + w + 8}px;top:${y}px;--i:${n}">${esc(t.name)}<em>${st === 'late' ? 'atrasada, ' : ''}${t.progress}%</em></span>`;
     }
   });
 
@@ -1414,7 +1568,8 @@ function renderGantt(fx) {
       const x2 = t.milestone ? X(d2n(t.start)) + dw / 2 - 12 : X(d2n(t.start)) - 1;
       const yb = y2 - dir * H / 2;
       const pts = x2 - xs >= 14 ? [[xs, ys], [xs, y2], [x2, y2]] : [[xs, ys], [xs, yb], [x2 - 12, yb], [x2 - 12, y2], [x2, y2]];
-      arrows += `<path d="${roundPath(pts)}" data-f="${id}" data-t="${t.id}"${status(d) === 'late' ? ' class="hot"' : ''}/>`;
+      const cl = [status(d) === 'late' && 'hot', CR.has(id) && CR.has(t.id) && 'crit'].filter(Boolean).join(' ');
+      arrows += `<path d="${roundPath(pts)}" data-f="${id}" data-t="${t.id}"${cl ? ` class="${cl}"` : ''}/>`;
     }
   }
   const mk = id => `<marker id="${id}" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 1L8 4L0 7z"/></marker>`;
@@ -1422,13 +1577,14 @@ function renderGantt(fx) {
   const empty = fo && !shown ? '<div class="g-empty"><b>Nenhuma tarefa com esse filtro</b><span>Mude a busca ou limpe os filtros.</span></div>'
     : p.tasks.length ? '' : `<div class="g-empty"><b>Projeto sem tarefas</b><span>${RO ? 'Nada planejado ainda.' : 'Use Nova tarefa ou o + ao lado de um grupo para começar.'}</span></div>`;
   $('#btnHoje').disabled = !hasToday;
+  const mks = marksIn(a, b);
 
   const g = $('#gantt');
   g.innerHTML = `<div class="g-inner${fx === 'load' ? ' anim' : fx === 'zoom' ? ' zoomfx' : ''}" style="width:${LW + W}px;--lw:${LW}px;--H:${H}px">
     <div class="g-head"><div class="g-corner"><span>Tarefa e responsável</span></div>
-      <div class="g-scale" style="width:${W}px"><div class="sc-top">${top}</div><div class="sc-bot">${bot}</div>${hasToday ? `<div class="today-flag" style="left:${tx}px">hoje</div>` : ''}</div></div>
+      <div class="g-scale" style="width:${W}px"><div class="sc-top">${top}</div><div class="sc-bot">${bot}</div>${mks.map(k => `<i class="mk-s mk-${k.kind}" style="left:${X(Math.max(k.s, a))}px;width:${Math.max(4, (Math.min(k.e, b) - Math.max(k.s, a) + 1) * dw)}px" title="${esc(mkTip(k))}"></i>`).join('')}${hasToday ? `<div class="today-flag" style="left:${tx}px">hoje</div>` : ''}</div></div>
     <div class="g-body" style="height:${HH}px">${labels}
-      <div class="g-canvas" style="left:${LW}px;width:${W}px;height:${HH}px">${grid}${hasToday ? `<div class="today" style="left:${tx}px"></div>` : ''}<svg class="arrows" width="${W}" height="${HH}" aria-hidden="true">${defs}${arrows}</svg>${bars}</div>${empty}
+      <div class="g-canvas" style="left:${LW}px;width:${W}px;height:${HH}px">${mks.map(k => `<i class="mk mk-${k.kind}" style="left:${X(Math.max(k.s, a))}px;width:${Math.max(2, (Math.min(k.e, b) - Math.max(k.s, a) + 1) * dw)}px">${k.kind === 'eq' ? `<span>${esc(k.name)}</span>` : ''}</i>`).join('')}${grid}${hasToday ? `<div class="today" style="left:${tx}px"></div>` : ''}<svg class="arrows" width="${W}" height="${HH}" aria-hidden="true">${defs}${arrows}</svg>${bars}</div>${empty}
     </div></div>`;
   // abre mostrando o começo do projeto; se o "hoje" ficar fora da tela, prioriza o hoje
   if (fx === 'load' || fx === 'zoom') {
@@ -1502,6 +1658,9 @@ function renderLine({ fx, fo }) {
   }
   const kn = mOf(todayN) - m0;
   if (M && kn >= 0 && kn < M) nowCol = `<i class="ls-now" style="left:${kn * CW}px;width:${CW}px"></i>`;
+  // faixas das datas da empresa e feriados: posição proporcional ao dia dentro da coluna do mês
+  const lsX = n => { const m = mOf(n), f = mFirst(m); return (m - m0) * CW + (n - f) / (mFirst(m + 1) - f) * CW; }, la = M ? mFirst(m0) : 0, lb = M ? mFirst(m0 + M) - 1 : -1;
+  if (M) nowCol += marksIn(la, lb).map(k => { const l = lsX(Math.max(k.s, la)); return `<i class="mk mk-${k.kind}" style="left:${l}px;width:${Math.max(2, lsX(Math.min(k.e, lb) + 1) - l)}px" title="${esc(mkTip(k))}">${k.kind === 'eq' ? `<span>${esc(k.name)}</span>` : ''}</i>`; }).join('');
   const ruler = M ? `<div class="ls-ru"><div class="ls-yr">${yr}</div><div class="ls-mo">${mo}</div></div>` : '';
   $('#gantt').innerHTML = `<div class="ls${ps.length > 1 ? ' multi' : ''}${fx === 'load' || fx === 'zoom' ? ' anim' : ''}"><div class="ls-tl" style="--cw:${CW}px;width:${M * CW || full}px">${nowCol}${ruler}${ps.map(strip).join('')}</div></div>`;
   $('#gantt').scrollLeft = 0;
@@ -2194,7 +2353,7 @@ const ACT = {
       <div class="pf-yr">${Object.keys(yrs).map(y => `<span style="left:${pos(yrs[y].s)};width:${wd(yrs[y].s, yrs[y].e)}">${y}</span>`).join('')}</div>
       <div class="pf-mo">${months.map(m => `<span style="left:${pos(m.s)};width:${wd(m.s, m.e)}">${MES[m.m]}</span>`).join('')}</div>
       <b class="pf-today" style="left:${pos(todayN + .5)}">hoje</b></div></div>`;
-    const grid = `<div class="pf-grid">${months.map(m => `<i style="left:${pos(m.s)}"></i>`).join('')}<s style="left:${pos(todayN + .5)}"></s></div><em class="pf-guide" hidden><b></b></em>`;
+    const grid = `<div class="pf-grid">${marksIn(a, b).map(k => `<b class="mk mk-${k.kind}" style="left:${pos(Math.max(k.s, a))};width:${wd(Math.max(k.s, a), Math.min(k.e, b))}">${k.kind === 'eq' ? `<span>${esc(k.name)}</span>` : ''}</b>`).join('')}${months.map(m => `<i style="left:${pos(m.s)}"></i>`).join('')}<s style="left:${pos(todayN + .5)}"></s></div><em class="pf-guide" hidden><b></b></em>`;
     const rows = ps.map((p, k) => {
       const n = p.tasks.length, pct = pctOf(p), late = p.tasks.filter(t => status(t) === 'late').length;
       const s = n ? Math.min(...p.tasks.map(t => d2n(t.start))) : 0, e = n ? Math.max(...p.tasks.map(t => d2n(t.end))) : 0;
@@ -2223,7 +2382,7 @@ const ACT = {
   html: () => {
     const p = cur(), multi = state.view === 'line' && lineProjects().length > 1;
     const wh = x => ({ ...x, hist: state.hist[x.id] });
-    const data = JSON.stringify({ project: wh(p), geradoEm: n2d(todayN), ...(multi ? { projects: lineProjects().map(wh), view: 'line' } : {}) }).replace(/</g, '\\u003c');
+    const data = JSON.stringify({ project: wh(p), geradoEm: n2d(todayN), marks: state.marks, showHol: state.showHol, ...(multi ? { projects: lineProjects().map(wh), view: 'line' } : {}) }).replace(/</g, '\\u003c');
     download(new Blob([SRC.replace(RO_TAG + 'null<', () => RO_TAG + data + '<')], { type: 'text/html' }), slug(p.name) + '-roadmap.html');
     toast('HTML para envio gerado');
   },
@@ -2233,6 +2392,9 @@ const ACT = {
     F.late.value = T.late; F.slip.value = T.slip; $('#ragRule').innerHTML = ragList(p, T);
     const d = $('#dlgRag'); d.returnValue = ''; d.showModal();
   },
+  crit: () => { state.showCrit = !state.showCrit; if (!RO) persist(); renderLegend(); renderGantt(); },
+  load: () => { renderLoad(); const d = $('#dlgLoad'); d.returnValue = ''; d.showModal(); },
+  marks: () => { renderMarks(); const d = $('#dlgMarks'); d.returnValue = ''; d.showModal(); },
   report: () => { $('#repBody').innerHTML = repHTML(!RO); const d = $('#dlgRep'); d.returnValue = ''; d.showModal(); },
   pptx: () => {
     download(buildPptx(repProjects()), slug(state.projects.length === 1 ? cur().name : 'roadmap-projetos') + '.pptx');
@@ -2325,11 +2487,23 @@ $('#tlist').addEventListener('click', async e => {
 });
 $('#btnNovo').addEventListener('click', () => openNovo(''));
 $('#btnBackup').addEventListener('click', () => {
-  download(new Blob([JSON.stringify({ app: 'roadmap-hdi', versao: 1, salvoEm: n2d(todayN), projects: state.projects, templates: state.templates }, null, 1)], { type: 'application/json' }), `roadmaps-backup-${n2d(todayN)}.json`);
+  download(new Blob([JSON.stringify({ app: 'roadmap-hdi', versao: 1, salvoEm: n2d(todayN), projects: state.projects, templates: state.templates, marks: state.marks }, null, 1)], { type: 'application/json' }), `roadmaps-backup-${n2d(todayN)}.json`);
   toast('Backup salvo');
 });
 $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
+// Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
+// A cada versão nova, troque a data e a lista abaixo.
+const NOVIDADES = { versao: '2026-11-18', secoes: ['Carga da equipe', 'Caminho crítico', 'Datas da empresa e feriados', 'Relatório executivo e PowerPoint', 'Situação do projeto', 'Inserir várias tarefas de uma vez', 'Importar de uma planilha'] };
+{
+  const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
+  sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
+  $('#dlgManual .man').insertAdjacentHTML('afterbegin', `<p class="man-nov"><b>Novidades da versão de ${fmtBR(d2n(NOVIDADES.versao))}:</b> ${sums.map((x, i) => `<button type="button" data-man="${i}">${esc(x.firstChild.textContent)}</button>`).join(', ')}.</p>`);
+  $('#dlgManual .man-nov').addEventListener('click', e => { const b = e.target.closest('[data-man]'); if (!b) return; const d = sums[+b.dataset.man].parentElement; d.open = true; d.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  let visto = null; try { visto = localStorage.getItem('roadmap-hdi-manual-visto'); } catch (e) { /* sem armazenamento: o aviso aparece sempre */ }
+  if (visto !== NOVIDADES.versao) $('#btnManual').classList.add('has-new');
+  $('#btnManual').addEventListener('click', () => { $('#btnManual').classList.remove('has-new'); try { localStorage.setItem('roadmap-hdi-manual-visto', NOVIDADES.versao); } catch (e) { /* idem */ } });
+}
 function modeloP() {
   const gid = uid(), s = todayN - ((dow(todayN) + 6) % 7) + 7;
   const t = (name, owner, a, b) => ({ id: uid(), name, groupId: gid, owner, start: n2d(s + a), end: n2d(s + b), progress: 0, milestone: false, risk: false, deps: [] });
@@ -2358,11 +2532,50 @@ $('#fileOpen').addEventListener('change', async e => {
     if (clash.length && !await ask({ title: 'Substituir projetos?', text: `${clash.length} ${clash.length === 1 ? 'projeto do arquivo já existe' : 'projetos do arquivo já existem'} aqui e ${clash.length === 1 ? 'será substituído' : 'serão substituídos'} pela versão do backup.`, ok: 'Substituir' })) return;
     for (const p of ps) { const i = state.projects.findIndex(x => x.id === p.id); if (i >= 0) state.projects[i] = p; else state.projects.push(p); }
     if (Array.isArray(d.templates)) for (const t of d.templates) if (okTpl(t) && !state.templates.some(x => x.id === t.id)) state.templates.push(t);
+    if (Array.isArray(d.marks)) for (const m of d.marks.map(normMark).filter(Boolean)) if (!state.marks.some(x => x.id === m.id)) state.marks.push(m);
     state.currentId = ps[0].id;
     save(); closeDrawer(); render('load');
     toast(ps.length === 1 ? '1 projeto carregado' : `${ps.length} projetos carregados`);
   } catch (err) { toast('Não consegui abrir o arquivo: ' + err.message + '.'); }
 });
+
+/* ---------- carga da equipe ---------- */
+let LG = null;
+function renderLoad() {
+  LG = loadGrid(state.projects); const now = monday(todayN);
+  $('#ldDet').innerHTML = '';
+  if (!LG.people.length) { $('#ldGrid').innerHTML = '<div class="ld-0">Nenhuma tarefa aberta com datas por aqui. Quando houver tarefas com responsável, a carga aparece aqui.</div>'; return; }
+  const head = `<tr><th class="ld-p" scope="col">Pessoa</th>${LG.weeks.map(w => `<th scope="col"${w === now ? ' class="now"' : ''} title="Semana de ${fmtLong(w)}">${fmtCurto(w)}</th>`).join('')}</tr>`;
+  const body = LG.people.map((q, i) => `<tr><th class="ld-p" scope="row" title="${esc(q.name)}">${esc(q.name)}</th>${q.cells.map((c, j) => `<td${LG.weeks[j] === now ? ' class="now"' : ''}><button type="button" class="c${Math.min(3, c.length)}" data-ld="${i}:${j}"${c.length ? ` aria-label="${esc(q.name)}, semana de ${fmtCurto(LG.weeks[j])}: ${c.length} ${c.length === 1 ? 'tarefa' : 'tarefas'}"` : ' disabled aria-label="sem tarefas"'}>${c.length ? `<i>${c.length}</i>` : ''}</button></td>`).join('')}</tr>`).join('');
+  $('#ldGrid').innerHTML = `<table class="ld"><thead>${head}</thead><tbody>${body}</tbody></table>`;
+  // começa mostrando a semana atual
+  const th = $('#ldGrid thead th.now'); if (th) $('#ldGrid').scrollLeft = th.offsetLeft - 200;
+}
+$('#ldGrid').addEventListener('click', e => {
+  const b = e.target.closest('[data-ld]'); if (!b || !LG) return;
+  const [i, j] = b.dataset.ld.split(':').map(Number), q = LG.people[i], c = q.cells[j];
+  $('#ldGrid').querySelectorAll('[aria-pressed]').forEach(x => x.removeAttribute('aria-pressed')); b.setAttribute('aria-pressed', 'true');
+  $('#ldDet').innerHTML = `<b>${esc(q.name)}</b>, semana de ${fmtLong(LG.weeks[j])}: ${c.length} ${c.length === 1 ? 'tarefa' : 'tarefas'}<ul>${c.map(x => `<li><span>${esc(x.t.name)}</span>${esc(x.p.name)}, ${fmtCurto(d2n(x.t.start))} a ${fmtCurto(d2n(x.t.end))}${status(x.t) === 'late' ? ', <em class="bad">atrasada</em>' : ''}</li>`).join('')}</ul>`;
+});
+
+/* ---------- datas da empresa ---------- */
+function renderMarks() {
+  $('#mkList').innerHTML = state.marks.length ? state.marks.map(m => `<div class="mk-i" data-id="${m.id}"><input class="mk-n" value="${esc(m.name)}" maxlength="80" placeholder="Ex.: Congelamento de produção" aria-label="Nome da data"><input type="date" class="mk-a" value="${m.start}" aria-label="Início"><input type="date" class="mk-b" value="${m.end}" aria-label="Fim"><button type="button" class="icon x" data-mkdel aria-label="Excluir ${esc(m.name)}">×</button></div>`).join('')
+    : '<div class="mk-0">Nenhuma data cadastrada. Use <b>Adicionar data</b> para marcar, por exemplo, o congelamento de produção de fim de ano.</div>';
+  $('#mkHol').checked = state.showHol;
+  const y = new Date(todayN * DAY).getUTCFullYear(), next = [y, y + 1].flatMap(holidays).filter(h => h.e >= todayN).slice(0, 4);
+  $('#mkNext').textContent = 'Próximos feriados nacionais: ' + next.map(h => `${h.name} (${fmtCurto(h.s)})`).join(', ') + '.';
+}
+// o que está na tela vira a lista; linha sem data válida é ignorada
+function readMarks() {
+  state.marks = [...$('#mkList').querySelectorAll('.mk-i')].map(r => normMark({ id: r.dataset.id, name: r.querySelector('.mk-n').value, start: r.querySelector('.mk-a').value, end: r.querySelector('.mk-b').value || r.querySelector('.mk-a').value })).filter(Boolean);
+  save(); renderGantt();
+}
+$('#mkList').addEventListener('change', readMarks);
+$('#mkList').addEventListener('click', e => { const b = e.target.closest('[data-mkdel]'); if (!b) return; b.closest('.mk-i').remove(); readMarks(); if (!state.marks.length) renderMarks(); });
+$('#btnMkAdd').addEventListener('click', () => { state.marks.push({ id: uid(), name: '', start: n2d(todayN), end: n2d(todayN) }); renderMarks(); const r = $('#mkList .mk-i:last-child .mk-n'); r.focus(); });
+$('#mkHol').addEventListener('change', e => { state.showHol = e.target.checked; if (!RO) persist(); renderGantt(); });
+$('#dlgMarks').addEventListener('close', () => { readMarks(); renderMarks(); });
 
 /* ---------- critério das cores ---------- */
 const ragList = (p, tol) => ragRule({ ...p, tol }).map(([k, l, t]) => `<li><span class="hb hb-${k}">${l}</span>${esc(t)}</li>`).join('');
@@ -2452,6 +2665,11 @@ function sHead(s, title, sub, pg) {
 // régua de anos e meses entre os meses ma e mb; devolve a posição x de um dia
 function sRuler(s, x0, x1, y, ma, mb, gridTo) {
   const a = mFirst(ma), b = mFirst(mb + 1), X = n => x0 + (n - a) / (b - a) * (x1 - x0), mNow = mOfN(todayN);
+  marksIn(a, b - 1).forEach(k => {
+    const l = X(Math.max(k.s, a)), r = X(Math.min(k.e, b - 1) + 1);
+    s.sp({ x: l, y: y + 30, w: Math.max(1.5, r - l), h: gridTo - y - 30, f: k.kind === 'eq' ? 'DCEEF4' : 'EEF1EF' });
+    if (k.kind === 'eq') s.sp({ x: l, y: gridTo + 2, w: Math.max(80, r - l), h: 12, paras: [[cut(k.name, 34), { sz: 7.5, b: 1, c: '005F7A' }]], ins: 1 });
+  });
   for (let m = ma; m <= mb; m++) {
     const l = X(mFirst(m)), r = X(mFirst(m + 1));
     if (m === ma || m % 12 === 0) s.sp({ x: l, y, w: X(mFirst(Math.min(mb + 1, (Math.floor(m / 12) + 1) * 12))) - l, h: 15, paras: [[String(Math.floor(m / 12)), { sz: 10, b: 1 }]], ins: 3 });
@@ -2505,14 +2723,15 @@ function slProj(p, ts, part, parts, pg) {
   if (!per) return s.xml();
   const y0 = 120, rh = Math.min(26, (SH - 44 - y0) / Math.max(1, ts.length)), x0 = SM + 250, x1 = SW - SM;
   const X = sRuler(s, x0, x1, 86, mOfN(per[0]), mOfN(per[1]), y0 + ts.length * rh);
-  const gOf = t => p.groups.find(g => g.id === t.groupId) || p.groups[0];
+  const gOf = t => p.groups.find(g => g.id === t.groupId) || p.groups[0], CR = critical(p);
+  s.sp({ x: SM, y: SH - 24, w: 520, h: 14, paras: [['Contorno escuro: caminho crítico  ·  vermelho: atrasada  ·  amarelo: em risco', { sz: 8, c: '5B6770' }]], ins: 0 });
   ts.forEach((t, i) => {
     const y = y0 + i * rh, c = gOf(t).color.slice(1).toUpperCase(), st = status(t), a = d2n(t.start), e = d2n(t.end);
     s.sp({ x: SM, y: y + 3, w: 3, h: rh - 6, f: c });
     s.sp({ x: SM + 6, y, w: 238, h: rh, paras: [[cut(t.name, 40), { sz: 9.5, b: t.milestone, c: '0B2A3C' }], ...(rh >= 22 ? [[cut([gOf(t).name, t.owner].filter(Boolean).join(' · '), 48), { sz: 7.5, c: '5B6770' }]] : [])], ins: 0 });
-    if (t.milestone) { s.sp({ x: X(a + 0.5) - 6, y: y + rh / 2 - 6, w: 12, h: 12, g: 'diamond', f: c, ln: ['003960', 0.75] }); return; }
+    if (t.milestone) { s.sp({ x: X(a + 0.5) - 6, y: y + rh / 2 - 6, w: 12, h: 12, g: 'diamond', f: c, ln: ['003960', CR.has(t.id) ? 2 : 0.75] }); return; }
     const bx = X(a), bw = Math.max(3, X(e + 1) - bx), bh = Math.min(12, rh * 0.5), by = y + rh / 2 - bh / 2;
-    s.sp({ x: bx, y: by, w: bw, h: bh, g: 'roundRect', f: tint(c, 0.6), ln: st === 'late' ? ['E60018', 1.5] : t.risk && st !== 'done' ? ['E8A317', 1.5] : null });
+    s.sp({ x: bx, y: by, w: bw, h: bh, g: 'roundRect', f: tint(c, 0.6), ln: st === 'late' ? ['E60018', 1.5] : t.risk && st !== 'done' ? ['E8A317', 1.5] : CR.has(t.id) ? ['003960', 1.5] : null });
     if (t.progress) s.sp({ x: bx, y: by, w: Math.max(2, bw * t.progress / 100), h: bh, g: 'roundRect', f: c });
   });
   return s.xml();
@@ -2587,7 +2806,8 @@ function teamParse(txt) {
   const d = txt.trim() ? JSON.parse(txt) : {};
   return {
     projects: (Array.isArray(d.projects) ? d.projects : []).flatMap(p => { try { return [normP(p)]; } catch (e) { return []; } }),
-    templates: (Array.isArray(d.templates) ? d.templates : []).filter(okTpl)
+    templates: (Array.isArray(d.templates) ? d.templates : []).filter(okTpl),
+    marks: (Array.isArray(d.marks) ? d.marks : []).map(normMark).filter(Boolean)
   };
 }
 // Junta por item (projeto ou modelo). base = como o arquivo estava na última sincronização:
@@ -2617,20 +2837,21 @@ async function teamSync() {
     const f = await TEAM.h.getFile();
     let disk = TEAM.base, pulled = false;
     if (f.lastModified !== TEAM.seen) {
-      const d = teamParse(await f.text()), conf = [], before = JSON.stringify([state.projects, state.templates]);
+      const d = teamParse(await f.text()), conf = [], before = JSON.stringify([state.projects, state.templates, state.marks]);
       state.projects = mergeList(state.projects, d.projects, TEAM.base, conf);
       state.templates = mergeList(state.templates, d.templates, TEAM.base, conf);
+      state.marks = mergeList(state.marks, d.marks, TEAM.base, conf);
       if (!state.projects.length) state.projects.push(blank('Novo projeto'));
-      disk = toMap(d.projects.concat(d.templates));
+      disk = toMap(d.projects.concat(d.templates, d.marks));
       TEAM.seen = f.lastModified;
-      pulled = JSON.stringify([state.projects, state.templates]) !== before;
+      pulled = JSON.stringify([state.projects, state.templates, state.marks]) !== before;
       if (conf.length) toast(`Outra pessoa mudou ao mesmo tempo: ${conf.join(', ')}. Ficou a sua versão.`);
     }
-    const all = state.projects.concat(state.templates);
+    const all = state.projects.concat(state.templates, state.marks);
     // só grava se tiver algo meu que o arquivo ainda não tem; sem isso os computadores ficariam regravando um depois do outro
     if (differs(all, disk) && TEAM.ok) {
       const w = await TEAM.h.createWritable();
-      await w.write(JSON.stringify({ app: 'roadmap-hdi', versao: 1, salvoEm: n2d(todayN), projects: state.projects, templates: state.templates }, null, 1));
+      await w.write(JSON.stringify({ app: 'roadmap-hdi', versao: 1, salvoEm: n2d(todayN), projects: state.projects, templates: state.templates, marks: state.marks }, null, 1));
       await w.close();
       TEAM.seen = (await TEAM.h.getFile()).lastModified;
       disk = toMap(all);
@@ -2670,7 +2891,7 @@ async function teamConnect(novo) {
       // Primeira conexão: os projetos pessoais ficam guardados à parte e voltam ao desconectar
       const copy = novo && await ask({ title: 'Levar seus projetos?', text: `Copiar os ${state.projects.length} projetos deste computador para o arquivo da equipe? Se preferir não copiar, a equipe começa com um projeto em branco.`, ok: 'Copiar projetos' });
       save();
-      if (!copy) { state.projects = []; state.templates = []; }
+      if (!copy) { state.projects = []; state.templates = []; state.marks = []; }
       TEAM.base = new Map();
     }
     Object.assign(TEAM, { h, ok, seen: -1, err: '' });
@@ -2813,6 +3034,38 @@ async function selfTest() {
     ok(pa.name === 'Projeto da aba' && pa.tasks.length > 0, 'abas: importa a aba escolhida');
     let err = ''; try { await parseXlsx(buf, 'x', 'Não existe'); } catch (e) { err = e.message; }
     ok(/não achei a aba/.test(err), 'abas: aba inexistente dá erro'); }
+  { // carga da equipe
+    const g = [{ id: 'g', name: 'G', color: '#006729' }], w = monday(todayN) + 7, D = k => n2d(w + k);
+    const t = (id, owner, a, b, o = {}) => ({ id, name: id, groupId: 'g', owner, start: D(a), end: D(b), progress: 0, milestone: false, risk: false, deps: [], ...o });
+    const p1 = { id: 'l1', name: 'P1', area: '', groups: g, tasks: [t('a', 'Ana Ribeiro', 0, 4), t('m', 'Ana Ribeiro', 2, 2, { milestone: true }), t('z', 'Ana Ribeiro', 0, 4, { progress: 100 })] };
+    const p2 = { id: 'l2', name: 'P2', area: '', groups: g, tasks: [t('b', ' ana  ribeiro ', 1, 2), t('c', '', 0, 1)] };
+    const L = loadGrid([p1, p2]), wi = L.weeks.indexOf(w), ana = L.people[0];
+    ok(L.people.length === 2 && ana.name === 'Ana Ribeiro' && ana.cells[wi].length === 2, 'carga: soma projetos e junta o nome escrito de outro jeito; marco e concluída não contam');
+    ok(L.people[1].none && L.people[1].name === 'Sem responsável' && L.people[1].cells[wi].length === 1, 'carga: sem responsável fica por último');
+    ok(L.weeks[0] === monday(todayN) - 28 && L.weeks.every(x => dow(x) === 1), 'carga: semanas começam na segunda'); }
+  { // caminho crítico
+    const g = [{ id: 'g', name: 'G', color: '#006729' }], t = (id, a, b, deps = [], pr = 0) => ({ id, name: id, groupId: 'g', owner: '', start: a, end: b, progress: pr, milestone: false, risk: false, deps });
+    const cp = { id: 'c', name: 'C', area: '', groups: g, tasks: [t('A', '2027-01-01', '2027-01-05', [], 100), t('B', '2027-01-06', '2027-01-10', ['A']), t('C', '2027-01-11', '2027-01-15', ['B']), t('D', '2027-01-01', '2027-01-08')] };
+    ok([...critical(cp)].sort().join() === 'A,B,C', 'caminho crítico: cadeia até o fim (concluída também conta)');
+    ok([...critical({ ...cp, tasks: cp.tasks.map(x => ({ ...x, deps: [] })) })].join() === 'C', 'caminho crítico: sem dependências, a que termina por último');
+    const cy = { ...cp, tasks: [t('X', '2027-01-01', '2027-01-05', ['Y']), t('Y', '2027-01-01', '2027-01-05', ['X'])] };
+    ok(critical(cy).size === 2 && critical({ ...cp, tasks: [] }).size === 0, 'caminho crítico: ciclo e projeto vazio'); }
+  { // feriados e datas da empresa
+    ok(easter(2026) === d2n('2026-04-05') && easter(2027) === d2n('2027-03-28') && easter(2030) === d2n('2030-04-21'), 'feriados: Páscoa');
+    const h27 = holidays(2027), has = (n, d) => h27.some(h => h.name === n && h.s === d2n(d));
+    ok(has('Carnaval', '2027-02-08') && h27.find(h => h.name === 'Carnaval').e === d2n('2027-02-09') && has('Corpus Christi', '2027-05-27') && has('Sexta-feira Santa', '2027-03-26'), 'feriados: móveis');
+    ok(['2027-01-01', '2027-04-21', '2027-05-01', '2027-09-07', '2027-10-12', '2027-11-02', '2027-11-15', '2027-11-20', '2027-12-25'].every(d => h27.some(h => h.s === d2n(d))) && h27.length === 12, 'feriados: fixos');
+    const nm = normMark({ name: 'x', start: '2027-02-10', end: '2027-02-01' });
+    ok(nm.start === '2027-02-01' && nm.end === '2027-02-10' && normMark({ start: 'x' }) === null && normMark(null) === null && normMark({ id: '<a>', start: '2027-01-01' }).id === 'a', 'datas da empresa: validação');
+    const sh = state.showHol, sm = state.marks;
+    try {
+      state.showHol = false; state.marks = [nm]; ok(marksIn(d2n('2027-01-01'), d2n('2027-12-31')).length === 1, 'datas da empresa: sem feriados');
+      state.showHol = true; ok(marksIn(d2n('2027-12-20'), d2n('2027-12-31')).map(k => k.name).join() === 'Natal', 'datas da empresa: só o que cai no período');
+    } finally { state.showHol = sh; state.marks = sm; }
+    // modo equipe: cada pessoa cadastrou uma data nova; as duas ficam, e a que a outra apagou some
+    const m1 = normMark({ id: 'm1', name: 'Minha', start: '2027-01-01' }), m2 = normMark({ id: 'm2', name: 'Da colega', start: '2027-02-01' }), m3 = normMark({ id: 'm3', name: 'Apagada', start: '2027-03-01' });
+    const mg = mergeList([m1, m3], [m2], new Map([[m3.id, JSON.stringify(m3)]]), []);
+    ok(mg.map(m => m.id).sort().join() === 'm1,m2', 'datas da empresa: junção no arquivo da equipe'); }
   { // critério das cores, tendência e PowerPoint
     const g = [{ id: 'g', name: 'G', color: '#006729' }], tk = (e, pr = 0) => ({ id: 't' + e, name: 'T', groupId: 'g', owner: '', start: n2d(todayN - 20), end: n2d(todayN + e), progress: pr, milestone: false, risk: false, deps: [] });
     const hp = { id: 'h', name: 'H & <x>', area: '', groups: g, tasks: [tk(-2), tk(5)] };
