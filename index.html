@@ -382,6 +382,15 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 .muted{color:var(--ink-2);margin:0;font-size:13.5px}
 .dlg-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:6px}
 #dlgGrupos{width:min(640px,calc(100vw - 32px))}
+#dlgAbas{width:min(620px,calc(100vw - 32px))}
+.ab-list{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow:auto}
+.ab-i{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.ab-i label{display:flex;align-items:center;gap:9px;font-size:13.5px;min-width:0;cursor:pointer}
+.ab-i label span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ab-i:has(input[type=checkbox]:not(:checked)) .ab-n{opacity:.45}
+.ab-n{height:36px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--surface);font-size:14px;color:var(--ink);width:100%}
+.ab-n:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18)}
+@media (max-width:560px){.ab-i{grid-template-columns:1fr}}
 #dlgLote{width:min(1000px,calc(100vw - 32px))}
 .lt-wrap{max-height:52vh;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
 .lt{width:100%;min-width:760px;border-collapse:collapse}
@@ -729,8 +738,8 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Preencha uma linha por atividade: <b>Seção</b>, <b>Atividade</b>, <b>Responsável</b>, <b>Início</b>, <b>Fim</b> e, se for o caso, marque <b>Marco</b> (data única). Enter desce para a linha de baixo; <b>Mais 5 linhas</b> abre espaço.</li>
         <li>Também dá para copiar as colunas no Excel e colar na primeira célula: cada linha vira uma tarefa. Datas como 05/03/2027 são entendidas.</li>
         <li>Clique em <b>Inserir tarefas</b>. Elas entram no projeto aberto; Ctrl+Z desfaz.</li>
-      </ol>O que ficar vazio o programa assume: sem seção, repete a da linha de cima. Para criar uma seção, basta digitar um nome que ainda não existe: a linha mostra o selo <b>nova</b> e a seção é criada ao inserir. Uma linha só com a seção, sem atividade, cria a seção vazia, e as linhas de baixo sem seção entram nela. Se a cópia do Excel trouxer o cabeçalho, ele é ignorado; sem início, começa no dia seguinte ao fim da linha de cima; sem fim, termina no mesmo dia. Marco usa a data de início (sem ela, a de fim; sem nenhuma, o dia seguinte à linha de cima). Ao colar do Excel, a coluna Marco aceita Sim, X ou 1. Responsável vazio fica sem responsável; % e o resto ficam no padrão para ajustar depois.</div></details>
-      <details><summary>Importar de uma planilha</summary><div><ol>
+      </ol>O que ficar vazio o programa assume: sem seção, repete a da linha de cima. Para criar uma seção, basta digitar um nome que ainda não existe: a linha mostra o selo <b>nova</b> e a seção é criada ao inserir. Pode repetir o mesmo nome em quantas linhas quiser (maiúscula e acento não importam): todas as atividades entram na mesma seção. Uma linha só com a seção, sem atividade, cria a seção vazia, e as linhas de baixo sem seção entram nela. Se a cópia do Excel trouxer o cabeçalho, ele é ignorado; sem início, começa no dia seguinte ao fim da linha de cima; sem fim, termina no mesmo dia. Marco usa a data de início (sem ela, a de fim; sem nenhuma, o dia seguinte à linha de cima). Ao colar do Excel, a coluna Marco aceita Sim, X ou 1. Responsável vazio fica sem responsável; % e o resto ficam no padrão para ajustar depois.</div></details>
+      <details><summary>Importar de uma planilha</summary><div><p>Vários projetos de uma vez: coloque cada projeto numa aba da mesma planilha. Ao abrir, o programa lista as abas; marque as que viram projeto e dê um nome para cada uma (já vem com o nome da aba). Se uma aba tiver problema, as outras são importadas mesmo assim e o aviso diz qual falhou.</p><ol>
         <li>Clique em <b>Baixar planilha modelo</b> na barra lateral.</li>
         <li>Preencha uma linha por tarefa: Grupo, Tarefa, Responsável, Início e Fim. As datas podem ser no formato 31/12/2026.</li>
         <li>Salve e use <b>Abrir backup ou planilha</b>. A planilha vira um projeto novo.</li>
@@ -789,11 +798,20 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 <dialog id="dlgLote" aria-labelledby="ltT">
   <form method="dialog" class="dlg-in">
     <h2 id="ltT">Inserir tarefas em lote</h2>
-    <p class="muted">Uma linha por atividade. Só a atividade é obrigatória: sem seção, repete a da linha de cima; sem início, começa no dia seguinte ao fim da linha de cima; sem fim, termina no mesmo dia. Marco tem data única (a de início ou, se faltar, a de fim). Uma linha só com a seção cria a seção vazia. Dá para colar várias linhas copiadas do Excel, com ou sem o cabeçalho.</p>
+    <p class="muted">Uma linha por atividade. Só a atividade é obrigatória. Pode repetir o nome da seção em cada linha ou deixar em branco para usar a de cima; uma seção nova aparece com o selo nova e é criada uma vez só. Nas datas: sem início, começa no dia seguinte ao fim da linha de cima; sem fim, termina no mesmo dia. Marco tem data única (a de início ou, se faltar, a de fim). Uma linha só com a seção cria a seção vazia. Dá para colar várias linhas copiadas do Excel, com ou sem o cabeçalho.</p>
     <div class="lt-wrap"><table class="lt"><thead><tr><th>Seção <span class="lt-h">escolha ou digite uma nova</span></th><th>Atividade</th><th>Responsável</th><th>Início</th><th>Fim</th><th>Marco</th></tr></thead><tbody id="ltBody"></tbody></table></div>
     <datalist id="ltGroups"></datalist>
     <div><button class="btn" type="button" id="btnLtMais">Mais 5 linhas</button></div>
     <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok">Inserir tarefas</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgAbas" aria-labelledby="abT">
+  <form method="dialog" class="dlg-in">
+    <h2 id="abT">Importar vários projetos</h2>
+    <p class="muted">Esta planilha tem várias abas. Marque as que viram projeto e dê um nome para cada uma. Cada aba precisa das colunas Tarefa (ou Atividade), Início e Fim, como na planilha modelo.</p>
+    <div class="ab-list" id="abList"></div>
+    <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok" id="abOk">Importar</button></div>
   </form>
 </dialog>
 
@@ -1871,20 +1889,27 @@ function buildXlsx(p, modelo) {
   ]);
 }
 
-const ALIAS = { grupo: 'grupo', fase: 'grupo', etapa: 'grupo', tarefa: 'nome', atividade: 'nome', 'nome da tarefa': 'nome', responsavel: 'owner', dono: 'owner',
+const ALIAS = { grupo: 'grupo', fase: 'grupo', etapa: 'grupo', secao: 'grupo', tarefa: 'nome', atividade: 'nome', 'nome da tarefa': 'nome', responsavel: 'owner', dono: 'owner',
   inicio: 'start', 'data de inicio': 'start', 'data inicio': 'start', fim: 'end', termino: 'end', 'data de fim': 'end', 'data fim': 'end', 'data final': 'end', 'data de termino': 'end',
   dias: 'dur', duracao: 'dur', 'duracao (dias)': 'dur',
   '% concluido': 'progress', concluido: 'progress', progresso: 'progress', status: 'status', marco: 'ms', 'depende de': 'deps', dependencias: 'deps', 'cor do grupo': 'color', cor: 'color',
   observacoes: 'note', observacao: 'note', obs: 'note', 'inicio planejado': 'bs', 'fim planejado': 'be' };
 
-async function parseXlsx(buf, name) {
+// nomes das abas, na ordem do Excel
+async function xlsxSheets(buf) {
+  const z = await unzip(buf);
+  if (!z['xl/workbook.xml']) throw Error('planilha incompleta (xl/workbook.xml)');
+  return [...new DOMParser().parseFromString(new TextDecoder().decode(z['xl/workbook.xml']), 'application/xml').getElementsByTagName('sheet')].map(s => s.getAttribute('name'));
+}
+// sheetName escolhe a aba; sem ele, usa "Tarefas" ou a primeira
+async function parseXlsx(buf, name, sheetName) {
   const z = await unzip(buf), dec = new TextDecoder();
   const X = f => { if (!z[f]) throw Error('planilha incompleta (' + f + ')'); return new DOMParser().parseFromString(dec.decode(z[f]), 'application/xml'); };
   const tags = (d, n) => [...d.getElementsByTagName(n)];
   const ss = z['xl/sharedStrings.xml'] ? tags(X('xl/sharedStrings.xml'), 'si').map(si => tags(si, 't').map(t => t.textContent).join('')) : [];
   const sheets = tags(X('xl/workbook.xml'), 'sheet');
-  const sh = sheets.find(s => norm(s.getAttribute('name')) === 'tarefas') || sheets[0];
-  if (!sh) throw Error('nenhuma aba encontrada');
+  const sh = sheetName != null ? sheets.find(s => s.getAttribute('name') === sheetName) : sheets.find(s => norm(s.getAttribute('name')) === 'tarefas') || sheets[0];
+  if (!sh) throw Error(sheetName != null ? `não achei a aba "${sheetName}"` : 'nenhuma aba encontrada');
   const rel = tags(X('xl/_rels/workbook.xml.rels'), 'Relationship').find(r => r.getAttribute('Id') === sh.getAttribute('r:id'));
   const tg = rel.getAttribute('Target'), path = tg.startsWith('/') ? tg.slice(1) : 'xl/' + tg.replace(/^\.\//, '');
   const rows = tags(X(path), 'row').map(r => {
@@ -1968,10 +1993,10 @@ function ltDate(v) {
 }
 const ltAdd = k => $('#ltBody').insertAdjacentHTML('beforeend', '<tr><td><input aria-label="Seção" list="ltGroups" autocomplete="off"></td><td><input aria-label="Atividade" autocomplete="off"></td><td><input aria-label="Responsável" list="owners" autocomplete="off"></td><td><input type="date" aria-label="Início"></td><td><input type="date" aria-label="Fim"></td><td><input type="checkbox" aria-label="Marco"></td></tr>'.repeat(k));
 $('#btnLtMais').addEventListener('click', () => ltAdd(5));
-// marca "nova" na seção que ainda não existe no projeto (ela é criada ao inserir)
+// marca "nova" na primeira linha de cada seção que ainda não existe (as repetições entram nela)
 const ltMark = () => { const ex = new Set(cur().groups.map(g => norm(g.name)));
   const novas = new Map();
-  $('#ltBody').querySelectorAll('tr').forEach(tr => { const i = tr.querySelector('input'), td = i.parentElement, v = norm(i.value); td.toggleAttribute('data-novo', !!v && !ex.has(v)); if (v && !ex.has(v) && !novas.has(v)) novas.set(v, i.value.trim()); });
+  $('#ltBody').querySelectorAll('tr').forEach(tr => { const i = tr.querySelector('input'), td = i.parentElement, v = norm(i.value); td.toggleAttribute('data-novo', !!v && !ex.has(v) && !novas.has(v)); if (v && !ex.has(v) && !novas.has(v)) novas.set(v, i.value.trim()); });
   // seções novas digitadas aqui também aparecem como sugestão nas outras linhas
   $('#ltGroups').innerHTML = [...cur().groups.map(g => g.name), ...novas.values()].map(n => `<option value="${esc(n)}">`).join(''); };
 $('#ltBody').addEventListener('input', ltMark);
@@ -2190,7 +2215,11 @@ $('#fileOpen').addEventListener('change', async e => {
   const f = e.target.files[0]; e.target.value = ''; if (!f) return;
   try {
     if (/\.xlsx$/i.test(f.name)) {
-      const { p, skipped } = await parseXlsx(await f.arrayBuffer(), f.name.replace(/\.xlsx$/i, ''));
+      const buf = await f.arrayBuffer(), base = f.name.replace(/\.xlsx$/i, '');
+      // abas que o próprio programa gera junto (Gantt, Como preencher) não viram projeto
+      const abas = (await xlsxSheets(buf)).filter(n => !['gantt', 'como preencher'].includes(norm(n)));
+      if (abas.length > 1) return importSheets(buf, abas);
+      const { p, skipped } = await parseXlsx(buf, base);
       state.projects.push(p); state.currentId = p.id;
       save(); closeDrawer(); render('load');
       toast(`${p.tasks.length} tarefas importadas${skipped ? `, ${skipped} linhas ignoradas por falta de nome ou data` : ''}`);
@@ -2208,6 +2237,28 @@ $('#fileOpen').addEventListener('change', async e => {
     toast(ps.length === 1 ? '1 projeto carregado' : `${ps.length} projetos carregados`);
   } catch (err) { toast('Não consegui abrir o arquivo: ' + err.message + '.'); }
 });
+
+/* ---------- importar várias abas como projetos ---------- */
+function importSheets(buf, abas) {
+  $('#abList').innerHTML = abas.map((n, i) => `<div class="ab-i"><label><input type="checkbox" checked data-i="${i}"><span>${esc(n)}</span></label><input class="ab-n" value="${esc(n)}" maxlength="120" aria-label="Nome do projeto da aba ${esc(n)}" placeholder="${esc(n)}"></div>`).join('');
+  const upd = () => { const k = $('#abList').querySelectorAll('input[type=checkbox]:checked').length; $('#abOk').textContent = k === 1 ? 'Importar 1 projeto' : `Importar ${k} projetos`; $('#abOk').disabled = !k; };
+  upd(); $('#abList').onchange = upd;
+  const d = $('#dlgAbas'); d.returnValue = ''; d.showModal();
+  d.addEventListener('close', async () => {
+    if (d.returnValue !== 'ok') return;
+    const pick = [...$('#abList').querySelectorAll('.ab-i')].filter(r => r.querySelector('input[type=checkbox]').checked)
+      .map(r => { const sheet = abas[+r.querySelector('input[type=checkbox]').dataset.i]; return { sheet, name: r.querySelector('.ab-n').value.trim() || sheet }; });
+    const ok = [], bad = []; let tasks = 0;
+    for (const { sheet, name } of pick) {
+      try { const { p } = await parseXlsx(buf, name, sheet); state.projects.push(p); ok.push(p); tasks += p.tasks.length; }
+      catch (err) { bad.push(`${sheet} (${err.message})`); }
+    }
+    if (ok.length) { state.currentId = ok[0].id; save(); closeDrawer(); render('load'); }
+    toast((ok.length ? `${ok.length} ${ok.length === 1 ? 'projeto importado' : 'projetos importados'}, ${tasks} tarefas` : 'Nenhum projeto importado') + (bad.length ? `. Não deu para importar: ${bad.join('; ')}` : '') + '.');
+  }, { once: true });
+}
+// Enter no nome importa, em vez de cancelar
+$('#abList').addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.classList.contains('ab-n')) { e.preventDefault(); if (!$('#abOk').disabled) $('#abOk').click(); } });
 
 /* ---------- arquivo da equipe ---------- */
 // Um .json numa pasta do SharePoint sincronizada pelo OneDrive. O app grava nele e o OneDrive leva para os colegas.
@@ -2446,6 +2497,12 @@ async function selfTest() {
     ok(a.groupId === 'g0' && b.groupId === 'g0' && c.groupId === d.groupId && c.groupId !== 'g0', 'lote: seção repete a de cima');
     ok(b.start === '2027-01-09' && c.start === '2027-01-16' && c.end === c.start && d.start === '2027-02-01' && d.end === '2027-02-10', 'lote: datas assumidas');
     ok(ltDate('05/03/2027') === '2027-03-05' && ltDate('5/3/27') === '2027-03-05' && ltDate('31/02/2027') === '' && ltDate('2027-03-05') === '2027-03-05' && ltDate('x') === '', 'lote: datas coladas'); }
+  { const buf = await buildXlsx(TPLS.length ? instantiate(TPLS[0], d2n('2027-01-04'), 'Abas') : modeloP()).arrayBuffer();
+    ok((await xlsxSheets(buf)).join() === 'Tarefas,Gantt', 'abas: nomes');
+    const { p: pa } = await parseXlsx(buf, 'Projeto da aba', 'Tarefas');
+    ok(pa.name === 'Projeto da aba' && pa.tasks.length > 0, 'abas: importa a aba escolhida');
+    let err = ''; try { await parseXlsx(buf, 'x', 'Não existe'); } catch (e) { err = e.message; }
+    ok(/não achei a aba/.test(err), 'abas: aba inexistente dá erro'); }
   const mp = modeloP(), { p: mq } = await parseXlsx(await buildXlsx(mp, true).arrayBuffer(), 'M');
   ok(mq.tasks.length === 3 && mq.tasks.every((t, i) => t.start === mp.tasks[i].start && t.end === mp.tasks[i].end && t.owner === mp.tasks[i].owner && t.progress === 0 && !t.milestone && !t.deps.length), 'planilha modelo');
   // Só Tarefa, Data início e Dias: o resto vem por padrão

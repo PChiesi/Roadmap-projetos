@@ -12,7 +12,7 @@ Ferramenta para montar cronogramas e roadmaps de projetos no navegador. É um ú
 - A Linha única resume o projeto numa faixa de tarefas em sequência, com nome e datas. Com vários projetos, eles ficam um embaixo do outro sobre a mesma régua de meses, e dá para ver em que meses se cruzam.
 - A Visão geral põe todos os projetos numa linha do tempo e mostra se cada um está no prazo, em atenção, atrasado ou concluído.
 - Inserir em lote abre uma tabela com Seção, Atividade, Responsável, Início, Fim e Marco. Você digita ou cola do Excel, cria seções novas ali mesmo, e o programa preenche o que ficar vazio.
-- Para importar, baixe a planilha modelo, preencha no Excel e abra no programa. A exportação gera um .xlsx com a lista de tarefas e um Gantt pintado.
+- Para importar, baixe a planilha modelo, preencha no Excel e abra no programa. Uma planilha com várias abas vira vários projetos de uma vez: você escolhe as abas e dá um nome para cada projeto. A exportação gera um .xlsx com a lista de tarefas e um Gantt pintado.
 - A linha de base guarda o plano original e mostra quantos dias cada tarefa atrasou ou adiantou.
 - O HTML para envio é uma cópia só para leitura, que abre com dois cliques em qualquer computador.
 - No modo equipe, várias pessoas editam o mesmo roadmap por um arquivo .json numa pasta do SharePoint ou OneDrive sincronizada.
