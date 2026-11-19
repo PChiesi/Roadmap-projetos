@@ -382,6 +382,17 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 .muted{color:var(--ink-2);margin:0;font-size:13.5px}
 .dlg-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:6px}
 #dlgGrupos{width:min(640px,calc(100vw - 32px))}
+#dlgLote{width:min(860px,calc(100vw - 32px))}
+.lt-wrap{max-height:52vh;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.lt{width:100%;min-width:600px;border-collapse:collapse}
+.lt th{position:sticky;top:0;z-index:1;background:var(--surface);text-align:left;font-size:12px;font-weight:600;color:var(--ink-3);padding:8px 12px;border-bottom:1px solid var(--line)}
+.lt th:nth-child(1){width:26%}
+.lt th:nth-child(3),.lt th:nth-child(4){width:150px}
+.lt td{padding:3px 4px;border-bottom:1px solid var(--line-2)}
+.lt tr:last-child td{border-bottom:0}
+.lt input{width:100%;height:34px;border:1px solid transparent;border-radius:7px;padding:0 8px;background:none;font-size:14px;color:var(--ink)}
+.lt input:hover{border-color:var(--line)}
+.lt input:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18);background:var(--surface)}
 #dlgManual{width:min(680px,calc(100vw - 32px))}
 .man{max-height:min(62vh,560px);overflow:auto;display:flex;flex-direction:column;gap:6px;margin:0 -6px;padding:0 6px}
 .man details{border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
@@ -568,6 +579,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
             <button data-act="print">Imprimir ou salvar PDF</button>
           </div>
         </details>
+        <button class="btn edit-only" data-act="batch" title="Digitar ou colar várias tarefas de uma vez">Inserir em lote</button>
         <button class="btn primary edit-only" data-act="newTask">Nova tarefa</button>
       </div>
     </header>
@@ -704,6 +716,12 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>A linha vermelha é o dia de hoje. Tarefas vencidas e não concluídas ficam marcadas como <b>Atrasada</b>; as marcadas como em risco aparecem tracejadas.</li>
         <li>O resumo no topo mostra o andamento geral, o período, atrasos, riscos e os próximos marcos.</li>
       </ul></div></details>
+      <details><summary>Inserir várias tarefas de uma vez</summary><div><ol>
+        <li>Clique em <b>Inserir em lote</b>, ao lado de Nova tarefa.</li>
+        <li>Preencha uma linha por atividade: <b>Seção</b>, <b>Atividade</b>, <b>Início</b> e <b>Fim</b>. Enter desce para a linha de baixo; <b>Mais 5 linhas</b> abre espaço.</li>
+        <li>Também dá para copiar as colunas no Excel e colar na primeira célula: cada linha vira uma tarefa. Datas como 05/03/2027 são entendidas.</li>
+        <li>Clique em <b>Inserir tarefas</b>. Elas entram no projeto aberto; Ctrl+Z desfaz.</li>
+      </ol>O que ficar vazio o programa assume: sem seção, repete a da linha de cima (seção que não existe é criada); sem início, começa no dia seguinte ao fim da linha de cima; sem fim, termina no mesmo dia. Responsável, % e o resto ficam em branco para ajustar depois, se quiser.</div></details>
       <details><summary>Importar de uma planilha</summary><div><ol>
         <li>Clique em <b>Baixar planilha modelo</b> na barra lateral.</li>
         <li>Preencha uma linha por tarefa: Grupo, Tarefa, Responsável, Início e Fim. As datas podem ser no formato 31/12/2026.</li>
@@ -757,6 +775,17 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
     <p class="muted">Todos os projetos na mesma régua de datas. Passe o mouse para ver a data exata e onde os projetos se sobrepõem. Clique em um projeto para abrir.</p>
     <div class="pf" id="pfList"></div>
     <div class="dlg-foot"><button class="btn primary" value="">Fechar</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgLote" aria-labelledby="ltT">
+  <form method="dialog" class="dlg-in">
+    <h2 id="ltT">Inserir tarefas em lote</h2>
+    <p class="muted">Uma linha por atividade. Só a atividade é obrigatória: sem seção, repete a da linha de cima; sem início, começa no dia seguinte ao fim da linha de cima; sem fim, termina no mesmo dia. Dá para colar várias linhas copiadas do Excel.</p>
+    <div class="lt-wrap"><table class="lt"><thead><tr><th>Seção</th><th>Atividade</th><th>Início</th><th>Fim</th></tr></thead><tbody id="ltBody"></tbody></table></div>
+    <datalist id="ltGroups"></datalist>
+    <div><button class="btn" type="button" id="btnLtMais">Mais 5 linhas</button></div>
+    <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok">Inserir tarefas</button></div>
   </form>
 </dialog>
 
@@ -1898,9 +1927,74 @@ async function parseXlsx(buf, name) {
   return { p: normP(p), skipped };
 }
 
+/* ---------- inserir em lote ---------- */
+// rows = [[seção, atividade, início, fim]] com datas aaaa-mm-dd ou ''. Vazios: seção repete a de cima,
+// início = dia seguinte ao fim da linha de cima (a primeira começa hoje), fim = mesmo dia do início.
+function batchAdd(p, rows) {
+  let g = null, prev = null, n = 0, skip = 0;
+  for (const [gn0, nome0, si, ei] of rows) {
+    const gn = String(gn0 || '').trim(), nome = String(nome0 || '').trim();
+    if (!nome) { if (gn || si || ei) skip++; continue; }
+    if (gn) {
+      g = p.groups.find(x => norm(x.name) === norm(gn));
+      if (!g) { g = { id: uid(), name: gn.slice(0, 120), color: PAL[p.groups.length % PAL.length] }; p.groups.push(g); }
+    }
+    g = g || p.groups[0];
+    let s = si ? d2n(si) : NaN, e = ei ? d2n(ei) : NaN;
+    if (isNaN(s)) { s = prev != null ? prev + 1 : isNaN(e) ? todayN : e; if (e < s) s = e; }
+    if (isNaN(e)) e = s; if (e < s) [s, e] = [e, s];
+    p.tasks.push({ id: uid(), name: nome.slice(0, 300), groupId: g.id, owner: '', start: n2d(s), end: n2d(e), progress: 0, milestone: false, risk: false, deps: [], note: '' });
+    prev = e; n++;
+  }
+  return { n, skip };
+}
+// datas coladas do Excel: dd/mm/aaaa, dd/mm/aa ou aaaa-mm-dd; data que não existe vira vazio
+function ltDate(v) {
+  v = String(v ?? '').trim();
+  const m = v.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/);
+  if (m) { const y = m[3].length === 2 ? 2000 + +m[3] : +m[3], n = Math.round(Date.UTC(y, m[2] - 1, +m[1]) / DAY); return new Date(n * DAY).getUTCDate() === +m[1] && +m[2] <= 12 ? n2d(n) : ''; }
+  return /^\d{4}-\d{2}-\d{2}$/.test(v) && !isNaN(d2n(v)) ? v : '';
+}
+const ltAdd = k => $('#ltBody').insertAdjacentHTML('beforeend', '<tr><td><input aria-label="Seção" list="ltGroups" autocomplete="off"></td><td><input aria-label="Atividade" autocomplete="off"></td><td><input type="date" aria-label="Início"></td><td><input type="date" aria-label="Fim"></td></tr>'.repeat(k));
+$('#btnLtMais').addEventListener('click', () => ltAdd(5));
+// colar várias linhas/colunas do Excel a partir da célula clicada
+$('#ltBody').addEventListener('paste', e => {
+  const txt = e.clipboardData.getData('text').replace(/\r/g, '').replace(/\n+$/, '');
+  if (!/[\t\n]/.test(txt)) return;
+  e.preventDefault();
+  const td = e.target.closest('td'), tr = td.parentElement, c0 = [...tr.children].indexOf(td);
+  let r = [...$('#ltBody').children].indexOf(tr);
+  for (const line of txt.split('\n')) {
+    while (r >= $('#ltBody').children.length) ltAdd(5);
+    const ins = $('#ltBody').children[r].querySelectorAll('input');
+    line.split('\t').forEach((v, k) => { const i = ins[c0 + k]; if (i) i.value = i.type === 'date' ? ltDate(v) : v.trim(); });
+    r++;
+  }
+});
+// Enter desce para a linha de baixo (como no Excel) em vez de fechar a janela
+$('#ltBody').addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return; e.preventDefault();
+  const td = e.target.closest('td'), tr = td.parentElement, c = [...tr.children].indexOf(td);
+  if (!tr.nextElementSibling) ltAdd(5);
+  tr.nextElementSibling.children[c].querySelector('input').focus();
+});
+$('#dlgLote').addEventListener('close', () => {
+  if ($('#dlgLote').returnValue !== 'ok') return;
+  const rows = [...$('#ltBody').children].map(tr => [...tr.querySelectorAll('input')].map(i => i.value));
+  const { n, skip } = batchAdd(cur(), rows);
+  if (!n) return toast('Nada foi inserido: preencha pelo menos a atividade.');
+  save(); render();
+  toast(`${n} ${n === 1 ? 'tarefa inserida' : 'tarefas inseridas'}${skip ? `. ${skip} ${skip === 1 ? 'linha sem atividade foi ignorada' : 'linhas sem atividade foram ignoradas'}` : ''}. Ctrl+Z desfaz.`);
+});
+
 /* ---------- ações ---------- */
 const ACT = {
   newTask: () => newTask(cur().groups[0].id),
+  batch: () => {
+    $('#ltGroups').innerHTML = cur().groups.map(g => `<option value="${esc(g.name)}">`).join('');
+    $('#ltBody').innerHTML = ''; ltAdd(8);
+    const d = $('#dlgLote'); d.returnValue = ''; d.showModal(); $('#ltBody input').focus();
+  },
   selClear: () => { SEL.clear(); renderGantt(); },
   groups: () => { renderGroups(); $('#dlgGrupos').showModal(); },
   saveTpl: async () => {
@@ -2321,6 +2415,13 @@ async function selfTest() {
     const tp = instantiate(toTemplate(p, 'x'), d2n('2027-01-04'), 'T2');
     ok(tp.tasks.length === p.tasks.length && tp.tasks.every((t, i) => t.end === p.tasks[i].end), 'modelo salvo de ' + tpl.name);
   }
+  { const bp = { id: 'b', name: 'L', area: '', groups: [{ id: 'g0', name: 'Especificação', color: PAL[0] }], tasks: [] };
+    const r = batchAdd(bp, [['especificacao', 'A', '2027-01-04', '2027-01-08'], ['', 'B', '', '2027-01-15'], ['Testes', 'C', '', ''], ['', 'D', '2027-02-10', '2027-02-01'], ['X', '', '', ''], ['', '', '', '']]);
+    const [a, b, c, d] = bp.tasks;
+    ok(r.n === 4 && r.skip === 1 && bp.groups.length === 2, 'lote: contagem e seção nova');
+    ok(a.groupId === 'g0' && b.groupId === 'g0' && c.groupId === d.groupId && c.groupId !== 'g0', 'lote: seção repete a de cima');
+    ok(b.start === '2027-01-09' && c.start === '2027-01-16' && c.end === c.start && d.start === '2027-02-01' && d.end === '2027-02-10', 'lote: datas assumidas');
+    ok(ltDate('05/03/2027') === '2027-03-05' && ltDate('5/3/27') === '2027-03-05' && ltDate('31/02/2027') === '' && ltDate('2027-03-05') === '2027-03-05' && ltDate('x') === '', 'lote: datas coladas'); }
   const mp = modeloP(), { p: mq } = await parseXlsx(await buildXlsx(mp, true).arrayBuffer(), 'M');
   ok(mq.tasks.length === 3 && mq.tasks.every((t, i) => t.start === mp.tasks[i].start && t.end === mp.tasks[i].end && t.owner === mp.tasks[i].owner && t.progress === 0 && !t.milestone && !t.deps.length), 'planilha modelo');
   // Só Tarefa, Data início e Dias: o resto vem por padrão
