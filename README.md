@@ -14,6 +14,9 @@ Ferramenta para montar cronogramas e roadmaps de projetos no navegador. É um ú
 - Inserir em lote abre uma tabela com Seção, Atividade, Responsável, Início, Fim e Marco. Você digita ou cola do Excel, cria seções novas ali mesmo, e o programa preenche o que ficar vazio.
 - Para importar, baixe a planilha modelo, preencha no Excel e abra no programa. Uma planilha com várias abas vira vários projetos de uma vez: você escolhe as abas e dá um nome para cada projeto. A exportação gera um .xlsx com a lista de tarefas e um Gantt pintado.
 - A linha de base guarda o plano original e mostra quantos dias cada tarefa atrasou ou adiantou.
+- O relatório executivo mostra todos os projetos numa página, do mais crítico para o mais tranquilo, com um campo para as decisões que a diretoria precisa tomar. Dá para imprimir ou salvar em PDF.
+- A exportação para PowerPoint gera slides editáveis (formas nativas, não imagem): resumo dos projetos, linha do tempo de todos na mesma régua e um cronograma por projeto.
+- Ao lado da situação aparece a tendência (melhorou, piorou ou estável em relação a 7 dias atrás), e o critério das cores pode ter tolerância em dias por projeto.
 - O HTML para envio é uma cópia só para leitura, que abre com dois cliques em qualquer computador.
 - No modo equipe, várias pessoas editam o mesmo roadmap por um arquivo .json numa pasta do SharePoint ou OneDrive sincronizada.
 - Também tem busca e filtros, desfazer e refazer (Ctrl+Z / Ctrl+Y), modelos de projeto, tema claro e escuro e um Manual dentro do programa.

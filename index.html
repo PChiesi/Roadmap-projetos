@@ -382,6 +382,36 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 .muted{color:var(--ink-2);margin:0;font-size:13.5px}
 .dlg-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:6px}
 #dlgGrupos{width:min(640px,calc(100vw - 32px))}
+#dlgRep{width:min(1180px,calc(100vw - 32px))}
+.hb-w{display:inline-flex;align-items:center;flex-wrap:wrap;gap:2px 0}
+.tr{display:inline-flex;align-items:center;margin-left:6px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.tr-up{color:var(--green-txt)}.tr-down{color:var(--red)}.tr-flat{color:var(--ink-3)}
+.rag-rule{list-style:none;margin:0;padding:12px 14px;display:flex;flex-direction:column;gap:7px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:13px;color:var(--ink-2)}
+.rag-rule .hb{margin-right:6px}
+.rp{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.rp-h{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--line)}
+.rp-h h3{margin:0;font:700 19px var(--f-d);color:var(--title)}
+.rp-h p{margin:2px 0 0;font-size:12.5px;color:var(--ink-3)}
+.rp-k{display:flex;gap:6px;flex-wrap:wrap}
+.rp-row{display:grid;grid-template-columns:1.25fr 1fr 1.1fr 1.1fr 1.5fr;gap:14px;padding:10px 16px 10px 13px;border-bottom:1px solid var(--line-2);border-left:3px solid transparent;align-items:start}
+.rp-row>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.rp-head{font-size:11px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;padding-top:8px;padding-bottom:8px;background:var(--surface-2,var(--line-2))}
+.rp-p{border-left-color:var(--h)}
+.rp-p b{font:700 14px/1.25 var(--f-d);color:var(--title)}
+.rp-p small{font-size:12px;color:var(--ink-2);line-height:1.35;overflow-wrap:anywhere}
+.rp-p small b{font:inherit;font-weight:700;color:var(--ink)}
+.rp-p .hb-w{margin-bottom:2px}
+.rp-0{color:var(--ink-3)!important}
+.rp-p i{font-style:normal;font-size:10.5px;font-weight:700;padding:0 5px;border-radius:4px;margin-right:3px}
+.rp-l{background:var(--red);color:#fff}.rp-r{background:color-mix(in srgb,var(--amber) 30%,transparent);color:var(--ink)}
+.rp-p textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--surface);font:400 13px/1.35 var(--f-t);color:var(--ink);resize:vertical;min-height:52px}
+.rp-p textarea:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18)}
+.rp-ex{margin:0;font-size:12.5px;line-height:1.4;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere}
+.rp-f{padding:10px 16px;font-size:11px;color:var(--ink-3);line-height:1.4}
+#repBody{max-height:60vh;overflow:auto;border-radius:14px}
+#repPrint{display:none}
+@media (max-width:860px){.rp-row{grid-template-columns:1fr}.rp-head{display:none}}
+@media print{body.rep-print .app,body.rep-print dialog,body.rep-print .toast{display:none!important}body.rep-print #repPrint{display:block}html:has(body.rep-print),body.rep-print{background:#fff!important;min-height:0!important}body.rep-print .rp{border:0}.rp-row{break-inside:avoid}.rp-row{grid-template-columns:1.25fr 1fr 1.1fr 1.1fr 1.5fr!important}.rp-head{display:grid!important}}
 #dlgAbas{width:min(620px,calc(100vw - 32px))}
 .ab-list{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow:auto}
 .ab-i{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
@@ -584,6 +614,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
             <button data-act="groups">Grupos e cores</button>
             <button data-act="baseSet">Salvar linha de base</button>
             <button data-act="baseDel" hidden>Remover linha de base</button>
+            <button data-act="rag">Critério das cores</button>
             <button data-act="saveTpl">Salvar como modelo</button>
             <button data-act="dup">Duplicar projeto</button>
             <button data-act="del" class="danger">Excluir projeto</button>
@@ -591,6 +622,8 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         </details>
         <details class="menu"><summary class="btn">Exportar</summary>
           <div class="menu-pop">
+            <button data-act="report">Relatório executivo (1 página)</button>
+            <button data-act="pptx">PowerPoint (.pptx)</button>
             <button data-act="xlsx">Planilha Excel (.xlsx)</button>
             <button data-act="html" class="edit-only">HTML para envio</button>
             <button data-act="print">Imprimir ou salvar PDF</button>
@@ -706,10 +739,18 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Ao passar o mouse na barra aparece o desvio em dias. O cartão <b>Período</b> mostra quanto o fim do projeto se afastou do plano, e os próximos marcos mostram o desvio de cada um.</li>
         <li>Salvar de novo troca a linha de base pelas datas atuais. <b>Remover linha de base</b> apaga a comparação.</li>
       </ul></div></details>
+      <details><summary>Relatório executivo e PowerPoint</summary><div><ul>
+        <li><b>Exportar › Relatório executivo</b> mostra todos os projetos numa página, do mais crítico para o mais tranquilo: situação e tendência, % concluído, próximos marcos, tarefas atrasadas e em risco.</li>
+        <li>Na coluna <b>Decisões e pontos de atenção</b>, escreva o que a diretoria precisa decidir ou saber. O texto fica salvo no projeto.</li>
+        <li><b>Imprimir ou salvar PDF</b> imprime só o relatório, em paisagem e no tema claro.</li>
+        <li><b>Exportar › PowerPoint</b> (ou o botão no relatório) gera um .pptx com: o resumo de todos os projetos, a linha do tempo deles na mesma régua de meses e um cronograma por projeto. Tudo é feito com formas do PowerPoint, então textos, barras e cores podem ser editados depois.</li>
+      </ul></div></details>
       <details><summary>Situação do projeto</summary><div><ul>
         <li><b>No prazo</b> (verde): nada atrasado nem em risco.</li>
         <li><b>Atenção</b> (amarelo): há tarefa marcada como em risco, ou o fim do projeto passou do que estava na linha de base.</li>
         <li><b>Atrasado</b> (vermelho): há tarefa vencida e não concluída.</li>
+        <li><b>Projeto › Critério das cores</b> define tolerâncias para este projeto: por exemplo, tarefa vencida há até 3 dias fica amarela em vez de vermelha, ou um desvio de até 5 dias da linha de base continua verde. A regra em vigor aparece ao passar o mouse na situação, no relatório e no PowerPoint.</li>
+        <li>Ao lado da situação aparece a <b>tendência</b>: <b>↑ Melhorou</b>, <b>↓ Piorou</b> ou <b>→ Estável</b>, comparando com a situação de 7 dias atrás (ou do primeiro dia registrado, se o projeto for mais novo). O programa guarda uma foto por dia, sozinho.</li>
         <li><b>Concluído</b> (azul): todas as tarefas em 100%.</li>
         <li>A mesma cor aparece na bolinha ao lado de cada projeto na barra lateral.</li>
       </ul></div></details>
@@ -812,6 +853,25 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
     <p class="muted">Esta planilha tem várias abas. Marque as que viram projeto e dê um nome para cada uma. Cada aba precisa das colunas Tarefa (ou Atividade), Início e Fim, como na planilha modelo.</p>
     <div class="ab-list" id="abList"></div>
     <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok" id="abOk">Importar</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgRag" aria-labelledby="rgT">
+  <form method="dialog" class="dlg-in" id="fRag">
+    <h2 id="rgT">Critério das cores</h2>
+    <p class="muted">Quanto atraso este projeto tolera antes de mudar de cor. Com 0, qualquer atraso já conta. A regra aparece no relatório executivo e no PowerPoint.</p>
+    <div class="two"><label class="fld">Tarefa vencida fica vermelha depois de (dias)<input type="number" name="late" min="0" max="365" step="1" inputmode="numeric"></label><label class="fld">Desvio da linha de base tolerado (dias)<input type="number" name="slip" min="0" max="365" step="1" inputmode="numeric"></label></div>
+    <ul class="rag-rule" id="ragRule"></ul>
+    <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok">Salvar critério</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgRep" aria-labelledby="rpT">
+  <form method="dialog" class="dlg-in">
+    <h2 id="rpT">Relatório executivo</h2>
+    <p class="muted"><span class="edit-only">A situação de todos os projetos numa página. Escreva em cada projeto as decisões que a diretoria precisa tomar: o texto fica salvo no projeto e vai também para o PowerPoint.</span><span class="ro-only">A situação de todos os projetos numa página.</span></p>
+    <div id="repBody"></div>
+    <div class="dlg-foot"><button class="btn" type="button" id="btnRepPptx">Baixar PowerPoint</button><button class="btn" type="button" id="btnRepPrint">Imprimir ou salvar PDF</button><button class="btn primary" value="">Fechar</button></div>
   </form>
 </dialog>
 
@@ -967,20 +1027,54 @@ function normP(p) {
   tasks.forEach(t => { t.deps = t.deps.filter(d => tids.has(d) && d !== t.id); if (t.milestone) t.end = t.start; });
   const out = { id: sid(p.id) || uid(), name: String(p.name || 'Projeto'), area: String(p.area || ''), groups, tasks };
   if (okd(p.baseAt) && tasks.some(t => t.bs)) out.baseAt = p.baseAt;
+  if (p.tol) { const tol = { late: tolN(p.tol.late), slip: tolN(p.tol.slip) }; if (tol.late || tol.slip) out.tol = tol; }
+  if (Array.isArray(p.hist)) out.hist = p.hist.filter(x => Array.isArray(x) && okd(x[0]) && Object.prototype.hasOwnProperty.call(HRANK, x[1])).slice(-120).map(x => [x[0], x[1], tolN(x[2]), Math.round(+x[3] || 0)]);
+  if (p.exec) out.exec = String(p.exec).slice(0, 1500);
   return out;
 }
 const okTpl = t => t && /^[\w-]{1,40}$/.test(t.id) && Array.isArray(t.groups) && Array.isArray(t.tasks);
 
 // Saúde do projeto em uma palavra, do jeito que a diretoria lê: verde, amarelo ou vermelho
 const slipDays = p => { const b = p.tasks.filter(t => t.be); return b.length ? Math.max(...p.tasks.map(t => d2n(t.end))) - Math.max(...b.map(t => d2n(t.be))) : 0; };
+// Critério das cores, por projeto: quantos dias de atraso e de desvio do plano ainda não mudam a cor (0 = qualquer um já conta)
+const tolN = v => Math.max(0, Math.min(365, Math.round(+v || 0)));
+const tolOf = p => ({ late: tolN(p.tol && p.tol.late), slip: tolN(p.tol && p.tol.slip) });
 function health(p) {
-  const open = p.tasks.filter(t => t.progress < 100);
+  const open = p.tasks.filter(t => t.progress < 100), T = tolOf(p);
   if (!p.tasks.length) return ['none', 'Sem tarefas'];
   if (!open.length) return ['done', 'Concluído'];
-  if (open.some(t => status(t) === 'late')) return ['late', 'Atrasado'];
-  if (open.some(t => t.risk) || slipDays(p) > 0) return ['risk', 'Atenção'];
+  const late = open.filter(t => status(t) === 'late');
+  if (late.some(t => todayN - d2n(t.end) > T.late)) return ['late', 'Atrasado'];
+  if (late.length || open.some(t => t.risk) || slipDays(p) > T.slip) return ['risk', 'Atenção'];
   return ['ok', 'No prazo'];
 }
+// a regra em palavras, para a tela, o relatório e o PowerPoint
+function ragRule(p) {
+  const T = tolOf(p), d = n => n === 1 ? '1 dia' : n + ' dias';
+  return [
+    ['late', 'Atrasado', T.late ? `tarefa não concluída vencida há mais de ${d(T.late)}` : 'tarefa vencida e não concluída'],
+    ['risk', 'Atenção', `${T.late ? `tarefa vencida há até ${d(T.late)}, ` : ''}tarefa marcada em risco ou fim do projeto ${T.slip ? `mais de ${d(T.slip)} ` : ''}depois da linha de base`],
+    ['ok', 'No prazo', 'nenhum dos casos acima'],
+    ['done', 'Concluído', 'todas as tarefas em 100%']
+  ];
+}
+// Tendência: uma foto por dia da situação de cada projeto, para dizer se melhorou ou piorou
+const HRANK = { done: 0, none: 0, ok: 1, risk: 2, late: 3 };
+const hsnap = p => [n2d(todayN), health(p)[0], p.tasks.filter(t => status(t) === 'late').length, slipDays(p)];
+function recordHist(p) {
+  const s = hsnap(p), h = p.hist || (p.hist = []), last = h[h.length - 1];
+  if (last && last[0] === s[0]) h[h.length - 1] = s; else h.push(s);
+  if (h.length > 120) h.splice(0, h.length - 120);
+}
+// compara com a foto de 7 dias atrás; se o histórico for mais curto, com a mais antiga (nunca com a de hoje)
+function trend(p) {
+  const h = (p.hist || []).filter(x => x[0] < n2d(todayN)); if (!h.length) return null;
+  const lim = n2d(todayN - 7), ref = h.slice().reverse().find(x => x[0] <= lim) || h[0], now = hsnap(p);
+  const c = (HRANK[now[1]] - HRANK[ref[1]]) || (now[2] - ref[2]) || Math.sign(now[3] - ref[3]);
+  return { dir: c < 0 ? 'up' : c > 0 ? 'down' : 'flat', since: ref[0] };
+}
+const TRT = { up: 'Melhorou', down: 'Piorou', flat: 'Estável' }, TRA = { up: '↑', down: '↓', flat: '→' };
+const tb = p => { const t = trend(p); return t ? `<span class="tr tr-${t.dir}" title="${TRT[t.dir]} desde ${fmtCurto(d2n(t.since))}">${TRA[t.dir]} ${TRT[t.dir]}</span>` : ''; };
 const pctOf = p => {
   const w = t => t.milestone ? 1 : d2n(t.end) - d2n(t.start) + 1, tw = p.tasks.reduce((a, t) => a + w(t), 0);
   return tw ? Math.round(p.tasks.reduce((a, t) => a + w(t) * t.progress, 0) / tw) : 0;
@@ -1021,6 +1115,7 @@ if (RO) {
   if (!state.projects.some(p => p.id === state.currentId)) state.currentId = state.projects[0].id;
   if (!ZOOM[state.zoom]) state.zoom = 'month';
   state.templates = state.templates.filter(okTpl);
+  state.projects.forEach(recordHist);
 }
 // Visão do cronograma também é preferência de tela: "detail" (uma linha por tarefa) ou "line" (todas as barras numa faixa só)
 if (state.view !== 'line') state.view = 'detail';
@@ -1058,6 +1153,7 @@ function persist() {
 }
 function save() {
   if (RO) return;
+  recordHist(cur());
   const s = snap(), now = Date.now();
   if (s !== HIST.last) {
     // mudanças em sequência (digitar um nome, arrastar o % concluído) contam como um passo só
@@ -1131,7 +1227,7 @@ function renderSummary(fx) {
   $('#summary').className = 'summary' + (fx === 'load' ? ' in' : '');
   $('#summary').innerHTML = `
     <div class="sm sm-main"><div class="ring-w"><svg class="ring" viewBox="0 0 80 80" aria-hidden="true"><defs><linearGradient id="rgG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--green-l)"/><stop offset="1" stop-color="var(--green)"/></linearGradient></defs><circle class="rg-t" cx="40" cy="40" r="34"/><circle class="rg-v" cx="40" cy="40" r="34" pathLength="100" style="stroke-dashoffset:${fx === 'load' ? 100 : 100 - pct}" data-o="${100 - pct}"/></svg><b class="ring-n" data-n="${pct}" data-s="%">${pct}%</b></div>
-      <div><span class="sm-k">Andamento geral</span>${hb(p)}<small>${done} de ${ts.length} ${ts.length === 1 ? 'tarefa concluída' : 'tarefas concluídas'}</small></div></div>
+      <div><span class="sm-k">Andamento geral</span><span class="hb-w" title="${esc(ragRule(p).map(([, l, t]) => l + ': ' + t).join('\n'))}">${hb(p)}${tb(p)}</span><small>${done} de ${ts.length} ${ts.length === 1 ? 'tarefa concluída' : 'tarefas concluídas'}</small></div></div>
     <div class="sm"><span class="sm-k">Período</span><b class="sm-mid">${per}</b><small title="${esc(perS)}">${perS}</small></div>
     <div class="sm${late.length ? ' late' : ''}"><span class="sm-k">Atrasadas</span><b class="sm-big" data-n="${late.length}">${late.length}</b><small title="${esc(late.map(t => t.name).join(', '))}">${names(late)}</small></div>
     <div class="sm${risk.length ? ' warn' : ''}"><span class="sm-k">Em risco</span><b class="sm-big" data-n="${risk.length}">${risk.length}</b><small title="${esc(risk.map(t => t.name).join(', '))}">${names(risk)}</small></div>
@@ -2085,7 +2181,7 @@ const ACT = {
       const s = n ? Math.min(...p.tasks.map(t => d2n(t.start))) : 0, e = n ? Math.max(...p.tasks.map(t => d2n(t.end))) : 0;
       const per = n ? `${fmtCurto(s)} a ${fmtLong(e)}` : 'Sem tarefas';
       return `<button class="pf-row" value="${p.id}" style="--k:${k}">
-        <span class="pf-name"><b title="${esc(p.name)}">${esc(p.name)}</b><span class="pf-sub">${hb(p)}<small>${pct}%, ${per}${late ? `, <em class="bad">${late} ${late === 1 ? 'atrasada' : 'atrasadas'}</em>` : ''}</small></span></span>
+        <span class="pf-name"><b title="${esc(p.name)}">${esc(p.name)}</b><span class="pf-sub">${hb(p)}${tb(p)}<small>${pct}%, ${per}${late ? `, <em class="bad">${late} ${late === 1 ? 'atrasada' : 'atrasadas'}</em>` : ''}</small></span></span>
         <span class="pf-lane" style="--k:${k}">${n ? `<i class="pf-bar hb-${health(p)[0]}" style="left:${pos(s)};width:${wd(s, e)}" title="${esc(p.name)}: ${per}"><u style="width:${pct}%"></u></i>` : ''}${p.tasks.filter(t => t.milestone).map(t => `<i class="pf-ms" style="left:${pos(d2n(t.start) + .5)}" title="${esc(t.name)}, ${fmtLong(d2n(t.start))}"></i>`).join('')}</span></button>`;
     }).join('');
     $('#pfList').innerHTML = head + `<div class="pf-body">${grid}${rows}</div>`;
@@ -2111,7 +2207,17 @@ const ACT = {
     download(new Blob([SRC.replace(RO_TAG + 'null<', () => RO_TAG + data + '<')], { type: 'text/html' }), slug(p.name) + '-roadmap.html');
     toast('HTML para envio gerado');
   },
-  print: () => print()
+  print: () => print(),
+  rag: () => {
+    const p = cur(), F = $('#fRag').elements, T = tolOf(p);
+    F.late.value = T.late; F.slip.value = T.slip; $('#ragRule').innerHTML = ragList(p, T);
+    const d = $('#dlgRag'); d.returnValue = ''; d.showModal();
+  },
+  report: () => { $('#repBody').innerHTML = repHTML(!RO); const d = $('#dlgRep'); d.returnValue = ''; d.showModal(); },
+  pptx: () => {
+    download(buildPptx(repProjects()), slug(state.projects.length === 1 ? cur().name : 'roadmap-projetos') + '.pptx');
+    toast('PowerPoint gerado. Tudo nele é editável: textos, barras e cores.');
+  }
 };
 
 document.addEventListener('click', e => {
@@ -2237,6 +2343,188 @@ $('#fileOpen').addEventListener('change', async e => {
     toast(ps.length === 1 ? '1 projeto carregado' : `${ps.length} projetos carregados`);
   } catch (err) { toast('Não consegui abrir o arquivo: ' + err.message + '.'); }
 });
+
+/* ---------- critério das cores ---------- */
+const ragList = (p, tol) => ragRule({ ...p, tol }).map(([k, l, t]) => `<li><span class="hb hb-${k}">${l}</span>${esc(t)}</li>`).join('');
+$('#fRag').addEventListener('input', () => { const F = $('#fRag').elements; $('#ragRule').innerHTML = ragList(cur(), { late: tolN(F.late.value), slip: tolN(F.slip.value) }); });
+// Enter salva (o primeiro botão do formulário é o Cancelar)
+$('#fRag').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); $('#fRag button[value=ok]').click(); } });
+$('#dlgRag').addEventListener('close', () => {
+  if ($('#dlgRag').returnValue !== 'ok') return;
+  const p = cur(), F = $('#fRag').elements, tol = { late: tolN(F.late.value), slip: tolN(F.slip.value) };
+  if (tol.late || tol.slip) p.tol = tol; else delete p.tol;
+  save(); render(); toast('Critério das cores salvo: ' + health(p)[1].toLowerCase() + ' com a regra nova.');
+});
+
+/* ---------- relatório executivo (1 página) ---------- */
+const SEV = { late: 0, risk: 1, ok: 2, none: 3, done: 4 };
+const HCNT = [['late', 'atrasado', 'atrasados'], ['risk', 'em atenção', 'em atenção'], ['ok', 'no prazo', 'no prazo'], ['done', 'concluído', 'concluídos']];
+const repProjects = () => state.projects.slice().sort((a, b) => SEV[health(a)[0]] - SEV[health(b)[0]]);
+const perOf = p => p.tasks.length ? [Math.min(...p.tasks.map(t => d2n(t.start))), Math.max(...p.tasks.map(t => d2n(t.end)))] : null;
+const nextMs = (p, k) => p.tasks.filter(t => t.milestone && t.progress < 100 && d2n(t.start) >= todayN).sort((a, b) => a.start < b.start ? -1 : 1).slice(0, k);
+const lateOf = p => p.tasks.filter(t => status(t) === 'late');
+const riskOf = p => p.tasks.filter(t => t.risk && t.progress < 100 && status(t) !== 'late');
+const ragFoot = ps => 'Critério das cores: ' + ragRule(ps[0] || { tasks: [] }).map(([, l, t]) => `${l}, ${t}`).join('; ') + '.' + (new Set(ps.map(p => JSON.stringify(tolOf(p)))).size > 1 ? ' Alguns projetos usam tolerâncias próprias (menu Projeto › Critério das cores).' : '');
+function repHTML(edit) {
+  const ps = repProjects(), cnt = k => ps.filter(p => health(p)[0] === k).length;
+  const chips = HCNT.filter(([k]) => cnt(k)).map(([k, a, b]) => `<span class="hb hb-${k}">${cnt(k)} ${cnt(k) === 1 ? a : b}</span>`).join('');
+  const rows = ps.map(p => {
+    const per = perOf(p), sl = slipDays(p), ms = nextMs(p, 2), lt = lateOf(p), rk = riskOf(p), ar = [...lt.map(t => ['l', 'atrasada', t]), ...rk.map(t => ['r', 'em risco', t])];
+    return `<section class="rp-row rp-p hb-${health(p)[0]}">
+      <div><b>${esc(p.name)}</b>${p.area ? `<small>${esc(p.area)}</small>` : ''}</div>
+      <div><span class="hb-w">${hb(p)}${tb(p)}</span><small>${pctOf(p)}% concluído${per ? `, termina ${fmtCurto(per[1])}` : ''}${p.baseAt && sl ? `, ${sl > 0 ? '+' : '−'}${Math.abs(sl)} d do plano` : ''}</small></div>
+      <div>${ms.length ? ms.map(t => `<small><b>${fmtCurto(d2n(t.start))}</b> ${esc(t.name)}</small>`).join('') : '<small class="rp-0">Nenhum marco pela frente</small>'}</div>
+      <div>${ar.length ? ar.slice(0, 3).map(([c, l, t]) => `<small><i class="rp-${c}">${l}</i>${esc(t.name)}</small>`).join('') + (ar.length > 3 ? `<small class="rp-0">e mais ${ar.length - 3}</small>` : '') : '<small class="rp-0">Nenhuma</small>'}</div>
+      <div>${edit ? `<textarea data-ex="${p.id}" rows="2" maxlength="1500" aria-label="Decisões e pontos de atenção de ${esc(p.name)}" placeholder="Ex.: aprovar o orçamento da fase 2 até 30/11">${esc(p.exec || '')}</textarea>` : p.exec ? `<p class="rp-ex">${esc(p.exec)}</p>` : '<small class="rp-0">Nada a decidir</small>'}</div>
+    </section>`;
+  }).join('');
+  return `<div class="rp"><header class="rp-h"><div><h3>Situação dos projetos</h3><p>Atualizado em ${fmtLong(todayN)}, ${ps.length} ${ps.length === 1 ? 'projeto' : 'projetos'}</p></div><div class="rp-k">${chips}</div></header>
+    <div class="rp-row rp-head"><span>Projeto</span><span>Situação</span><span>Próximos marcos</span><span>Atrasadas e em risco</span><span>Decisões e pontos de atenção</span></div>${rows}
+    <footer class="rp-f">${esc(ragFoot(ps))}</footer></div>`;
+}
+$('#repBody').addEventListener('input', e => {
+  const ta = e.target.closest('[data-ex]'), p = ta && state.projects.find(x => x.id === ta.dataset.ex); if (!p) return;
+  const v = ta.value.trim() ? ta.value.slice(0, 1500) : ''; if (v) p.exec = v; else delete p.exec;
+  save();
+});
+// imprime só o relatório, sempre no tema claro
+function printReport() {
+  const box = document.createElement('div'), el = document.documentElement, th = el.dataset.theme;
+  box.id = 'repPrint'; box.innerHTML = repHTML(false); document.body.appendChild(box);
+  $('#dlgRep').close(); el.dataset.theme = 'light'; document.body.classList.add('rep-print');
+  try { print(); } finally { document.body.classList.remove('rep-print'); el.dataset.theme = th; box.remove(); }
+}
+$('#btnRepPrint').addEventListener('click', printReport);
+$('#btnRepPptx').addEventListener('click', () => ACT.pptx());
+
+/* ---------- PowerPoint (.pptx) editável ---------- */
+// Formas nativas do PowerPoint (retângulos, losangos, caixas de texto), não imagem: dá para mexer em tudo depois.
+// Medidas em pontos; o slide é 16:9 (960 x 540 pt).
+const PNS = 'http://schemas.openxmlformats.org/presentationml/2006/main', ANS = 'http://schemas.openxmlformats.org/drawingml/2006/main', ORNS = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
+const HC = { ok: '65A518', risk: 'E8A317', late: 'E60018', done: '0083A9', none: '8496A2' }, HLB = { ok: 'No prazo', risk: 'Atenção', late: 'Atrasado', done: 'Concluído', none: 'Sem tarefas' };
+const tint = (hex, k) => hex.match(/../g).map(c => { const v = parseInt(c, 16); return Math.round(v + (255 - v) * k).toString(16).padStart(2, '0'); }).join('').toUpperCase();
+const xq = s => String(s ?? '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const cut = (s, n) => { s = String(s ?? '').replace(/\s+/g, ' ').trim(); return s.length > n ? s.slice(0, Math.max(1, n - 1)).trimEnd() + '…' : s; };
+const chunk = (a, n) => a.length ? Array.from({ length: Math.ceil(a.length / n) }, (_, i) => a.slice(i * n, i * n + n)) : [[]];
+const mOfN = n => { const d = new Date(n * DAY); return d.getUTCFullYear() * 12 + d.getUTCMonth(); };
+const mFirst = m => Math.round(Date.UTC(Math.floor(m / 12), m % 12, 1) / DAY);
+const SW = 960, SH = 540, SM = 36;
+function pSlide() {
+  let id = 1; const out = [], E = v => Math.round(v * 12700);
+  // paras: [[texto, { sz, b, c }], ...]
+  const sp = ({ x, y, w, h, g = 'rect', f, ln, paras = [], al = 'l', an = 'ctr', ins = 4 }) => {
+    id++;
+    const para = ([t, o = {}]) => { const sz = Math.round((o.sz || 11) * 100); return `<a:p><a:pPr algn="${al}"/>${t ? `<a:r><a:rPr lang="pt-BR" sz="${sz}" b="${o.b ? 1 : 0}" dirty="0"><a:solidFill><a:srgbClr val="${o.c || '0B2A3C'}"/></a:solidFill></a:rPr><a:t>${xq(t)}</a:t></a:r>` : ''}<a:endParaRPr lang="pt-BR" sz="${sz}" dirty="0"/></a:p>`; };
+    out.push(`<p:sp><p:nvSpPr><p:cNvPr id="${id}" name="Forma ${id}"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr><p:spPr><a:xfrm><a:off x="${E(x)}" y="${E(y)}"/><a:ext cx="${Math.max(1, E(w))}" cy="${Math.max(1, E(h))}"/></a:xfrm><a:prstGeom prst="${g}"><a:avLst/></a:prstGeom>`
+      + (f ? `<a:solidFill><a:srgbClr val="${f}"/></a:solidFill>` : '<a:noFill/>') + (ln ? `<a:ln w="${E(ln[1] || 1)}"><a:solidFill><a:srgbClr val="${ln[0]}"/></a:solidFill></a:ln>` : '<a:ln><a:noFill/></a:ln>')
+      + `</p:spPr><p:txBody><a:bodyPr wrap="square" lIns="${E(ins)}" tIns="${E(1)}" rIns="${E(ins)}" bIns="${E(1)}" anchor="${an}" rtlCol="0"><a:noAutofit/></a:bodyPr><a:lstStyle/>${(paras.length ? paras : [['']]).map(para).join('')}</p:txBody></p:sp>`);
+  };
+  const xml = () => `${XHEAD}<p:sld xmlns:a="${ANS}" xmlns:r="${ORNS}" xmlns:p="${PNS}"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr/>${out.join('')}</p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>`;
+  return { sp, xml };
+}
+function sHead(s, title, sub, pg) {
+  s.sp({ x: 0, y: 0, w: SW, h: 6, f: '006729' });
+  s.sp({ x: SM, y: 18, w: SW - 2 * SM, h: 36, paras: [[cut(title, 64), { sz: 24, b: 1, c: '003960' }]], ins: 0 });
+  if (sub) s.sp({ x: SM, y: 54, w: SW - 2 * SM, h: 20, paras: [[cut(sub, 150), { sz: 12, c: '46606F' }]], ins: 0 });
+  s.sp({ x: SM, y: SH - 24, w: SW - 2 * SM, h: 14, paras: [[`Gerado em ${fmtBR(todayN)}  ·  ${pg}`, { sz: 9, c: '8496A2' }]], ins: 0, al: 'r' });
+}
+// régua de anos e meses entre os meses ma e mb; devolve a posição x de um dia
+function sRuler(s, x0, x1, y, ma, mb, gridTo) {
+  const a = mFirst(ma), b = mFirst(mb + 1), X = n => x0 + (n - a) / (b - a) * (x1 - x0), mNow = mOfN(todayN);
+  for (let m = ma; m <= mb; m++) {
+    const l = X(mFirst(m)), r = X(mFirst(m + 1));
+    if (m === ma || m % 12 === 0) s.sp({ x: l, y, w: X(mFirst(Math.min(mb + 1, (Math.floor(m / 12) + 1) * 12))) - l, h: 15, paras: [[String(Math.floor(m / 12)), { sz: 10, b: 1 }]], ins: 3 });
+    s.sp({ x: l, y: y + 15, w: r - l, h: 15, paras: [[r - l > 16 ? MES[m % 12] : '', { sz: 9, b: m === mNow, c: m === mNow ? 'E60018' : '8496A2' }]], ins: 3 });
+    s.sp({ x: l, y: y + 2, w: 0.75, h: gridTo - y - 2, f: 'DCE4DF' });
+  }
+  if (todayN >= a && todayN < b) { s.sp({ x: X(todayN) - 0.75, y: y + 30, w: 1.5, h: gridTo - y - 30, f: 'E60018' }); }
+  return X;
+}
+function slResumo(ps, pg, all) {
+  const s = pSlide(), cnt = k => all.filter(p => health(p)[0] === k).length;
+  sHead(s, 'Situação dos projetos', HCNT.filter(([k]) => cnt(k)).map(([k, a, b]) => `${cnt(k)} ${cnt(k) === 1 ? a : b}`).join(', ') || 'Nenhum projeto', pg);
+  const C = [[SM, 226, 'PROJETO'], [266, 128, 'SITUAÇÃO'], [398, 92, 'ANDAMENTO'], [494, 176, 'PRÓXIMOS MARCOS'], [674, SW - SM - 674, 'DECISÕES E PONTOS DE ATENÇÃO']];
+  C.forEach(([x, w, l]) => s.sp({ x, y: 86, w, h: 16, paras: [[l, { sz: 8.5, b: 1, c: '8496A2' }]], ins: x === SM ? 10 : 2 }));
+  const y0 = 104, rh = Math.min(58, (SH - 40 - y0) / Math.max(1, ps.length));
+  ps.forEach((p, i) => {
+    const y = y0 + i * rh, k = health(p)[0], tr = trend(p), per = perOf(p), ms = nextMs(p, 2);
+    s.sp({ x: SM, y: y + 2, w: SW - 2 * SM, h: rh - 4, f: i % 2 ? 'FFFFFF' : 'F3F7F4' });
+    s.sp({ x: SM, y: y + 2, w: 4, h: rh - 4, f: HC[k] });
+    s.sp({ x: SM + 6, y: y + 2, w: 220, h: rh - 4, paras: [[cut(p.name, 34), { sz: 12, b: 1, c: '003960' }], ...(p.area ? [[cut(p.area, 44), { sz: 9, c: '46606F' }]] : [])] });
+    s.sp({ x: 268, y: y + rh / 2 - (tr ? 14 : 9), w: 92, h: 18, g: 'roundRect', f: HC[k], paras: [[HLB[k], { sz: 9.5, b: 1, c: k === 'risk' ? '0B2A3C' : 'FFFFFF' }]], al: 'ctr', ins: 2 });
+    if (tr) s.sp({ x: 268, y: y + rh / 2 + 5, w: 124, h: 14, paras: [[`${TRA[tr.dir]} ${TRT[tr.dir]} desde ${fmtCurto(d2n(tr.since))}`, { sz: 8.5, b: 1, c: tr.dir === 'up' ? '006729' : tr.dir === 'down' ? 'E60018' : '8496A2' }]], ins: 0 });
+    s.sp({ x: 398, y: y + 2, w: 92, h: rh - 4, paras: [[pctOf(p) + '%', { sz: 15, b: 1 }], [per ? 'termina ' + fmtCurto(per[1]) : 'sem tarefas', { sz: 8.5, c: '46606F' }]], ins: 2 });
+    s.sp({ x: 494, y: y + 2, w: 176, h: rh - 4, paras: ms.length ? ms.map(t => [`${fmtCurto(d2n(t.start))}  ${cut(t.name, 30)}`, { sz: 9.5 }]) : [['Nenhum marco pela frente', { sz: 9.5, c: '8496A2' }]], ins: 2 });
+    s.sp({ x: 674, y: y + 2, w: SW - SM - 674, h: rh - 4, paras: [[p.exec ? cut(p.exec, Math.round(rh * 3.2)) : 'Nada a decidir', { sz: 9.5, c: p.exec ? '0B2A3C' : '8496A2' }]], ins: 2 });
+  });
+  s.sp({ x: SM, y: SH - 50, w: SW - 2 * SM, h: 24, paras: [[cut(ragFoot(all), 400), { sz: 7.5, c: '8496A2' }]], ins: 0, an: 't' });
+  return s.xml();
+}
+function slTempo(ps, pg) {
+  const s = pSlide(), dd = ps.flatMap(p => p.tasks.flatMap(t => [d2n(t.start), d2n(t.end)]));
+  sHead(s, 'Linha do tempo dos projetos', 'Todos na mesma régua de meses: onde as barras se sobrepõem, os projetos acontecem ao mesmo tempo', pg);
+  if (!dd.length) return s.xml();
+  const y0 = 120, rh = Math.min(46, (SH - 44 - y0) / Math.max(1, ps.length)), x0 = SM + 214, x1 = SW - SM;
+  const X = sRuler(s, x0, x1, 86, mOfN(Math.min(...dd)), mOfN(Math.max(...dd)), y0 + ps.length * rh);
+  ps.forEach((p, i) => {
+    const y = y0 + i * rh, k = health(p)[0], per = perOf(p), tr = trend(p), pct = pctOf(p);
+    s.sp({ x: SM, y, w: 208, h: rh, paras: [[cut(p.name, 30), { sz: 11, b: 1, c: '003960' }], [`${pct}%, ${HLB[k].toLowerCase()}${tr ? ', ' + TRT[tr.dir].toLowerCase() : ''}`, { sz: 8.5, c: '46606F' }]], ins: 0 });
+    if (!per) return;
+    const bx = X(per[0]), bw = Math.max(3, X(per[1] + 1) - bx), bh = Math.min(16, rh * 0.42), by = y + rh / 2 - bh / 2;
+    s.sp({ x: bx, y: by, w: bw, h: bh, g: 'roundRect', f: tint(HC[k], 0.72), ln: [HC[k], 0.75] });
+    if (pct) s.sp({ x: bx, y: by, w: Math.max(2, bw * pct / 100), h: bh, g: 'roundRect', f: HC[k] });
+    p.tasks.filter(t => t.milestone).forEach(t => s.sp({ x: X(d2n(t.start) + 0.5) - 5, y: y + rh / 2 - 5, w: 10, h: 10, g: 'diamond', f: '003960', ln: ['FFFFFF', 0.75] }));
+  });
+  return s.xml();
+}
+function slProj(p, ts, part, parts, pg) {
+  const s = pSlide(), per = perOf(p), k = health(p)[0], tr = trend(p);
+  sHead(s, p.name + (parts > 1 ? ` (${part} de ${parts})` : ''), [p.area, per && `${fmtLong(per[0])} a ${fmtLong(per[1])}`, `${pctOf(p)}% concluído`, HLB[k] + (tr ? `, ${TRT[tr.dir].toLowerCase()}` : '')].filter(Boolean).join('  ·  '), pg);
+  if (!per) return s.xml();
+  const y0 = 120, rh = Math.min(26, (SH - 44 - y0) / Math.max(1, ts.length)), x0 = SM + 250, x1 = SW - SM;
+  const X = sRuler(s, x0, x1, 86, mOfN(per[0]), mOfN(per[1]), y0 + ts.length * rh);
+  const gOf = t => p.groups.find(g => g.id === t.groupId) || p.groups[0];
+  ts.forEach((t, i) => {
+    const y = y0 + i * rh, c = gOf(t).color.slice(1).toUpperCase(), st = status(t), a = d2n(t.start), e = d2n(t.end);
+    s.sp({ x: SM, y: y + 3, w: 3, h: rh - 6, f: c });
+    s.sp({ x: SM + 6, y, w: 238, h: rh, paras: [[cut(t.name, 40), { sz: 9.5, b: t.milestone, c: '0B2A3C' }], ...(rh >= 22 ? [[cut([gOf(t).name, t.owner].filter(Boolean).join(' · '), 48), { sz: 7.5, c: '8496A2' }]] : [])], ins: 0 });
+    if (t.milestone) { s.sp({ x: X(a + 0.5) - 6, y: y + rh / 2 - 6, w: 12, h: 12, g: 'diamond', f: c, ln: ['003960', 0.75] }); return; }
+    const bx = X(a), bw = Math.max(3, X(e + 1) - bx), bh = Math.min(12, rh * 0.5), by = y + rh / 2 - bh / 2;
+    s.sp({ x: bx, y: by, w: bw, h: bh, g: 'roundRect', f: tint(c, 0.6), ln: st === 'late' ? ['E60018', 1.5] : t.risk && st !== 'done' ? ['E8A317', 1.5] : null });
+    if (t.progress) s.sp({ x: bx, y: by, w: Math.max(2, bw * t.progress / 100), h: bh, g: 'roundRect', f: c });
+  });
+  return s.xml();
+}
+function buildPptx(ps) {
+  const ix = p => { const i = state.projects.indexOf(p); return i < 0 ? 1e9 : i; }, byTime = ps.slice().sort((a, b) => ix(a) - ix(b)), gi = p => t => p.groups.findIndex(g => g.id === t.groupId);
+  const mk = [...chunk(ps, 7).map(c => pg => slResumo(c, pg, ps)), ...chunk(byTime, 8).map(c => pg => slTempo(c, pg))];
+  byTime.filter(p => p.tasks.length).forEach(p => {
+    const g = gi(p), ts = p.tasks.slice().sort((a, b) => g(a) - g(b) || (a.start < b.start ? -1 : a.start > b.start ? 1 : 0)), parts = chunk(ts, 15);
+    parts.forEach((c, i) => mk.push(pg => slProj(p, c, i + 1, parts.length, pg)));
+  });
+  const slides = mk.map((f, i) => f(`${i + 1} de ${mk.length}`)), CT = 'application/vnd.openxmlformats-officedocument.presentationml.';
+  const rels = list => `${XHEAD}<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${list.map(([t, tg], i) => `<Relationship Id="rId${i + 1}" Type="${ORNS}/${t}" Target="${tg}"/>`).join('')}</Relationships>`;
+  const NS = `xmlns:a="${ANS}" xmlns:r="${ORNS}" xmlns:p="${PNS}"`, tree = '<p:spTree><p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr/></p:spTree>';
+  const clr = [['dk1', '0B2A3C'], ['lt1', 'FFFFFF'], ['dk2', '003960'], ['lt2', 'F1F5F2'], ['accent1', '006729'], ['accent2', '003960'], ['accent3', '65A518'], ['accent4', '0083A9'], ['accent5', 'E8A317'], ['accent6', 'E60018'], ['hlink', '0083A9'], ['folHlink', '7A4FA0']].map(([n, v]) => `<a:${n}><a:srgbClr val="${v}"/></a:${n}>`).join('');
+  const x3 = t => t + t + t, font = f => `<a:latin typeface="${f}"/><a:ea typeface=""/><a:cs typeface=""/>`;
+  const theme = `${XHEAD}<a:theme xmlns:a="${ANS}" name="Roadmap"><a:themeElements><a:clrScheme name="Roadmap">${clr}</a:clrScheme><a:fontScheme name="Roadmap"><a:majorFont>${font('Segoe UI Semibold')}</a:majorFont><a:minorFont>${font('Segoe UI')}</a:minorFont></a:fontScheme><a:fmtScheme name="Roadmap"><a:fillStyleLst>${x3('<a:solidFill><a:schemeClr val="phClr"/></a:solidFill>')}</a:fillStyleLst><a:lnStyleLst>${x3('<a:ln w="9525"><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:ln>')}</a:lnStyleLst><a:effectStyleLst>${x3('<a:effectStyle><a:effectLst/></a:effectStyle>')}</a:effectStyleLst><a:bgFillStyleLst>${x3('<a:solidFill><a:schemeClr val="phClr"/></a:solidFill>')}</a:bgFillStyleLst></a:fmtScheme></a:themeElements></a:theme>`;
+  const files = [
+    ['[Content_Types].xml', `${XHEAD}<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/ppt/presentation.xml" ContentType="${CT}presentation.main+xml"/><Override PartName="/ppt/slideMasters/slideMaster1.xml" ContentType="${CT}slideMaster+xml"/><Override PartName="/ppt/slideLayouts/slideLayout1.xml" ContentType="${CT}slideLayout+xml"/><Override PartName="/ppt/theme/theme1.xml" ContentType="application/vnd.openxmlformats-officedocument.theme+xml"/><Override PartName="/ppt/presProps.xml" ContentType="${CT}presProps+xml"/><Override PartName="/ppt/viewProps.xml" ContentType="${CT}viewProps+xml"/><Override PartName="/ppt/tableStyles.xml" ContentType="${CT}tableStyles+xml"/>${slides.map((_, i) => `<Override PartName="/ppt/slides/slide${i + 1}.xml" ContentType="${CT}slide+xml"/>`).join('')}</Types>`],
+    ['_rels/.rels', rels([['officeDocument', 'ppt/presentation.xml']])],
+    ['ppt/presentation.xml', `${XHEAD}<p:presentation ${NS} saveSubsetFonts="1"><p:sldMasterIdLst><p:sldMasterId id="2147483648" r:id="rId1"/></p:sldMasterIdLst><p:sldIdLst>${slides.map((_, i) => `<p:sldId id="${256 + i}" r:id="rId${i + 6}"/>`).join('')}</p:sldIdLst><p:sldSz cx="12192000" cy="6858000"/><p:notesSz cx="6858000" cy="9144000"/></p:presentation>`],
+    ['ppt/_rels/presentation.xml.rels', rels([['slideMaster', 'slideMasters/slideMaster1.xml'], ['theme', 'theme/theme1.xml'], ['presProps', 'presProps.xml'], ['viewProps', 'viewProps.xml'], ['tableStyles', 'tableStyles.xml'], ...slides.map((_, i) => ['slide', `slides/slide${i + 1}.xml`])])],
+    ['ppt/presProps.xml', `${XHEAD}<p:presentationPr ${NS}/>`],
+    ['ppt/viewProps.xml', `${XHEAD}<p:viewPr ${NS}/>`],
+    ['ppt/tableStyles.xml', `${XHEAD}<a:tblStyleLst xmlns:a="${ANS}" def="{5C22544A-7EE6-4342-B048-85BDC9FD1C3A}"/>`],
+    ['ppt/theme/theme1.xml', theme],
+    ['ppt/slideMasters/slideMaster1.xml', `${XHEAD}<p:sldMaster ${NS}><p:cSld><p:bg><p:bgRef idx="1001"><a:schemeClr val="bg1"/></p:bgRef></p:bg>${tree}</p:cSld><p:clrMap bg1="lt1" tx1="dk1" bg2="lt2" tx2="dk2" accent1="accent1" accent2="accent2" accent3="accent3" accent4="accent4" accent5="accent5" accent6="accent6" hlink="hlink" folHlink="folHlink"/><p:sldLayoutIdLst><p:sldLayoutId id="2147483649" r:id="rId1"/></p:sldLayoutIdLst></p:sldMaster>`],
+    ['ppt/slideMasters/_rels/slideMaster1.xml.rels', rels([['slideLayout', '../slideLayouts/slideLayout1.xml'], ['theme', '../theme/theme1.xml']])],
+    ['ppt/slideLayouts/slideLayout1.xml', `${XHEAD}<p:sldLayout ${NS} type="blank" preserve="1"><p:cSld name="Em branco">${tree}</p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sldLayout>`],
+    ['ppt/slideLayouts/_rels/slideLayout1.xml.rels', rels([['slideMaster', '../slideMasters/slideMaster1.xml']])],
+    ...slides.flatMap((x, i) => [[`ppt/slides/slide${i + 1}.xml`, x], [`ppt/slides/_rels/slide${i + 1}.xml.rels`, rels([['slideLayout', '../slideLayouts/slideLayout1.xml']])]])
+  ];
+  return new Blob([zip(files)], { type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' });
+}
 
 /* ---------- importar várias abas como projetos ---------- */
 function importSheets(buf, abas) {
@@ -2503,6 +2791,23 @@ async function selfTest() {
     ok(pa.name === 'Projeto da aba' && pa.tasks.length > 0, 'abas: importa a aba escolhida');
     let err = ''; try { await parseXlsx(buf, 'x', 'Não existe'); } catch (e) { err = e.message; }
     ok(/não achei a aba/.test(err), 'abas: aba inexistente dá erro'); }
+  { // critério das cores, tendência e PowerPoint
+    const g = [{ id: 'g', name: 'G', color: '#006729' }], tk = (e, pr = 0) => ({ id: 't' + e, name: 'T', groupId: 'g', owner: '', start: n2d(todayN - 20), end: n2d(todayN + e), progress: pr, milestone: false, risk: false, deps: [] });
+    const hp = { id: 'h', name: 'H & <x>', area: '', groups: g, tasks: [tk(-2), tk(5)] };
+    ok(health(hp)[0] === 'late', 'cores: atraso sem tolerância');
+    hp.tol = { late: 3 }; ok(health(hp)[0] === 'risk', 'cores: atraso dentro da tolerância');
+    hp.tasks[0].end = n2d(todayN - 5); ok(health(hp)[0] === 'late', 'cores: atraso além da tolerância');
+    ok(normP(hp).tol.late === 3 && normP({ ...hp, tol: { late: 0, slip: 0 } }).tol === undefined, 'cores: tolerância guardada');
+    const tp = { id: 'tp', name: 'T', area: '', groups: g, tasks: [tk(5)] };
+    tp.hist = [[n2d(todayN - 10), 'late', 2, 0]]; ok(trend(tp).dir === 'up', 'tendência: melhorou');
+    tp.hist = [[n2d(todayN - 10), 'ok', 0, 0]]; tp.tasks[0].end = n2d(todayN - 1); ok(trend(tp).dir === 'down', 'tendência: piorou');
+    tp.hist = [[n2d(todayN), 'ok', 0, 0]]; ok(trend(tp) === null, 'tendência: sem foto antiga');
+    tp.hist = [[n2d(todayN - 30), 'ok', 0, 0], [n2d(todayN - 8), 'late', 1, 0], [n2d(todayN - 2), 'ok', 0, 0]]; ok(trend(tp).since === n2d(todayN - 8), 'tendência: compara com 7 dias atrás');
+    ok(normP({ ...tp, hist: [...tp.hist, ['x', 'ok'], [n2d(todayN), 'zzz']], exec: 'decidir' }).hist.length === 3 && normP({ ...tp, exec: 'decidir' }).exec === 'decidir', 'tendência e decisões guardadas');
+    const z = await unzip(await buildPptx([hp, tp, normP(hp)]).arrayBuffer()), dec = new TextDecoder();
+    const sl = Object.keys(z).filter(n => /^ppt\/slides\/slide\d+\.xml$/.test(n));
+    ok(sl.length >= 4 && Object.keys(z).filter(n => n.endsWith('.xml') || n.endsWith('.rels')).every(n => !new DOMParser().parseFromString(dec.decode(z[n]), 'application/xml').querySelector('parsererror')), 'PowerPoint: XML válido');
+    ok(sl.some(n => dec.decode(z[n]).includes('H &amp; &lt;x&gt;')), 'PowerPoint: nome escapado'); }
   const mp = modeloP(), { p: mq } = await parseXlsx(await buildXlsx(mp, true).arrayBuffer(), 'M');
   ok(mq.tasks.length === 3 && mq.tasks.every((t, i) => t.start === mp.tasks[i].start && t.end === mp.tasks[i].end && t.owner === mp.tasks[i].owner && t.progress === 0 && !t.milestone && !t.deps.length), 'planilha modelo');
   // Só Tarefa, Data início e Dias: o resto vem por padrão
