@@ -24,6 +24,8 @@ Ferramenta para montar cronogramas e roadmaps de projetos no navegador. É um ú
 - O Manual marca o que mudou na última versão, e o botão avisa quem ainda não viu.
 - O HTML para envio é uma cópia só para leitura, que abre com dois cliques em qualquer computador.
 - No modo equipe, várias pessoas editam o mesmo roadmap por um arquivo .json numa pasta do SharePoint ou OneDrive sincronizada.
+- Cada tarefa aceita mais de um responsável (aparecem juntos na mesma linha, como "Ana / Bruno") e tem um checklist de até 15 itens no painel lateral, para marcar o que já foi feito.
+- O botão **Editar grupos**, no começo da linha de grupos, abre a tela para renomear, mudar a cor, criar ou excluir grupos.
 - Também tem busca e filtros, desfazer e refazer (Ctrl+Z / Ctrl+Y), modelos de projeto, tema claro e escuro e um Manual dentro do programa.
 
 ![Linha única com a régua de meses](docs/captura-linha-unica.png)
@@ -44,7 +46,7 @@ Baixe o [`index.html`](index.html) e abra o arquivo no navegador. Fontes e ícon
 
 1. Abra a página e clique em **Novo projeto**. Comece em branco ou a partir de um modelo.
 2. Adicione tarefas com **Nova tarefa** ou **Inserir em lote**.
-3. Clique em uma barra para editar responsável, datas, % concluído e dependências.
+3. Clique em uma barra para editar responsáveis, datas, % concluído, checklist e dependências.
 4. Na dúvida, o botão **Manual** no topo explica cada função.
 
 ![Tela de inserir tarefas em lote](docs/captura-lote.png)

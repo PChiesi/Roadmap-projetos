@@ -187,6 +187,8 @@ button.lg:hover{color:var(--green-txt);border-color:var(--ink-3)}
 .k-crit{width:16px;height:9px;border-radius:3px;box-shadow:0 0 0 2px var(--title)}
 .k-crit-b{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);color:inherit;font:inherit;padding:3px 10px 3px 9px;border-radius:99px;cursor:pointer;transition:background .15s,border-color .15s}
 .k-crit-b:hover{border-color:var(--title)}
+.lg-ed{font-weight:600;color:var(--title)}
+.lg-ed svg{width:14px;height:14px}
 .k-hol{width:14px;height:12px;border-radius:2px;background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--amber) 75%,transparent) 0 2px,transparent 2px 4px);box-shadow:0 0 0 1px color-mix(in srgb,var(--amber) 65%,transparent)}
 .k-crit-b[aria-pressed=false] .k-hol{filter:grayscale(1);opacity:.6}
 .mk .mk-hn{display:none}
@@ -387,6 +389,15 @@ legend{font-size:12.5px;font-weight:600;color:var(--ink-2);margin-bottom:6px;pad
 .dep:hover{background:var(--line-2)}
 .dep i{width:8px;height:8px;border-radius:2px;flex:none}
 .deps-empty{color:var(--ink-3);font-size:13px;padding:6px}
+.own-list,.ck-list{display:flex;flex-direction:column;gap:6px;list-style:none;margin:0;padding:0}
+.own-r,.ck-add,.ck-i{display:flex;gap:6px;align-items:center}
+.own-r input,.ck-add input,.ck-t{flex:1;min-width:0;height:36px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--surface);font:400 14px var(--f-t);color:var(--ink)}
+.own-r input:focus,.ck-add input:focus,.ck-t:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18)}
+#btnOwnAdd{margin-top:6px}
+.ck-list:not(:empty){margin-bottom:6px}
+.ck-i .ck-d{width:18px;height:18px;flex:none}
+.ck-i:has(.ck-d:checked) .ck-t{text-decoration:line-through;color:var(--ink-3)}
+.ck-count{font-weight:700;color:var(--green-txt)}
 .icon{width:32px;height:32px;border:0;background:none;border-radius:8px;font-size:20px;line-height:1;color:var(--ink-3)}
 .icon:hover{background:var(--line-2);color:var(--ink)}
 
@@ -788,12 +799,13 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
   <form class="dr-body" id="drForm" onsubmit="return false">
     <label class="fld">Nome<input name="nome" autocomplete="off"></label>
     <label class="fld">Grupo<select name="groupId"></select></label>
-    <label class="fld">Responsável<input name="owner" list="owners" autocomplete="off"></label>
+    <fieldset><legend>Responsáveis</legend><div id="ownList" class="own-list"></div><button type="button" class="btn small" id="btnOwnAdd">+ Adicionar pessoa</button></fieldset>
     <div class="two"><label class="fld">Início<input type="date" name="start"></label><label class="fld" id="endFld">Fim<input type="date" name="end"></label></div>
     <label class="chk"><input type="checkbox" name="milestone"> É um marco (data única)</label>
     <label class="fld">Concluído <output id="pOut"></output><input type="range" name="progress" min="0" max="100" step="5"></label>
     <label class="chk"><input type="checkbox" name="risk"> Marcar como em risco</label>
     <label class="fld">Observações<textarea name="note" rows="3" maxlength="2000" placeholder="Ex.: motivo do atraso, decisão pendente, próximo passo"></textarea></label>
+    <fieldset><legend>Checklist <span id="ckCount" class="ck-count"></span></legend><ul id="ckList" class="ck-list"></ul><div class="ck-add"><input id="ckNew" maxlength="200" autocomplete="off" placeholder="Novo item e Enter" aria-label="Novo item do checklist"><button type="button" class="btn small" id="btnCkAdd">Adicionar</button></div></fieldset>
     <fieldset><legend>Depende de</legend><div id="depList" class="deps"></div></fieldset>
   </form>
   <div class="dr-foot"><button class="btn quiet" id="btnDelTask">Excluir tarefa</button><button class="btn primary" data-close>Pronto</button></div>
@@ -831,7 +843,9 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ol>Para trocar de projeto, clique nele na lista <b>Projetos</b>. O nome e a área do projeto podem ser editados clicando no título.</div></details>
       <details><summary>Adicionar e editar tarefas</summary><div><ul>
         <li><b>Nova tarefa</b> no topo cria uma tarefa no primeiro grupo. O <b>+</b> ao lado de um grupo cria nele.</li>
-        <li>Clique no nome ou na barra da tarefa para abrir os detalhes: nome, grupo, responsável, datas, % concluído, marco, em risco e dependências.</li>
+        <li>Clique no nome ou na barra da tarefa para abrir os detalhes: nome, grupo, responsáveis, datas, % concluído, marco, em risco, checklist e dependências.</li>
+        <li>Para ter mais de um responsável, clique em <b>+ Adicionar pessoa</b>: cada nome fica numa linha do painel. No cronograma eles aparecem juntos, separados por barra (Ana / Bruno), e a carga da equipe e o filtro contam cada pessoa.</li>
+        <li>O <b>Checklist</b> guarda até 15 itens do que precisa ser feito dentro da atividade. Escreva o item e aperte Enter; marque a caixa quando estiver feito. Ele só aparece aqui no painel.</li>
         <li>Nos ícones da linha da tarefa você duplica ou exclui.</li>
         <li>Use <b>Observações</b> para registrar o motivo de um atraso, uma decisão pendente ou o próximo passo. O texto aparece ao passar o mouse na barra e vai para a planilha.</li>
       </ul></div></details>
@@ -864,7 +878,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li><b>Marco</b> é um evento de um dia só, como uma aprovação ou o go-live. Aparece como losango.</li>
       </ul></div></details>
       <details><summary>Grupos e cores</summary><div><ul>
-        <li>Abra <b>Projeto › Grupos e cores</b> (ou clique num grupo da legenda) para renomear, mudar a cor, criar ou excluir grupos.</li>
+        <li>Clique em <b>Editar grupos</b>, no começo da linha de grupos logo abaixo dos painéis, para renomear, mudar a cor, criar ou excluir grupos. Também dá pelo menu <b>Projeto › Grupos e cores</b> ou clicando no nome de um grupo.</li>
         <li>A seta ao lado do grupo no cronograma recolhe ou mostra as tarefas dele.</li>
       </ul></div></details>
       <details><summary>Linha de base: comparar com o plano</summary><div><ul>
@@ -942,7 +956,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ol>O que ficar vazio o programa assume: sem seção, repete a da linha de cima. Para criar uma seção, basta digitar um nome que ainda não existe: a linha mostra o selo <b>nova</b> e a seção é criada ao inserir. Pode repetir o mesmo nome em quantas linhas quiser (maiúscula e acento não importam): todas as atividades entram na mesma seção. Uma linha só com a seção, sem atividade, cria a seção vazia, e as linhas de baixo sem seção entram nela. Se a cópia do Excel trouxer o cabeçalho, ele é ignorado; sem início, começa no dia seguinte ao fim da linha de cima; sem fim, termina no mesmo dia. Marco usa a data de início (sem ela, a de fim; sem nenhuma, o dia seguinte à linha de cima). Ao colar do Excel, a coluna Marco aceita Sim, X ou 1. Responsável vazio fica sem responsável; % e o resto ficam no padrão para ajustar depois.</div></details>
       <details><summary>Importar de uma planilha</summary><div><p>Vários projetos de uma vez: coloque cada projeto numa aba da mesma planilha. Ao abrir, o programa lista as abas; marque as que viram projeto e dê um nome para cada uma (já vem com o nome da aba). Se uma aba tiver problema, as outras são importadas mesmo assim e o aviso diz qual falhou.</p><ol>
         <li>Clique em <b>Baixar planilha modelo</b> na barra lateral.</li>
-        <li>Preencha uma linha por tarefa: Grupo, Tarefa, Responsável, Início e Fim. As datas podem ser no formato 31/12/2026.</li>
+        <li>Preencha uma linha por tarefa: Grupo, Tarefa, Responsável, Início e Fim. As datas podem ser no formato 31/12/2026. Para mais de um responsável, separe os nomes com ; ou / (Ana / Bruno).</li>
         <li>Salve e use <b>Abrir backup ou planilha</b>. A planilha vira um projeto novo.</li>
       </ol>O que ficar vazio é preenchido por padrão: sem grupo vai para "Geral", sem fim termina no mesmo dia. Colunas extras (Dias, % concluído, Marco, Depende de, Cor do grupo, Observações, Início e Fim planejados) são aceitas; a aba <b>Como preencher</b> da planilha modelo explica cada uma.</div></details>
       <details><summary>Modelos</summary><div><ul>
@@ -1237,13 +1251,15 @@ function normP(p) {
   if (!groups.length) groups.push({ id: uid(), name: 'Geral', color: PAL[0] });
   const gids = new Set(groups.map(g => g.id));
   const tasks = p.tasks.filter(t => t && okd(t.start) && okd(t.end)).map(t => {
+    const ck = Array.isArray(t.check) ? t.check.filter(c => c && String(c.t || '').trim()).slice(0, CK_MAX).map(c => ({ t: String(c.t).trim().slice(0, 200), d: !!c.d })) : [];
     const o = {
-      id: sid(t.id) || uid(), name: String(t.name || 'Tarefa'), groupId: gids.has(sid(t.groupId)) ? sid(t.groupId) : groups[0].id, owner: String(t.owner || ''),
+      id: sid(t.id) || uid(), name: String(t.name || 'Tarefa'), groupId: gids.has(sid(t.groupId)) ? sid(t.groupId) : groups[0].id, owner: ownNorm(t.owner),
       start: t.start, end: t.end < t.start ? t.start : t.end, progress: Math.max(0, Math.min(100, Math.round(+t.progress || 0))),
       milestone: !!t.milestone, risk: !!t.risk, deps: Array.isArray(t.deps) ? t.deps.map(sid) : [], note: String(t.note || '').slice(0, 2000)
     };
     // linha de base: as datas do plano aprovado, para comparar com as atuais
     if (okd(t.bs) && okd(t.be) && t.be >= t.bs) { o.bs = t.bs; o.be = t.be; }
+    if (ck.length) o.check = ck;
     return o;
   });
   const tids = new Set(tasks.map(t => t.id));
@@ -1297,6 +1313,10 @@ function critical(p) {
   p.tasks.filter(t => d2n(t.end) === end).forEach(walk);
   return out;
 }
+// Vários responsáveis ficam num texto só, "Ana / Bruno"; aceita digitar com quebra de linha, ";" ou " / "
+const ownNorm = v => String(v || '').split(/\s*(?:\n|;|\s\/\s)\s*/).map(x => x.trim().replace(/\s+/g, ' ')).filter(Boolean).join(' / ').slice(0, 300);
+const owns = t => t.owner ? t.owner.split(' / ') : [];
+const CK_MAX = 15;
 // Carga da equipe: por pessoa e por semana (segunda a domingo), quantas tarefas abertas ela tem somando todos os projetos.
 // Tarefa atrasada continua contando até hoje (ainda é trabalho na mesa); marco e tarefa concluída não contam.
 const monday = n => n - ((dow(n) + 6) % 7);
@@ -1305,9 +1325,9 @@ function loadGrid(ps) {
   const w0 = monday(todayN) - 28, last = open.length ? Math.max(...open.map(x => x.e)) : todayN, weeks = [];
   for (let w = w0; w <= last && weeks.length < 26; w += 7) weeks.push(w);
   const people = new Map();
-  for (const x of open) {
-    const key = norm(x.t.owner).replace(/\s+/g, ' ');
-    if (!people.has(key)) people.set(key, { name: x.t.owner.trim().replace(/\s+/g, ' ') || 'Sem responsável', none: !key, cells: weeks.map(() => []) });
+  for (const x of open) for (const o of owns(x.t).length ? owns(x.t) : ['']) {
+    const key = norm(o).replace(/\s+/g, ' ');
+    if (!people.has(key)) people.set(key, { name: o.trim().replace(/\s+/g, ' ') || 'Sem responsável', none: !key, cells: weeks.map(() => []) });
     const pr = people.get(key); weeks.forEach((w, i) => { if (x.s <= w + 6 && x.e >= w) pr.cells[i].push(x); });
   }
   return { weeks, people: [...people.values()].filter(q => q.cells.some(c => c.length)).sort((a, b) => a.none - b.none || a.name.localeCompare(b.name, 'pt-BR')) };
@@ -1492,7 +1512,7 @@ function renderSel() {
   el.querySelector('b').textContent = SEL.size === 1 ? '1 tarefa selecionada' : `${SEL.size} tarefas selecionadas, arraste uma para mover todas`;
 }
 const fltOn = () => !!(flt.q || flt.owner || flt.st);
-const fltOk = t => (!flt.q || norm(t.name + ' ' + t.owner + ' ' + t.note).includes(norm(flt.q))) && (!flt.owner || t.owner === flt.owner) && (!flt.st || status(t) === flt.st);
+const fltOk = t => (!flt.q || norm(t.name + ' ' + t.owner + ' ' + t.note).includes(norm(flt.q))) && (!flt.owner || owns(t).includes(flt.owner)) && (!flt.st || status(t) === flt.st);
 
 /* ---------- desfazer e refazer ---------- */
 const snap = () => JSON.stringify([state.projects, state.templates, state.marks]);
@@ -1540,7 +1560,7 @@ function renderSide() {
   if (RO) return;
   $('#plist').innerHTML = state.projects.map(p => `<button class="pitem${p.id === state.currentId ? ' on' : ''}" data-p="${p.id}"><i class="hd hb-${health(p)[0]}" title="${health(p)[1]}"></i><span><b>${esc(p.name)}</b><small>${p.tasks.length} ${p.tasks.length === 1 ? 'tarefa' : 'tarefas'}, ${pctOf(p)}%</small></span></button>`).join('');
   $('#tlist').innerHTML = allTpls().map(t => `<li><button class="tl" data-tpl="${t.id}" title="Criar projeto a partir de ${esc(t.name)}"><span>${esc(t.name)}</span></button>${t.builtin ? '' : `<button class="x" data-deltpl="${t.id}" aria-label="Excluir modelo ${esc(t.name)}">×</button>`}</li>`).join('');
-  $('#owners').innerHTML = [...new Set(state.projects.flatMap(p => p.tasks.map(t => t.owner)).filter(Boolean))].map(o => `<option value="${esc(o)}">`).join('');
+  $('#owners').innerHTML = [...new Set(state.projects.flatMap(p => p.tasks.flatMap(owns)).filter(Boolean))].map(o => `<option value="${esc(o)}">`).join('');
 }
 
 function renderTop() {
@@ -1601,12 +1621,12 @@ function countUp() {
 
 function renderLegend() {
   const p = cur(), tag = RO ? 'span' : 'button';
-  $('#legend').innerHTML = p.groups.map(g => `<${tag} class="lg"${RO ? '' : ' data-act="groups" title="Editar grupos e cores"'}><i style="--c:${g.color}"></i>${esc(g.name)}<span>${p.tasks.filter(t => t.groupId === g.id).length}</span></${tag}>`).join('') +
+  $('#legend').innerHTML = (RO ? '' : '<button class="k-crit-b lg-ed" data-act="groups" title="Renomear, mudar a cor, criar ou excluir grupos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Editar grupos</button>') + p.groups.map(g => `<${tag} class="lg"${RO ? '' : ' data-act="groups" title="Editar grupos e cores"'}><i style="--c:${g.color}"></i>${esc(g.name)}<span>${p.tasks.filter(t => t.groupId === g.id).length}</span></${tag}>`).join('') +
     `<span class="lg-keys"><button class="k-crit-b" data-act="hol" aria-pressed="${state.hlHol}" title="Destacar os feriados nacionais no cronograma, com o nome"><i class="k-hol"></i>Feriados</button><button class="k-crit-b" data-act="crit" aria-pressed="${state.showCrit}" title="Destacar a sequência de tarefas que define a data final"><i class="k-crit"></i>Caminho crítico</button><span><i class="k-ms"></i>Marco</span>${p.baseAt ? '<span><i class="k-base"></i>Plano</span>' : ''}<span><i class="k-late"></i>Atrasada</span><span><i class="k-risk"></i>Em risco</span><span><i class="k-today"></i>Hoje</span></span>`;
 }
 
 function renderTools() {
-  const p = cur(), owners = [...new Set(p.tasks.map(t => t.owner).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  const p = cur(), owners = [...new Set(p.tasks.flatMap(owns))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
   if (!owners.includes(flt.owner)) flt.owner = '';
   $('#fOwner').innerHTML = '<option value="">Todos os responsáveis</option>' + owners.map(o => `<option${o === flt.owner ? ' selected' : ''}>${esc(o)}</option>`).join('');
   $('#fSt').innerHTML = '<option value="">Todos os status</option>' + Object.keys(STL).map(k => `<option value="${k}"${k === flt.st ? ' selected' : ''}>${STL[k]}</option>`).join('');
@@ -1867,7 +1887,7 @@ function openTask(id) {
   openId = id;
   const F = $('#drForm').elements;
   F.groupId.innerHTML = p.groups.map(g => `<option value="${g.id}">${esc(g.name)}</option>`).join('');
-  F.nome.value = t.name; F.groupId.value = t.groupId; F.owner.value = t.owner; F.start.value = t.start; F.end.value = t.end;
+  F.nome.value = t.name; F.groupId.value = t.groupId; renderOwn(owns(t)); renderCk(t); F.start.value = t.start; F.end.value = t.end;
   F.milestone.checked = t.milestone; F.progress.value = t.progress; F.risk.checked = t.risk; F.note.value = t.note;
   $('#pOut').value = t.progress + '%';
   $('#endFld').hidden = t.milestone;
@@ -1875,6 +1895,37 @@ function openTask(id) {
   const d = $('#drawer'); d.inert = false; d.classList.add('open');
   markSel();
 }
+
+function renderOwn(list) {
+  const n = Math.max(1, list.length);
+  $('#ownList').innerHTML = (list.length ? list : ['']).map((o, i) => `<div class="own-r"><input class="own" list="owners" autocomplete="off" maxlength="80" aria-label="Responsável ${i + 1}" value="${esc(o)}">${n > 1 ? `<button type="button" class="icon" data-ownrm aria-label="Remover responsável ${i + 1}">×</button>` : ''}</div>`).join('');
+}
+const ownRead = () => ownNorm([...document.querySelectorAll('#ownList .own')].map(i => i.value).join('\n'));
+// Checklist: só aparece aqui no painel; não vai para o cronograma, planilha nem relatórios
+function renderCk(t) {
+  const c = t.check || [];
+  $('#ckList').innerHTML = c.map((x, i) => `<li class="ck-i"><input type="checkbox" class="ck-d" aria-label="Feito: item ${i + 1}"${x.d ? ' checked' : ''}><input class="ck-t" maxlength="200" aria-label="Item ${i + 1} do checklist" value="${esc(x.t)}"><button type="button" class="icon" data-ckrm="${i}" aria-label="Remover item ${i + 1}">×</button></li>`).join('');
+  $('#ckCount').textContent = c.length ? `${c.filter(x => x.d).length} de ${c.length}` : '';
+  $('#ckNew').disabled = $('#btnCkAdd').disabled = c.length >= CK_MAX;
+  $('#ckNew').placeholder = c.length >= CK_MAX ? `Limite de ${CK_MAX} itens` : 'Novo item e Enter';
+}
+const ckTask = () => cur().tasks.find(x => x.id === openId);
+function ckAdd() {
+  const t = ckTask(), i = $('#ckNew'), v = i.value.trim(); if (!t || !v) return;
+  if ((t.check || []).length >= CK_MAX) return toast(`Até ${CK_MAX} itens por checklist.`);
+  (t.check = t.check || []).push({ t: v.slice(0, 200), d: false }); i.value = '';
+  save(); renderCk(t); i.focus();
+}
+$('#btnCkAdd').addEventListener('click', ckAdd);
+$('#ckNew').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); ckAdd(); } });
+$('#btnOwnAdd').addEventListener('click', () => { renderOwn([...owns({ owner: ownRead() }), '']); [...document.querySelectorAll('#ownList .own')].pop().focus(); });
+$('#drForm').addEventListener('click', e => {
+  const t = ckTask(); if (!t) return;
+  const ck = e.target.closest('[data-ckrm]');
+  if (ck) { t.check.splice(+ck.dataset.ckrm, 1); if (!t.check.length) delete t.check; save(); renderCk(t); $('#ckNew').focus(); return; }
+  const o = e.target.closest('[data-ownrm]');
+  if (o) { o.parentElement.remove(); t.owner = ownRead(); renderOwn(owns(t)); save(); renderTools(); renderGantt(); }
+});
 
 function renderDeps() {
   const p = cur(), t = p.tasks.find(x => x.id === openId);
@@ -1903,9 +1954,14 @@ $('#drForm').addEventListener('input', e => {
   const p = cur(), t = p.tasks.find(x => x.id === openId); if (!t) return;
   const wasDone = health(p)[0] === 'done';
   const F = e.currentTarget.elements;
+  if (e.target.id === 'ckNew') return;
+  if (e.target.closest('#ckList')) {
+    t.check = [...$('#ckList').children].map(li => ({ t: li.querySelector('.ck-t').value.slice(0, 200), d: li.querySelector('.ck-d').checked }));
+    save(); $('#ckCount').textContent = `${t.check.filter(x => x.d).length} de ${t.check.length}`; return;
+  }
   if (e.target.closest('#depList')) t.deps = [...document.querySelectorAll('#depList input:checked')].map(i => i.value);
   else {
-    t.name = F.nome.value.trim() || 'Sem nome'; t.groupId = F.groupId.value; t.owner = F.owner.value.trim();
+    t.name = F.nome.value.trim() || 'Sem nome'; t.groupId = F.groupId.value; t.owner = ownRead();
     t.milestone = F.milestone.checked; t.risk = F.risk.checked; t.progress = +F.progress.value; t.note = F.note.value.trim();
     if (F.start.value) t.start = F.start.value;
     if (F.end.value) t.end = F.end.value;
@@ -1938,7 +1994,7 @@ function deleteTask(id) {
 
 function duplicateTask(id) {
   const p = cur(), i = p.tasks.findIndex(x => x.id === id); if (i < 0) return;
-  const c = { ...p.tasks[i], id: uid(), name: p.tasks[i].name + ' (cópia)', deps: [...p.tasks[i].deps], progress: 0, risk: false };
+  const c = { ...p.tasks[i], id: uid(), name: p.tasks[i].name + ' (cópia)', deps: [...p.tasks[i].deps], progress: 0, risk: false, ...(p.tasks[i].check ? { check: p.tasks[i].check.map(c => ({ t: c.t, d: false })) } : {}) };
   p.tasks.splice(i + 1, 0, c);
   save(); render(); flashRow(c.id);
   toast('Tarefa duplicada');
@@ -2400,7 +2456,7 @@ async function parseXlsx(buf, name, sheetName) {
     if (!grp) { const c = String(g('color')).trim(); grp = byName[gn] = { id: uid(), name: gn, color: /^#[0-9a-f]{6}$/i.test(c) ? c : PAL[p.groups.length % PAL.length] }; p.groups.push(grp); }
     let pr = +g('progress') || 0; if (pr > 0 && pr <= 1) pr *= 100;
     const ms = g('ms') === true || /^(sim|s|x|1|true)$/i.test(String(g('ms')).trim());
-    const t = { id: uid(), name: nome, groupId: grp.id, owner: String(g('owner')).trim(), start: n2d(s), end: n2d(ms ? s : e), progress: Math.round(Math.max(0, Math.min(100, pr))), milestone: ms, risk: norm(g('status')) === 'em risco', deps: [], note: String(g('note')).trim() };
+    const t = { id: uid(), name: nome, groupId: grp.id, owner: ownNorm(g('owner')), start: n2d(s), end: n2d(ms ? s : e), progress: Math.round(Math.max(0, Math.min(100, pr))), milestone: ms, risk: norm(g('status')) === 'em risco', deps: [], note: String(g('note')).trim() };
     const bs = xd(g('bs')), be = xd(g('be'));
     if (!isNaN(bs) && !isNaN(be)) { t.bs = n2d(bs); t.be = n2d(be); p.baseAt = n2d(todayN); }
     p.tasks.push(t); pend.push([t, String(g('deps'))]);
@@ -2431,7 +2487,7 @@ function batchAdd(p, rows) {
     if (ms && isNaN(s)) s = e;
     if (isNaN(s)) { s = prev != null ? prev + 1 : isNaN(e) ? todayN : e; if (e < s) s = e; }
     if (isNaN(e) || ms) e = s; if (e < s) [s, e] = [e, s];
-    p.tasks.push({ id: uid(), name: nome.slice(0, 300), groupId: g.id, owner: owner.slice(0, 120), start: n2d(s), end: n2d(e), progress: 0, milestone: !!ms, risk: false, deps: [], note: '' });
+    p.tasks.push({ id: uid(), name: nome.slice(0, 300), groupId: g.id, owner: ownNorm(owner), start: n2d(s), end: n2d(e), progress: 0, milestone: !!ms, risk: false, deps: [], note: '' });
     prev = e; n++;
   }
   return { n, skip, novas };
@@ -2676,15 +2732,16 @@ $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
 // Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
 // A cada versão nova, troque a data e a lista abaixo.
-const NOVIDADES = { versao: '2026-11-19', secoes: ['Salvar na nuvem (versão online)','Planejar D− (de trás para frente)', 'Carga da equipe', 'Caminho crítico', 'Datas da empresa e feriados', 'Relatório executivo e PowerPoint', 'Situação do projeto', 'Inserir várias tarefas de uma vez', 'Importar de uma planilha'] };
+const NOVIDADES = { versao: '2026-11-19', secoes: ['Grupos e cores', 'Adicionar e editar tarefas', 'Importar de uma planilha', 'Salvar na nuvem (versão online)'] };
 {
   const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
   sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
   $('#dlgManual .man').insertAdjacentHTML('afterbegin', `<p class="man-nov"><b>Novidades da versão de ${fmtBR(d2n(NOVIDADES.versao))}:</b> ${sums.map((x, i) => `<button type="button" data-man="${i}">${esc(x.firstChild.textContent)}</button>`).join(', ')}.</p>`);
   $('#dlgManual .man-nov').addEventListener('click', e => { const b = e.target.closest('[data-man]'); if (!b) return; const d = sums[+b.dataset.man].parentElement; d.open = true; d.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
   let visto = null; try { visto = localStorage.getItem('roadmap-hdi-manual-visto'); } catch (e) { /* sem armazenamento: o aviso aparece sempre */ }
-  if (visto !== NOVIDADES.versao) { $('#btnManual').classList.add('has-new'); $('#btnManual').title = 'Como usar cada função (há novidades nesta versão)'; }
-  $('#btnManual').addEventListener('click', () => { $('#btnManual').classList.remove('has-new'); try { localStorage.setItem('roadmap-hdi-manual-visto', NOVIDADES.versao); } catch (e) { /* idem */ } });
+  const novId = NOVIDADES.versao + ' ' + NOVIDADES.secoes.join('|');
+  if (visto !== novId) { $('#btnManual').classList.add('has-new'); $('#btnManual').title = 'Como usar cada função (há novidades nesta versão)'; }
+  $('#btnManual').addEventListener('click', () => { $('#btnManual').classList.remove('has-new'); try { localStorage.setItem('roadmap-hdi-manual-visto', novId); } catch (e) { /* idem */ } });
 }
 function modeloP() {
   const gid = uid(), s = todayN - ((dow(todayN) + 6) % 7) + 7;
@@ -3614,6 +3671,12 @@ async function selfTest() {
   // filtros
   flt.q = 'ana'; ok(fltOk({ name: 'x', owner: 'Ána Lima', note: '', start: '2027-01-01', end: '2027-01-02', progress: 0 }) && !fltOk({ name: 'x', owner: 'Bia', note: '', start: '2027-01-01', end: '2027-01-02', progress: 0 }), 'busca sem acento');
   flt.q = '';
+  ok(ownNorm(' Ana;Bia\nCarlos  Mota / Dani ') === 'Ana / Bia / Carlos Mota / Dani' && ownNorm('TI/Sistemas') === 'TI/Sistemas', 'vários responsáveis');
+  flt.owner = 'Bia'; ok(fltOk({ name: 'x', owner: 'Ana / Bia', note: '', start: '2027-01-01', end: '2027-01-02', progress: 0 }), 'filtro por um dos responsáveis'); flt.owner = '';
+  { const lg = loadGrid([{ tasks: [{ name: 'x', owner: 'Ana / Bia', start: n2d(todayN), end: n2d(todayN + 2), progress: 0, milestone: false }] }]);
+    ok(lg.people.map(q => q.name).join() === 'Ana,Bia', 'carga conta cada responsável'); }
+  { const ck = normP({ id: 'c', name: 'C', groups: [], tasks: [{ id: 't', name: 'T', start: '2027-01-01', end: '2027-01-02', check: [...Array(20)].map((_, i) => ({ t: i ? 'item ' + i : ' ', d: i === 1 })) }] }).tasks[0].check;
+    ok(ck.length === 15 && ck[0].t === 'item 1' && ck[0].d === true && ck[1].d === false, 'checklist: até 15 itens, vazios saem'); }
   // junção do arquivo da equipe
   const it = (id, v) => ({ id, name: id, v }), B = toMap([it('a', 0), it('b', 0), it('c', 0), it('x', 0)]), conf = [];
   const mg = mergeList([it('a', 1), it('b', 0), it('d', 1), it('x', 1)], [it('a', 0), it('b', 1), it('c', 0), it('e', 1)], B, conf);
