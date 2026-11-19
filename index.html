@@ -1970,7 +1970,10 @@ const ltAdd = k => $('#ltBody').insertAdjacentHTML('beforeend', '<tr><td><input 
 $('#btnLtMais').addEventListener('click', () => ltAdd(5));
 // marca "nova" na seção que ainda não existe no projeto (ela é criada ao inserir)
 const ltMark = () => { const ex = new Set(cur().groups.map(g => norm(g.name)));
-  $('#ltBody').querySelectorAll('tr').forEach(tr => { const i = tr.querySelector('input'), td = i.parentElement, v = norm(i.value); td.toggleAttribute('data-novo', !!v && !ex.has(v)); }); };
+  const novas = new Map();
+  $('#ltBody').querySelectorAll('tr').forEach(tr => { const i = tr.querySelector('input'), td = i.parentElement, v = norm(i.value); td.toggleAttribute('data-novo', !!v && !ex.has(v)); if (v && !ex.has(v) && !novas.has(v)) novas.set(v, i.value.trim()); });
+  // seções novas digitadas aqui também aparecem como sugestão nas outras linhas
+  $('#ltGroups').innerHTML = [...cur().groups.map(g => g.name), ...novas.values()].map(n => `<option value="${esc(n)}">`).join(''); };
 $('#ltBody').addEventListener('input', ltMark);
 // colar várias linhas/colunas do Excel a partir da célula clicada
 $('#ltBody').addEventListener('paste', e => {
