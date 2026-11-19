@@ -3340,10 +3340,12 @@ async function cloudLive() {
 async function cloudLogin() {
   const email = await ask({ title: 'Entrar para salvar na nuvem', text: 'Mandamos um link para o seu e-mail. Abra o link neste navegador e pronto, sem senha. Os projetos passam a abrir em qualquer computador e você pode dividir com a equipe.', label: 'Seu e-mail', value: '', ok: 'Enviar link' });
   if (!email) return;
+  toast('Enviando o link…');
   try {
     await sbAuth('otp?redirect_to=' + encodeURIComponent(location.origin + location.pathname), { email, create_user: true });
-    toast(`Link enviado para ${email}. Abra o e-mail neste computador.`);
-  } catch (e) { toast('Não consegui enviar o link: ' + e.message + '.'); }
+    // com botão o aviso fica 7 s em vez de 3: a pessoa precisa ler para onde foi o link
+    toast(`Link enviado para ${email}. Abra o e-mail neste computador e clique no link.`, 'Entendi', () => {});
+  } catch (e) { toast('Não consegui enviar o link: ' + e.message + '.', 'Entendi', () => {}); }
 }
 async function cloudSwitch(id) {
   clearTimeout(CLOUD.t); if (CLOUD.s && cloudWs) await cloudSync();
