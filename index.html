@@ -1613,8 +1613,7 @@ function renderLine({ fx, fo }) {
   const full = ($('#gantt').clientWidth || 1000) - 50;
   // Régua por mês: colunas iguais e cada projeto ocupa os meses inteiros em que tem tarefa (1 dia no mês já conta)
   const ps = lineProjects(), vis = p => p.tasks.filter(fltOk);
-  const mOf = n => { const d = new Date(n * DAY); return d.getUTCFullYear() * 12 + d.getUTCMonth(); };
-  const spans = ps.map(p => { const ts = vis(p); return ts.length ? [mOf(Math.min(...ts.map(t => d2n(t.start)))), mOf(Math.max(...ts.map(t => d2n(t.end))))] : null; });
+  const spans = ps.map(p => { const ts = vis(p); return ts.length ? [mOfN(Math.min(...ts.map(t => d2n(t.start)))), mOfN(Math.max(...ts.map(t => d2n(t.end))))] : null; });
   const sp = spans.filter(Boolean), m0 = sp.length ? Math.min(...sp.map(x => x[0])) : 0, M = sp.length ? Math.max(...sp.map(x => x[1])) - m0 + 1 : 0;
   // a coluna cresce até caber o texto mínimo das tarefas do projeto mais apertado; se passar da tela, rola para o lado
   const need = (p, x) => { const ts = vis(p); return (ts.reduce((a, t) => a + (t.milestone ? MSW : MINW), 0) - OV * (ts.length - 1)) / (x[1] - x[0] + 1); };
@@ -1653,13 +1652,13 @@ function renderLine({ fx, fo }) {
   let yr = '', mo = '', nowCol = '';
   for (let k = 0; k < M; k++) {
     const m = m0 + k, y = Math.floor(m / 12);
-    mo += `<span style="width:${CW}px"${m === mOf(todayN) ? ' class="now"' : ''}>${MES[m % 12]}</span>`;
+    mo += `<span style="width:${CW}px"${m === mOfN(todayN) ? ' class="now"' : ''}>${MES[m % 12]}</span>`;
     if (k === 0 || m % 12 === 0) yr += `<span style="width:${Math.min(12 - m % 12, M - k) * CW}px">${y}</span>`;
   }
-  const kn = mOf(todayN) - m0;
+  const kn = mOfN(todayN) - m0;
   if (M && kn >= 0 && kn < M) nowCol = `<i class="ls-now" style="left:${kn * CW}px;width:${CW}px"></i>`;
   // faixas das datas da empresa e feriados: posição proporcional ao dia dentro da coluna do mês
-  const lsX = n => { const m = mOf(n), f = mFirst(m); return (m - m0) * CW + (n - f) / (mFirst(m + 1) - f) * CW; }, la = M ? mFirst(m0) : 0, lb = M ? mFirst(m0 + M) - 1 : -1;
+  const lsX = n => { const m = mOfN(n), f = mFirst(m); return (m - m0) * CW + (n - f) / (mFirst(m + 1) - f) * CW; }, la = M ? mFirst(m0) : 0, lb = M ? mFirst(m0 + M) - 1 : -1;
   if (M) nowCol += marksIn(la, lb).map(k => { const l = lsX(Math.max(k.s, la)); return `<i class="mk mk-${k.kind}" style="left:${l}px;width:${Math.max(2, lsX(Math.min(k.e, lb) + 1) - l)}px" title="${esc(mkTip(k))}">${k.kind === 'eq' ? `<span>${esc(k.name)}</span>` : ''}</i>`; }).join('');
   const ruler = M ? `<div class="ls-ru"><div class="ls-yr">${yr}</div><div class="ls-mo">${mo}</div></div>` : '';
   $('#gantt').innerHTML = `<div class="ls${ps.length > 1 ? ' multi' : ''}${fx === 'load' || fx === 'zoom' ? ' anim' : ''}"><div class="ls-tl" style="--cw:${CW}px;width:${M * CW || full}px">${nowCol}${ruler}${ps.map(strip).join('')}</div></div>`;
@@ -2181,7 +2180,9 @@ async function parseXlsx(buf, name, sheetName) {
   const X = f => { if (!z[f]) throw Error('planilha incompleta (' + f + ')'); return new DOMParser().parseFromString(dec.decode(z[f]), 'application/xml'); };
   const tags = (d, n) => [...d.getElementsByTagName(n)];
   const ss = z['xl/sharedStrings.xml'] ? tags(X('xl/sharedStrings.xml'), 'si').map(si => tags(si, 't').map(t => t.textContent).join('')) : [];
-  const sheets = tags(X('xl/workbook.xml'), 'sheet');
+  const wbx = X('xl/workbook.xml'), sheets = tags(wbx, 'sheet');
+  // planilha do Excel de Mac antigo conta os dias a partir de 1904
+  const base1904 = /^(1|true)$/.test(tags(wbx, 'workbookPr')[0]?.getAttribute('date1904') || '') ? 1462 : 0;
   const sh = sheetName != null ? sheets.find(s => s.getAttribute('name') === sheetName) : sheets.find(s => norm(s.getAttribute('name')) === 'tarefas') || sheets[0];
   if (!sh) throw Error(sheetName != null ? `não achei a aba "${sheetName}"` : 'nenhuma aba encontrada');
   const rel = tags(X('xl/_rels/workbook.xml.rels'), 'Relationship').find(r => r.getAttribute('Id') === sh.getAttribute('r:id'));
@@ -2199,13 +2200,8 @@ async function parseXlsx(buf, name, sheetName) {
   const map = {};
   rows[hi].forEach((h, i) => { const k = ALIAS[norm(h)]; if (k && map[k] == null) map[k] = i; });
   if (map.start == null && map.end == null) throw Error('a aba Tarefas precisa das colunas Início e Fim');
-  const xd = v => {
-    if (typeof v === 'number') return Math.round(v) - 25569;
-    const s = String(v ?? '').trim(); let m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-    if (m) return Math.round(Date.UTC(+m[3], m[2] - 1, +m[1]) / DAY);
-    m = s.match(/^\d{4}-\d{2}-\d{2}/);
-    return m ? d2n(m[0]) : NaN;
-  };
+  // número do Excel: a parte depois da vírgula é o horário, não pode arredondar para o dia seguinte
+  const xd = v => { if (typeof v === 'number') return Math.floor(v) - 25569 + base1904; const d = ltDate(String(v ?? '').trim().slice(0, 10)); return d ? d2n(d) : NaN; };
   const p = { id: uid(), name, area: '', groups: [], tasks: [] }, byName = {}, pend = [];
   let skipped = 0;
   for (const r of rows.slice(hi + 1)) {
@@ -2802,7 +2798,9 @@ const idb = (mode, fn) => new Promise((res, rej) => {
   };
 });
 // Arquivo inválido lança erro aqui, antes de qualquer gravação: nunca sobrescreve o que não conseguiu ler
-function teamParse(txt) {
+// vazio só vale para arquivo novo; depois da primeira sincronização é OneDrive no meio do download, e aceitar apagaria tudo
+function teamParse(txt, synced) {
+  if (!txt.trim() && synced) throw Error('o arquivo veio vazio (o OneDrive pode estar baixando); nada foi alterado');
   const d = txt.trim() ? JSON.parse(txt) : {};
   return {
     projects: (Array.isArray(d.projects) ? d.projects : []).flatMap(p => { try { return [normP(p)]; } catch (e) { return []; } }),
@@ -2837,7 +2835,7 @@ async function teamSync() {
     const f = await TEAM.h.getFile();
     let disk = TEAM.base, pulled = false;
     if (f.lastModified !== TEAM.seen) {
-      const d = teamParse(await f.text()), conf = [], before = JSON.stringify([state.projects, state.templates, state.marks]);
+      const d = teamParse(await f.text(), TEAM.base.size > 0), conf = [], before = JSON.stringify([state.projects, state.templates, state.marks]);
       state.projects = mergeList(state.projects, d.projects, TEAM.base, conf);
       state.templates = mergeList(state.templates, d.templates, TEAM.base, conf);
       state.marks = mergeList(state.marks, d.marks, TEAM.base, conf);
@@ -2955,7 +2953,14 @@ async function teamInit() {
   if (TEAM.ok) teamSync();
 }
 // Busca o que os colegas mudaram ao voltar para a aba e a cada 15 segundos
-addEventListener('focus', () => { if (TEAM.ok) teamSync(); });
+addEventListener('focus', () => { if (dayTurned()) return; if (TEAM.ok) teamSync(); });
+// "hoje" é calculado ao abrir; se o dia virou com a página aberta, recarrega para atrasos e tendência usarem a data certa
+function dayTurned() {
+  const t = new Date(); if (Math.round(Date.UTC(t.getFullYear(), t.getMonth(), t.getDate()) / DAY) === todayN) return false;
+  if (drag || reo || document.querySelector('dialog[open]') || (openId && $('#drawer').contains(document.activeElement))) return false;
+  location.reload(); return true;
+}
+setInterval(dayTurned, 60000);
 setInterval(() => { if (TEAM.ok && !document.hidden) teamSync(); }, 15000);
 
 /* ---------- tema claro e escuro ---------- */
@@ -3034,6 +3039,22 @@ async function selfTest() {
     ok(pa.name === 'Projeto da aba' && pa.tasks.length > 0, 'abas: importa a aba escolhida');
     let err = ''; try { await parseXlsx(buf, 'x', 'Não existe'); } catch (e) { err = e.message; }
     ok(/não achei a aba/.test(err), 'abas: aba inexistente dá erro'); }
+  { // reparos da revisão
+    let e1 = ''; try { teamParse('  ', true); } catch (e) { e1 = e.message; }
+    ok(/vazio/.test(e1) && teamParse('', false).projects.length === 0, 'equipe: arquivo vazio depois de sincronizar não apaga nada');
+    const cell = (r, v, t) => `<c r="${r}"${t ? ' t="inlineStr"' : ''}>${t ? `<is><t>${v}</t></is>` : `<v>${v}</v>`}</c>`;
+    const mk = (pr, rows) => buildXlsx(modeloP(), true).arrayBuffer().then(async b => {
+      const z = await unzip(b), dec = new TextDecoder(), files = Object.entries(z).map(([n, u]) => [n, dec.decode(u)]);
+      const f = Object.fromEntries(files);
+      f['xl/workbook.xml'] = f['xl/workbook.xml'].replace('<sheets>', pr + '<sheets>');
+      f['xl/worksheets/sheet1.xml'] = f['xl/worksheets/sheet1.xml'].replace(/<sheetData>[\s\S]*<\/sheetData>/, `<sheetData><row r="1">${cell('A1', 'Tarefa', 1)}${cell('B1', 'Início', 1)}${cell('C1', 'Fim', 1)}</row>${rows}</sheetData>`);
+      return (await parseXlsx(await zip(Object.entries(f)).arrayBuffer(), 'D')).p;
+    });
+    const p1 = await mk('', `<row r="2">${cell('A2', 'Tarde', 1)}${cell('B2', 46361.75)}${cell('C2', 46362.2)}</row><row r="3">${cell('A3', 'Inexistente', 1)}${cell('B3', '31/02/2027', 1)}${cell('C3', '05/03/2027', 1)}</row>`);
+    ok(p1.tasks[0].start === n2d(46361 - 25569) && p1.tasks[0].end === n2d(46362 - 25569), 'planilha: horário depois do meio-dia não pula o dia');
+    ok(p1.tasks[1].start === '2027-03-05', 'planilha: data que não existe vira vazio e usa a outra');
+    const p2 = await mk('<workbookPr date1904="1"/>', `<row r="2">${cell('A2', 'Mac', 1)}${cell('B2', 44899)}${cell('C2', 44899)}</row>`);
+    ok(p2.tasks[0].start === n2d(44899 - 25569 + 1462), 'planilha: sistema de datas 1904'); }
   { // carga da equipe
     const g = [{ id: 'g', name: 'G', color: '#006729' }], w = monday(todayN) + 7, D = k => n2d(w + k);
     const t = (id, owner, a, b, o = {}) => ({ id, name: id, groupId: 'g', owner, start: D(a), end: D(b), progress: 0, milestone: false, risk: false, deps: [], ...o });
