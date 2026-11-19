@@ -399,6 +399,14 @@ dialog::backdrop{background:rgba(0,36,18,.35);-webkit-backdrop-filter:blur(7px);
 .dlg-in{padding:22px 22px 18px;display:flex;flex-direction:column;gap:14px;margin:0}
 dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.01em}
 .muted{color:var(--ink-2);margin:0;font-size:13.5px}
+.nv-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px}
+.nv-list li{display:flex;align-items:center;gap:10px;padding:8px 12px;min-height:44px;font-size:13.5px}
+.nv-list li + li{border-top:1px solid var(--line)}
+.nv-list span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.nv-list small{color:var(--ink-2)}
+.nv-list .btn{height:30px;padding:0 10px;font-size:12.5px}
+.nv-add{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:end}
+@media (max-width:600px){.nv-add{grid-template-columns:1fr}}
 .dlg-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:6px}
 #dlgGrupos{width:min(640px,calc(100vw - 32px))}
 #dlgRep{width:min(1180px,calc(100vw - 32px))}
@@ -959,8 +967,20 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li><b>Desconectar</b> volta para os seus projetos pessoais deste computador. Para levar um projeto pessoal para a equipe: salve um backup dele, conecte e abra o backup.</li>
         <li>Funciona no Edge e no Chrome.</li>
       </ul></div></details>
+      <details><summary>Salvar na nuvem (versão online)</summary><div><ol>
+        <li>Só aparece na versão aberta pelo endereço da internet. O arquivo aberto do computador nunca fala com a internet.</li>
+        <li>Clique em <b>Entrar para salvar na nuvem</b>, digite o seu e-mail e abra o link que chegar. Não tem senha.</li>
+        <li>Você começa na equipe <b>Meus projetos</b>, que só você vê. Os projetos passam a abrir em qualquer computador em que você entrar.</li>
+      </ol><ul>
+        <li>Para dividir com outras pessoas, clique na equipe na barra lateral e use <b>Nova equipe</b>. Depois adicione as pessoas pelo e-mail, como <b>Pode editar</b>, <b>Só ver</b> ou <b>Dono</b>. A pessoa precisa ter entrado uma vez antes.</li>
+        <li>As mudanças dos colegas aparecem em poucos segundos. Se duas pessoas mexerem no mesmo projeto ao mesmo tempo, fica a versão de quem gravou por último, e o app avisa.</li>
+        <li>Sem internet você continua trabalhando. As mudanças ficam guardadas no navegador e sobem quando a conexão voltar.</li>
+        <li>Os projetos deste navegador não vão sozinhos para a nuvem. Para levar: antes de entrar, use <b>Salvar backup</b>; depois de entrar, use <b>Abrir backup ou planilha</b>.</li>
+        <li><b>Sair da nuvem</b> apaga a cópia da nuvem deste navegador. Os projetos continuam na nuvem.</li>
+        <li>Não coloque dados da empresa na versão online.</li>
+      </ul></div></details>
       <details><summary>Backup e onde ficam os dados</summary><div><ul>
-        <li>Tudo fica salvo neste navegador, neste computador. Nada é enviado para a internet.</li>
+        <li>Tudo fica salvo neste navegador, neste computador. Nada é enviado para a internet, a não ser que você entre na nuvem na versão online.</li>
         <li>Limpar os dados do navegador apaga os projetos. Use <b>Salvar backup (.json)</b> com frequência.</li>
         <li>Para restaurar ou levar para outro computador, use <b>Abrir backup ou planilha</b> e escolha o .json.</li>
       </ul></div></details>
@@ -976,6 +996,24 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
     <p class="muted">Todos usam o mesmo arquivo .json, guardado numa pasta do SharePoint e sincronizada no computador de cada um pelo OneDrive. O app grava nesse arquivo a cada alteração e busca o que os colegas mudaram.</p>
     <p class="muted">Se a equipe ainda não tem o arquivo, crie um dentro da pasta sincronizada. Se já tem, abra o que está lá.</p>
     <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn" value="novo">Criar arquivo novo</button><button class="btn primary" value="abrir">Abrir arquivo existente</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgNuvem" aria-labelledby="nvT">
+  <form method="dialog" class="dlg-in">
+    <h2 id="nvT">Equipes na nuvem</h2>
+    <p class="muted" id="nvWho"></p>
+    <label class="fld">Equipe aberta<select id="nvWs"></select></label>
+    <div id="nvMem"></div>
+    <div id="nvAdd">
+      <div class="nv-add">
+        <label class="fld">Adicionar pessoa<input type="email" id="nvEmail" placeholder="email@empresa.com" autocomplete="off"></label>
+        <label class="fld">Pode<select id="nvRole"><option value="editor">Pode editar</option><option value="viewer">Só ver</option><option value="owner">Dono</option></select></label>
+        <button type="button" class="btn" id="nvAddBtn">Adicionar</button>
+      </div>
+      <p class="muted">A pessoa precisa entrar no roadmap uma vez com o e-mail dela antes. Para mudar o que alguém pode fazer, adicione o mesmo e-mail de novo com a opção nova.</p>
+    </div>
+    <div class="dlg-foot"><button type="button" class="btn" id="nvOut">Sair da nuvem</button><button type="button" class="btn" id="nvNew">Nova equipe</button><button class="btn primary" value="">Fechar</button></div>
   </form>
 </dialog>
 
@@ -1395,7 +1433,13 @@ let state, drag = null, reo = null, openId = null, lastRange = null;
 const TK = 'roadmap-hdi-equipe';
 let teamName = null;
 try { teamName = localStorage.getItem(TK + '-nome'); } catch (e) { /* sem armazenamento: fica no modo local */ }
-const stKey = () => teamName ? TK : KEY;
+// Nuvem (Supabase): só na versão publicada no GitHub Pages; aberto do computador (file://) o app nunca fala com a internet
+const CLOUD_OK = !RO && (location.hostname === 'pchiesi.github.io' || /^(localhost|127\.0\.0\.1)$/.test(location.hostname));
+const CK = 'roadmap-nuvem';
+let cloudWs = null;
+if (CLOUD_OK) try { cloudWs = localStorage.getItem(CK + '-ws'); } catch (e) { /* sem armazenamento: sem nuvem */ }
+const CLOUD = { s: null, list: [], role: '', base: new Map(), ver: new Map(), busy: false, again: false, tries: 0, err: '', at: '', t: 0, fresh: false, sock: null, rp: null };
+const stKey = () => cloudWs ? CK + '-' + cloudWs : teamName ? TK : KEY;
 const TEAM = { h: null, ok: false, seen: 0, base: new Map(), busy: false, again: false, err: '', at: '', t: 0 };
 const RAWH = {}, keepH = x => { if (x && x.id && x.hist) RAWH[String(x.id).replace(/[^\w-]/g, '').slice(0, 40)] = x.hist; return x; };
 if (RO) {
@@ -1406,7 +1450,7 @@ if (RO) {
   if (!state || !Array.isArray(state.projects)) state = { projects: [], templates: [], zoom: 'month' };
   state.projects = state.projects.flatMap(p => { try { return [normP(keepH(p))]; } catch (e) { return []; } });
   if (!Array.isArray(state.templates)) state.templates = [];
-  if (!state.projects.length) state.projects.push(teamName ? blank('Novo projeto') : demo());
+  if (!state.projects.length) state.projects.push(teamName || cloudWs ? blank('Novo projeto') : demo());
   if (!state.projects.some(p => p.id === state.currentId)) state.currentId = state.projects[0].id;
   if (!ZOOM[state.zoom]) state.zoom = 'month';
   state.templates = state.templates.filter(okTpl);
@@ -1457,6 +1501,7 @@ function persist() {
   try { localStorage.setItem(stKey(), JSON.stringify(state)); }
   catch (e) { toast('Não consegui salvar no navegador. Use Salvar backup para não perder o trabalho.'); }
   if (TEAM.h) { clearTimeout(TEAM.t); TEAM.t = setTimeout(teamSync, 800); }
+  if (cloudWs && CLOUD.s) { clearTimeout(CLOUD.t); CLOUD.t = setTimeout(cloudSync, 800); }
 }
 function save() {
   if (RO) return;
@@ -2631,7 +2676,7 @@ $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
 // Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
 // A cada versão nova, troque a data e a lista abaixo.
-const NOVIDADES = { versao: '2026-11-18', secoes: ['Planejar D− (de trás para frente)', 'Carga da equipe', 'Caminho crítico', 'Datas da empresa e feriados', 'Relatório executivo e PowerPoint', 'Situação do projeto', 'Inserir várias tarefas de uma vez', 'Importar de uma planilha'] };
+const NOVIDADES = { versao: '2026-11-19', secoes: ['Salvar na nuvem (versão online)','Planejar D− (de trás para frente)', 'Carga da equipe', 'Caminho crítico', 'Datas da empresa e feriados', 'Relatório executivo e PowerPoint', 'Situação do projeto', 'Inserir várias tarefas de uma vez', 'Importar de uma planilha'] };
 {
   const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
   sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
@@ -3136,10 +3181,11 @@ async function teamOff() {
 
 function renderTeam() {
   if (RO) return;
-  const svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c.6-3.2 3-5 6-5s5.4 1.8 6 5M16 5.2a3 3 0 0 1 0 5.6M18 14c1.8.6 3 2.3 3.3 5"/></svg>';
+  if (cloudWs || CLOUD.s) return renderCloud();
+  const svg ='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c.6-3.2 3-5 6-5s5.4 1.8 6 5M16 5.2a3 3 0 0 1 0 5.6M18 14c1.8.6 3 2.3 3.3 5"/></svg>';
   if (!teamName) {
-    $('#team').innerHTML = `<button class="side-btn" data-team="connect">${svg}Conectar arquivo da equipe</button>`;
-    $('.side-note').textContent = 'Tudo fica salvo neste computador. Nada é enviado para a internet.';
+    $('#team').innerHTML = `<button class="side-btn" data-team="connect">${svg}Conectar arquivo da equipe</button>` + (CLOUD_OK ? `<button class="side-btn" data-team="login">${CLOUD_SVG}Entrar para salvar na nuvem</button>` : '');
+    $('.side-note').textContent = CLOUD_OK ? 'Tudo fica salvo neste navegador. Para abrir em outro computador ou dividir com a equipe, entre na nuvem.' : 'Tudo fica salvo neste computador. Nada é enviado para a internet.';
     return;
   }
   const cls = !TEAM.ok ? 'off' : TEAM.err ? 'err' : '';
@@ -3150,7 +3196,9 @@ function renderTeam() {
 
 $('#team').addEventListener('click', e => {
   const a = e.target.closest('[data-team]'); if (!a) return;
-  if (a.dataset.team === 'connect') { $('#dlgTeam').returnValue = ''; $('#dlgTeam').showModal(); }
+  if (a.dataset.team === 'login') cloudLogin();
+  else if (a.dataset.team === 'cloud') CLOUD.s ? openNuvem() : cloudLogin();
+  else if (a.dataset.team === 'connect') { $('#dlgTeam').returnValue = ''; $('#dlgTeam').showModal(); }
   else if (a.dataset.team === 'sync') teamReconnect();
   else teamOff();
 });
@@ -3158,7 +3206,7 @@ $('#dlgTeam').addEventListener('close', () => { const v = $('#dlgTeam').returnVa
 
 async function teamInit() {
   renderTeam();
-  if (!teamName) return;
+  if (!teamName || cloudWs) return; // na nuvem o arquivo da equipe fica parado
   try { TEAM.base = new Map(JSON.parse(localStorage.getItem(TK + '-base') || '[]')); } catch (e) { TEAM.base = new Map(); }
   try { TEAM.h = await idb('readonly', s => s.get('team')); } catch (e) { TEAM.h = null; }
   if (TEAM.h) { try { TEAM.ok = await TEAM.h.queryPermission({ mode: 'readwrite' }) === 'granted'; } catch (e) { TEAM.ok = false; } }
@@ -3166,7 +3214,7 @@ async function teamInit() {
   if (TEAM.ok) teamSync();
 }
 // Busca o que os colegas mudaram ao voltar para a aba e a cada 15 segundos
-addEventListener('focus', () => { if (dayTurned()) return; if (TEAM.ok) teamSync(); });
+addEventListener('focus', () => { if (dayTurned()) return; if (TEAM.ok) teamSync(); if (CLOUD.s && cloudWs) cloudSync(); });
 // "hoje" é calculado ao abrir; se o dia virou com a página aberta, recarrega para atrasos e tendência usarem a data certa
 function dayTurned() {
   const t = new Date(); if (Math.round(Date.UTC(t.getFullYear(), t.getMonth(), t.getDate()) / DAY) === todayN) return false;
@@ -3175,6 +3223,208 @@ function dayTurned() {
 }
 setInterval(dayTurned, 60000);
 setInterval(() => { if (TEAM.ok && !document.hidden) teamSync(); }, 15000);
+// na nuvem o aviso em tempo real é o principal; a busca a cada 30 s cobre a conexão que caiu sem avisar
+setInterval(() => { if (CLOUD.s && cloudWs && !document.hidden) cloudSync(); }, 30000);
+
+/* ---------- nuvem (Supabase, sem biblioteca: só fetch e WebSocket) ---------- */
+const SB = 'https://lvrlfnsqhqwxruwxvgqf.supabase.co', SBK = 'sb_publishable_blTjgMfWtiV-7jsS3c2HsA_ot5yPvw_';
+const CLOUD_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.1 9.2 4.5 4.5 0 0 0 7 18z"/></svg>';
+// tabela do banco e como validar o que vem dela (a mesma validação do arquivo da equipe)
+const CTAB = [['projects', normP], ['templates', t => okTpl(t) ? t : null], ['marks', normMark]];
+const lsGet = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* o banco é a cópia principal */ } };
+const jwt = t => { try { return JSON.parse(decodeURIComponent(escape(atob(t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))))); } catch (e) { return {}; } };
+
+async function sbAuth(path, body, at) {
+  const r = await fetch(SB + '/auth/v1/' + path, { method: 'POST', headers: { apikey: SBK, 'Content-Type': 'application/json', ...(at ? { Authorization: 'Bearer ' + at } : {}) }, body: JSON.stringify(body || {}) });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) { const e = Error(j.msg || j.error_description || j.message || 'erro ' + r.status); e.status = r.status; throw e; }
+  return j;
+}
+function keepSess(j) {
+  const p = jwt(j.access_token);
+  CLOUD.s = { at: j.access_token, rt: j.refresh_token, exp: Date.now() + (+j.expires_in || 3600) * 1000, uid: p.sub, email: p.email || '' };
+  lsSet(CK + '-sessao', JSON.stringify(CLOUD.s));
+}
+function dropSess() { CLOUD.s = null; try { localStorage.removeItem(CK + '-sessao'); } catch (e) { /* nada a limpar */ } }
+// renova o acesso 1 min antes de vencer; chamadas ao mesmo tempo esperam a mesma renovação
+async function token() {
+  if (!CLOUD.s) throw Error('entre de novo');
+  if (CLOUD.s.exp - Date.now() > 60000) return CLOUD.s.at;
+  CLOUD.rp = CLOUD.rp || sbAuth('token?grant_type=refresh_token', { refresh_token: CLOUD.s.rt })
+    .then(keepSess, e => { if (e.status >= 400 && e.status < 500) dropSess(); throw e; })
+    .finally(() => { CLOUD.rp = null; });
+  await CLOUD.rp;
+  return CLOUD.s.at;
+}
+async function sb(path, opt = {}) {
+  const r = await fetch(SB + '/rest/v1/' + path, { ...opt, headers: { apikey: SBK, Authorization: 'Bearer ' + await token(), 'Content-Type': 'application/json', ...opt.headers } });
+  const txt = await r.text(), j = txt ? JSON.parse(txt) : null;
+  if (!r.ok) { const e = Error((j && j.message) || 'erro ' + r.status); e.status = r.status; throw e; }
+  return j;
+}
+const rowQ = (t, id, v) => `${t}?workspace_id=eq.${cloudWs}&id=eq.${encodeURIComponent(id)}` + (v ? '&version=eq.' + v : '');
+
+async function cloudSync() {
+  if (!CLOUD.s || !cloudWs) return;
+  if (CLOUD.busy || drag || reo) { CLOUD.again = true; return; }
+  CLOUD.busy = true; renderTeam();
+  let clash = false;
+  try {
+    const rows = await Promise.all(CTAB.map(([t]) => sb(t + `?workspace_id=eq.${cloudWs}&select=id,data,version`)));
+    const disk = new Map(), ver = new Map();
+    const theirs = rows.map((rs, i) => rs.flatMap(r => { let x; try { x = CTAB[i][1](r.data); } catch (e) { return []; } if (!x) return []; disk.set(x.id, JSON.stringify(x)); ver.set(x.id, r.version); return [x]; }));
+    const conf = [], before = snap();
+    // primeira vez nesta equipe neste navegador, ou só leitura: fica exatamente o que está no banco
+    if ((CLOUD.fresh && theirs.some(l => l.length)) || CLOUD.role === 'viewer') [state.projects, state.templates, state.marks] = theirs;
+    else {
+      state.projects = mergeList(state.projects, theirs[0], CLOUD.base, conf);
+      state.templates = mergeList(state.templates, theirs[1], CLOUD.base, conf);
+      state.marks = mergeList(state.marks, theirs[2], CLOUD.base, conf);
+    }
+    CLOUD.fresh = false;
+    if (!state.projects.length) state.projects.push(blank('Novo projeto'));
+    const pulled = snap() !== before;
+    if (conf.length) toast(`Outra pessoa mudou ao mesmo tempo: ${conf.join(', ')}. Ficou a sua versão.`);
+    // grava o que é meu; cada gravação confere a versão, e se alguém gravou antes a próxima rodada junta as duas
+    if (CLOUD.role !== 'viewer') for (const [i, [t]] of CTAB.entries()) {
+      const mine = [state.projects, state.templates, state.marks][i], ids = new Set(mine.map(x => x.id));
+      for (const x of mine) {
+        const j = JSON.stringify(x); if (j === disk.get(x.id)) continue;
+        const v = ver.get(x.id), r = v
+          ? await sb(rowQ(t, x.id, v), { method: 'PATCH', headers: { Prefer: 'return=representation' }, body: JSON.stringify({ data: x }) })
+          : await sb(t, { method: 'POST', headers: { Prefer: 'return=representation' }, body: JSON.stringify({ workspace_id: cloudWs, id: x.id, data: x }) }).catch(e => { if (e.status === 409) return []; throw e; });
+        if (r.length) { disk.set(x.id, j); ver.set(x.id, r[0].version); } else clash = true;
+      }
+      // só apaga o que conseguiu ler; item que não passou na validação fica no banco
+      for (const x of theirs[i]) if (!ids.has(x.id)) {
+        const r = await sb(rowQ(t, x.id, ver.get(x.id)), { method: 'DELETE', headers: { Prefer: 'return=representation' } });
+        if (r.length) { disk.delete(x.id); ver.delete(x.id); } else clash = true;
+      }
+    }
+    CLOUD.base = disk; CLOUD.ver = ver;
+    lsSet(CK + '-base-' + cloudWs, JSON.stringify([...disk])); lsSet(CK + '-ver-' + cloudWs, JSON.stringify([...ver]));
+    lsSet(stKey(), JSON.stringify(state));
+    CLOUD.err = ''; CLOUD.at = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    if (pulled) {
+      if (!cur()) state.currentId = state.projects[0].id;
+      if (openId && !cur().tasks.some(t => t.id === openId)) closeDrawer();
+      HIST.past = []; HIST.future = []; HIST.last = snap();
+      render(); renderHist();
+      if (openId && !$('#drawer').contains(document.activeElement)) openTask(openId);
+    }
+  } catch (e) { CLOUD.err = !CLOUD.s ? 'o acesso venceu' : e instanceof TypeError ? 'sem conexão, as mudanças ficam guardadas aqui' : e.message; }
+  CLOUD.busy = false;
+  renderTeam();
+  // conflito: busca de novo para juntar (no máximo 3 vezes seguidas, para não ficar em laço)
+  CLOUD.tries = clash ? CLOUD.tries + 1 : 0;
+  if (CLOUD.again || (clash && CLOUD.tries < 4)) { CLOUD.again = false; setTimeout(cloudSync, 300); }
+}
+
+// tempo real: avisa quando um projeto da equipe muda; aí busca no banco
+async function cloudLive() {
+  if (CLOUD.sock || !CLOUD.s || !cloudWs) return;
+  let at; try { at = await token(); } catch (e) { return; }
+  const w = new WebSocket(SB.replace('https', 'wss') + '/realtime/v1/websocket?vsn=1.0.0&apikey=' + SBK);
+  let hb, deb;
+  CLOUD.sock = w;
+  w.onopen = () => {
+    w.send(JSON.stringify({ topic: 'realtime:roadmap-' + cloudWs, event: 'phx_join', ref: '1', payload: { access_token: at, config: { postgres_changes: CTAB.map(([t]) => ({ event: '*', schema: 'public', table: t, filter: 'workspace_id=eq.' + cloudWs })) } } }));
+    hb = setInterval(() => w.send(JSON.stringify({ topic: 'phoenix', event: 'heartbeat', ref: 'hb', payload: {} })), 25000);
+  };
+  w.onmessage = e => { let m; try { m = JSON.parse(e.data); } catch (x) { return; } if (m.event === 'postgres_changes') { clearTimeout(deb); deb = setTimeout(cloudSync, 400); } };
+  // caiu (internet, acesso vencido): reconecta em 5 s com o acesso renovado
+  w.onclose = () => { clearInterval(hb); CLOUD.sock = null; if (CLOUD.s) setTimeout(cloudLive, 5000); };
+}
+
+async function cloudLogin() {
+  const email = await ask({ title: 'Entrar para salvar na nuvem', text: 'Mandamos um link para o seu e-mail. Abra o link neste navegador e pronto, sem senha. Os projetos passam a abrir em qualquer computador e você pode dividir com a equipe.', label: 'Seu e-mail', value: '', ok: 'Enviar link' });
+  if (!email) return;
+  try {
+    await sbAuth('otp?redirect_to=' + encodeURIComponent(location.origin + location.pathname), { email, create_user: true });
+    toast(`Link enviado para ${email}. Abra o e-mail neste computador.`);
+  } catch (e) { toast('Não consegui enviar o link: ' + e.message + '.'); }
+}
+async function cloudSwitch(id) {
+  clearTimeout(CLOUD.t); if (CLOUD.s && cloudWs) await cloudSync();
+  if (id) lsSet(CK + '-ws', id); else try { localStorage.removeItem(CK + '-ws'); } catch (e) { /* nada a limpar */ }
+  location.reload();
+}
+async function cloudOff() {
+  if (!await ask({ title: 'Sair da nuvem?', text: 'Os projetos continuam na nuvem e voltam quando você entrar de novo. Neste navegador ficam só os projetos salvos aqui.', ok: 'Sair' })) return;
+  clearTimeout(CLOUD.t);
+  if (CLOUD.s) { await cloudSync(); try { await sbAuth('logout', {}, await token()); } catch (e) { /* o acesso vence sozinho */ } }
+  // não deixa cópia dos projetos da equipe num computador que pode ser de outra pessoa
+  try { Object.keys(localStorage).filter(k => k.startsWith(CK)).forEach(k => localStorage.removeItem(k)); } catch (e) { /* nada a limpar */ }
+  location.reload();
+}
+
+function renderCloud() {
+  const w = CLOUD.list.find(x => x.id === cloudWs), name = w ? w.name : lsGet(CK + '-wsnome') || 'Nuvem';
+  const cls = !CLOUD.s ? 'off' : CLOUD.err ? 'err' : '';
+  const msg = !CLOUD.s ? 'Acesso venceu. Clique para entrar de novo.' : CLOUD.busy ? 'Sincronizando…' : CLOUD.err ? 'Erro: ' + CLOUD.err + '.' : CLOUD.at ? 'Na nuvem, salvo às ' + CLOUD.at : 'Conectando…';
+  $('#team').innerHTML = `<button class="team ${cls}${CLOUD.busy ? ' busy' : ''}" data-team="cloud" title="${CLOUD.s ? 'Equipes e pessoas' : 'Entrar'}"><span class="dot"></span><div><b>${esc(name)}${CLOUD.role === 'viewer' ? ' (só ver)' : ''}</b><small>${esc(msg)}</small></div></button>`;
+  $('.side-note').textContent = 'Os projetos ficam na nuvem. Só as pessoas da equipe veem.';
+}
+
+const ROLES = { owner: 'Dono', editor: 'Pode editar', viewer: 'Só ver' };
+async function openNuvem() {
+  const d = $('#dlgNuvem'), w = CLOUD.list.find(x => x.id === cloudWs), owner = w && w.role === 'owner';
+  $('#nvWho').textContent = 'Você entrou como ' + CLOUD.s.email + '.';
+  $('#nvWs').innerHTML = CLOUD.list.map(x => `<option value="${x.id}"${x.id === cloudWs ? ' selected' : ''}>${esc(x.name)}${x.personal ? ' (só você)' : ''} · ${ROLES[x.role]}</option>`).join('');
+  $('#nvAdd').hidden = !owner || w.personal;
+  $('#nvMem').innerHTML = '<p class="muted">Carregando as pessoas…</p>';
+  d.showModal();
+  try {
+    const ms = await sb(`members?workspace_id=eq.${cloudWs}&select=user_id,role,email&order=email`);
+    $('#nvMem').innerHTML = `<ul class="nv-list">${ms.map(m => `<li><span>${esc(m.email || '(sem e-mail)')}</span><small>${ROLES[m.role]}</small>${owner && m.user_id !== CLOUD.s.uid ? `<button type="button" class="btn small" data-rm="${m.user_id}">Remover</button>` : ''}</li>`).join('')}</ul>`;
+  } catch (e) { $('#nvMem').innerHTML = `<p class="muted">Não consegui carregar as pessoas: ${esc(e.message)}.</p>`; }
+}
+$('#nvWs').addEventListener('change', e => cloudSwitch(e.target.value));
+$('#nvNew').addEventListener('click', async () => {
+  const name = await ask({ title: 'Nova equipe', text: 'Você vira o dono e pode adicionar as pessoas depois.', label: 'Nome da equipe', value: '', ok: 'Criar equipe' });
+  if (!name) return;
+  // o id sai daqui: pedir a linha de volta falharia, porque o dono só é gravado depois da equipe
+  const id = crypto.randomUUID();
+  try { await sb('workspaces', { method: 'POST', body: JSON.stringify({ id, name }) }); lsSet(CK + '-wsnome', name); cloudSwitch(id); }
+  catch (e) { toast('Não consegui criar a equipe: ' + e.message + '.'); }
+});
+$('#nvAddBtn').addEventListener('click', async () => {
+  const email = $('#nvEmail').value.trim(); if (!email) return $('#nvEmail').focus();
+  try { await sb('rpc/add_member', { method: 'POST', body: JSON.stringify({ ws: cloudWs, member_email: email, member_role: $('#nvRole').value }) }); $('#nvEmail').value = ''; toast(email + ' foi adicionado.'); openNuvem(); }
+  catch (e) { toast(e.message); }
+});
+$('#nvMem').addEventListener('click', async e => {
+  const b = e.target.closest('[data-rm]'); if (!b) return;
+  try { await sb(`members?workspace_id=eq.${cloudWs}&user_id=eq.${b.dataset.rm}`, { method: 'DELETE' }); openNuvem(); }
+  catch (x) { toast('Não consegui remover: ' + x.message + '.'); }
+});
+$('#nvOut').addEventListener('click', () => { $('#dlgNuvem').close(); cloudOff(); });
+// entrou pelo link em outra aba: esta aba recarrega já conectada
+addEventListener('storage', e => { if (e.key === CK + '-sessao' && !CLOUD.s && e.newValue) location.reload(); });
+
+async function cloudInit() {
+  if (!CLOUD_OK) return;
+  const h = new URLSearchParams(location.hash.slice(1));
+  if (h.get('access_token')) { keepSess({ access_token: h.get('access_token'), refresh_token: h.get('refresh_token'), expires_in: h.get('expires_in') }); history.replaceState(null, '', location.pathname + location.search); }
+  else if (h.get('error_description')) { toast('O link de entrada não funcionou (' + h.get('error_description') + '). Peça outro.'); history.replaceState(null, '', location.pathname + location.search); }
+  else try { CLOUD.s = JSON.parse(lsGet(CK + '-sessao')); } catch (e) { CLOUD.s = null; }
+  if (!CLOUD.s) return renderTeam();
+  CLOUD.fresh = lsGet(CK + '-base-' + cloudWs) === null;
+  try { CLOUD.base = new Map(JSON.parse(lsGet(CK + '-base-' + cloudWs) || '[]')); } catch (e) { CLOUD.base = new Map(); }
+  renderTeam();
+  try {
+    const ms = await sb('members?select=role,workspace_id,workspaces(name,personal)&user_id=eq.' + CLOUD.s.uid);
+    CLOUD.list = ms.map(m => ({ id: m.workspace_id, role: m.role, name: m.workspaces.name, personal: m.workspaces.personal })).sort((a, b) => b.personal - a.personal || a.name.localeCompare(b.name));
+    const w = CLOUD.list.find(x => x.id === cloudWs) || CLOUD.list.find(x => x.personal) || CLOUD.list[0];
+    if (!w) throw Error('nenhuma equipe encontrada');
+    // primeira entrada, ou tiraram você da equipe: abre a equipe certa com o cache dela
+    if (w.id !== cloudWs) { lsSet(CK + '-wsnome', w.name); return cloudSwitch(w.id); }
+    CLOUD.role = w.role; lsSet(CK + '-wsnome', w.name);
+    await cloudSync();
+    cloudLive();
+  } catch (e) { CLOUD.err = e instanceof TypeError ? 'sem conexão, as mudanças ficam guardadas aqui' : e.message; renderTeam(); }
+}
 
 /* ---------- tema claro e escuro ---------- */
 const root = document.documentElement;
@@ -3394,6 +3644,7 @@ if (RO) {
 save();
 render('load');
 teamInit();
+cloudInit();
 if (location.hash === '#teste') selfTest().then(r => console.log('autoteste', r), err => console.error('autoteste', err.message));
 window.selfTest = selfTest;
 })();
