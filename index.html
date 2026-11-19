@@ -395,6 +395,55 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 #dlgRep{width:min(1180px,calc(100vw - 32px))}
 #dlgMarks{width:min(640px,calc(100vw - 32px))}
 #dlgLoad{width:min(1180px,calc(100vw - 32px))}
+.btn-dm{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.07);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:9px 14px;font-weight:700;text-align:left;font-size:14px;transition:background .15s,border-color .15s}
+.btn-dm svg{width:18px;height:18px;flex:none}
+.btn-dm span{display:flex;flex-direction:column;line-height:1.2}
+.btn-dm small{font-size:12px;font-weight:500;color:#B9D6C2}
+.btn-dm:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.55)}
+.btn-dm:focus-visible{outline:2px solid var(--green-l);outline-offset:2px}
+#dlgDm{width:min(980px,calc(100vw - 32px))}
+.dm-head{display:flex;gap:14px;align-items:flex-start}
+.dm-ic{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--title);color:#fff;font:700 17px var(--f-d);letter-spacing:-.02em}
+.dm-head h2{margin-bottom:4px}
+.dm-top{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:12px}
+.dm-warn{margin:0;padding:9px 12px;border-radius:10px;font-size:13px;background:color-mix(in srgb,var(--amber) 16%,var(--surface));border:1px solid color-mix(in srgb,var(--amber) 45%,var(--line));color:var(--ink)}
+.dm-wrap{max-height:46vh;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.dm{width:100%;min-width:720px;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.dm th{position:sticky;top:0;z-index:1;background:var(--surface);text-align:left;font-size:12px;font-weight:600;color:var(--ink-2);padding:8px 8px;border-bottom:1px solid var(--line)}
+.dm td{padding:4px 6px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+.dm .dm-n{width:34px;text-align:center;color:var(--ink-2);font-weight:700;font-size:12.5px}
+.dm .dm-dh{width:96px}.dm .dm-oh{width:150px}.dm .dm-th{width:190px}
+.dm input{width:100%;height:36px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--surface);font-size:14px;color:var(--ink)}
+.dm input:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18)}
+.dm input.dm-d{text-align:center;font-weight:700;font-size:15px}
+.dm-dt{font-size:12.5px;color:var(--ink-2);white-space:nowrap;min-width:190px}
+.dm-dt b{color:var(--ink);font-weight:600}
+.dm-dt.off{color:var(--ink-2);font-style:italic}
+.dm-act{white-space:nowrap;width:1%}
+.dm-act button{width:30px;height:30px;border:1px solid transparent;border-radius:7px;background:none;color:var(--ink-2);display:inline-grid;place-items:center;cursor:pointer}
+.dm-act button:hover{background:var(--line-2);color:var(--ink)}
+.dm-act button:disabled{opacity:.3;cursor:default;background:none}
+.dm-act button:focus-visible{outline:2px solid var(--green-l);outline-offset:1px}
+.dm-act svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dm-ms td{background:color-mix(in srgb,var(--title) 6%,var(--surface));border-bottom:0;padding:10px 6px;font-size:13.5px}
+.dm-ms .dm-n i{display:inline-block;width:11px;height:11px;background:var(--title);transform:rotate(45deg);border-radius:2px}
+.dm-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.dm-sum{font-size:13.5px;color:var(--ink-2)}
+.dm-sum b{color:var(--title)}
+.dm-sum.bad{color:var(--red-txt)}.dm-sum.bad b{color:var(--red-txt)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:640px){
+  .dm-top{grid-template-columns:1fr}
+  .dm,.dm tbody,.dm tfoot{display:block;min-width:0;width:100%}.dm thead{display:none}
+  .dm tfoot tr{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.dm tfoot td{border:0}
+  .dm tbody tr{display:grid;grid-template-columns:24px 80px minmax(0,1fr);grid-template-areas:"n a a" "n d t" "n o o" "n x x";gap:6px 8px;padding:10px 8px;border-bottom:1px solid var(--line)}
+  .dm tbody td{border:0;padding:0}
+  .dm td.dm-n{grid-area:n;padding-top:9px}
+  .dm tbody td:nth-child(2){grid-area:a}.dm tbody td:nth-child(3){grid-area:d}.dm tbody td:nth-child(4){grid-area:o}
+  .dm td.dm-dt{grid-area:t;align-self:center;min-width:0;white-space:normal}
+  .dm td.dm-act{grid-area:x;justify-self:end;width:auto;display:flex;gap:4px}
+}
+
 .ld-wrap{max-height:52vh;overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
 .ld{min-width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px;font-variant-numeric:tabular-nums}
 .ld th,.ld td{padding:0;border-bottom:1px solid var(--line-2)}
@@ -638,6 +687,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       <div><b>Roadmaps</b><small>Projetos e entregas</small></div>
     </div>
     <button class="btn-new" id="btnNovo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Novo projeto</button>
+    <button class="btn-dm edit-only" data-act="dm" title="Planejar de trás para frente a partir do início da TI, em dias úteis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M15 15.5h-6M11.5 13 9 15.5l2.5 2.5"/></svg><span>Planejar D−<small>a partir da data da TI</small></span></button>
     <div><h3>Projetos</h3><button class="side-btn all" data-act="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>Visão geral</button><button class="side-btn all" data-act="marks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15h6"/></svg>Datas da empresa</button><button class="side-btn all" data-act="load"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.2 3.2 0 0 1 0 6.4M21 20c0-2.6-1.6-4.8-4-5.6"/></svg>Carga da equipe</button><nav class="plist" id="plist" aria-label="Projetos"></nav></div>
     <div class="side-sec"><h3>Modelos</h3><ul class="tlist" id="tlist"></ul></div>
     <div class="side-foot">
@@ -681,6 +731,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
             <button data-act="baseSet">Salvar linha de base</button>
             <button data-act="baseDel" hidden>Remover linha de base</button>
             <button data-act="rag">Critério das cores</button>
+            <button data-act="dmRe" hidden>Replanejar D−</button>
             <button data-act="saveTpl">Salvar como modelo</button>
             <button data-act="dup">Duplicar projeto</button>
             <button data-act="del" class="danger">Excluir projeto</button>
@@ -805,6 +856,13 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Ao passar o mouse na barra aparece o desvio em dias. O cartão <b>Período</b> mostra quanto o fim do projeto se afastou do plano, e os próximos marcos mostram o desvio de cada um.</li>
         <li>Salvar de novo troca a linha de base pelas datas atuais. <b>Remover linha de base</b> apaga a comparação.</li>
       </ul></div></details>
+      <details><summary>Planejar D− (de trás para frente)</summary><div><ol>
+        <li>Na barra lateral, clique em <b>Planejar D−</b> (logo abaixo de Novo projeto).</li>
+        <li>Informe o nome do projeto e a data de <b>início do desenvolvimento da TI</b>.</li>
+        <li>A tabela já vem com as atividades de Produto: Discovery, Escrita da especificação, Validação com negócio, Refinamento com TI + Negócio, Ajustes do refinamento e Validação final com TI. Digite os <b>dias úteis</b> de cada uma; Enter pula para a próxima.</li>
+        <li>As datas aparecem ao lado enquanto você digita, e o resumo diz quando o trabalho precisa começar. Em vermelho: não cabe, porque precisaria ter começado antes de hoje.</li>
+        <li>Clique em <b>Criar cronograma</b>: o projeto nasce com as atividades em sequência (cada uma depende da anterior) e o marco da TI no fim.</li>
+      </ol>A conta usa só dias úteis: não conta sábado, domingo nem feriado nacional (o Carnaval entra como feriado). Se a data da TI cair num dia sem trabalho, o marco fica nela e a última atividade termina no dia útil anterior. Dá para renomear, mudar a ordem (setas), tirar ou acrescentar atividades; linha com 0 dias fica de fora. Se a TI mudar a data, use <b>Projeto › Replanejar D−</b>: as tarefas se reorganizam para trás e mantêm o % concluído e as observações.</div></details>
       <details><summary>Carga da equipe</summary><div><ul>
         <li>Na barra lateral, <b>Carga da equipe</b> mostra uma linha por pessoa e uma coluna por semana, somando as tarefas abertas de <b>todos</b> os projetos.</li>
         <li>O número é quantas tarefas a pessoa tem naquela semana. Amarelo: duas ao mesmo tempo. Vermelho: três ou mais. A coluna da semana atual fica marcada.</li>
@@ -956,6 +1014,18 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
     <p class="muted"><span class="edit-only">A situação de todos os projetos numa página. Escreva em cada projeto as decisões que a diretoria precisa tomar: o texto fica salvo no projeto e vai também para o PowerPoint.</span><span class="ro-only">A situação de todos os projetos numa página.</span></p>
     <div id="repBody"></div>
     <div class="dlg-foot"><button class="btn" type="button" id="btnRepPptx">Baixar PowerPoint</button><button class="btn" type="button" id="btnRepPrint">Imprimir ou salvar PDF</button><button class="btn primary" value="">Fechar</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgDm" aria-labelledby="dmT">
+  <form method="dialog" class="dlg-in" id="fDm">
+    <div class="dm-head"><span class="dm-ic" aria-hidden="true">D−</span><div><h2 id="dmT">Planejar D−</h2><p class="muted">Planejamento de trás para frente. Informe quando a TI começa a desenvolver e quantos <b>dias úteis</b> cada atividade leva: o programa encaixa tudo antes dessa data, sem contar fins de semana e feriados nacionais.</p></div></div>
+    <div class="dm-top"><label class="fld">Nome do projeto<input name="nome" maxlength="120" autocomplete="off" placeholder="Ex.: Especificação Auto 2027"></label><label class="fld">Início do desenvolvimento (TI)<input type="date" name="anchor"></label></div>
+    <p class="dm-warn" id="dmWarn" hidden></p>
+    <div class="dm-wrap"><table class="dm"><thead><tr><th class="dm-n">#</th><th>Atividade</th><th class="dm-dh">Dias úteis</th><th class="dm-oh">Responsável</th><th class="dm-th">Datas calculadas</th><th><span class="vh">Ações</span></th></tr></thead><tbody id="dmBody"></tbody>
+      <tfoot><tr class="dm-ms"><td class="dm-n"><i></i></td><td colspan="3"><b>Início do desenvolvimento (TI)</b></td><td id="dmMsD" colspan="2"></td></tr></tfoot></table></div>
+    <div class="dm-bar"><button class="btn" type="button" id="btnDmAdd">Adicionar atividade</button><div class="dm-sum" id="dmSum" aria-live="polite"></div></div>
+    <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok" id="dmOk">Criar cronograma</button></div>
   </form>
 </dialog>
 
@@ -1135,6 +1205,8 @@ function normP(p) {
   if (p.tol) { const tol = { late: tolN(p.tol.late), slip: tolN(p.tol.slip) }; if (tol.late || tol.slip) out.tol = tol; }
 
   if (p.exec) out.exec = String(p.exec).slice(0, 1500);
+  if (p.dplan && okd(p.dplan.anchor) && Array.isArray(p.dplan.rows)) out.dplan = { anchor: p.dplan.anchor, ms: sid(p.dplan.ms), gp: sid(p.dplan.gp), gt: sid(p.dplan.gt),
+    rows: p.dplan.rows.slice(0, 30).filter(r => r && typeof r === 'object').map(r => ({ name: String(r.name || '').slice(0, 200), days: Math.max(0, Math.min(365, Math.floor(+r.days || 0))), owner: String(r.owner || '').slice(0, 120), tid: sid(r.tid) })) };
   return out;
 }
 const okTpl = t => t && /^[\w-]{1,40}$/.test(t.id) && Array.isArray(t.groups) && Array.isArray(t.tasks);
@@ -1203,6 +1275,50 @@ function holidays(y) {
   return [one(f(1, 1), 'Confraternização Universal'), { s: E - 48, e: E - 47, name: 'Carnaval' }, one(E - 2, 'Sexta-feira Santa'), one(f(4, 21), 'Tiradentes'), one(f(5, 1), 'Dia do Trabalho'),
     one(E + 60, 'Corpus Christi'), one(f(9, 7), 'Independência'), one(f(10, 12), 'Nossa Senhora Aparecida'), one(f(11, 2), 'Finados'), one(f(11, 15), 'Proclamação da República'),
     one(f(11, 20), 'Consciência Negra'), one(f(12, 25), 'Natal')];
+}
+// Dias úteis: sem sábado, domingo e feriado nacional (as datas da empresa não contam: valem para a TI, não para Produto)
+const HOLS = new Map();
+const holDays = y => { if (!HOLS.has(y)) { const st = new Set(); holidays(y).forEach(h => { for (let n = h.s; n <= h.e; n++) st.add(n); }); HOLS.set(y, st); } return HOLS.get(y); };
+const isWork = n => { const w = dow(n); return w !== 0 && w !== 6 && !holDays(new Date(n * DAY).getUTCFullYear()).has(n); };
+const prevWork = n => { do n--; while (!isWork(n)); return n; };
+const DSEM = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+// D−: encaixa as atividades para trás a partir do início da TI. days = dias úteis por linha, na ordem; devolve [{ s, e }] ou null (0 dias)
+function dminus(anchor, days) {
+  const out = []; let next = anchor;
+  for (let i = days.length - 1; i >= 0; i--) {
+    const d = Math.max(0, Math.min(365, Math.floor(+days[i] || 0))); if (!d) { out[i] = null; continue; }
+    const e = prevWork(next); let a = e; for (let k = 1; k < d; k++) a = prevWork(a);
+    out[i] = { s: a, e }; next = a;
+  }
+  return out;
+}
+const DM_ROWS = ['Discovery', 'Escrita da especificação', 'Validação da especificação com negócio', 'Refinamento com TI + Negócio', 'Ajustes da especificação do refinamento anterior', 'Validação final com TI'];
+const DM_MS = 'Início do desenvolvimento (TI)';
+// cria (p sem dplan) ou replaneja (p com dplan) o projeto: rows = [{ name, days, owner, tid? }]
+function applyDPlan(p, anchor, rows) {
+  const span = dminus(anchor, rows.map(r => r.days));
+  let gP = p.groups.find(g => g.id === p.dplan?.gp), gT = p.groups.find(g => g.id === p.dplan?.gt);
+  if (!gP) { gP = { id: uid(), name: 'Produto (pré-desenvolvimento)', color: PAL[0] }; p.groups.push(gP); }
+  if (!gT) { gT = { id: uid(), name: 'TI', color: PAL[1] }; p.groups.push(gT); }
+  const old = new Set((p.dplan?.rows || []).map(r => r.tid).concat(p.dplan?.ms || [])), keep = new Set(), planIds = new Set();
+  let prev = null; const saved = [];
+  rows.forEach((r, i) => {
+    let t = p.tasks.find(x => x.id === r.tid);
+    if (!span[i]) { saved.push({ name: r.name, days: 0, owner: r.owner, tid: '' }); return; }
+    if (!t) { t = { id: uid(), groupId: gP.id, progress: 0, milestone: false, risk: false, deps: [], note: '' }; p.tasks.push(t); }
+    const outside = (t.deps || []).filter(id => !old.has(id));
+    Object.assign(t, { name: r.name.trim() || 'Atividade', owner: r.owner.trim(), start: n2d(span[i].s), end: n2d(span[i].e), milestone: false, deps: [...(prev ? [prev] : []), ...outside] });
+    keep.add(t.id); planIds.add(t.id); prev = t.id; saved.push({ name: t.name, days: Math.floor(+r.days), owner: t.owner, tid: t.id });
+  });
+  let ms = p.tasks.find(x => x.id === p.dplan?.ms);
+  if (!ms) { ms = { id: uid(), name: DM_MS, groupId: gT.id, owner: '', progress: 0, milestone: true, risk: false, deps: [], note: '' }; p.tasks.push(ms); }
+  Object.assign(ms, { start: n2d(anchor), end: n2d(anchor), milestone: true, deps: [...(prev ? [prev] : []), ...(ms.deps || []).filter(id => !old.has(id))] });
+  keep.add(ms.id);
+  // linhas tiradas da tabela saem do projeto; tarefas criadas à mão fora do plano ficam
+  p.tasks = p.tasks.filter(t => !old.has(t.id) || keep.has(t.id));
+  const ids = new Set(p.tasks.map(t => t.id)); p.tasks.forEach(t => { t.deps = t.deps.filter(d => ids.has(d)); });
+  p.dplan = { anchor: n2d(anchor), rows: saved, ms: ms.id, gp: gP.id, gt: gT.id };
+  return p;
 }
 // Datas da empresa (congelamento, fechamento...): valem para todos os projetos e vão para o arquivo da equipe
 function normMark(m) {
@@ -1441,6 +1557,7 @@ function renderTools() {
   $('#fSt').innerHTML = '<option value="">Todos os status</option>' + Object.keys(STL).map(k => `<option value="${k}"${k === flt.st ? ' selected' : ''}>${STL[k]}</option>`).join('');
   $('#fQ').value = flt.q;
   const base = $('[data-act="baseDel"]'); if (base) base.hidden = !p.baseAt;
+  const dmr = $('[data-act="dmRe"]'); if (dmr) dmr.hidden = !p.dplan;
 }
 
 function range(p) {
@@ -2397,6 +2514,8 @@ const ACT = {
     const d = $('#dlgRag'); d.returnValue = ''; d.showModal();
   },
   crit: () => { state.showCrit = !state.showCrit; if (!RO) persist(); renderLegend(); renderGantt(); },
+  dm: () => openDm(null),
+  dmRe: () => openDm(cur()),
   load: () => { renderLoad(); const d = $('#dlgLoad'); d.returnValue = ''; d.showModal(); },
   marks: () => { renderMarks(); const d = $('#dlgMarks'); d.returnValue = ''; d.showModal(); },
   report: () => { $('#repBody').innerHTML = repHTML(!RO); const d = $('#dlgRep'); d.returnValue = ''; d.showModal(); },
@@ -2498,7 +2617,7 @@ $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
 // Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
 // A cada versão nova, troque a data e a lista abaixo.
-const NOVIDADES = { versao: '2026-11-18', secoes: ['Carga da equipe', 'Caminho crítico', 'Datas da empresa e feriados', 'Relatório executivo e PowerPoint', 'Situação do projeto', 'Inserir várias tarefas de uma vez', 'Importar de uma planilha'] };
+const NOVIDADES = { versao: '2026-11-18', secoes: ['Planejar D− (de trás para frente)', 'Carga da equipe', 'Caminho crítico', 'Datas da empresa e feriados', 'Relatório executivo e PowerPoint', 'Situação do projeto', 'Inserir várias tarefas de uma vez', 'Importar de uma planilha'] };
 {
   const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
   sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
@@ -2541,6 +2660,76 @@ $('#fileOpen').addEventListener('change', async e => {
     save(); closeDrawer(); render('load');
     toast(ps.length === 1 ? '1 projeto carregado' : `${ps.length} projetos carregados`);
   } catch (err) { toast('Não consegui abrir o arquivo: ' + err.message + '.'); }
+});
+
+/* ---------- planejar D− ---------- */
+const DMI = { up: 'M8 13V3M3.5 7.5 8 3l4.5 4.5', down: 'M8 3v10M3.5 8.5 8 13l4.5-4.5', del: 'M3.5 3.5l9 9M12.5 3.5l-9 9' };
+let dmFor = null; // projeto sendo replanejado (null = projeto novo)
+const fmtDia = n => `${DSEM[dow(n)]} ${fmtBR(n).slice(0, 5)}`;
+function dmRow(r) {
+  const b = (k, l) => `<button type="button" data-dm="${k}" aria-label="${l}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="${DMI[k]}"/></svg></button>`;
+  return `<tr data-tid="${esc(r.tid || '')}"><td class="dm-n"></td><td><input class="dm-a" value="${esc(r.name)}" maxlength="200" aria-label="Atividade"></td><td><input class="dm-d" type="number" min="0" max="365" step="1" inputmode="numeric" value="${r.days || ''}" placeholder="0" aria-label="Dias úteis de ${esc(r.name)}"></td><td><input class="dm-o" value="${esc(r.owner || '')}" list="owners" maxlength="120" aria-label="Responsável" placeholder="Opcional"></td><td class="dm-dt"></td><td class="dm-act">${b('up', 'Subir')}${b('down', 'Descer')}${b('del', 'Tirar a atividade')}</td></tr>`;
+}
+const dmRows = () => [...$('#dmBody').children].map(tr => ({ name: tr.querySelector('.dm-a').value, days: tr.querySelector('.dm-d').value, owner: tr.querySelector('.dm-o').value, tid: tr.dataset.tid }));
+// recalcula as datas na tela a cada tecla
+function dmCalc() {
+  const F = $('#fDm').elements, a = F.anchor.value ? d2n(F.anchor.value) : NaN, rows = dmRows(), trs = [...$('#dmBody').children];
+  trs.forEach((tr, i) => { tr.querySelector('.dm-n').textContent = i + 1; tr.querySelector('[data-dm=up]').disabled = i === 0; tr.querySelector('[data-dm=down]').disabled = i === trs.length - 1; });
+  const w = $('#dmWarn'), sum = $('#dmSum'); sum.classList.remove('bad');
+  if (isNaN(a)) { trs.forEach(tr => { const c = tr.querySelector('.dm-dt'); c.className = 'dm-dt off'; c.textContent = 'informe a data da TI'; }); $('#dmMsD').textContent = ''; w.hidden = true; sum.textContent = 'Comece pela data de início do desenvolvimento.'; return; }
+  const sp = dminus(a, rows.map(r => r.days)), total = rows.reduce((t, r) => t + Math.max(0, Math.min(365, Math.floor(+r.days || 0))), 0);
+  sp.forEach((x, i) => { const c = trs[i].querySelector('.dm-dt'); c.className = 'dm-dt' + (x ? '' : ' off'); c.innerHTML = x ? `<b>${fmtDia(x.s)}</b> a <b>${fmtDia(x.e)}</b>` : 'sem dias, fica de fora'; });
+  $('#dmMsD').innerHTML = `<b>${DSEM[dow(a)]} ${fmtBR(a)}</b>`;
+  const hol = holidays(new Date(a * DAY).getUTCFullYear()).find(h => a >= h.s && a <= h.e);
+  w.hidden = isWork(a);
+  if (!isWork(a)) w.textContent = `${fmtBR(a)} é ${hol ? `feriado (${hol.name})` : dow(a) === 6 ? 'sábado' : 'domingo'}. O marco fica nessa data e a última atividade termina no dia útil anterior, ${fmtDia(prevWork(a))}.`;
+  const first = sp.find(Boolean);
+  if (!first) { sum.textContent = 'Preencha os dias úteis de pelo menos uma atividade.'; return; }
+  const late = first.s < todayN;
+  sum.classList.toggle('bad', late);
+  sum.innerHTML = late ? `Não cabe: precisaria ter começado em <b>${fmtDia(first.s)}/${new Date(first.s * DAY).getUTCFullYear()}</b>. Reduza os dias ou converse sobre a data da TI.`
+    : `Comece em <b>${DSEM[dow(first.s)]} ${fmtBR(first.s)}</b>: ${total} ${total === 1 ? 'dia útil' : 'dias úteis'} de preparação até a TI.`;
+}
+function openDm(p) {
+  dmFor = p || null; const F = $('#fDm').elements, pl = p && p.dplan;
+  F.nome.value = p ? p.name : ''; F.anchor.value = pl ? pl.anchor : '';
+  $('#dmBody').innerHTML = (pl ? pl.rows : DM_ROWS.map(name => ({ name, days: '', owner: '' }))).map(dmRow).join('');
+  $('#dmT').textContent = p ? 'Replanejar D−' : 'Planejar D−'; $('#dmOk').textContent = p ? 'Replanejar' : 'Criar cronograma';
+  dmCalc(); const d = $('#dlgDm'); d.returnValue = ''; d.showModal(); (p ? F.anchor : F.nome).focus();
+}
+$('#fDm').addEventListener('input', dmCalc);
+$('#dmBody').addEventListener('click', e => {
+  const b = e.target.closest('[data-dm]'); if (!b) return; const tr = b.closest('tr');
+  if (b.dataset.dm === 'up' && tr.previousElementSibling) tr.previousElementSibling.before(tr);
+  if (b.dataset.dm === 'down' && tr.nextElementSibling) tr.nextElementSibling.after(tr);
+  if (b.dataset.dm === 'del') { const nx = tr.nextElementSibling || tr.previousElementSibling; tr.remove(); if (nx) nx.querySelector('.dm-d').focus(); }
+  else b.focus();
+  dmCalc();
+});
+$('#btnDmAdd').addEventListener('click', () => { if ($('#dmBody').children.length >= 30) return toast('Até 30 atividades por planejamento.'); $('#dmBody').insertAdjacentHTML('beforeend', dmRow({ name: '', days: '', owner: '' })); dmCalc(); $('#dmBody tr:last-child .dm-a').focus(); });
+// Enter desce para os dias da próxima atividade (como no Excel); não fecha a janela
+$('#fDm').addEventListener('keydown', e => {
+  if (e.key !== 'Enter' || e.target.tagName !== 'INPUT') return; e.preventDefault();
+  const tr = e.target.closest('tr'), nx = tr ? tr.nextElementSibling : $('#dmBody tr');
+  (nx ? nx.querySelector('.dm-d') : $('#dmOk')).focus();
+});
+// faltando dado, a janela não fecha: o aviso fica no resumo e o cursor vai para o campo
+$('#fDm').addEventListener('submit', e => {
+  if (e.submitter?.value !== 'ok') return;
+  const F = $('#fDm').elements, sum = $('#dmSum'), miss = !F.anchor.value ? [F.anchor, 'Informe a data de início do desenvolvimento da TI.'] : !dmRows().some(r => Math.floor(+r.days || 0) > 0) ? [$('#dmBody .dm-d'), 'Preencha os dias úteis de pelo menos uma atividade.'] : null;
+  if (!miss) return;
+  e.preventDefault(); sum.textContent = miss[1]; sum.classList.add('bad'); if (miss[0]) miss[0].focus();
+});
+$('#dlgDm').addEventListener('close', () => {
+  if ($('#dlgDm').returnValue !== 'ok') return;
+  const F = $('#fDm').elements, rows = dmRows(), a = d2n(F.anchor.value);
+  const name = F.nome.value.trim() || `D− TI ${fmtBR(a)}`;
+  let p = dmFor && state.projects.includes(dmFor) ? dmFor : null;
+  if (!p) { p = { id: uid(), name, area: 'Planejado em D− a partir do início da TI', groups: [], tasks: [] }; applyDPlan(p, a, rows); state.projects.push(normP(p)); p = state.projects[state.projects.length - 1]; }
+  else { p.name = name; applyDPlan(p, a, rows); }
+  state.currentId = p.id; save(); closeDrawer(); render('load');
+  const s0 = Math.min(...p.tasks.filter(t => !t.milestone).map(t => d2n(t.start)));
+  toast(`${dmFor ? 'Cronograma replanejado' : 'Cronograma criado'}: começa ${DSEM[dow(s0)]} ${fmtBR(s0)} e termina antes da TI, em ${fmtBR(a)}.`);
 });
 
 /* ---------- carga da equipe ---------- */
@@ -3047,6 +3236,23 @@ async function selfTest() {
     ok(pa.name === 'Projeto da aba' && pa.tasks.length > 0, 'abas: importa a aba escolhida');
     let err = ''; try { await parseXlsx(buf, 'x', 'Não existe'); } catch (e) { err = e.message; }
     ok(/não achei a aba/.test(err), 'abas: aba inexistente dá erro'); }
+  { // planejar D−
+    const A = d2n('2027-02-20'); // sábado; Carnaval de 2027 em 8 e 9/2
+    ok(!isWork(A) && !isWork(d2n('2027-02-08')) && !isWork(d2n('2027-02-09')) && isWork(d2n('2027-02-10')) && prevWork(A) === d2n('2027-02-19'), 'D−: dias úteis');
+    const sp = dminus(A, [2, 0, 5, 3]);
+    ok(sp[3].e === d2n('2027-02-19') && sp[3].s === d2n('2027-02-17'), 'D−: última termina no dia útil antes da TI');
+    ok(sp[2].e === d2n('2027-02-16') && sp[2].s === d2n('2027-02-10') && sp[1] === null, 'D−: anterior termina antes da seguinte, linha com 0 fica de fora');
+    ok(sp[0].e === d2n('2027-02-05') && sp[0].s === d2n('2027-02-04'), 'D−: pula o Carnaval');
+    const rows = DM_ROWS.map((name, i) => ({ name, days: [3, 5, 2, 2, 3, 1][i], owner: i === 0 ? 'Ana' : '', tid: '' }));
+    const dp = normP(applyDPlan({ id: 'dp', name: 'D', area: '', groups: [], tasks: [] }, A, rows)), ts = dp.tasks.filter(t => !t.milestone), ms = dp.tasks.find(t => t.milestone);
+    ok(ts.length === 6 && ms.start === '2027-02-20' && ms.deps[0] === ts[5].id && ts.every((t, i) => i === 0 ? !t.deps.length : t.deps[0] === ts[i - 1].id) && ts[0].owner === 'Ana', 'D−: projeto encadeado com marco');
+    ok(ts.every(t => isWork(d2n(t.start)) && isWork(d2n(t.end))) && dp.dplan.rows.length === 6 && dp.dplan.anchor === '2027-02-20', 'D−: tudo em dia útil e plano guardado');
+    // replanejar: TI foi para 05/03, a 2ª atividade já está em 50%, a 4ª sai, uma tarefa feita à mão continua
+    ts[1].progress = 50; ts[1].note = 'nota'; dp.tasks.push({ id: 'manual', name: 'Extra', groupId: dp.groups[0].id, owner: '', start: '2027-01-04', end: '2027-01-05', progress: 0, milestone: false, risk: false, deps: [], note: '' });
+    const r2 = dp.dplan.rows.filter((_, i) => i !== 3); applyDPlan(dp, d2n('2027-03-05'), r2);
+    const t2 = dp.tasks.find(t => t.id === ts[1].id);
+    ok(dp.tasks.length === 7 && t2.progress === 50 && t2.note === 'nota' && !dp.tasks.some(t => t.id === ts[3].id) && dp.tasks.some(t => t.id === 'manual') && dp.tasks.find(t => t.milestone).start === '2027-03-05', 'D−: replanejar mantém progresso e tira a linha removida');
+    ok(dp.tasks.find(t => t.id === ts[4].id).deps[0] === ts[2].id, 'D−: dependências refeitas sem a linha removida'); }
   { // reparos da revisão
     let e1 = ''; try { teamParse('  ', true); } catch (e) { e1 = e.message; }
     ok(/vazio/.test(e1) && teamParse('', false).projects.length === 0, 'equipe: arquivo vazio depois de sincronizar não apaga nada');
