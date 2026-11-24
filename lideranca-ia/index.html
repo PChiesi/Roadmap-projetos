@@ -1,0 +1,1792 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<title>Liderança com Copilot</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: barra lateral fixa com o índice do guia + área de leitura com uma seção por vez (troca animada). No celular, o índice vira gaveta. */
+:root{
+  --bg:#F4F6F9; --surface:#FFFFFF; --surface-2:#EEF2F6; --ink:#14213D; --muted:#56627A; --line:#D9DFE8;
+  --accent:#0D5C6B; --accent-ink:#FFFFFF; --accent-soft:#E1EEF0; --seal:#9A7230; --seal-soft:#F5ECDD;
+  --ok:#2E7D4F; --ok-soft:#E3F2E8; --warn:#A86A0B; --warn-soft:#FBEFD9; --bad:#B3392F; --bad-soft:#F8E3E1;
+  --shadow:0 1px 2px rgba(20,33,61,.06),0 6px 20px rgba(20,33,61,.06);
+  --f-display:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"Cascadia Code",Consolas,monospace;
+  --r:10px; --side:272px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C1320; --surface:#131C2B; --surface-2:#1A2537; --ink:#E6EBF2; --muted:#9BA7BA; --line:#26334A;
+  --accent:#5DB7C6; --accent-ink:#06222A; --accent-soft:#14343C; --seal:#D7AE62; --seal-soft:#3A2F1C;
+  --ok:#6CC08E; --ok-soft:#183324; --warn:#E3A84A; --warn-soft:#3A2C14; --bad:#EC7D72; --bad-soft:#3D1D1A;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C1320; --surface:#131C2B; --surface-2:#1A2537; --ink:#E6EBF2; --muted:#9BA7BA; --line:#26334A;
+  --accent:#5DB7C6; --accent-ink:#06222A; --accent-soft:#14343C; --seal:#D7AE62; --seal-soft:#3A2F1C;
+  --ok:#6CC08E; --ok-soft:#183324; --warn:#E3A84A; --warn-soft:#3A2C14; --bad:#EC7D72; --bad-soft:#3D1D1A;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.2;text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(1.9rem,3.6vw,2.7rem);font-weight:800}
+h2{font-size:clamp(1.45rem,2.4vw,1.85rem);font-weight:800}
+h3{font-size:1.15rem;font-weight:700}
+h4{font-size:1rem;font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.eyebrow{font-family:var(--f-display);font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--seal)}
+.muted{color:var(--muted)}
+.lead{font-size:1.12rem;color:var(--muted);max-width:68ch}
+.prose{max-width:70ch;display:grid;gap:.8rem}
+
+/* Estrutura */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--surface)}
+.app{display:grid;grid-template-columns:var(--side) minmax(0,1fr);min-height:100vh}
+.side{position:sticky;top:env(safe-area-inset-top,0px);height:calc(100vh - env(safe-area-inset-top,0px));overflow-y:auto;background:var(--surface);border-right:1px solid var(--line);padding:1.4rem 1rem 1.4rem max(1rem,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:1.2rem}
+.brand{display:flex;gap:.7rem;align-items:center;padding:0 .4rem}
+.seal{width:40px;height:40px;flex:none;border-radius:50%;border:2px solid var(--seal);display:grid;place-items:center;color:var(--seal);font-family:var(--f-display);font-weight:800;font-size:.8rem;letter-spacing:.04em;background:var(--seal-soft)}
+.brand b{font-family:var(--f-display);font-size:1rem;display:block;line-height:1.15}
+.brand span{font-size:.8rem;color:var(--muted)}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:center;gap:.7rem;padding:.55rem .7rem;border-radius:8px;text-decoration:none;color:var(--ink);font-weight:600;font-size:.96rem;position:relative;transition:background .2s,color .2s}
+.nav a .n{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);width:1.4rem}
+.nav a:hover{background:var(--surface-2)}
+.nav a[aria-current="page"]{background:var(--accent-soft);color:var(--accent)}
+.nav a[aria-current="page"] .n{color:var(--accent)}
+.nav a[aria-current="page"]::before{content:"";position:absolute;left:-1rem;top:20%;bottom:20%;width:3px;border-radius:0 3px 3px 0;background:var(--accent)}
+.side-foot{margin-top:auto;display:grid;gap:.6rem;font-size:.85rem;color:var(--muted);padding:0 .4rem}
+.progress-mini{height:6px;border-radius:6px;background:var(--surface-2);overflow:hidden}
+.progress-mini i{display:block;height:100%;width:0;background:var(--seal);transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.theme-btn{justify-self:start;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:.35rem .7rem;cursor:pointer;font-size:.85rem}
+
+.topbar{display:none}
+main{min-width:0;padding-block:2.2rem 4rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:clamp(0px,2vw,24px)}
+.view{display:grid;gap:2rem}
+.view.enter{animation:viewIn .45s cubic-bezier(.2,.7,.2,1) both}
+@keyframes viewIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.stagger>*{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.head{display:grid;gap:.6rem}
+
+/* Componentes */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1.25rem 1.3rem;min-width:0}
+.grid{display:grid;gap:1rem}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.btn{display:inline-flex;align-items:center;gap:.45rem;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:.5rem .9rem;font-weight:600;font-size:.92rem;cursor:pointer;transition:transform .15s,background .2s,border-color .2s;text-decoration:none;color:var(--ink)}
+.btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.btn:active{transform:none}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.small{padding:.3rem .65rem;font-size:.84rem}
+.btn svg{width:16px;height:16px}
+.chip{display:inline-flex;align-items:center;gap:.3rem;border-radius:999px;padding:.12rem .6rem;font-size:.78rem;font-weight:600;background:var(--surface-2);color:var(--muted);white-space:nowrap}
+.chip.lv{background:var(--accent-soft);color:var(--accent)}
+.chip.file{background:var(--seal-soft);color:var(--seal)}
+.chip.web{background:var(--ok-soft);color:var(--ok)}
+.tag-row{display:flex;flex-wrap:wrap;gap:.35rem}
+.callout{border-left:3px solid var(--seal);background:var(--seal-soft);padding:.9rem 1.1rem;border-radius:0 var(--r) var(--r) 0;display:grid;gap:.35rem}
+.callout.info{border-color:var(--accent);background:var(--accent-soft)}
+.callout.bad{border-color:var(--bad);background:var(--bad-soft)}
+ul.clean{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+ul.ticks{margin:0;padding-left:1.1rem;display:grid;gap:.35rem}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:.7rem .9rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-display);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.yes{color:var(--ok);font-weight:700}.no{color:var(--bad);font-weight:700}.maybe{color:var(--warn);font-weight:700}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:2rem;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(1.4rem,3vw,2.6rem);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:360px;height:360px;border-radius:50%;border:1px solid var(--line);box-shadow:0 0 0 40px var(--surface),0 0 0 41px var(--line),0 0 0 80px var(--surface),0 0 0 81px var(--line);pointer-events:none;opacity:.7}
+.hero>*{position:relative;z-index:1}
+.hero-copy{display:grid;gap:1rem}
+.policy{border:1px dashed var(--seal);border-radius:12px;padding:1.1rem 1.2rem;background:var(--bg);font-size:.92rem;display:grid;gap:.55rem}
+.policy .row{display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--line);padding-bottom:.45rem}
+.policy .row:last-child{border:0;padding:0}
+.policy .k{color:var(--muted)}
+.policy .v{font-weight:700;text-align:right}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
+.stat{display:grid;gap:.15rem}
+.stat b{font-family:var(--f-display);font-size:2rem;font-weight:800;font-variant-numeric:tabular-nums;color:var(--accent)}
+.stat span{font-size:.9rem;color:var(--muted)}
+.path{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;counter-reset:p}
+.step{display:grid;gap:.4rem;align-content:start;text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s,border-color .2s}
+.step:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--accent)}
+.step .k{font-family:var(--f-mono);font-size:.78rem;color:var(--seal)}
+
+/* Fundamentos */
+.traffic{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.light{border-top:4px solid var(--ok)}
+.light.y{border-top-color:var(--warn)}
+.light.r{border-top-color:var(--bad)}
+.light h3{display:flex;align-items:center;gap:.5rem}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--ok);flex:none}
+.light.y .dot{background:var(--warn)}.light.r .dot{background:var(--bad)}
+
+/* Método */
+.gcse{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.6rem}
+.gcse .card{padding:1rem;display:grid;gap:.35rem;align-content:start;transition:border-color .2s,transform .2s}
+.gcse .card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.gcse .letter{font-family:var(--f-display);font-weight:800;font-size:1.6rem;color:var(--accent);line-height:1}
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.compare pre{margin:0}
+.code{font-family:var(--f-mono);font-size:.84rem;line-height:1.6;white-space:pre-wrap;word-break:break-word;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:1rem;max-height:none}
+.code mark,.ph{background:var(--seal-soft);color:var(--seal);border-radius:4px;padding:0 .2em;font-weight:500}
+.builder{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.2rem;align-items:start}
+.form{display:grid;gap:.85rem}
+.field{display:grid;gap:.3rem}
+.field label{font-weight:700;font-size:.9rem;display:flex;justify-content:space-between;gap:.5rem}
+.field label small{font-weight:400;color:var(--muted)}
+.input,textarea.input,select.input{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:.55rem .7rem;font-size:.95rem;transition:border-color .2s,box-shadow .2s}
+.input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+textarea.input{resize:vertical;min-height:70px}
+.checks{display:flex;flex-wrap:wrap;gap:.5rem}
+.check{display:inline-flex;gap:.4rem;align-items:center;border:1px solid var(--line);border-radius:999px;padding:.3rem .75rem;font-size:.88rem;cursor:pointer;background:var(--surface);transition:background .2s,border-color .2s}
+.check:has(input:checked){background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.check input{accent-color:var(--accent)}
+.out{position:sticky;top:calc(env(safe-area-inset-top,0px) + 1rem);display:grid;gap:.8rem}
+.meter{display:grid;gap:.35rem}
+.meter-bar{height:8px;border-radius:8px;background:var(--surface-2);overflow:hidden}
+.meter-bar i{display:block;height:100%;width:0;border-radius:8px;background:var(--bad);transition:width .5s cubic-bezier(.2,.7,.2,1),background .3s}
+.meter-row{display:flex;justify-content:space-between;font-size:.9rem}
+.missing{font-size:.88rem;color:var(--muted)}
+.tech{display:grid;gap:.4rem}
+.tech h3{font-size:1.02rem}
+
+/* Biblioteca */
+.toolbar{display:grid;gap:.8rem;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:.8rem;margin-block:-.8rem}
+.search{position:relative}
+.search svg{position:absolute;left:.8rem;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted)}
+.search input{padding-left:2.4rem;height:46px;font-size:1rem}
+.filters{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.seg{display:flex;flex-wrap:wrap;gap:.3rem}
+.seg button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:.3rem .8rem;font-size:.86rem;font-weight:600;cursor:pointer;transition:all .2s}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.filters select{width:auto;min-width:0;max-width:100%;padding:.35rem .6rem;font-size:.88rem;border-radius:999px}
+.count{font-size:.9rem;color:var(--muted);margin-left:auto}
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1rem}
+.pcard{display:flex;flex-direction:column;gap:.7rem;position:relative;transition:transform .25s,box-shadow .25s,border-color .25s}
+.pcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.pcard .top{display:flex;justify-content:space-between;align-items:center;gap:.5rem}
+.pid{font-family:var(--f-mono);font-size:.74rem;color:var(--seal);letter-spacing:.04em}
+.fav{border:0;background:none;cursor:pointer;padding:.2rem;color:var(--muted);line-height:0;transition:transform .2s,color .2s}
+.fav:hover{transform:scale(1.15)}
+.fav[aria-pressed="true"]{color:var(--seal)}
+.fav svg{width:20px;height:20px}
+.pcard h3{font-size:1.05rem}
+.pcard p.when{font-size:.93rem;color:var(--muted)}
+.pcard .meta{display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:.7rem;margin-top:auto}
+.saving{font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.empty{text-align:center;padding:3rem 1rem;color:var(--muted);display:grid;gap:.6rem;justify-items:center}
+
+/* Modal */
+.modal-bg{position:fixed;inset:0;background:rgba(8,14,26,.55);z-index:50;display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:fade .2s both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal{background:var(--surface);border:1px solid var(--line);border-radius:14px;width:min(980px,100%);max-height:100%;overflow:auto;display:grid;gap:1rem;padding:1.4rem;animation:pop .3s cubic-bezier(.2,.8,.2,1) both;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.modal-head{display:flex;justify-content:space-between;gap:1rem;align-items:start}
+.x{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:36px;height:36px;cursor:pointer;flex:none;font-size:1.2rem;line-height:1}
+.modal-body{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:1.2rem;align-items:start}
+.fills{display:grid;gap:.7rem}
+.actions{display:flex;flex-wrap:wrap;gap:.5rem}
+
+/* Agentes */
+.agent{display:grid;gap:.9rem}
+.agent-head{display:flex;gap:1rem;align-items:center}
+.agent-ico{width:48px;height:48px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;flex:none}
+details.fold{border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
+details.fold summary{cursor:pointer;padding:.6rem .9rem;font-weight:700;font-size:.92rem;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details.fold summary::-webkit-details-marker{display:none}
+details.fold summary::after{content:"+";font-family:var(--f-mono);color:var(--muted);transition:transform .2s}
+details.fold[open] summary::after{transform:rotate(45deg)}
+details.fold .inner{padding:0 .9rem .9rem;display:grid;gap:.6rem}
+details.fold .code{background:var(--surface)}
+.steps-list{counter-reset:s;display:grid;gap:.8rem;list-style:none;padding:0;margin:0}
+.steps-list li{counter-increment:s;display:grid;grid-template-columns:2.2rem minmax(0,1fr);gap:.8rem;align-items:start}
+.steps-list li::before{content:counter(s);width:2.2rem;height:2.2rem;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--f-display);font-weight:800}
+
+/* Desafios */
+.week{display:grid;gap:.8rem}
+.week-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.ring{width:64px;height:64px;flex:none}
+.ring circle{fill:none;stroke-width:6}
+.ring .bgc{stroke:var(--surface-2)}
+.ring .fgc{stroke:var(--seal);stroke-linecap:round;transition:stroke-dashoffset .7s cubic-bezier(.2,.7,.2,1);transform:rotate(-90deg);transform-origin:50% 50%}
+.ring text{fill:var(--ink);font-family:var(--f-display);font-weight:800;font-size:15px}
+.task{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.8rem;align-items:start;padding:.8rem .9rem;border:1px solid var(--line);border-radius:8px;background:var(--surface);cursor:pointer;transition:background .25s,border-color .25s}
+.task:has(input:checked){background:var(--ok-soft);border-color:var(--ok)}
+.task input{width:20px;height:20px;accent-color:var(--ok);margin-top:.15rem}
+.task b{display:block}
+.task small{color:var(--muted);font-size:.88rem}
+.task:has(input:checked) b{text-decoration:line-through;text-decoration-color:var(--ok)}
+.done-pop{animation:popc .4s ease}
+@keyframes popc{50%{transform:scale(1.02)}}
+.level-ch{border-top:4px solid var(--seal)}
+
+/* Metas */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.2rem;align-items:start}
+.result-box{display:grid;gap:.9rem}
+.big{font-family:var(--f-display);font-size:2.2rem;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.1}
+.maturity{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.6rem;align-items:end}
+.mlevel{display:grid;gap:.4rem;align-content:start;border-top:4px solid var(--accent);opacity:.95}
+.mlevel:nth-child(1){border-top-color:color-mix(in srgb,var(--accent) 25%,var(--line))}
+.mlevel:nth-child(2){border-top-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.mlevel:nth-child(3){border-top-color:color-mix(in srgb,var(--accent) 65%,var(--line))}
+.mlevel:nth-child(4){border-top-color:color-mix(in srgb,var(--accent) 85%,var(--line))}
+.mlevel .k{font-family:var(--f-mono);font-size:.75rem;color:var(--seal)}
+.log-form{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:.6rem;align-items:end}
+.ex-row td{color:var(--muted);font-style:italic}
+.okr{display:grid;gap:.6rem}
+.okr .kr{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.6rem;font-size:.95rem}
+.okr .kr::before{content:"KR";font-family:var(--f-mono);font-size:.72rem;color:var(--seal);border:1px solid var(--seal);border-radius:4px;padding:0 .3rem;height:fit-content;margin-top:.2rem}
+
+/* Boas práticas */
+.dd{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.dd li{display:grid;grid-template-columns:1.2rem minmax(0,1fr);gap:.5rem}
+.dd .do li::before{content:"✓";color:var(--ok);font-weight:800}
+.dd .dont li::before{content:"✕";color:var(--bad);font-weight:800}
+
+/* Toast */
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:.65rem 1.1rem;border-radius:10px;font-weight:600;font-size:.92rem;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:60;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:1100px){
+  .gcse{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .maturity{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:920px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{position:fixed;inset:0 auto 0 0;width:min(300px,86vw);height:100%;z-index:45;transform:translateX(-102%);transition:transform .3s cubic-bezier(.2,.7,.2,1);padding-top:calc(1.2rem + env(safe-area-inset-top,0px));box-shadow:var(--shadow)}
+  .side.open{transform:none}
+  .scrim{position:fixed;inset:0;background:rgba(8,14,26,.45);z-index:44;animation:fade .2s both}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:.8rem;position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--surface);border-bottom:1px solid var(--line);padding-block:.6rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .topbar b{font-family:var(--f-display);font-size:.98rem}
+  .toolbar{top:calc(env(safe-area-inset-top,0px) + 57px)}
+  .hero,.builder,.calc,.modal-body,.compare{grid-template-columns:minmax(0,1fr)}
+  .out{position:static}
+  .g3,.g4,.path,.traffic{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:620px){
+  body{font-size:16px}
+  .g2,.g3,.g4,.path,.traffic,.dd,.gcse,.maturity{grid-template-columns:minmax(0,1fr)}
+  .lib{grid-template-columns:minmax(0,1fr)}
+  .log-form{grid-template-columns:1fr 1fr}
+  .log-form .wide{grid-column:1/-1}
+  .count{margin-left:0;width:100%}
+  .hero::after{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0ms!important;transition-duration:.001ms!important}
+}
+</style>
+
+<div class="topbar">
+  <button class="btn small" id="menuBtn" aria-label="Abrir índice" aria-expanded="false">☰ Índice</button>
+  <b>Liderança com Copilot</b>
+  <span class="seal" style="width:32px;height:32px;font-size:.68rem">IA</span>
+</div>
+
+<div class="app">
+  <aside class="side" id="side">
+    <div class="brand">
+      <div class="seal">IA</div>
+      <div><b>Liderança com Copilot</b><span>Guia para executivos de seguros</span></div>
+    </div>
+    <nav class="nav" id="nav" aria-label="Seções do guia">
+      <a href="#inicio" data-v="inicio"><span class="n">00</span>Início</a>
+      <a href="#fundamentos" data-v="fundamentos"><span class="n">01</span>O que o Copilot faz</a>
+      <a href="#metodo" data-v="metodo"><span class="n">02</span>Monte seu prompt</a>
+      <a href="#biblioteca" data-v="biblioteca"><span class="n">03</span>Biblioteca de prompts</a>
+      <a href="#agentes" data-v="agentes"><span class="n">04</span>Agentes simples</a>
+      <a href="#desafios" data-v="desafios"><span class="n">05</span>Desafio de 30 dias</a>
+      <a href="#metas" data-v="metas"><span class="n">06</span>Metas e medição</a>
+      <a href="#boas-praticas" data-v="boas-praticas"><span class="n">07</span>Boas práticas</a>
+    </nav>
+    <div class="side-foot">
+      <div>Seu desafio de 30 dias: <b id="sideProg">0%</b></div>
+      <div class="progress-mini"><i id="sideBar"></i></div>
+      <div>Favoritos: <b id="sideFav">0</b> prompts</div>
+      <button class="theme-btn" id="themeBtn" type="button">Alternar tema</button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="wrap">
+
+<!-- ===================== INÍCIO ===================== -->
+<section class="view" data-view="inicio">
+  <div class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">Programa de adoção · Líderes</span>
+      <h1>Inteligência artificial no dia a dia da liderança</h1>
+      <p class="lead">Um guia prático para coordenadores, gerentes, diretores e C-Level aplicarem o Microsoft Copilot Chat e agentes simples em comunicação, decisão, gestão de pessoas e acompanhamento de resultados.</p>
+      <div class="actions">
+        <a class="btn primary" href="#biblioteca">Abrir a biblioteca de prompts</a>
+        <a class="btn" href="#metodo">Aprender a montar um prompt</a>
+      </div>
+    </div>
+    <div class="policy" aria-label="Resumo do guia">
+      <div class="row"><span class="k">Ferramenta coberta</span><span class="v">Microsoft 365 Copilot Chat e agentes do Copilot</span></div>
+      <div class="row"><span class="k">Público</span><span class="v">Coordenação até CEO</span></div>
+      <div class="row"><span class="k">Setor</span><span class="v">Seguros</span></div>
+      <div class="row"><span class="k">Dedicação sugerida</span><span class="v">20 min por dia, por 30 dias</span></div>
+      <div class="row"><span class="k">Regra principal</span><span class="v">A IA prepara. O líder decide e assina.</span></div>
+    </div>
+  </div>
+
+  <div class="stats" id="stats">
+    <div class="stat"><b data-count="0" id="stPrompts">0</b><span>prompts prontos para adaptar</span></div>
+    <div class="stat"><b data-count="5">0</b><span>agentes com instruções completas</span></div>
+    <div class="stat"><b data-count="20">0</b><span>desafios em 4 semanas</span></div>
+    <div class="stat"><b data-count="4">0</b><span>níveis de liderança atendidos</span></div>
+  </div>
+
+  <div class="head">
+    <span class="eyebrow">Como usar este guia</span>
+    <h2>Quatro passos, nesta ordem</h2>
+  </div>
+  <div class="path stagger">
+    <a class="card step" href="#fundamentos"><span class="k">Passo 1</span><h3>Conheça os limites</h3><p class="muted">Saiba o que o Copilot Chat faz com a licença atual e quais dados podem ou não ser usados.</p></a>
+    <a class="card step" href="#metodo"><span class="k">Passo 2</span><h3>Aprenda o método</h3><p class="muted">Objetivo, Contexto, Fonte e Expectativas. Use o construtor para montar seu primeiro prompt.</p></a>
+    <a class="card step" href="#biblioteca"><span class="k">Passo 3</span><h3>Use a biblioteca</h3><p class="muted">Filtre por nível e tema, preencha os campos entre colchetes e copie para o Copilot.</p></a>
+    <a class="card step" href="#desafios"><span class="k">Passo 4</span><h3>Pratique e meça</h3><p class="muted">Cumpra o desafio de 30 dias, registre o tempo economizado e acompanhe suas metas.</p></a>
+  </div>
+
+  <div class="grid g2">
+    <div class="callout info">
+      <h4>Premissa deste material</h4>
+      <p>Tudo aqui funciona com o <b>Copilot Chat</b> (o chat corporativo, com proteção de dados empresarial) e com <b>agentes criados no próprio Copilot</b>. Não pressupõe a licença completa do Microsoft 365 Copilot, que lê e-mails, agenda e Teams automaticamente. Por isso, os prompts pedem que você cole o texto ou anexe o arquivo.</p>
+    </div>
+    <div class="callout">
+      <h4>O papel do líder não muda</h4>
+      <p>O Copilot acelera rascunhos, análises e preparação. A responsabilidade pela decisão, pelo conteúdo enviado e pelo cumprimento das normas da SUSEP, da LGPD e das políticas internas continua sendo de quem assina.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FUNDAMENTOS ===================== -->
+<section class="view" data-view="fundamentos" hidden>
+  <div class="head">
+    <span class="eyebrow">01 · Fundamentos</span>
+    <h2>O que o Copilot Chat faz hoje, e o que não faz</h2>
+    <p class="lead">Antes de criar o hábito, alinhe expectativas. Os recursos exatos dependem do que a TI liberou na sua empresa; confirme os itens marcados como "Depende".</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Recurso</th><th>Situação</th><th>Como usar no trabalho</th></tr></thead>
+      <tbody>
+        <tr><td><b>Texto colado no chat</b></td><td class="yes">Sim</td><td>Cole e-mails, anotações, trechos de relatório ou transcrições e peça resumo, revisão, plano de ação.</td></tr>
+        <tr><td><b>Arquivos anexados</b> (Word, PDF, PowerPoint, Excel)</td><td class="yes">Sim</td><td>Anexe o documento pelo clipe ou arraste para o chat. Peça resumo executivo, comparação, perguntas críticas ou leitura de indicadores.</td></tr>
+        <tr><td><b>Pesquisa na web</b> com citações</td><td class="maybe">Depende</td><td>Útil para tendências de mercado, notícias do setor e informações públicas de concorrentes. Sempre abra as fontes citadas antes de usar.</td></tr>
+        <tr><td><b>Copilot Pages</b></td><td class="maybe">Depende</td><td>Transforma uma resposta em página editável e compartilhável. Bom para montar pautas, planos e rascunhos em conjunto.</td></tr>
+        <tr><td><b>Painel do Copilot Chat no Word, Excel, PowerPoint e Outlook</b></td><td class="maybe">Depende</td><td>Quando disponível, trabalha sobre o documento aberto. Os mesmos prompts deste guia funcionam ali.</td></tr>
+        <tr><td><b>Geração de imagens</b></td><td class="maybe">Depende</td><td>Ilustrações para apresentações internas. Não use para peças externas sem aprovação de Marketing.</td></tr>
+        <tr><td><b>Agentes criados por você</b></td><td class="yes">Sim</td><td>Assistentes com instruções fixas, prompts iniciais e fontes de conhecimento (sites públicos e, quando liberado, arquivos e SharePoint). Veja a seção Agentes.</td></tr>
+        <tr><td><b>Ler sua caixa de e-mail, agenda e chats do Teams sozinho</b></td><td class="no">Não</td><td>Esse recurso é da licença completa do Microsoft 365 Copilot. Com o Copilot Chat, você precisa colar ou anexar o conteúdo.</td></tr>
+        <tr><td><b>Acessar sistemas core</b> (emissão, sinistros, CRM)</td><td class="no">Não</td><td>Exporte um relatório autorizado e anonimizado e anexe. Nunca cole extrações com dados pessoais.</td></tr>
+        <tr><td><b>Garantir que a resposta está correta</b></td><td class="no">Não</td><td>A IA pode inventar números, normas e citações com aparência convincente. Toda informação factual precisa de conferência.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="head">
+    <span class="eyebrow">Classificação de dados</span>
+    <h3>O semáforo antes de cada prompt</h3>
+    <p class="muted">Confirme que o ícone de proteção de dados empresarial aparece no Copilot Chat (você está conectado com a conta corporativa). Mesmo assim, siga a política de classificação da empresa, que prevalece sobre este guia.</p>
+  </div>
+  <div class="traffic stagger">
+    <div class="card light"><h3><span class="dot"></span>Pode usar</h3>
+      <ul class="ticks"><li>Informações públicas e notícias do setor</li><li>Rascunhos seus, ideias, estruturas de apresentação</li><li>Políticas e procedimentos internos de uso geral</li><li>Indicadores agregados, sem identificação de pessoas</li></ul></div>
+    <div class="card light y"><h3><span class="dot"></span>Use com cuidado</h3>
+      <ul class="ticks"><li>Documentos internos confidenciais: só no Copilot com proteção empresarial</li><li>Casos de sinistro e reclamações: retire nomes, CPF, placa, apólice e endereço</li><li>Avaliações de equipe: use iniciais ou "Colaborador A"</li><li>Resultados financeiros ainda não divulgados: consulte a política de informação privilegiada</li></ul></div>
+    <div class="card light r"><h3><span class="dot"></span>Não insira</h3>
+      <ul class="ticks"><li>Dados pessoais de segurados e beneficiários identificáveis</li><li>Dados de saúde (dado pessoal sensível pela LGPD)</li><li>Senhas, credenciais e informações de segurança</li><li>Qualquer conteúdo em ferramenta de IA pessoal ou não aprovada</li></ul></div>
+  </div>
+
+  <div class="grid g3">
+    <div class="card"><h3>Onde a IA gera mais valor para líderes</h3><p class="muted" style="margin-top:.4rem">Primeiros rascunhos, sínteses de material longo, preparação de reuniões, análise de alternativas, revisão crítica e roteiros de conversas difíceis.</p></div>
+    <div class="card"><h3>Onde exige mais cautela</h3><p class="muted" style="margin-top:.4rem">Interpretação de normas, cálculos atuariais, números de mercado, decisões sobre pessoas e qualquer texto que chegue ao segurado ou ao regulador.</p></div>
+    <div class="card"><h3>Onde não deve ser usada</h3><p class="muted" style="margin-top:.4rem">Decisão final de sinistro, aceitação de risco, avaliação de desempenho sem revisão humana, ou como fonte única para o conselho.</p></div>
+  </div>
+</section>
+
+<!-- ===================== MÉTODO ===================== -->
+<section class="view" data-view="metodo" hidden>
+  <div class="head">
+    <span class="eyebrow">02 · Método</span>
+    <h2>Como montar seu próprio prompt</h2>
+    <p class="lead">A Microsoft recomenda quatro elementos para um bom prompt: Objetivo, Contexto, Fonte e Expectativas. Para liderança, acrescentamos Papel e Restrições. Quanto mais desses blocos, menos retrabalho.</p>
+  </div>
+
+  <div class="gcse stagger">
+    <div class="card"><span class="letter">P</span><h4>Papel</h4><p class="muted">Quem o Copilot deve ser. "Atue como consultor de estratégia de seguros."</p></div>
+    <div class="card"><span class="letter">O</span><h4>Objetivo</h4><p class="muted">O que você precisa, em uma frase com verbo de ação.</p></div>
+    <div class="card"><span class="letter">C</span><h4>Contexto</h4><p class="muted">Por que precisa, para quem é, qual o momento da empresa.</p></div>
+    <div class="card"><span class="letter">F</span><h4>Fonte</h4><p class="muted">Texto colado, arquivo anexado ou web. Diga onde está a informação.</p></div>
+    <div class="card"><span class="letter">E</span><h4>Expectativas</h4><p class="muted">Formato, tamanho, tom, público. "Tabela com 3 colunas, até 200 palavras."</p></div>
+    <div class="card"><span class="letter">R</span><h4>Restrições</h4><p class="muted">O que evitar. "Não invente números. Sinalize o que precisa de confirmação."</p></div>
+  </div>
+
+  <div class="compare">
+    <div class="card" style="display:grid;gap:.7rem">
+      <span class="chip" style="background:var(--bad-soft);color:var(--bad);justify-self:start">Prompt fraco</span>
+      <pre class="code">Faz um resumo desse relatório de sinistros.</pre>
+      <p class="muted">Sem público, sem formato, sem foco. O Copilot vai devolver um resumo genérico, provavelmente longo, sem destacar o que importa para a sua decisão.</p>
+    </div>
+    <div class="card" style="display:grid;gap:.7rem">
+      <span class="chip" style="background:var(--ok-soft);color:var(--ok);justify-self:start">Prompt completo</span>
+      <pre class="code">Atue como analista sênior de sinistros.
+Objetivo: resumir o relatório anexado para minha reunião com a diretoria amanhã.
+Contexto: a sinistralidade do ramo Auto subiu no trimestre e a diretoria quer entender causas e próximos passos.
+Fonte: use apenas o arquivo anexado.
+Entrega: 5 bullets com os principais achados (com o número de cada um), 3 hipóteses de causa e 3 perguntas que a diretoria provavelmente fará. Máximo de 250 palavras.
+Regras: não invente dados; se algo não estiver no arquivo, escreva "não consta".</pre>
+    </div>
+  </div>
+
+  <div class="head">
+    <span class="eyebrow">Construtor</span>
+    <h3>Monte o seu e veja a qualidade em tempo real</h3>
+    <p class="muted">Os campos já vêm com um exemplo. Substitua pelo seu caso. O medidor indica quais blocos ainda faltam.</p>
+  </div>
+  <div class="builder">
+    <form class="card form" id="builder" autocomplete="off">
+      <div class="field"><label for="b-papel">Papel <small>quem o Copilot deve ser</small></label>
+        <input class="input" id="b-papel" value="gerente de relacionamento com corretores, experiente em seguros empresariais"></div>
+      <div class="field"><label for="b-obj">Objetivo <small>verbo + resultado</small></label>
+        <input class="input" id="b-obj" value="Escrever um e-mail convidando os 20 maiores corretores para o lançamento do novo produto de Riscos Nomeados"></div>
+      <div class="field"><label for="b-ctx">Contexto <small>por quê, para quem, momento</small></label>
+        <textarea class="input" id="b-ctx" rows="3">O evento será presencial em São Paulo, em 10 de março. Queremos reforçar a parceria depois de um ano de reajustes e mostrar que o produto tem aceitação mais ágil.</textarea></div>
+      <div class="field"><label for="b-fonte">Fonte <small>onde está a informação</small></label>
+        <select class="input" id="b-fonte">
+          <option value="">Nenhuma fonte específica</option>
+          <option value="Use apenas as informações que colei abaixo.">Texto que vou colar abaixo</option>
+          <option value="Use apenas o arquivo anexado.">Arquivo anexado</option>
+          <option value="Pesquise na web e cite as fontes com link.">Pesquisa na web</option>
+        </select></div>
+      <div class="grid g2">
+        <div class="field"><label for="b-fmt">Formato</label>
+          <select class="input" id="b-fmt">
+            <option value="">Livre</option>
+            <option value="e-mail com assunto">E-mail com assunto</option>
+            <option value="tópicos (bullets)">Tópicos</option>
+            <option value="tabela">Tabela</option>
+            <option value="resumo executivo de uma página">Resumo executivo</option>
+            <option value="roteiro de fala">Roteiro de fala</option>
+          </select></div>
+        <div class="field"><label for="b-tom">Tom</label>
+          <select class="input" id="b-tom">
+            <option value="">Não especificar</option>
+            <option value="formal e cordial">Formal e cordial</option>
+            <option value="direto e objetivo">Direto e objetivo</option>
+            <option value="empático e acolhedor">Empático</option>
+            <option value="institucional, adequado ao conselho">Institucional</option>
+          </select></div>
+      </div>
+      <div class="grid g2">
+        <div class="field"><label for="b-pub">Público</label>
+          <input class="input" id="b-pub" value="sócios de corretoras"></div>
+        <div class="field"><label for="b-tam">Tamanho</label>
+          <input class="input" id="b-tam" value="até 180 palavras"></div>
+      </div>
+      <div class="field"><label for="b-rest">Restrições <small>o que evitar</small></label>
+        <textarea class="input" id="b-rest" rows="2">Não prometa condições comerciais. Não use jargão de marketing.</textarea></div>
+      <div class="field"><label>Técnicas adicionais</label>
+        <div class="checks">
+          <label class="check"><input type="checkbox" id="t-perg" checked> Fazer perguntas antes</label>
+          <label class="check"><input type="checkbox" id="t-opc"> 3 versões</label>
+          <label class="check"><input type="checkbox" id="t-crit"> Autocrítica</label>
+          <label class="check"><input type="checkbox" id="t-passo"> Passo a passo</label>
+        </div></div>
+      <div class="actions"><button class="btn small" type="button" id="b-clear">Limpar campos</button><button class="btn small" type="button" id="b-ex">Carregar exemplo</button></div>
+    </form>
+    <div class="out">
+      <div class="card meter">
+        <div class="meter-row"><b>Qualidade do prompt</b><span id="m-val" style="font-variant-numeric:tabular-nums">0%</span></div>
+        <div class="meter-bar"><i id="m-bar"></i></div>
+        <p class="missing" id="m-miss"></p>
+      </div>
+      <pre class="code" id="b-out" aria-live="polite"></pre>
+      <div class="actions"><button class="btn primary" type="button" id="b-copy">Copiar prompt</button><span class="muted" style="font-size:.88rem;align-self:center"><span id="b-chars">0</span> caracteres</span></div>
+    </div>
+  </div>
+
+  <div class="head">
+    <span class="eyebrow">Técnicas</span>
+    <h3>Seis técnicas que mudam a qualidade da resposta</h3>
+  </div>
+  <div class="grid g3 stagger">
+    <div class="card tech"><h3>Converse, não encomende</h3><p class="muted">A primeira resposta é um rascunho. Refine: "mais curto", "mude o tom para o conselho", "transforme em tabela". Três rodadas costumam bastar.</p></div>
+    <div class="card tech"><h3>Peça perguntas antes</h3><p class="muted">"Antes de responder, faça até 5 perguntas para entender melhor meu contexto." Evita respostas genéricas em temas complexos.</p></div>
+    <div class="card tech"><h3>Dê um exemplo</h3><p class="muted">Cole um comunicado que você aprovou e diga "siga este estilo". O Copilot replica estrutura e tom com muito mais precisão.</p></div>
+    <div class="card tech"><h3>Divida em etapas</h3><p class="muted">Em análises, peça primeiro os fatos, depois as hipóteses, depois a recomendação. Fica mais fácil auditar cada parte.</p></div>
+    <div class="card tech"><h3>Peça autocrítica</h3><p class="muted">"Revise sua resposta como um diretor cético faria e aponte as 3 maiores fragilidades." Expõe furos antes de você enviar.</p></div>
+    <div class="card tech"><h3>Exija rastreabilidade</h3><p class="muted">"Indique de qual trecho do arquivo veio cada número." Reduz o risco de dados inventados e acelera a conferência.</p></div>
+  </div>
+
+  <div class="callout info">
+    <h4>Salve o que funcionou</h4>
+    <p>Quando um prompt der certo, guarde-o com os campos variáveis entre colchetes, como nos prompts da biblioteca. Em poucas semanas você terá sua biblioteca pessoal, e os melhores podem virar um agente para a equipe.</p>
+  </div>
+</section>
+
+<!-- ===================== BIBLIOTECA ===================== -->
+<section class="view" data-view="biblioteca" hidden>
+  <div class="head">
+    <span class="eyebrow">03 · Biblioteca</span>
+    <h2>Biblioteca de prompts para líderes</h2>
+    <p class="lead">Cada prompt segue o método do guia. Abra, preencha os campos entre <span class="ph">[COLCHETES]</span> e copie para o Copilot Chat. Marque com a estrela os que você usa com frequência.</p>
+  </div>
+  <div class="toolbar">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input class="input" id="q" type="search" placeholder="Buscar por tema, situação ou palavra (ex.: sinistralidade, feedback, conselho)" aria-label="Buscar prompts">
+    </div>
+    <div class="filters">
+      <div class="seg" id="fLevel" role="group" aria-label="Filtrar por nível">
+        <button type="button" data-v="" aria-pressed="true">Todos os níveis</button>
+        <button type="button" data-v="Coordenação" aria-pressed="false">Coordenação</button>
+        <button type="button" data-v="Gerência" aria-pressed="false">Gerência</button>
+        <button type="button" data-v="Diretoria" aria-pressed="false">Diretoria</button>
+        <button type="button" data-v="C-Level" aria-pressed="false">C-Level</button>
+      </div>
+      <select class="input" id="fCat" aria-label="Filtrar por tema"></select>
+      <select class="input" id="fArea" aria-label="Filtrar por área"></select>
+      <select class="input" id="fSrc" aria-label="Filtrar por fonte">
+        <option value="">Qualquer fonte</option>
+        <option value="Texto">Texto colado</option>
+        <option value="Arquivo">Arquivo anexado</option>
+        <option value="Web">Pesquisa web</option>
+      </select>
+      <button type="button" class="btn small" id="fFav" aria-pressed="false">★ Só favoritos</button>
+      <span class="count" id="count"></span>
+    </div>
+  </div>
+  <div class="lib" id="lib"></div>
+</section>
+
+<!-- ===================== AGENTES ===================== -->
+<section class="view" data-view="agentes" hidden>
+  <div class="head">
+    <span class="eyebrow">04 · Agentes</span>
+    <h2>Agentes simples no Copilot</h2>
+    <p class="lead">Um agente é um Copilot com instruções fixas. Você escreve uma vez como ele deve se comportar e a equipe passa a usar sem precisar montar o prompt toda vez. É o próximo passo depois que um prompt se mostra útil.</p>
+  </div>
+
+  <div class="grid g2">
+    <div class="card" style="display:grid;gap:1rem">
+      <h3>Como criar um agente</h3>
+      <ol class="steps-list">
+        <li><div><b>Abra o Copilot Chat</b><p class="muted">No painel lateral, escolha a opção de criar agente. O nome do menu pode variar conforme a versão.</p></div></li>
+        <li><div><b>Use a aba Configurar</b><p class="muted">Preencha nome, descrição e instruções. Você pode descrever em linguagem natural, mas colar instruções prontas dá mais controle.</p></div></li>
+        <li><div><b>Adicione conhecimento</b><p class="muted">Sites públicos (como o portal da SUSEP) e, se a TI liberar, arquivos ou sites do SharePoint. O agente responde a partir dessas fontes.</p></div></li>
+        <li><div><b>Cadastre prompts iniciais</b><p class="muted">São os botões que aparecem ao abrir o agente. Use os modelos abaixo.</p></div></li>
+        <li><div><b>Teste antes de compartilhar</b><p class="muted">Use o painel de teste com 5 casos reais anonimizados. Ajuste as instruções e só depois compartilhe com a equipe.</p></div></li>
+      </ol>
+    </div>
+    <div class="card" style="display:grid;gap:.8rem;align-content:start">
+      <h3>Boas práticas para instruções</h3>
+      <ul class="ticks">
+        <li>Comece pelo papel e pelo público do agente.</li>
+        <li>Liste o passo a passo que ele deve seguir em toda conversa.</li>
+        <li>Defina o formato padrão da resposta.</li>
+        <li>Escreva o que ele nunca deve fazer, incluindo pedir ou aceitar dados pessoais.</li>
+        <li>Diga o que fazer quando faltar informação: perguntar, não supor.</li>
+        <li>Mantenha as instruções abaixo do limite de caracteres do editor (hoje em torno de 8.000). As deste guia têm entre 1.500 e 2.600.</li>
+        <li>Nomeie um responsável pelo agente e revise as instruções a cada trimestre.</li>
+      </ul>
+      <div class="callout bad"><p><b>Atenção:</b> agentes compartilhados alcançam muita gente. Valide com Compliance antes de publicar um agente que trate de normas, produtos ou atendimento ao cliente.</p></div>
+    </div>
+  </div>
+
+  <div class="head"><span class="eyebrow">Modelos prontos</span><h3>Cinco agentes para começar</h3></div>
+  <div class="grid g2" id="agents"></div>
+</section>
+
+<!-- ===================== DESAFIOS ===================== -->
+<section class="view" data-view="desafios" hidden>
+  <div class="head">
+    <span class="eyebrow">05 · Desafio de 30 dias</span>
+    <h2>Quatro semanas para criar o hábito</h2>
+    <p class="lead">Um desafio por dia útil, de 15 a 20 minutos cada. Marque o que concluiu; o progresso fica salvo neste navegador. No fim de cada semana há um desafio específico do seu nível.</p>
+  </div>
+  <div class="filters">
+    <span class="muted" style="font-size:.92rem">Meu nível:</span>
+    <div class="seg" id="chLevel" role="group" aria-label="Selecionar nível do desafio">
+      <button type="button" data-v="Coordenação" aria-pressed="true">Coordenação</button>
+      <button type="button" data-v="Gerência" aria-pressed="false">Gerência</button>
+      <button type="button" data-v="Diretoria" aria-pressed="false">Diretoria</button>
+      <button type="button" data-v="C-Level" aria-pressed="false">C-Level</button>
+    </div>
+    <button type="button" class="btn small" id="chReset" style="margin-left:auto">Recomeçar desafio</button>
+  </div>
+  <div class="callout" id="chResetConfirm" hidden>
+    <p>Apagar todas as marcações do desafio neste navegador?</p>
+    <div class="actions"><button type="button" class="btn small" id="chResetYes">Apagar marcações</button><button type="button" class="btn small" id="chResetNo">Manter</button></div>
+  </div>
+  <div class="grid g2" id="weeks"></div>
+</section>
+
+<!-- ===================== METAS ===================== -->
+<section class="view" data-view="metas" hidden>
+  <div class="head">
+    <span class="eyebrow">06 · Metas e medição</span>
+    <h2>Como definir metas e medir resultados</h2>
+    <p class="lead">Adoção sem medição vira impressão. Use quatro dimensões, registre uma linha de base antes de começar e revise a cada 15 dias.</p>
+  </div>
+
+  <div class="grid g4 stagger">
+    <div class="card"><span class="eyebrow">Adoção</span><h3 style="margin-top:.3rem">Uso recorrente</h3><p class="muted" style="margin-top:.4rem">Dias com uso por semana; % da equipe usando ao menos 3 vezes por semana.</p></div>
+    <div class="card"><span class="eyebrow">Eficiência</span><h3 style="margin-top:.3rem">Tempo economizado</h3><p class="muted" style="margin-top:.4rem">(Minutos antes − minutos com IA) × frequência mensal da tarefa.</p></div>
+    <div class="card"><span class="eyebrow">Qualidade</span><h3 style="margin-top:.3rem">Menos retrabalho</h3><p class="muted" style="margin-top:.4rem">Rodadas de revisão por documento; nota de 1 a 5 dada por quem recebe.</p></div>
+    <div class="card"><span class="eyebrow">Impacto</span><h3 style="margin-top:.3rem">Tempo redirecionado</h3><p class="muted" style="margin-top:.4rem">Horas liberadas usadas em clientes, corretores, equipe ou estratégia.</p></div>
+  </div>
+
+  <div class="head"><span class="eyebrow">Metas por nível</span><h3>Exemplos de OKR para o primeiro trimestre</h3></div>
+  <div class="grid g2 stagger" id="okrs"></div>
+
+  <div class="head"><span class="eyebrow">Diário de bordo</span><h3>Registre cada uso relevante</h3>
+    <p class="muted">Leva 20 segundos e é a base de toda a medição. Os registros ficam somente neste navegador; use "Copiar tabela" para colar no Excel e consolidar com a equipe.</p></div>
+  <div class="card" style="display:grid;gap:1rem">
+    <form class="log-form" id="logForm" autocomplete="off">
+      <div class="field wide"><label for="lg-t">Tarefa</label><input class="input" id="lg-t" placeholder="Ex.: ata do comitê de sinistros" required></div>
+      <div class="field"><label for="lg-a">Min. antes</label><input class="input" id="lg-a" type="number" min="0" placeholder="60" required></div>
+      <div class="field"><label for="lg-d">Min. com IA</label><input class="input" id="lg-d" type="number" min="0" placeholder="15" required></div>
+      <div class="field"><label for="lg-q">Qualidade</label><select class="input" id="lg-q"><option>5</option><option selected>4</option><option>3</option><option>2</option><option>1</option></select></div>
+      <button class="btn primary" type="submit">Registrar</button>
+    </form>
+    <div class="table-wrap"><table><thead><tr><th>Data</th><th>Tarefa</th><th class="num">Antes</th><th class="num">Com IA</th><th class="num">Economia</th><th class="num">Qualidade</th><th></th></tr></thead><tbody id="logBody"></tbody></table></div>
+    <div class="grid g3">
+      <div><span class="muted">Usos registrados</span><div class="big" id="lgN">0</div></div>
+      <div><span class="muted">Horas economizadas</span><div class="big" id="lgH">0</div></div>
+      <div><span class="muted">Qualidade média</span><div class="big" id="lgQ">0</div></div>
+    </div>
+    <div class="actions"><button class="btn small" type="button" id="lgCopy">Copiar tabela</button></div>
+  </div>
+
+  <div class="head"><span class="eyebrow">Calculadora</span><h3>Estimativa de capacidade liberada</h3>
+    <p class="muted">Use para dimensionar a meta do programa. Valores iniciais são ilustrativos; ajuste com os números do seu diário de bordo.</p></div>
+  <div class="calc">
+    <div class="card form">
+      <div class="field"><label for="c-l">Líderes no programa</label><input class="input" id="c-l" type="number" min="1" value="40"></div>
+      <div class="field"><label for="c-h">Horas economizadas por líder por semana</label><input class="input" id="c-h" type="number" min="0" step="0.5" value="3"></div>
+      <div class="field"><label for="c-c">Custo médio da hora do líder (R$)</label><input class="input" id="c-c" type="number" min="0" value="180"></div>
+      <div class="field"><label for="c-r">% do tempo redirecionado a atividades de maior valor</label><input class="input" id="c-r" type="number" min="0" max="100" value="50"></div>
+    </div>
+    <div class="card result-box">
+      <div><span class="muted">Horas liberadas por mês</span><div class="big" id="r-h">0</div></div>
+      <div><span class="muted">Valor equivalente por ano</span><div class="big" id="r-v">R$ 0</div></div>
+      <div><span class="muted">Horas por ano em clientes, equipe e estratégia</span><div class="big" id="r-r">0</div></div>
+      <p class="muted" style="font-size:.88rem">Cálculo: líderes × horas por semana × 4,33 semanas = horas por mês. Valor anual = horas por mês × 12 × custo da hora. É uma estimativa de capacidade, não de redução de custo.</p>
+    </div>
+  </div>
+
+  <div class="head"><span class="eyebrow">Maturidade</span><h3>Em que nível sua área está</h3></div>
+  <div class="maturity stagger">
+    <div class="card mlevel"><span class="k">Nível 1</span><h4>Exploração</h4><p class="muted">Uso esporádico, curiosidade, prompts curtos.</p></div>
+    <div class="card mlevel"><span class="k">Nível 2</span><h4>Hábito</h4><p class="muted">Uso semanal em tarefas pessoais, com método.</p></div>
+    <div class="card mlevel"><span class="k">Nível 3</span><h4>Prática</h4><p class="muted">Biblioteca própria, medição de tempo, revisão crítica.</p></div>
+    <div class="card mlevel"><span class="k">Nível 4</span><h4>Multiplicação</h4><p class="muted">Agentes compartilhados, equipe treinada, metas no plano.</p></div>
+    <div class="card mlevel"><span class="k">Nível 5</span><h4>Transformação</h4><p class="muted">Rotinas redesenhadas, indicadores no painel da área.</p></div>
+  </div>
+
+  <div class="card" style="display:grid;gap:.6rem">
+    <h3>Ritual de acompanhamento</h3>
+    <div class="table-wrap" style="border:0"><table>
+      <thead><tr><th>Quando</th><th>O quê</th><th>Quem</th></tr></thead>
+      <tbody>
+        <tr><td>Antes de começar</td><td>Linha de base: tempo atual das 5 tarefas mais repetitivas do líder</td><td>Cada líder</td></tr>
+        <tr><td>Diariamente</td><td>Registro no diário de bordo</td><td>Cada líder</td></tr>
+        <tr><td>A cada 15 dias</td><td>15 minutos na reunião de equipe: um caso de uso que funcionou e um que falhou</td><td>Gestor da área</td></tr>
+        <tr><td>Mensalmente</td><td>Consolidação de horas, qualidade e adoção; atualização da biblioteca da área</td><td>Ponto focal de IA</td></tr>
+        <tr><td>Trimestralmente</td><td>Revisão dos OKRs, dos agentes publicados e do nível de maturidade</td><td>Diretoria</td></tr>
+      </tbody></table></div>
+  </div>
+</section>
+
+<!-- ===================== BOAS PRÁTICAS ===================== -->
+<section class="view" data-view="boas-praticas" hidden>
+  <div class="head">
+    <span class="eyebrow">07 · Boas práticas</span>
+    <h2>Uso responsável e com padrão executivo</h2>
+    <p class="lead">Regras curtas para que a IA aumente a qualidade do trabalho da liderança sem criar risco regulatório, reputacional ou de pessoas.</p>
+  </div>
+  <div class="dd">
+    <div class="card do"><h3 style="margin-bottom:.7rem">Faça</h3><ul class="clean">
+      <li><span>Use sempre a conta corporativa e confira o ícone de proteção de dados empresarial.</span></li>
+      <li><span>Anonimize casos: "Segurado A", "Corretora B", "Colaborador C".</span></li>
+      <li><span>Confira todo número, data, norma e nome antes de usar.</span></li>
+      <li><span>Peça para o Copilot indicar a origem de cada informação.</span></li>
+      <li><span>Revise o tom: o texto precisa soar como você e como a empresa.</span></li>
+      <li><span>Declare o uso de IA quando a política da empresa exigir.</span></li>
+      <li><span>Compartilhe com a equipe os prompts que funcionaram.</span></li>
+    </ul></div>
+    <div class="card dont"><h3 style="margin-bottom:.7rem">Evite</h3><ul class="clean">
+      <li><span>Colar extrações de sistemas com CPF, apólice, placa ou dados de saúde.</span></li>
+      <li><span>Enviar ao segurado ou ao regulador um texto que você não revisou linha a linha.</span></li>
+      <li><span>Usar a IA para decidir sobre pessoas: promoção, desligamento, avaliação.</span></li>
+      <li><span>Tratar resposta da IA como parecer jurídico ou atuarial.</span></li>
+      <li><span>Usar ferramentas de IA pessoais ou não aprovadas pela TI para assuntos da empresa.</span></li>
+      <li><span>Pedir "o melhor" sem dizer o critério. A IA escolhe por você sem avisar.</span></li>
+    </ul></div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card" style="display:grid;gap:.7rem">
+      <h3>Checklist antes de enviar algo gerado com IA</h3>
+      <ul class="clean" id="sendCheck"></ul>
+    </div>
+    <div class="card" style="display:grid;gap:.7rem">
+      <h3>Riscos típicos e como reduzir</h3>
+      <div class="table-wrap" style="border:0"><table>
+        <thead><tr><th>Risco</th><th>Como reduzir</th></tr></thead>
+        <tbody>
+          <tr><td><b>Alucinação</b></td><td>Restringir a fonte ("use apenas o anexo") e pedir "não consta" quando faltar dado.</td></tr>
+          <tr><td><b>Viés</b></td><td>Pedir contra-argumentos e perspectivas de diferentes públicos; revisão humana em temas de pessoas.</td></tr>
+          <tr><td><b>Vazamento</b></td><td>Semáforo de dados, anonimização e uso exclusivo da conta corporativa.</td></tr>
+          <tr><td><b>Desatualização</b></td><td>Para normas e mercado, pedir pesquisa web com data e abrir a fonte oficial.</td></tr>
+          <tr><td><b>Perda de voz</b></td><td>Dar exemplos do seu estilo e reescrever a abertura e o fechamento.</td></tr>
+        </tbody></table></div>
+    </div>
+  </div>
+
+  <div class="head"><span class="eyebrow">Para quem lidera líderes</span><h3>O que muda em cada nível</h3></div>
+  <div class="grid g4 stagger">
+    <div class="card"><span class="chip lv">Coordenação</span><h4 style="margin:.6rem 0 .3rem">Produtividade da operação</h4><p class="muted">Padronize respostas, atas e rotinas da equipe. Seja o primeiro a mostrar casos reais de sinistro, atendimento ou subscrição.</p></div>
+    <div class="card"><span class="chip lv">Gerência</span><h4 style="margin:.6rem 0 .3rem">Análise e gente</h4><p class="muted">Use para preparar 1:1, ler indicadores e estruturar planos. Defina 2 ou 3 casos de uso da área e meça.</p></div>
+    <div class="card"><span class="chip lv">Diretoria</span><h4 style="margin:.6rem 0 .3rem">Decisão e governança</h4><p class="muted">Pré-mortem, cenários e preparação de comitês. Garanta que a área tem ponto focal, metas e regras claras.</p></div>
+    <div class="card"><span class="chip lv">C-Level</span><h4 style="margin:.6rem 0 .3rem">Exemplo e patrocínio</h4><p class="muted">Use em público, conte como usa, peça indicadores de adoção e financie a capacitação. O comportamento do topo define o ritmo.</p></div>
+  </div>
+
+  <p class="muted" style="font-size:.88rem">Os recursos do Copilot mudam com frequência e dependem da configuração liberada pela TI. Este guia não substitui as políticas internas de segurança da informação, privacidade e uso de IA, nem as orientações de Jurídico e Compliance.</p>
+</section>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="modalRoot"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============ Armazenamento seguro ============ */
+const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* ============ Biblioteca de prompts ============ */
+const P=[
+/* --- Comunicação executiva --- */
+{id:"COM-01",t:"Comunicado para a equipe",cat:"Comunicação",area:"Geral",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:30,
+w:"Transformar pontos soltos em um comunicado claro sobre mudança, resultado ou decisão.",
+p:`Atue como especialista em comunicação interna de uma seguradora.
+Objetivo: redigir um comunicado para [PÚBLICO, EX.: EQUIPE DE SINISTROS AUTO] sobre [ASSUNTO].
+Contexto: [POR QUE ESTAMOS COMUNICANDO AGORA E O QUE MUDA PARA AS PESSOAS].
+Fonte: use apenas os pontos que colei abaixo.
+Entrega: título, parágrafo de abertura com a mensagem principal, até 4 tópicos com o que muda, a partir de quando e a quem procurar em caso de dúvida. Máximo de [NÚMERO DE PALAVRAS] palavras, tom [TOM, EX.: FORMAL E PRÓXIMO].
+Regras: não acrescente fatos que não estão nos pontos; sinalize entre colchetes qualquer informação que esteja faltando.
+
+Pontos:
+[COLE SEUS PONTOS AQUI]`,
+tip:"Para mudanças sensíveis, peça em seguida: \"Liste as 5 dúvidas que a equipe provavelmente terá e sugira respostas\"."},
+
+{id:"COM-02",t:"Resumo executivo de documento",cat:"Comunicação",area:"Geral",lv:["Gerência","Diretoria","C-Level"],src:"Arquivo",min:45,
+w:"Ler um relatório, estudo ou apresentação longa e extrair o essencial para decidir.",
+p:`Atue como chefe de gabinete de um executivo de seguros.
+Objetivo: produzir um resumo executivo do arquivo anexado para que eu decida sobre [DECISÃO OU TEMA].
+Contexto: sou [SEU CARGO] e tenho [TEMPO, EX.: 5 MINUTOS] para ler antes de [REUNIÃO OU PRAZO].
+Fonte: use apenas o arquivo anexado.
+Entrega, nesta ordem:
+1. Conclusão principal em 2 frases.
+2. Os 5 pontos mais relevantes, cada um com o número ou fato que o sustenta e a página ou seção de origem.
+3. Riscos e pontos de atenção.
+4. O que o documento não responde.
+5. Três perguntas que eu deveria fazer ao autor.
+Regras: máximo de 300 palavras; não invente dados; quando algo não estiver no arquivo, escreva "não consta".`,
+tip:"Funciona com estudos atuariais, relatórios de auditoria e apresentações de fornecedores. Troque \"autor\" por \"fornecedor\" quando for o caso."},
+
+{id:"COM-03",t:"Resposta a e-mail sensível",cat:"Comunicação",area:"Comercial",lv:["Coordenação","Gerência","Diretoria"],src:"Texto",min:20,
+w:"Responder a reclamação de corretor, parceiro ou área interna sem escalar o conflito.",
+p:`Atue como executivo de relacionamento experiente em seguros.
+Objetivo: redigir uma resposta ao e-mail abaixo.
+Contexto: o remetente é [QUEM É, EX.: SÓCIO DE CORRETORA PARCEIRA HÁ 10 ANOS]. Nossa posição é [O QUE PODEMOS E NÃO PODEMOS FAZER]. Quero preservar a relação e ser claro sobre os limites.
+Fonte: e-mail colado abaixo (dados pessoais já removidos).
+Entrega: e-mail com assunto, em até 200 palavras, que (1) reconheça o ponto legítimo do remetente, (2) explique nossa posição com fatos, (3) proponha um próximo passo concreto com prazo.
+Regras: tom [TOM, EX.: CORDIAL E FIRME]; não admita responsabilidade nem prometa condições que não estejam na nossa posição; evite frases defensivas.
+
+E-mail recebido:
+[COLE O E-MAIL AQUI, SEM DADOS PESSOAIS]`,
+tip:"Peça duas versões, uma mais firme e uma mais conciliadora, e escolha a que combina com o momento da relação."},
+
+{id:"COM-04",t:"Comunicação de mudança organizacional",cat:"Comunicação",area:"RH",lv:["Diretoria","C-Level"],src:"Texto",min:60,
+w:"Anunciar reestruturação, nova liderança ou mudança de estratégia com clareza e cuidado.",
+p:`Atue como consultor sênior de comunicação de mudança.
+Objetivo: preparar o pacote de comunicação da seguinte mudança: [DESCREVA A MUDANÇA].
+Contexto: impacta [ÁREAS E NÚMERO APROXIMADO DE PESSOAS]. O motivo é [MOTIVO DE NEGÓCIO]. Data de efetivação: [DATA].
+Fonte: apenas as informações deste prompt.
+Entrega:
+1. Mensagem principal em uma frase.
+2. Comunicado para toda a empresa (até 250 palavras).
+3. Roteiro de 5 minutos para os gestores conversarem com suas equipes.
+4. Perguntas e respostas com as 8 dúvidas mais prováveis.
+5. Sequência recomendada: quem precisa saber antes de quem.
+Regras: tom [TOM, EX.: TRANSPARENTE E RESPEITOSO]; não use eufemismos que escondam o impacto; marque com [VALIDAR COM RH/JURÍDICO] os trechos que envolvem direitos trabalhistas.`,
+tip:"Nunca inclua nomes de pessoas afetadas. Revise o pacote com RH e Jurídico antes de qualquer envio."},
+
+{id:"COM-05",t:"Roteiro para reunião geral",cat:"Comunicação",area:"Geral",lv:["Diretoria","C-Level"],src:"Texto",min:60,
+w:"Preparar fala para town hall, convenção de vendas ou encontro anual.",
+p:`Atue como redator de discursos para executivos do mercado segurador.
+Objetivo: escrever um roteiro de fala de [DURAÇÃO, EX.: 10 MINUTOS] para [EVENTO E PÚBLICO].
+Contexto: as mensagens que preciso transmitir são: [MENSAGEM 1], [MENSAGEM 2], [MENSAGEM 3]. O clima atual da empresa é [CLIMA, EX.: ANO DE RESULTADO ABAIXO DA META, EQUIPE CANSADA].
+Fonte: os dados que colei abaixo.
+Entrega: roteiro em blocos com tempo estimado de cada bloco, abertura que conecte com o público, uma história ou exemplo concreto por mensagem, fechamento com chamada para ação. Inclua marcações de pausa.
+Regras: frases curtas, fáceis de falar em voz alta; linguagem formal sem ser burocrática; use apenas os números fornecidos.
+
+Dados e fatos:
+[COLE AQUI]`,
+tip:"Depois, peça: \"Leia o roteiro como um colaborador cético da operação e aponte onde ele soa distante da realidade\"."},
+
+{id:"COM-06",t:"Traduzir linguagem técnica",cat:"Comunicação",area:"Atuarial",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:25,
+w:"Explicar conceito atuarial, regulatório ou técnico para conselho, área comercial ou cliente.",
+p:`Atue como professor de seguros que explica temas técnicos para não especialistas.
+Objetivo: explicar [CONCEITO OU TRECHO TÉCNICO, EX.: IBNR, PROVISÃO DE PRÊMIOS NÃO GANHOS, ÍNDICE COMBINADO] para [PÚBLICO].
+Contexto: esse público precisa entender o tema para [DECISÃO OU AÇÃO].
+Fonte: o trecho abaixo e conhecimento geral de seguros.
+Entrega: (1) explicação em até 120 palavras, sem jargão; (2) uma analogia do dia a dia; (3) por que isso importa para o resultado da empresa; (4) dois erros comuns de interpretação.
+Regras: mantenha a precisão técnica; se simplificar algo a ponto de perder exatidão, avise.
+
+Trecho técnico (opcional):
+[COLE AQUI]`,
+tip:"Peça para a área técnica validar a analogia antes de usar com o conselho."},
+
+{id:"COM-07",t:"Revisor de tom e clareza",cat:"Comunicação",area:"Geral",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:15,
+w:"Revisar qualquer texto antes de enviar: e-mail, memorando, apresentação.",
+p:`Atue como editor executivo exigente.
+Objetivo: revisar o texto abaixo antes de eu enviar para [DESTINATÁRIO].
+Contexto: quero que o leitor [AÇÃO ESPERADA, EX.: APROVE O ORÇAMENTO ATÉ SEXTA].
+Fonte: texto colado abaixo.
+Entrega:
+1. Nota de 1 a 10 para clareza, objetividade e tom, com uma frase de justificativa cada.
+2. Os 3 principais problemas.
+3. Versão revisada, com no máximo [NÚMERO DE PALAVRAS] palavras, mantendo meu estilo.
+4. Lista do que você alterou e por quê.
+Regras: preserve todos os fatos e números; não acrescente informações; mantenha a mensagem principal no primeiro parágrafo.
+
+Texto:
+[COLE AQUI]`,
+tip:"É o prompt com maior retorno imediato. Use no desafio do dia 2."},
+
+{id:"COM-08",t:"Mensagem de visão e prioridades do ano",cat:"Comunicação",area:"Geral",lv:["C-Level","Diretoria"],src:"Texto",min:90,
+w:"Escrever a carta anual de prioridades para a liderança ou para toda a empresa.",
+p:`Atue como conselheiro de comunicação do CEO de uma seguradora.
+Objetivo: redigir a mensagem de prioridades de [ANO] para [PÚBLICO, EX.: TODOS OS LÍDERES].
+Contexto: o ano anterior foi marcado por [FATOS PRINCIPAIS]. As prioridades serão: [PRIORIDADE 1], [PRIORIDADE 2], [PRIORIDADE 3]. Queremos que cada líder saiba como sua área contribui.
+Fonte: somente as informações acima e os dados que colei abaixo.
+Entrega: texto de até 500 palavras com (1) reconhecimento do ano anterior, (2) contexto do mercado em linguagem simples, (3) as prioridades com o "porquê" de cada uma, (4) o que esperamos dos líderes, (5) fechamento. Ao final, sugira 3 títulos.
+Regras: tom [TOM, EX.: CONFIANTE E SÓBRIO]; não prometa resultados numéricos que não estejam nos dados.
+
+Dados:
+[COLE AQUI]`,
+tip:"Peça uma versão de 100 palavras para o Teams e outra em tópicos para a primeira página da apresentação."},
+
+/* --- Reuniões e rituais --- */
+{id:"REU-01",t:"Pauta com objetivo e tempos",cat:"Reuniões",area:"Geral",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:20,
+w:"Preparar reuniões curtas e produtivas, com decisão clara no fim.",
+p:`Atue como facilitador de reuniões executivas.
+Objetivo: montar a pauta de uma reunião de [DURAÇÃO] sobre [TEMA].
+Contexto: participantes: [CARGOS OU ÁREAS]. Ao final, precisamos sair com [DECISÃO OU ENTREGÁVEL].
+Fonte: os tópicos que colei abaixo.
+Entrega: tabela com colunas Tempo, Tópico, Responsável, Resultado esperado (informar, discutir ou decidir). Inclua 5 minutos finais para próximos passos. Acrescente a mensagem do convite em 3 linhas e o material que cada participante deve ler antes.
+Regras: se os tópicos não couberem no tempo, diga o que deve sair da pauta.
+
+Tópicos:
+[COLE AQUI]`,
+tip:"Copie a tabela direto para o convite do Outlook."},
+
+{id:"REU-02",t:"Ata e plano de ação",cat:"Reuniões",area:"Geral",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:40,
+w:"Transformar anotações ou transcrição em ata com decisões e responsáveis.",
+p:`Atue como secretário executivo de comitês.
+Objetivo: transformar as anotações abaixo em uma ata formal da reunião [NOME DA REUNIÃO] de [DATA].
+Contexto: a ata será enviada para [DESTINATÁRIOS] e servirá de registro das decisões.
+Fonte: apenas as anotações ou a transcrição colada abaixo.
+Entrega:
+1. Resumo em 3 linhas.
+2. Decisões tomadas (numeradas).
+3. Tabela de ações: Ação, Responsável, Prazo, Status.
+4. Pontos em aberto para a próxima reunião.
+Regras: não atribua decisões ou falas que não estejam no texto; quando faltar responsável ou prazo, escreva "a definir"; linguagem impessoal e objetiva.
+
+Anotações:
+[COLE AQUI]`,
+tip:"Se a reunião foi no Teams com transcrição, baixe a transcrição e anexe o arquivo. Revise nomes e decisões antes de enviar."},
+
+{id:"REU-03",t:"Preparação de 1:1 com liderado",cat:"Reuniões",area:"RH",lv:["Coordenação","Gerência","Diretoria"],src:"Texto",min:20,
+w:"Chegar à conversa individual com foco, boas perguntas e um combinado claro.",
+p:`Atue como coach executivo de líderes.
+Objetivo: preparar minha conversa individual de [DURAÇÃO] com [CARGO DO LIDERADO, SEM NOME].
+Contexto: nos últimos 30 dias: [ENTREGAS, DIFICULDADES, SINAIS DE MOTIVAÇÃO OU DESMOTIVAÇÃO]. Meu objetivo com esta conversa é [OBJETIVO].
+Fonte: apenas as informações acima.
+Entrega: (1) roteiro com abertura, 3 blocos e fechamento; (2) 6 perguntas abertas, sendo 2 sobre desenvolvimento; (3) um reconhecimento específico que eu possa fazer; (4) como encerrar com um combinado verificável.
+Regras: linguagem respeitosa; não faça diagnósticos psicológicos; sugira, não determine.`,
+tip:"Use apenas o cargo ou iniciais. Nada de dados de saúde ou situações pessoais detalhadas."},
+
+{id:"REU-04",t:"Preparação para conselho ou comitê",cat:"Reuniões",area:"Geral",lv:["Diretoria","C-Level"],src:"Arquivo",min:90,
+w:"Antecipar perguntas difíceis do conselho, do comitê de auditoria ou de riscos.",
+p:`Atue como conselheiro independente experiente em seguradoras, com perfil questionador.
+Objetivo: me preparar para apresentar [TEMA] ao [CONSELHO OU COMITÊ] em [DATA].
+Contexto: minha recomendação é [RECOMENDAÇÃO]. O colegiado tem preocupação conhecida com [PREOCUPAÇÕES, EX.: SOLVÊNCIA, SINISTRALIDADE, RISCO CIBERNÉTICO].
+Fonte: a apresentação anexada.
+Entrega:
+1. As 10 perguntas mais difíceis que eu posso receber, em ordem de probabilidade.
+2. Para cada uma: o que o conselheiro quer de fato saber e uma resposta sugerida de até 3 frases baseada no material.
+3. Lacunas do material que podem me expor.
+4. Três ajustes na apresentação para antecipar objeções.
+Regras: seja crítico; aponte quando a resposta depender de dado que não está no material.`,
+tip:"Repita com outro papel: \"Agora atue como o diretor financeiro\" ou \"como o auditor independente\"."},
+
+{id:"REU-05",t:"Briefing antes de visitar cliente ou corretor",cat:"Reuniões",area:"Comercial",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Web",min:30,
+w:"Chegar preparado a uma reunião com grande cliente corporativo, corretora ou parceiro.",
+p:`Atue como analista de inteligência comercial do mercado de seguros.
+Objetivo: preparar um briefing para minha reunião com [EMPRESA OU CORRETORA] em [DATA].
+Contexto: o objetivo da reunião é [OBJETIVO, EX.: RENOVAR O PROGRAMA DE SEGUROS, AMPLIAR PARCERIA]. Nossa relação atual: [RESUMO DA RELAÇÃO].
+Fonte: pesquise na web apenas informações públicas dos últimos 12 meses e cite cada fonte com link e data.
+Entrega: (1) perfil da empresa em 5 linhas; (2) notícias recentes relevantes; (3) riscos e necessidades de seguro prováveis para o setor dela; (4) 5 perguntas para abrir a conversa; (5) possíveis objeções e como responder.
+Regras: separe claramente o que é fato com fonte do que é inferência sua.`,
+tip:"Confirme as notícias abrindo os links. Não cole dados da carteira desse cliente no prompt."},
+
+{id:"REU-06",t:"Retrospectiva de projeto ou trimestre",cat:"Reuniões",area:"Geral",lv:["Coordenação","Gerência","Diretoria"],src:"Texto",min:30,
+w:"Conduzir uma retrospectiva honesta e gerar aprendizados acionáveis.",
+p:`Atue como facilitador de retrospectivas.
+Objetivo: estruturar a retrospectiva de [PROJETO OU PERÍODO] com a equipe de [ÁREA].
+Contexto: resultados obtidos: [RESULTADOS]. O que saiu diferente do planejado: [DESVIOS].
+Fonte: informações acima e as notas abaixo.
+Entrega: (1) dinâmica de [DURAÇÃO] com etapas e tempos; (2) perguntas para cada etapa (o que funcionou, o que não funcionou, o que vamos mudar); (3) uma síntese preliminar dos aprendizados com base nas notas; (4) modelo de quadro de ações.
+Regras: foco em processos, não em culpados; linguagem neutra.
+
+Notas:
+[COLE AQUI]`,
+tip:"Depois da reunião, cole o resultado e use o REU-02 para gerar o plano de ação."},
+
+/* --- Gestão de pessoas --- */
+{id:"PES-01",t:"Feedback estruturado",cat:"Pessoas",area:"RH",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:25,
+w:"Preparar feedback de reconhecimento ou de correção usando o modelo Situação, Comportamento e Impacto.",
+p:`Atue como especialista em desenvolvimento de líderes.
+Objetivo: preparar um feedback [TIPO: DE RECONHECIMENTO OU DE AJUSTE] para [CARGO DO COLABORADOR, SEM NOME].
+Contexto: situação observada: [O QUE ACONTECEU, QUANDO, ONDE]. Impacto: [EFEITO NO CLIENTE, NA EQUIPE OU NO RESULTADO].
+Fonte: apenas as informações acima.
+Entrega: (1) o feedback no modelo Situação, Comportamento e Impacto, em até 6 frases; (2) uma pergunta aberta para ouvir o colaborador; (3) uma proposta de combinado; (4) duas frases que devo evitar.
+Regras: descreva comportamentos observáveis, sem rótulos de personalidade; tom respeitoso e direto.`,
+tip:"Ensaie em voz alta. Se o texto não soar como você, peça: \"reescreva com linguagem mais coloquial\"."},
+
+{id:"PES-02",t:"Plano de desenvolvimento individual",cat:"Pessoas",area:"RH",lv:["Coordenação","Gerência","Diretoria"],src:"Texto",min:45,
+w:"Construir um PDI realista com ações 70-20-10.",
+p:`Atue como parceiro de RH especializado em desenvolvimento.
+Objetivo: montar um plano de desenvolvimento de [PERÍODO, EX.: 6 MESES] para um [CARGO] que quer evoluir para [CARGO OU COMPETÊNCIA ALVO].
+Contexto: pontos fortes: [PONTOS FORTES]. Pontos a desenvolver: [PONTOS A DESENVOLVER]. Restrições: [TEMPO, ORÇAMENTO].
+Fonte: apenas as informações acima.
+Entrega: tabela com Competência, Ação, Tipo (70% prática, 20% troca com outras pessoas, 10% curso), Prazo e Evidência de progresso. Inclua 2 metas mensuráveis e um roteiro de acompanhamento mensal.
+Regras: ações possíveis dentro da rotina de uma seguradora; nada que dependa de orçamento não informado.`,
+tip:"Construa junto com o colaborador: compartilhe a tela e ajuste o plano na conversa."},
+
+{id:"PES-03",t:"Vaga e roteiro de entrevista",cat:"Pessoas",area:"RH",lv:["Coordenação","Gerência","Diretoria"],src:"Texto",min:60,
+w:"Escrever descrição de vaga inclusiva e entrevista por competências.",
+p:`Atue como recrutador sênior do mercado de seguros.
+Objetivo: criar a descrição da vaga de [CARGO] na área de [ÁREA] e o roteiro de entrevista.
+Contexto: principais entregas do cargo: [ENTREGAS]. Competências essenciais: [COMPETÊNCIAS]. Requisitos obrigatórios: [REQUISITOS, EX.: CERTIFICAÇÃO, EXPERIÊNCIA EM RAMOS ELEMENTARES].
+Fonte: apenas as informações acima.
+Entrega: (1) descrição da vaga em até 250 palavras, com linguagem inclusiva; (2) 8 perguntas comportamentais, 2 por competência, com o que observar em uma boa resposta; (3) um caso prático de 15 minutos ligado ao dia a dia da área; (4) régua de avaliação de 1 a 4.
+Regras: evite requisitos que excluam candidatos sem relação com o desempenho (idade, gênero, origem).`,
+tip:"Valide a descrição com o RH, que conhece as políticas e a marca empregadora."},
+
+{id:"PES-04",t:"Ensaio de conversa difícil",cat:"Pessoas",area:"RH",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:30,
+w:"Treinar uma conversa sobre baixo desempenho, conflito ou negativa de promoção.",
+p:`Vamos fazer um ensaio. Atue como [PERFIL DO INTERLOCUTOR, EX.: ANALISTA SÊNIOR EXPERIENTE QUE DISCORDA DA AVALIAÇÃO].
+Objetivo: treinar a conversa em que preciso [OBJETIVO DA CONVERSA].
+Contexto: fatos: [FATOS OBJETIVOS]. Reação que espero: [REAÇÃO PROVÁVEL].
+Fonte: apenas este contexto.
+Entrega: responda como o interlocutor responderia, uma fala por vez, e espere a minha resposta. Seja realista, inclusive com resistência. Quando eu escrever "pausa", saia do papel e me dê feedback: o que funcionou, o que soou defensivo e uma frase melhor para o ponto mais difícil.
+Regras: não encerre o ensaio sozinho; mantenha o personagem até eu escrever "pausa".`,
+tip:"Faça duas rodadas. Na segunda, peça um interlocutor mais emocional."},
+
+{id:"PES-05",t:"Reconhecimento específico",cat:"Pessoas",area:"Geral",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:10,
+w:"Escrever reconhecimento público ou individual que vá além do \"parabéns\".",
+p:`Atue como líder que reconhece de forma específica e sincera.
+Objetivo: escrever uma mensagem de reconhecimento para [PESSOA OU EQUIPE, PELO CARGO OU NOME DA EQUIPE].
+Contexto: o que fizeram: [ENTREGA]. Resultado gerado: [IMPACTO, EX.: REDUÇÃO DO PRAZO MÉDIO DE REGULAÇÃO]. Canal: [CANAL, EX.: TEAMS DA ÁREA, E-MAIL, REUNIÃO].
+Fonte: apenas as informações acima.
+Entrega: duas versões, uma de até 60 palavras e outra de até 120, citando o comportamento, o impacto e o valor da empresa que ele representa.
+Regras: sem exageros nem clichês; tom [TOM, EX.: CALOROSO E PROFISSIONAL].`,
+tip:"Reconhecimento específico é um dos usos mais simples e de maior efeito no clima."},
+
+{id:"PES-06",t:"Plano de integração 30-60-90",cat:"Pessoas",area:"RH",lv:["Coordenação","Gerência","Diretoria"],src:"Texto",min:45,
+w:"Receber um novo integrante da equipe com metas claras para os primeiros 90 dias.",
+p:`Atue como especialista em integração de novos colaboradores em seguradoras.
+Objetivo: montar o plano de 30, 60 e 90 dias para um novo [CARGO] na área de [ÁREA].
+Contexto: principais sistemas e processos que ele precisa dominar: [PROCESSOS, EX.: REGULAÇÃO, EMISSÃO, ATENDIMENTO A CORRETORES]. Pessoas-chave para conhecer: [ÁREAS OU CARGOS].
+Fonte: apenas as informações acima.
+Entrega: tabela por período com Objetivo, Atividades, Pessoas envolvidas e Como saberemos que deu certo. Inclua agenda da primeira semana e 3 conversas de acompanhamento com perguntas.
+Regras: incluir treinamentos obrigatórios de compliance, LGPD e segurança da informação na primeira semana.`,
+tip:"Guarde o resultado como modelo da área e ajuste só o cargo nas próximas contratações."},
+
+{id:"PES-07",t:"Matriz de delegação",cat:"Pessoas",area:"Geral",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:30,
+w:"Decidir o que manter, delegar, automatizar ou eliminar da sua agenda.",
+p:`Atue como consultor de produtividade de executivos.
+Objetivo: classificar minhas atividades recorrentes para liberar [HORAS] por semana.
+Contexto: sou [CARGO] e minha equipe tem [PERFIS DA EQUIPE, SEM NOMES]. Minhas prioridades do trimestre são [PRIORIDADES].
+Fonte: a lista de atividades abaixo, com o tempo semanal de cada uma.
+Entrega: tabela com Atividade, Horas por semana, Decisão (manter, delegar, apoiar com IA, eliminar), Para quem delegar e Primeiro passo. No final, total de horas liberadas e os riscos de cada delegação.
+Regras: atividades que envolvem decisão de alçada ou relação com regulador ficam comigo, salvo indicação contrária.
+
+Atividades:
+[COLE AQUI]`,
+tip:"Repita no início de cada trimestre e compare a evolução."},
+
+/* --- Estratégia e decisão --- */
+{id:"EST-01",t:"Pré-mortem de projeto",cat:"Estratégia",area:"Geral",lv:["Gerência","Diretoria","C-Level"],src:"Texto",min:45,
+w:"Imaginar que o projeto fracassou e descobrir os motivos antes que aconteçam.",
+p:`Atue como gestor de riscos de projetos em seguradoras.
+Objetivo: fazer um pré-mortem do projeto [NOME E DESCRIÇÃO CURTA].
+Contexto: prazo: [PRAZO]. Orçamento: [ORÇAMENTO]. Áreas envolvidas: [ÁREAS]. Premissas principais: [PREMISSAS].
+Fonte: apenas as informações acima.
+Entrega: imagine que estamos 12 meses à frente e o projeto fracassou.
+1. Liste 10 causas prováveis do fracasso, agrupadas em pessoas, processos, tecnologia, regulação e mercado.
+2. Para cada causa: probabilidade (alta, média, baixa), impacto e sinal de alerta precoce.
+3. As 5 ações preventivas de maior efeito.
+Regras: seja específico ao setor de seguros; evite riscos genéricos sem relação com as informações dadas.`,
+tip:"Leve o resultado para a reunião de kickoff e peça à equipe que acrescente o que faltou."},
+
+{id:"EST-02",t:"Matriz de decisão com critérios",cat:"Estratégia",area:"Geral",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:40,
+w:"Comparar alternativas de forma transparente, com pesos explícitos.",
+p:`Atue como consultor de estratégia.
+Objetivo: comparar as alternativas [ALTERNATIVA A], [ALTERNATIVA B] e [ALTERNATIVA C] para resolver [PROBLEMA].
+Contexto: os critérios que importam são [CRITÉRIOS, EX.: CUSTO, PRAZO, RISCO REGULATÓRIO, EXPERIÊNCIA DO CORRETOR] com pesos [PESOS EM %].
+Fonte: as informações que colei abaixo.
+Entrega: (1) tabela com nota de 1 a 5 por critério, justificativa curta e pontuação ponderada; (2) a alternativa vencedora e o quanto ela é sensível aos pesos; (3) o que mudaria a decisão; (4) informações que faltam para decidir com segurança.
+Regras: mostre o cálculo; não altere os pesos que defini; quando uma nota depender de suposição, sinalize.
+
+Informações:
+[COLE AQUI]`,
+tip:"Peça na sequência: \"refaça com o peso de risco regulatório dobrado\" para testar a robustez."},
+
+{id:"EST-03",t:"Advogado do diabo",cat:"Estratégia",area:"Geral",lv:["Gerência","Diretoria","C-Level"],src:"Texto",min:30,
+w:"Testar uma proposta antes de levá-la à diretoria ou ao conselho.",
+p:`Atue como o executivo mais cético da diretoria de uma seguradora.
+Objetivo: atacar a proposta abaixo para que eu a fortaleça antes de apresentar.
+Contexto: a proposta será avaliada por [QUEM DECIDE] e a principal preocupação deles é [PREOCUPAÇÃO].
+Fonte: a proposta colada abaixo.
+Entrega: (1) os 5 argumentos mais fortes contra a proposta; (2) as premissas mais frágeis; (3) os números que precisam de comprovação; (4) para cada argumento, como eu poderia responder ou ajustar a proposta.
+Regras: seja duro e específico; não elogie; não invente fatos sobre a empresa.
+
+Proposta:
+[COLE AQUI]`,
+tip:"Ótimo para C-Level: líderes seniores recebem pouco contraponto honesto da organização."},
+
+{id:"EST-04",t:"Cenários para o negócio",cat:"Estratégia",area:"Geral",lv:["Diretoria","C-Level"],src:"Web",min:60,
+w:"Explorar como mudanças de mercado, regulação ou economia afetam a área.",
+p:`Atue como planejador estratégico do setor de seguros no Brasil.
+Objetivo: construir três cenários para [TEMA, EX.: ALTA DA SELIC, NOVA REGRA DA SUSEP, CRESCIMENTO DO SEGURO PARAMÉTRICO] em um horizonte de [PRAZO].
+Contexto: nossa operação é concentrada em [RAMOS E CANAIS].
+Fonte: pesquise na web informações públicas recentes e cite fonte e data de cada dado usado.
+Entrega: tabela com cenários otimista, base e pessimista contendo premissas, sinais que indicariam cada cenário, impacto provável em prêmio, sinistralidade e despesas, e ações recomendadas. Depois, liste 3 ações que fazem sentido em qualquer cenário.
+Regras: separe fato de projeção; não apresente estimativas numéricas como certeza.`,
+tip:"Peça à área de Planejamento ou Atuarial para validar as premissas antes de circular."},
+
+{id:"EST-05",t:"Panorama público de mercado",cat:"Estratégia",area:"Comercial",lv:["Gerência","Diretoria","C-Level"],src:"Web",min:60,
+w:"Mapear tendências e movimentos públicos de concorrentes, insurtechs e parceiros.",
+p:`Atue como analista de inteligência de mercado do setor segurador.
+Objetivo: montar um panorama sobre [TEMA, EX.: SEGURO AUTO POR ASSINATURA, BANCASSURANCE, SEGURO RURAL].
+Contexto: vamos usar o panorama para [USO, EX.: DISCUTIR A ESTRATÉGIA DO PRÓXIMO ANO].
+Fonte: pesquise na web fontes públicas dos últimos 18 meses (associações do setor, órgão regulador, imprensa especializada, relatórios públicos de empresas) e cite link e data de cada informação.
+Entrega: (1) 5 tendências principais com evidência; (2) movimentos públicos relevantes de [EMPRESAS OU TIPO DE EMPRESA]; (3) oportunidades e ameaças para uma seguradora como a nossa; (4) perguntas para aprofundar internamente.
+Regras: não use informação sem fonte; se a fonte for opinativa, indique.`,
+tip:"Sempre abra as fontes. Números de mercado mudam e a IA pode misturar anos diferentes."},
+
+{id:"EST-06",t:"Desdobrar estratégia em OKRs",cat:"Estratégia",area:"Geral",lv:["Gerência","Diretoria","C-Level"],src:"Texto",min:60,
+w:"Transformar a estratégia da empresa em objetivos e resultados-chave da área.",
+p:`Atue como especialista em gestão por OKRs.
+Objetivo: desdobrar as prioridades estratégicas abaixo em OKRs para a área de [ÁREA] no [PERÍODO].
+Contexto: a área é responsável por [ESCOPO]. Indicadores que já acompanhamos: [INDICADORES, EX.: SINISTRALIDADE, PRAZO MÉDIO DE REGULAÇÃO, NPS DE CORRETORES].
+Fonte: prioridades coladas abaixo.
+Entrega: 3 objetivos qualitativos e, para cada um, 3 resultados-chave mensuráveis com linha de base, meta e fonte do dado. Indique a qual prioridade da empresa cada objetivo se conecta.
+Regras: resultados-chave devem medir resultado, não atividade; marque com [DEFINIR] metas que dependem de dado que não forneci.
+
+Prioridades:
+[COLE AQUI]`,
+tip:"Peça depois: \"Quais destes OKRs têm risco de gerar comportamento indesejado?\"."},
+
+{id:"EST-07",t:"Business case de iniciativa",cat:"Estratégia",area:"Financeiro",lv:["Gerência","Diretoria","C-Level"],src:"Texto",min:90,
+w:"Estruturar a justificativa de um investimento para aprovação.",
+p:`Atue como analista financeiro de uma seguradora.
+Objetivo: estruturar o business case de [INICIATIVA].
+Contexto: problema que resolve: [PROBLEMA]. Investimento estimado: [VALOR]. Benefícios esperados: [BENEFÍCIOS]. Aprovação por: [ALÇADA].
+Fonte: dados colados abaixo.
+Entrega: (1) resumo executivo de uma página; (2) problema e oportunidade; (3) alternativas consideradas, incluindo não fazer nada; (4) premissas de custo e benefício em tabela; (5) retorno simples e prazo de retorno, mostrando a conta; (6) riscos e mitigação; (7) cronograma macro; (8) indicadores de sucesso.
+Regras: use apenas os números fornecidos; sinalize com [PREMISSA] qualquer número estimado por você.
+
+Dados:
+[COLE AQUI]`,
+tip:"Envie o resultado para a Controladoria revisar as premissas financeiras."},
+
+/* --- Indicadores e análise --- */
+{id:"IND-01",t:"Leitura de planilha de indicadores",cat:"Indicadores",area:"Sinistros",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Arquivo",min:60,
+w:"Entender rapidamente o que mudou nos indicadores e o que perguntar à equipe.",
+p:`Atue como analista sênior de indicadores de seguros.
+Objetivo: analisar a planilha anexada com [INDICADORES, EX.: SINISTRALIDADE, FREQUÊNCIA, CUSTO MÉDIO POR RAMO] de [PERÍODO].
+Contexto: vou discutir esses números com [PÚBLICO] e preciso entender o que mudou e por quê.
+Fonte: use apenas a planilha anexada.
+Entrega:
+1. As 5 variações mais relevantes em relação ao período anterior, com valores e variação percentual.
+2. Linhas ou segmentos que fogem do padrão.
+3. Hipóteses de causa para cada variação, marcadas como hipótese.
+4. As 5 perguntas que devo fazer à equipe.
+5. Sugestão de um gráfico que resuma a situação.
+Regras: mostre como calculou cada variação; não extrapole para dados que não estão na planilha; se houver células vazias ou inconsistentes, aponte.`,
+tip:"Exporte do sistema apenas dados agregados, sem identificação de segurados. Confira 2 ou 3 números na planilha original."},
+
+{id:"IND-02",t:"Narrativa de desvio de orçamento",cat:"Indicadores",area:"Financeiro",lv:["Gerência","Diretoria","C-Level"],src:"Arquivo",min:45,
+w:"Explicar o realizado contra o orçado de forma clara para a diretoria.",
+p:`Atue como controller de uma seguradora.
+Objetivo: escrever a explicação do desvio entre orçado e realizado de [ÁREA OU LINHA] em [PERÍODO].
+Contexto: a explicação vai para [PÚBLICO]. Causas que já conhecemos: [CAUSAS CONHECIDAS].
+Fonte: a planilha anexada.
+Entrega: (1) uma frase com o desvio total em valor e percentual; (2) decomposição dos 3 a 5 maiores desvios, cada um com valor, causa e se é pontual ou recorrente; (3) ações corretivas propostas; (4) projeção qualitativa para o próximo período.
+Regras: confirme cada valor na planilha e indique a célula ou linha de origem; não crie causas além das conhecidas, mas sugira hipóteses separadamente.`,
+tip:"Se o Copilot não conseguir ler a planilha inteira, remova abas desnecessárias e envie só o resumo."},
+
+{id:"IND-03",t:"Painel de indicadores da área",cat:"Indicadores",area:"Geral",lv:["Coordenação","Gerência","Diretoria"],src:"Texto",min:60,
+w:"Definir quais indicadores acompanhar e como apresentá-los.",
+p:`Atue como especialista em gestão de desempenho no setor de seguros.
+Objetivo: propor um painel de indicadores para a área de [ÁREA, EX.: REGULAÇÃO DE SINISTROS AUTO].
+Contexto: a área é responsável por [ESCOPO] e o principal objetivo do ano é [OBJETIVO].
+Fonte: os dados que temos disponíveis hoje são: [DADOS DISPONÍVEIS].
+Entrega: tabela com até 10 indicadores contendo Nome, Fórmula, Frequência, Fonte do dado, Meta sugerida (ou [DEFINIR]) e Tipo (resultado ou processo). Depois, indique os 3 que devem aparecer no topo do painel e por quê, e um indicador de experiência do cliente ou do corretor.
+Regras: inclua pelo menos um indicador de qualidade e um de prazo; evite indicadores que não temos como medir com os dados disponíveis.`,
+tip:"Leve a proposta para a área de Dados ou BI validar a viabilidade de cada fórmula."},
+
+{id:"IND-04",t:"Temas em comentários de pesquisa",cat:"Indicadores",area:"Atendimento",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Arquivo",min:90,
+w:"Classificar comentários de NPS, pesquisa interna ou reclamações por tema.",
+p:`Atue como analista de experiência do cliente.
+Objetivo: classificar os comentários do arquivo anexado da pesquisa [NOME DA PESQUISA] de [PERÍODO].
+Contexto: queremos priorizar ações de melhoria para [JORNADA, EX.: ABERTURA DE SINISTRO, RENOVAÇÃO].
+Fonte: apenas o arquivo anexado (comentários já anonimizados).
+Entrega: (1) tabela de temas com número de menções, percentual e sentimento predominante; (2) 2 comentários representativos por tema, reescritos sem identificação; (3) os 3 temas com maior potencial de impacto na nota; (4) ações sugeridas por tema, separando ganhos rápidos de estruturais.
+Regras: contagens devem vir do arquivo; se o volume for grande demais para ler por completo, avise e indique o que foi analisado.`,
+tip:"Antes de anexar, remova nome, telefone, e-mail, CPF e número de apólice de todos os comentários."},
+
+{id:"IND-05",t:"Ajuda com fórmulas no Excel",cat:"Indicadores",area:"Geral",lv:["Coordenação","Gerência"],src:"Texto",min:20,
+w:"Criar ou entender uma fórmula sem depender de outra pessoa.",
+p:`Atue como especialista em Excel para áreas de negócio.
+Objetivo: criar uma fórmula que [O QUE A FÓRMULA DEVE FAZER, EX.: CALCULE A SINISTRALIDADE POR RAMO A PARTIR DE PRÊMIO GANHO E SINISTRO RETIDO].
+Contexto: minha planilha tem as colunas [LISTA DE COLUNAS COM LETRA E NOME]. Os dados vão da linha [LINHA INICIAL] até [LINHA FINAL]. Uso Excel em [IDIOMA DO EXCEL, EX.: PORTUGUÊS].
+Fonte: estrutura descrita acima.
+Entrega: (1) a fórmula pronta para colar, com os nomes de função no idioma informado; (2) explicação de cada parte; (3) como tratar divisão por zero e células vazias; (4) uma forma de conferir se o resultado está certo.
+Regras: prefira funções disponíveis no Microsoft 365; avise se a fórmula exigir uma versão específica.`,
+tip:"Funções em português usam ponto e vírgula como separador. Teste em uma cópia da planilha."},
+
+/* --- Riscos e compliance --- */
+{id:"RIS-01",t:"Mapa de riscos de um processo",cat:"Riscos e compliance",area:"Compliance",lv:["Coordenação","Gerência","Diretoria"],src:"Texto",min:60,
+w:"Identificar riscos operacionais e controles de um processo da área.",
+p:`Atue como especialista em riscos operacionais e controles internos de seguradoras.
+Objetivo: mapear os riscos do processo [PROCESSO, EX.: PAGAMENTO DE INDENIZAÇÕES].
+Contexto: etapas do processo: [ETAPAS]. Controles que já existem: [CONTROLES]. Incidentes recentes: [INCIDENTES, SEM DADOS PESSOAIS].
+Fonte: apenas as informações acima.
+Entrega: tabela com Etapa, Risco, Causa, Consequência, Probabilidade (1 a 5), Impacto (1 a 5), Nota (probabilidade × impacto), Controle existente e Controle sugerido. Ordene pela nota. Inclua riscos de fraude, de conduta e de proteção de dados.
+Regras: use linguagem de controles internos; não classifique como "baixo" um risco sem controle descrito.`,
+tip:"Compare com a matriz oficial da área de Riscos. O resultado é um insumo, não substitui a avaliação formal."},
+
+{id:"RIS-02",t:"Checklist de privacidade para iniciativa nova",cat:"Riscos e compliance",area:"Compliance",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:30,
+w:"Levantar as perguntas de LGPD antes de lançar produto, campanha ou processo.",
+p:`Atue como consultor de privacidade e proteção de dados no setor de seguros.
+Objetivo: montar um checklist de LGPD para a iniciativa [DESCRIÇÃO DA INICIATIVA].
+Contexto: dados que pretendemos tratar: [TIPOS DE DADOS, EX.: CADASTRAIS, DE SAÚDE, DE LOCALIZAÇÃO]. Parceiros envolvidos: [PARCEIROS].
+Fonte: conhecimento geral sobre a LGPD.
+Entrega: checklist em tabela com Pergunta, Por que importa e Quem deve responder (Encarregado de dados, Jurídico, TI, Negócio). Cubra finalidade, base legal, dados sensíveis, compartilhamento, retenção, direitos do titular e segurança. Ao final, os 3 pontos de maior risco para esta iniciativa.
+Regras: não emita parecer jurídico; indique que a validação é do Encarregado de dados e do Jurídico.`,
+tip:"Envie o checklist preenchido ao Encarregado de dados (DPO) da empresa logo no início do projeto."},
+
+{id:"RIS-03",t:"Resumo de norma e impactos na área",cat:"Riscos e compliance",area:"Jurídico",lv:["Gerência","Diretoria","C-Level"],src:"Arquivo",min:90,
+w:"Entender uma resolução, circular ou política anexada e o que muda na operação.",
+p:`Atue como analista de compliance regulatório de seguros.
+Objetivo: resumir a norma anexada e identificar impactos para a área de [ÁREA].
+Contexto: nossa área atua em [ATIVIDADES PRINCIPAIS].
+Fonte: use apenas o arquivo anexado. Não use outras normas sem indicar claramente.
+Entrega: (1) o que a norma trata, em 5 linhas; (2) principais obrigações, cada uma com artigo de referência; (3) prazos de adequação; (4) tabela de impactos com Obrigação, Processo afetado, O que muda e Responsável provável; (5) dúvidas para levar ao Jurídico.
+Regras: cite o artigo de cada obrigação; não interprete além do texto; marque como [VERIFICAR] qualquer ponto ambíguo.`,
+tip:"Baixe a norma do site oficial e anexe o PDF. A leitura final é sempre do Jurídico e Compliance."},
+
+{id:"RIS-04",t:"Plano de resposta a crise de reputação",cat:"Riscos e compliance",area:"Geral",lv:["Diretoria","C-Level"],src:"Texto",min:60,
+w:"Organizar as primeiras horas de uma crise: post viral, falha de sistema, evento catastrófico.",
+p:`Atue como consultor de gestão de crises para seguradoras.
+Objetivo: estruturar a resposta inicial para [SITUAÇÃO, EX.: INSTABILIDADE NO APP DURANTE ENCHENTE, POST VIRAL DE NEGATIVA DE SINISTRO].
+Contexto: o que sabemos até agora: [FATOS CONFIRMADOS]. O que ainda não sabemos: [INCERTEZAS]. Públicos afetados: [PÚBLICOS].
+Fonte: apenas as informações acima.
+Entrega: (1) plano das primeiras 24 horas em etapas; (2) quem decide o quê; (3) mensagem inicial de holding para segurados e corretores (até 80 palavras); (4) mensagem interna para atendimento; (5) perguntas que a imprensa fará; (6) o que não dizer.
+Regras: apenas fatos confirmados nas mensagens; incluir canal de atendimento; marcar [VALIDAR COM JURÍDICO E COMUNICAÇÃO].`,
+tip:"Use para simulação de crise com a diretoria antes que ela aconteça."},
+
+{id:"RIS-05",t:"Revisão de política interna",cat:"Riscos e compliance",area:"Compliance",lv:["Coordenação","Gerência","Diretoria"],src:"Arquivo",min:60,
+w:"Encontrar lacunas, ambiguidades e conflitos em uma política ou procedimento.",
+p:`Atue como auditor interno experiente.
+Objetivo: revisar a política anexada sobre [TEMA DA POLÍTICA].
+Contexto: a política será usada por [PÚBLICO] e precisa ser clara para quem não é especialista.
+Fonte: apenas o arquivo anexado.
+Entrega: tabela com Trecho, Problema (ambíguo, incompleto, conflitante, inaplicável), Risco gerado e Sugestão de redação. Depois, aponte papéis e responsabilidades que não estão definidos e exceções sem regra de aprovação.
+Regras: cite o item ou a seção de cada trecho; não altere o objetivo da política.`,
+tip:"Peça na sequência um resumo de uma página da política para divulgação à equipe."},
+
+/* --- Cliente, sinistro e corretor --- */
+{id:"CLI-01",t:"Jornada do segurado no sinistro",cat:"Cliente e corretor",area:"Sinistros",lv:["Coordenação","Gerência","Diretoria"],src:"Texto",min:60,
+w:"Mapear a jornada do aviso ao pagamento e encontrar pontos de atrito.",
+p:`Atue como especialista em experiência do cliente no setor de seguros.
+Objetivo: mapear a jornada do segurado em um sinistro de [RAMO, EX.: AUTO, RESIDENCIAL, VIDA].
+Contexto: etapas atuais: [ETAPAS DO PROCESSO]. Principais reclamações: [RECLAMAÇÕES MAIS FREQUENTES]. Prazos médios: [PRAZOS].
+Fonte: apenas as informações acima.
+Entrega: tabela com Etapa, O que o segurado faz, O que ele sente, Ponto de atrito, Oportunidade de melhoria e Indicador para medir. Depois, os 3 momentos da verdade e 5 ações de melhoria, separando o que depende de tecnologia do que depende só de processo ou comunicação.
+Regras: escreva do ponto de vista do segurado; seja específico ao ramo informado.`,
+tip:"Valide o mapa com quem atende o segurado na linha de frente."},
+
+{id:"CLI-02",t:"Comunicação clara de negativa ou pendência",cat:"Cliente e corretor",area:"Sinistros",lv:["Coordenação","Gerência"],src:"Texto",min:20,
+w:"Criar modelo de carta ou roteiro com linguagem simples e respeitosa.",
+p:`Atue como especialista em linguagem simples aplicada a seguros.
+Objetivo: criar um modelo de [CARTA OU ROTEIRO TELEFÔNICO] para comunicar [SITUAÇÃO, EX.: NEGATIVA POR RISCO EXCLUÍDO, PENDÊNCIA DE DOCUMENTOS].
+Contexto: o motivo técnico é [MOTIVO, COM A CLÁUSULA DAS CONDIÇÕES GERAIS]. O segurado pode [DIREITOS OU PRÓXIMOS PASSOS, EX.: APRESENTAR RECURSO EM X DIAS].
+Fonte: apenas as informações acima.
+Entrega: modelo com campos variáveis entre colchetes, explicando o motivo em linguagem simples, citando a cláusula, informando os próximos passos e os canais de atendimento e ouvidoria. Depois, uma versão do mesmo texto em até 60 palavras para mensagem digital.
+Regras: empatia sem prometer revisão da decisão; nada de termos técnicos sem explicação; não inclua dados reais de nenhum segurado.`,
+tip:"Modelos para o segurado precisam passar pela aprovação de Jurídico e Ouvidoria antes do uso."},
+
+{id:"CLI-03",t:"Análise de reclamações por causa raiz",cat:"Cliente e corretor",area:"Atendimento",lv:["Coordenação","Gerência","Diretoria"],src:"Arquivo",min:90,
+w:"Transformar uma base anonimizada de reclamações em prioridades de correção.",
+p:`Atue como analista de qualidade e ouvidoria.
+Objetivo: identificar as causas raiz das reclamações do arquivo anexado de [PERÍODO].
+Contexto: queremos reduzir reclamações em [CANAL, EX.: OUVIDORIA, CONSUMIDOR.GOV, SAC] em [META].
+Fonte: apenas o arquivo anexado, já anonimizado.
+Entrega: (1) agrupamento por motivo com quantidade e percentual; (2) para os 3 maiores motivos, análise de causa raiz com a técnica dos 5 porquês, deixando claro o que é hipótese; (3) área responsável provável; (4) ações corretivas e preventivas; (5) indicador para acompanhar cada ação.
+Regras: contagens vêm do arquivo; não cite nenhum dado identificável.`,
+tip:"Confirme as hipóteses de causa com as áreas antes de definir as ações."},
+
+{id:"CLI-04",t:"Plano de relacionamento com corretores",cat:"Cliente e corretor",area:"Comercial",lv:["Gerência","Diretoria"],src:"Texto",min:60,
+w:"Segmentar a base de corretores e definir uma rotina de relacionamento.",
+p:`Atue como diretor comercial experiente em distribuição via corretores.
+Objetivo: montar um plano de relacionamento para nossa carteira de [NÚMERO] corretores na região [REGIÃO].
+Contexto: perfil da carteira: [DESCRIÇÃO AGREGADA, EX.: 20% DOS CORRETORES GERAM 75% DO PRÊMIO]. Equipe comercial disponível: [EQUIPE]. Objetivo do ano: [OBJETIVO].
+Fonte: apenas as informações acima.
+Entrega: (1) proposta de segmentação em 3 ou 4 grupos com critérios; (2) para cada grupo: frequência de contato, canal, conteúdo e responsável; (3) calendário trimestral de ações; (4) 5 indicadores de relacionamento; (5) riscos de concentração e como mitigar.
+Regras: plano viável com a equipe informada; mostre a conta de capacidade (contatos por mês × pessoas).`,
+tip:"Use dados agregados por faixa. Não cole a lista nominal de corretores com produção."},
+
+{id:"CLI-05",t:"Estrutura de apresentação de produto",cat:"Cliente e corretor",area:"Comercial",lv:["Coordenação","Gerência","Diretoria"],src:"Arquivo",min:60,
+w:"Montar o roteiro de slides para apresentar um produto a corretores.",
+p:`Atue como especialista em treinamento comercial de seguros.
+Objetivo: estruturar uma apresentação de [NÚMERO] slides sobre o produto [PRODUTO] para corretores.
+Contexto: o corretor precisa sair sabendo [O QUE ELE PRECISA SABER, EX.: PARA QUEM VENDER, DIFERENCIAIS, PROCESSO DE COTAÇÃO].
+Fonte: o material técnico anexado (condições gerais ou ficha do produto).
+Entrega: para cada slide: título em forma de mensagem, 3 tópicos de conteúdo, sugestão de visual e nota do apresentador. Inclua um slide de perguntas frequentes e um de objeções comuns com respostas.
+Regras: toda cobertura, exclusão e limite deve vir do material anexado, com a cláusula de referência; não use termos comparativos sobre concorrentes.`,
+tip:"Cole o roteiro no PowerPoint ou, se houver painel do Copilot no PowerPoint, peça para ele criar os slides a partir do roteiro."},
+
+{id:"CLI-06",t:"Perguntas frequentes a partir das condições gerais",cat:"Cliente e corretor",area:"Subscrição",lv:["Coordenação","Gerência"],src:"Arquivo",min:90,
+w:"Gerar FAQ para atendimento ou corretores com base no documento oficial.",
+p:`Atue como especialista em produto de seguros e linguagem simples.
+Objetivo: criar uma lista de perguntas frequentes sobre o produto [PRODUTO] para [PÚBLICO, EX.: CENTRAL DE ATENDIMENTO, CORRETORES].
+Contexto: as dúvidas mais comuns hoje são sobre [TEMAS].
+Fonte: use apenas as condições gerais anexadas.
+Entrega: 15 perguntas e respostas agrupadas por tema (contratação, coberturas, exclusões, sinistro, cancelamento). Cada resposta com até 60 palavras e a cláusula de referência entre parênteses. Ao final, liste os pontos em que o texto das condições é ambíguo.
+Regras: se a resposta não estiver no documento, escreva "não consta nas condições gerais, verificar com a área de Produto".`,
+tip:"Excelente fonte de conhecimento para um agente de apoio à equipe interna, depois de revisada pela área de Produto."},
+
+{id:"CLI-07",t:"Preparação de renovação de grande conta",cat:"Cliente e corretor",area:"Subscrição",lv:["Gerência","Diretoria","C-Level"],src:"Texto",min:45,
+w:"Planejar a negociação de renovação de um cliente corporativo relevante.",
+p:`Atue como subscritor sênior e negociador de grandes riscos.
+Objetivo: preparar a estratégia de renovação de um cliente do segmento [SEGMENTO] com prêmio aproximado de [FAIXA DE PRÊMIO].
+Contexto: histórico agregado: [SINISTRALIDADE DOS ÚLTIMOS ANOS, ALTERAÇÕES DE RISCO]. Posição desejada: [REAJUSTE OU AJUSTE DE CONDIÇÕES]. Concorrência provável: [CENÁRIO].
+Fonte: apenas as informações acima, sem nome do cliente.
+Entrega: (1) nossos argumentos técnicos em ordem de força; (2) objeções prováveis do corretor e do cliente com respostas; (3) concessões possíveis e o que pedir em troca de cada uma; (4) nosso limite e alternativas caso não haja acordo; (5) roteiro da reunião.
+Regras: não recomende condições fora das alçadas de subscrição; sinalize premissas.`,
+tip:"Use um codinome para o cliente. Confira alçadas e política de subscrição antes da reunião."},
+
+/* --- Produtividade pessoal --- */
+{id:"PRO-01",t:"Prioridades da semana",cat:"Produtividade",area:"Geral",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:20,
+w:"Organizar a semana pela matriz urgente e importante.",
+p:`Atue como assessor executivo focado em prioridades.
+Objetivo: organizar minha semana de [DATA INICIAL] a [DATA FINAL].
+Contexto: minhas prioridades do trimestre são [PRIORIDADES]. Compromissos fixos: [REUNIÕES E PRAZOS]. Tenho cerca de [HORAS] horas livres.
+Fonte: a lista de pendências abaixo.
+Entrega: (1) matriz em 4 quadrantes (urgente e importante, importante, urgente, nem um nem outro); (2) as 3 entregas que tornam a semana bem-sucedida; (3) proposta de blocos de tempo por dia; (4) o que delegar e o que recusar, com uma frase sugerida para recusar.
+Regras: não ultrapasse as horas livres informadas; se não couber, diga o que sai.
+
+Pendências:
+[COLE AQUI]`,
+tip:"Ritual de segunda-feira de manhã: 10 minutos com este prompt."},
+
+{id:"PRO-02",t:"De ideia solta a plano de projeto",cat:"Produtividade",area:"Geral",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:60,
+w:"Estruturar uma ideia em escopo, etapas, riscos e próximos passos.",
+p:`Atue como gerente de projetos experiente em seguradoras.
+Objetivo: transformar a ideia abaixo em um plano de projeto inicial.
+Contexto: patrocinador: [CARGO]. Prazo desejado: [PRAZO]. Recursos disponíveis: [RECURSOS].
+Fonte: a ideia descrita abaixo.
+Antes de responder, faça até 5 perguntas para esclarecer o que estiver vago. Depois das minhas respostas, entregue:
+1. Objetivo e resultado esperado.
+2. Escopo: o que está dentro e fora.
+3. Etapas com duração estimada e entregáveis.
+4. Áreas envolvidas e papel de cada uma.
+5. Principais riscos.
+6. Próximos 3 passos para a semana que vem.
+Regras: sinalize com [ESTIMATIVA] durações que você supôs.
+
+Ideia:
+[DESCREVA SUA IDEIA]`,
+tip:"As perguntas iniciais são a parte mais valiosa. Responda com calma."},
+
+{id:"PRO-03",t:"Aprender um tema rapidamente",cat:"Produtividade",area:"Geral",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Web",min:60,
+w:"Ganhar repertório sobre um tema novo antes de uma decisão ou reunião.",
+p:`Atue como tutor paciente e exigente.
+Objetivo: me ensinar o essencial sobre [TEMA, EX.: RESSEGURO NÃO PROPORCIONAL, OPEN INSURANCE, SEGURO PARAMÉTRICO] em [TEMPO] minutos.
+Contexto: meu nível atual é [INICIANTE, INTERMEDIÁRIO] e preciso do tema para [APLICAÇÃO].
+Fonte: conhecimento geral e, quando citar dados ou regras atuais, pesquise na web e indique a fonte.
+Entrega: (1) explicação em camadas, do básico ao aplicado; (2) 5 termos-chave com definição; (3) um exemplo numérico simples; (4) depois, faça-me 3 perguntas, uma de cada vez, e corrija minhas respostas.
+Regras: frases curtas; indique o que costuma ser mal compreendido.`,
+tip:"A etapa de perguntas fixa o aprendizado. Não pule."},
+
+{id:"PRO-04",t:"Narrativa de apresentação",cat:"Produtividade",area:"Geral",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:60,
+w:"Organizar uma apresentação com a mensagem principal primeiro, em estrutura de pirâmide.",
+p:`Atue como consultor especialista em comunicação executiva e no princípio da pirâmide.
+Objetivo: organizar a narrativa de uma apresentação sobre [TEMA] para [PÚBLICO].
+Contexto: quero que o público [DECISÃO OU AÇÃO]. Tenho [TEMPO] minutos.
+Fonte: meus pontos e dados colados abaixo.
+Entrega: (1) mensagem principal em uma frase; (2) 3 argumentos que a sustentam, cada um com seus dados; (3) sequência de slides com título-mensagem de cada um; (4) o slide que deve ser cortado se faltar tempo; (5) a pergunta mais provável do público ao final.
+Regras: um slide, uma ideia; títulos em forma de frase completa; use apenas os dados fornecidos.
+
+Pontos e dados:
+[COLE AQUI]`,
+tip:"Escreva os títulos de todos os slides antes de abrir o PowerPoint."},
+
+{id:"PRO-05",t:"Melhorar meu próprio prompt",cat:"Produtividade",area:"Geral",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:10,
+w:"Pedir ao Copilot que aperfeiçoe um prompt antes de usá-lo.",
+p:`Atue como especialista em escrever instruções para assistentes de IA.
+Objetivo: melhorar o prompt abaixo, que vou usar no Copilot Chat.
+Contexto: meu objetivo real com ele é [O QUE QUERO OBTER].
+Fonte: o prompt colado abaixo.
+Entrega: (1) avalie o prompt nos critérios Papel, Objetivo, Contexto, Fonte, Expectativas e Restrições, com nota de 0 a 2 cada; (2) faça até 3 perguntas sobre o que estiver faltando; (3) depois das minhas respostas, entregue a versão melhorada com os campos variáveis entre colchetes, pronta para reutilizar.
+Regras: mantenha o prompt final com menos de 1.500 caracteres.
+
+Meu prompt:
+[COLE SEU PROMPT]`,
+tip:"Use junto com o construtor da seção Método."},
+
+{id:"PRO-06",t:"Revisão crítica antes de enviar",cat:"Produtividade",area:"Geral",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Arquivo",min:30,
+w:"Fazer o último controle de qualidade de um documento importante.",
+p:`Atue como revisor sênior que nunca deixa passar um erro.
+Objetivo: revisar o documento anexado antes de eu enviá-lo para [DESTINATÁRIO].
+Contexto: o documento é [TIPO, EX.: PROPOSTA, RELATÓRIO, MEMORANDO] e o objetivo é [OBJETIVO].
+Fonte: apenas o arquivo anexado.
+Entrega: tabela com Local (página ou seção), Problema e Sugestão, cobrindo: (1) números que não batem entre si; (2) afirmações sem dado de apoio; (3) incoerências de datas, nomes e termos; (4) trechos ambíguos; (5) erros de português. Depois, uma nota geral de 1 a 10 e as 3 correções obrigatórias.
+Regras: não reescreva o documento inteiro; aponte, não invente.`,
+tip:"Mesmo com esta revisão, confira você mesmo os números que vão para fora da empresa."},
+
+{id:"PRO-07",t:"Triagem de e-mails acumulados",cat:"Produtividade",area:"Geral",lv:["Coordenação","Gerência","Diretoria","C-Level"],src:"Texto",min:30,
+w:"Organizar vários e-mails colados em ações, decisões e respostas rápidas.",
+p:`Atue como assessor executivo.
+Objetivo: triar os e-mails que colei abaixo, recebidos durante [PERÍODO, EX.: MINHAS FÉRIAS].
+Contexto: sou [CARGO] e minhas prioridades são [PRIORIDADES].
+Fonte: apenas os e-mails colados (assinaturas e dados pessoais removidos).
+Entrega: tabela com Remetente (cargo ou área), Assunto, O que pedem, Prazo, Prioridade (alta, média, baixa) e Ação sugerida (responder, delegar, arquivar). Depois, rascunhos de resposta de até 3 linhas para os itens de prioridade alta.
+Regras: não invente prazos; se o e-mail não tiver pedido claro, classifique como "informativo".
+
+E-mails:
+[COLE AQUI]`,
+tip:"Com o Copilot Chat, a caixa de entrada não é lida automaticamente. Copie os e-mails relevantes, ou use o painel do Copilot no Outlook se ele estiver disponível na sua empresa."}
+];
+
+/* ============ Agentes ============ */
+const AG=[
+{ini:"RE",n:"Revisor de Comunicação Executiva",d:"Revisa e-mails, memorandos e comunicados com o padrão de escrita da empresa.",lv:"Todos os níveis",
+ins:`Você é o Revisor de Comunicação Executiva de uma seguradora. Seu papel é ajudar líderes a enviar textos claros, objetivos e alinhados ao tom institucional.
+
+Em toda conversa:
+1. Se o usuário não informar, pergunte: quem é o destinatário, qual ação se espera dele e qual o tom desejado.
+2. Avalie o texto em clareza, objetividade e tom, com nota de 1 a 10 e uma frase de justificativa para cada critério.
+3. Aponte os 3 principais problemas.
+4. Entregue a versão revisada, mantendo fatos, números e a voz do autor.
+5. Liste as alterações feitas e o motivo.
+
+Padrão de escrita:
+- Mensagem principal no primeiro parágrafo.
+- Frases curtas, voz ativa, sem jargão desnecessário.
+- Termos técnicos de seguros (sinistralidade, regulação, subscrição) são aceitos para público interno; para segurados, explique em linguagem simples.
+- Tratamento formal e cordial.
+
+Regras:
+- Nunca acrescente fatos, números ou compromissos que não estejam no texto original.
+- Se o texto contiver dados pessoais (CPF, número de apólice, dados de saúde, endereço), alerte o usuário e peça que remova antes de continuar.
+- Textos destinados a segurados, imprensa ou regulador: lembre que precisam de aprovação das áreas responsáveis.
+- Responda sempre em português do Brasil.`,
+st:["Revise este e-mail antes de eu enviar para a diretoria","Deixe este comunicado mais curto e direto","Ajuste o tom deste texto para o conselho","Transforme estes tópicos em um e-mail formal"],
+kn:"Opcional: manual de redação ou guia de tom de voz da empresa, se houver."},
+
+{ini:"AT",n:"Secretário de Reuniões",d:"Monta pautas, atas e planos de ação a partir de anotações ou transcrições.",lv:"Todos os níveis",
+ins:`Você é o Secretário de Reuniões da liderança de uma seguradora. Você prepara pautas antes das reuniões e atas depois delas.
+
+Identifique o que o usuário precisa:
+A) PAUTA: pergunte duração, participantes (por cargo), objetivo e tópicos. Entregue tabela com Tempo, Tópico, Responsável e Resultado esperado (informar, discutir, decidir), mais um texto de convite de 3 linhas. Se os tópicos não couberem no tempo, diga o que deve sair.
+B) ATA: a partir das anotações ou da transcrição colada, entregue:
+   1. Resumo em 3 linhas.
+   2. Decisões tomadas, numeradas.
+   3. Tabela de ações: Ação, Responsável, Prazo, Status.
+   4. Pontos em aberto.
+C) FOLLOW-UP: a partir de uma ata, redija e-mail curto de acompanhamento cobrando as ações vencidas ou próximas do prazo.
+
+Regras:
+- Nunca atribua falas ou decisões que não estejam no material fornecido.
+- Quando faltar responsável ou prazo, escreva "a definir".
+- Linguagem impessoal e objetiva.
+- Se a transcrição contiver dados pessoais de clientes ou informações de saúde, alerte e não os reproduza na ata.
+- Ao final de cada ata, lembre o usuário de revisar nomes e decisões antes de enviar.
+- Responda sempre em português do Brasil.`,
+st:["Monte a pauta da minha reunião de 45 minutos","Transforme estas anotações em ata","Crie o e-mail de follow-up desta ata","Quais decisões desta transcrição estão sem responsável?"],
+kn:"Opcional: modelo de ata padrão da empresa."},
+
+{ini:"CO",n:"Coach de Liderança",d:"Ajuda a preparar 1:1, feedbacks, conversas difíceis e planos de desenvolvimento.",lv:"Coordenação, Gerência e Diretoria",
+ins:`Você é um coach executivo experiente que apoia líderes de uma seguradora em situações de gestão de pessoas.
+
+Abordagem:
+- Antes de recomendar, faça perguntas para entender a situação: objetivo do líder, fatos observados, histórico e o que já foi tentado. Faça no máximo 4 perguntas por vez.
+- Use modelos consagrados quando úteis: Situação-Comportamento-Impacto para feedback; GROW para conversas de desenvolvimento; 70-20-10 para planos de desenvolvimento.
+- Ofereça roteiros práticos com frases sugeridas, e também frases a evitar.
+- Quando o usuário pedir ensaio, assuma o papel do interlocutor, responda uma fala por vez e só saia do papel quando o usuário escrever "pausa". Então dê feedback objetivo.
+
+Regras:
+- Peça que o usuário use cargo ou iniciais, nunca nome completo, e que não compartilhe dados de saúde ou detalhes da vida pessoal do colaborador.
+- Não faça diagnósticos psicológicos nem recomendações médicas.
+- Em temas de assédio, discriminação, desligamento ou questões trabalhistas, oriente expressamente a envolver RH e Jurídico, e não dê orientação definitiva.
+- Lembre que decisões sobre pessoas são do líder e devem seguir as políticas de RH.
+- Tom respeitoso, direto e encorajador.
+- Responda sempre em português do Brasil.`,
+st:["Prepare minha próxima conversa individual","Quero dar um feedback de ajuste","Vamos ensaiar uma conversa difícil","Monte um PDI de 6 meses"],
+kn:"Opcional: modelo de competências e política de avaliação de desempenho da empresa."},
+
+{ini:"AN",n:"Analista de Indicadores",d:"Lê planilhas agregadas de sinistralidade, produção ou atendimento e aponta variações e perguntas.",lv:"Gerência, Diretoria e C-Level",
+ins:`Você é um analista sênior de indicadores de uma seguradora. Você ajuda líderes a entender planilhas e relatórios de desempenho e a preparar discussões com suas equipes.
+
+Quando receber uma planilha ou tabela:
+1. Descreva em 2 linhas o que o arquivo contém (períodos, indicadores, segmentos).
+2. Liste as 5 variações mais relevantes em relação ao período anterior ou à meta, com valores, variação percentual e a linha ou célula de origem.
+3. Aponte segmentos ou linhas fora do padrão.
+4. Proponha hipóteses de causa, sempre marcadas como "Hipótese".
+5. Sugira 5 perguntas para o líder fazer à equipe.
+6. Sugira um gráfico adequado e o que ele deve mostrar.
+
+Conhecimento do domínio:
+- Sinistralidade = sinistros retidos / prêmios ganhos.
+- Índice combinado considera sinistralidade, despesas de comercialização e despesas administrativas sobre prêmio ganho.
+- Diferencie frequência (quantidade de sinistros por exposição) de severidade (custo médio).
+- Considere sazonalidade e eventos climáticos quando relevante.
+
+Regras:
+- Use apenas os dados fornecidos e mostre os cálculos.
+- Se houver células vazias, inconsistentes ou totais que não batem, aponte antes de analisar.
+- Se o arquivo contiver dados pessoais de segurados, pare e peça uma versão agregada e anonimizada.
+- Nunca apresente hipótese como conclusão.
+- Responda sempre em português do Brasil.`,
+st:["Analise esta planilha de sinistralidade","O que mudou em relação ao mês passado?","Quais perguntas devo fazer à equipe?","Explique este desvio para a diretoria"],
+kn:"Opcional: glossário de indicadores da empresa e definição oficial de cada métrica."},
+
+{ini:"NO",n:"Leitor de Normas e Políticas",d:"Resume normas e políticas anexadas ou publicadas, com artigos de referência e impactos.",lv:"Gerência, Diretoria e C-Level",
+ins:`Você é um analista de compliance regulatório especializado no setor de seguros no Brasil. Você ajuda líderes a entender normas, resoluções, circulares e políticas internas, sempre como apoio, nunca como parecer.
+
+Quando receber uma norma ou política (anexada ou nas fontes de conhecimento):
+1. Resuma o tema em até 5 linhas.
+2. Liste as principais obrigações, cada uma com o artigo ou item de referência.
+3. Indique prazos de vigência e adequação.
+4. Monte tabela de impactos: Obrigação, Processo afetado, O que muda, Área responsável provável.
+5. Liste dúvidas para levar ao Jurídico e ao Compliance.
+
+Regras:
+- Baseie-se somente no texto da norma fornecida ou nas fontes de conhecimento configuradas. Se usar qualquer outra referência, diga claramente.
+- Sempre cite o artigo ou item.
+- Marque como [VERIFICAR] qualquer trecho ambíguo ou interpretação que não esteja literal no texto.
+- Ao final de toda resposta, inclua: "Este resumo é apoio à leitura e não substitui a análise do Jurídico e do Compliance."
+- Se perguntarem algo que a norma não cobre, responda que não consta no documento.
+- Responda sempre em português do Brasil.`,
+st:["Resuma esta norma e os impactos para minha área","Quais são os prazos de adequação?","Monte a tabela de impactos por processo","Quais dúvidas devo levar ao Jurídico?"],
+kn:"Sugerido: sites oficiais públicos do órgão regulador de seguros e da autoridade de proteção de dados; políticas internas publicadas no SharePoint, se a TI liberar."}
+];
+
+/* ============ Desafios ============ */
+const WEEKS=[
+{t:"Semana 1 · Primeiro contato",s:"Criar familiaridade e confiança com a ferramenta.",items:[
+["Descubra o que o Copilot sabe e não sabe","Pergunte sobre um tema que você domina (um ramo, um processo). Anote 1 acerto e 1 erro da resposta."],
+["Revise um e-mail importante","Use o COM-07 em um e-mail real antes de enviar. Compare o tempo com o que gastaria sozinho."],
+["Prepare a pauta da próxima reunião","Use o REU-01 e envie a pauta no convite."],
+["Monte seu primeiro prompt","Use o construtor da seção Método para uma tarefa recorrente sua. Atinja 80% no medidor."],
+["Abra seu diário de bordo","Registre os usos da semana na seção Metas e defina sua linha de base."]]},
+{t:"Semana 2 · Rotina de liderança",s:"Levar a IA para os rituais com a equipe.",items:[
+["Gere uma ata com plano de ação","Use o REU-02 a partir das suas anotações ou da transcrição de uma reunião."],
+["Prepare uma conversa individual","Use o REU-03 antes do seu próximo 1:1 e avalie a diferença na conversa."],
+["Dê um feedback estruturado","Use o PES-01 para um feedback de reconhecimento."],
+["Organize sua semana","Use o PRO-01 na segunda-feira com sua lista de pendências."],
+["Resuma um documento longo","Use o COM-02 em um relatório ou estudo anexado. Confira 3 números no original."]]},
+{t:"Semana 3 · Decisão e análise",s:"Usar a IA como parceira de pensamento crítico.",items:[
+["Faça um pré-mortem","Use o EST-01 em um projeto em andamento e compartilhe 2 riscos com a equipe."],
+["Teste uma proposta","Use o EST-03 (advogado do diabo) antes de levar uma ideia adiante."],
+["Leia uma planilha de indicadores","Use o IND-01 com dados agregados e anonimizados da sua área."],
+["Compare alternativas","Use o EST-02 com critérios e pesos explícitos em uma decisão real."],
+["Peça autocrítica","Em qualquer resposta da semana, peça: \"Revise como um diretor cético e aponte 3 fragilidades\"."]]},
+{t:"Semana 4 · Escala e equipe",s:"Multiplicar o ganho para a equipe.",items:[
+["Crie seu primeiro agente","Use um dos 5 modelos da seção Agentes, teste com 5 casos e ajuste."],
+["Monte a biblioteca da equipe","Selecione 5 prompts úteis para a área, adapte e compartilhe em uma página ou canal do Teams."],
+["Conduza 30 minutos de prática","Na reunião de equipe, resolvam juntos um caso real com o Copilot."],
+["Defina o OKR de IA da área","Use os exemplos da seção Metas e registre linha de base e meta."],
+["Apresente seus resultados","Consolide o diário de bordo: horas economizadas, qualidade e próximos passos."]]}
+];
+const LEVEL_CH={
+"Coordenação":["Padronize 3 respostas recorrentes da operação (ex.: pendência de documentos) com o CLI-02 e valide com sua gerência.","Leve 1 caso de uso de IA da linha de frente para a reunião com sua gerência.","Crie um checklist de qualidade para um processo da sua equipe usando o RIS-01.","Treine 2 pessoas da equipe para usar o Revisor de Comunicação."],
+"Gerência":["Defina os 2 casos de uso prioritários da sua área e o tempo atual de cada um.","Use o IND-03 para propor o painel de indicadores da área.","Conduza um pré-mortem com sua equipe usando o resultado do EST-01 como ponto de partida.","Publique um agente para a área e nomeie um responsável por mantê-lo."],
+"Diretoria":["Grave ou escreva para suas equipes como você usa IA no dia a dia.","Prepare um comitê usando o REU-04 e compare com a preparação habitual.","Peça a cada gerente 1 caso de uso medido e revise na reunião mensal.","Inclua um OKR de adoção de IA no plano da diretoria."],
+"C-Level":["Use o EST-03 em uma proposta estratégica e compartilhe o aprendizado com a diretoria.","Comunique à empresa as regras de uso responsável e seu próprio exemplo de uso.","Prepare-se para o conselho com o REU-04, simulando 2 conselheiros diferentes.","Patrocine o programa: defina meta de adoção, orçamento de capacitação e ritual trimestral de revisão."]
+};
+
+/* ============ OKRs ============ */
+const OKR=[
+{lv:"Coordenação",o:"Ganhar tempo na rotina operacional para dedicar à equipe",kr:["Usar o Copilot em pelo menos 4 dias por semana durante 8 semanas","Reduzir em 30% o tempo de preparação de atas e relatórios semanais (linha de base no diário)","Padronizar 5 modelos de resposta da operação aprovados pela gerência"]},
+{lv:"Gerência",o:"Tornar a análise de desempenho da área mais rápida e mais profunda",kr:["Reduzir de 6 para 2 horas o tempo de preparação da reunião mensal de resultados","70% da equipe usando o Copilot pelo menos 3 vezes por semana","Publicar 1 agente da área com nota média de utilidade 4 ou mais"]},
+{lv:"Diretoria",o:"Qualificar decisões e a preparação de comitês",kr:["100% das propostas levadas a comitê passam por pré-mortem e advogado do diabo","Liberar 3 horas por semana de cada gerente, medidas pelo diário de bordo","Todas as gerências com ponto focal de IA e 2 casos de uso medidos"]},
+{lv:"C-Level",o:"Consolidar o uso responsável de IA como capacidade da liderança",kr:["80% dos líderes no nível 3 de maturidade ou acima ao fim do trimestre","Zero incidentes de dados pessoais envolvendo ferramentas de IA","Capacidade liberada reportada trimestralmente ao comitê executivo, com destino das horas"]}
+];
+
+const SEND_CHECK=["Conferi todos os números, datas e nomes com a fonte original.","Não há dados pessoais de segurados, corretores ou colaboradores.","O texto soa como eu e como a empresa.","Normas e cláusulas citadas foram verificadas no documento oficial.","Quem precisa aprovar (Jurídico, Compliance, Comunicação) já aprovou.","Eu assumo integralmente o conteúdo que estou enviando."];
+
+/* ============ Utilidades ============ */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const PH=/\[([A-ZÀ-Ý][A-ZÀ-Ý0-9 _\/\-,.:%()]*)\]/g;
+/* Marcadores que o Copilot deve usar na resposta: não são campos a preencher */
+const MARKERS=/^(DEFINIR|PREMISSA|VERIFICAR|ESTIMATIVA|VALIDAR\b.*)$/;
+const hl=s=>esc(s).replace(PH,(all,g)=>MARKERS.test(g)?all:'<mark>['+g+']</mark>');
+const placeholders=s=>{const out=[];let m;const r=new RegExp(PH.source,"g");while((m=r.exec(s))){if(!MARKERS.test(m[1])&&!out.includes(m[1]))out.push(m[1])}return out};
+const KEEP=new Set(["NPS","RH","TI","SUSEP","IBNR","SELIC","OKR","PDI","LGPD","CEO","SAC","BI","APP","CPF"]);
+const phLabel=ph=>{const t=ph.toLowerCase().replace(/[a-zà-ý]+/g,w=>KEEP.has(w.toUpperCase())?(w==="selic"?"Selic":w==="app"?"app":w.toUpperCase()):w);return t.charAt(0).toUpperCase()+t.slice(1)};
+const norm=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+let toastT;
+function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2200)}
+function copy(text,ok){
+  const fallback=()=>{const ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();let done=false;try{done=document.execCommand("copy")}catch(e){}ta.remove();toast(done?ok:"Não foi possível copiar. Selecione o texto e use Ctrl+C.")};
+  try{navigator.clipboard.writeText(text).then(()=>toast(ok),fallback)}catch(e){fallback()}
+}
+const ICON_STAR='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4L2.8 9.5l6.4-.8z"/></svg>';
+const ICON_STAR_O='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4L2.8 9.5l6.4-.8z"/></svg>';
+const SRC_LABEL={Texto:"Texto colado",Arquivo:"Arquivo anexado",Web:"Pesquisa web"};
+const SRC_CLASS={Texto:"",Arquivo:"file",Web:"web"};
+
+/* ============ Navegação ============ */
+const VIEWS=$$("[data-view]").map(v=>v.dataset.view);
+function show(name,animate){
+  if(!VIEWS.includes(name))name="inicio";
+  $$("[data-view]").forEach(v=>{const on=v.dataset.view===name;v.hidden=!on;v.classList.remove("enter");if(on&&animate!==false){void v.offsetWidth;v.classList.add("enter")}});
+  $$("#nav a").forEach(a=>a.setAttribute("aria-current",a.dataset.v===name?"page":"false"));
+  closeMenu();
+  if(name==="inicio")runCounters();
+  window.scrollTo({top:0,behavior:"instant"in window?"instant":"auto"});
+}
+window.addEventListener("hashchange",()=>show(location.hash.slice(1)));
+const side=$("#side");let scrim=null;
+function closeMenu(){side.classList.remove("open");$("#menuBtn").setAttribute("aria-expanded","false");if(scrim){scrim.remove();scrim=null}}
+$("#menuBtn").addEventListener("click",()=>{if(side.classList.contains("open")){closeMenu();return}side.classList.add("open");$("#menuBtn").setAttribute("aria-expanded","true");scrim=document.createElement("div");scrim.className="scrim";scrim.addEventListener("click",closeMenu);document.body.appendChild(scrim)});
+$("#themeBtn").addEventListener("click",()=>{const r=document.documentElement;const cur=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");const nx=cur==="dark"?"light":"dark";r.setAttribute("data-theme",nx);store.set("lcp-theme",nx)});
+(function(){const t=store.get("lcp-theme",null);if(t)document.documentElement.setAttribute("data-theme",t)})();
+
+/* Contadores */
+$("#stPrompts").dataset.count=P.length;
+function runCounters(){
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  $$("#stats [data-count]").forEach(el=>{const end=+el.dataset.count;if(reduce){el.textContent=end;return}const t0=performance.now(),d=900;el.textContent="0";
+    (function tick(t){const k=Math.min(1,(t-t0)/d);el.textContent=Math.round(end*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(tick)})(t0)});
+}
+
+/* ============ Construtor ============ */
+const B=id=>$("#"+id);
+const EX={"b-papel":"gerente de relacionamento com corretores, experiente em seguros empresariais","b-obj":"Escrever um e-mail convidando os 20 maiores corretores para o lançamento do novo produto de Riscos Nomeados","b-ctx":"O evento será presencial em São Paulo, em 10 de março. Queremos reforçar a parceria depois de um ano de reajustes e mostrar que o produto tem aceitação mais ágil.","b-pub":"sócios de corretoras","b-tam":"até 180 palavras","b-rest":"Não prometa condições comerciais. Não use jargão de marketing."};
+function build(){
+  const v=id=>B(id).value.trim();
+  const papel=v("b-papel"),obj=v("b-obj"),ctx=v("b-ctx"),fonte=B("b-fonte").value,fmt=B("b-fmt").value,tom=B("b-tom").value,pub=v("b-pub"),tam=v("b-tam"),rest=v("b-rest");
+  const L=[];
+  if(papel)L.push("Atue como "+papel.replace(/\.$/,"")+".");
+  if(obj)L.push("Objetivo: "+obj.replace(/\.$/,"")+".");
+  if(ctx)L.push("Contexto: "+ctx);
+  if(fonte)L.push("Fonte: "+fonte);
+  const ex=[];if(fmt)ex.push("formato de "+fmt);if(pub)ex.push("para "+pub);if(tom)ex.push("tom "+tom);if(tam)ex.push(tam);
+  if(ex.length)L.push("Entrega: "+ex.join(", ")+".");
+  const r=[];if(rest)r.push(rest);
+  if(B("t-opc").checked)r.push("Apresente 3 versões diferentes para eu escolher.");
+  if(B("t-passo").checked)r.push("Organize o raciocínio passo a passo antes da resposta final.");
+  if(B("t-crit").checked)r.push("Ao final, revise sua resposta como um executivo cético e aponte 3 pontos fracos.");
+  r.push("Se faltar informação, sinalize em vez de supor.");
+  L.push("Regras: "+r.join(" "));
+  if(B("t-perg").checked)L.push("Antes de responder, faça até 3 perguntas para entender melhor o que preciso.");
+  const txt=L.join("\n");
+  $("#b-out").textContent=txt;$("#b-chars").textContent=txt.length.toLocaleString("pt-BR");
+  const checks=[["Papel",!!papel],["Objetivo",obj.length>15],["Contexto",ctx.length>30],["Fonte",!!fonte],["Formato ou tamanho",!!(fmt||tam)],["Público ou tom",!!(pub||tom)],["Restrições",!!rest]];
+  const score=Math.round(checks.filter(c=>c[1]).length/checks.length*100);
+  $("#m-val").textContent=score+"%";const bar=$("#m-bar");bar.style.width=score+"%";
+  bar.style.background=score>=80?"var(--ok)":score>=50?"var(--warn)":"var(--bad)";
+  const miss=checks.filter(c=>!c[1]).map(c=>c[0]);
+  $("#m-miss").textContent=miss.length?"Falta: "+miss.join(", ")+".":"Prompt completo. Copie e teste no Copilot Chat.";
+}
+$("#builder").addEventListener("input",build);$("#builder").addEventListener("change",build);
+$("#b-clear").addEventListener("click",()=>{$$("#builder .input").forEach(i=>i.value="");build()});
+$("#b-ex").addEventListener("click",()=>{Object.entries(EX).forEach(([k,v])=>B(k).value=v);B("b-fmt").value="e-mail com assunto";B("b-tom").value="formal e cordial";build()});
+$("#b-copy").addEventListener("click",()=>copy($("#b-out").textContent,"Prompt copiado. Cole no Copilot Chat."));
+B("b-fmt").value="e-mail com assunto";B("b-tom").value="formal e cordial";B("b-fonte").value="";build();
+
+/* ============ Biblioteca ============ */
+let favs=store.get("lcp-favs",[]);
+const F={q:"",lv:"",cat:"",area:"",src:"",fav:false};
+const cats=[...new Set(P.map(p=>p.cat))];const areas=[...new Set(P.map(p=>p.area))].sort((a,b)=>a.localeCompare(b,"pt"));
+$("#fCat").innerHTML='<option value="">Todos os temas</option>'+cats.map(c=>`<option>${esc(c)}</option>`).join("");
+$("#fArea").innerHTML='<option value="">Todas as áreas</option>'+areas.map(c=>`<option>${esc(c)}</option>`).join("");
+function updateFavCount(){$("#sideFav").textContent=favs.length}
+function renderLib(){
+  const q=norm(F.q.trim());
+  const list=P.filter(p=>(!F.lv||p.lv.includes(F.lv))&&(!F.cat||p.cat===F.cat)&&(!F.area||p.area===F.area)&&(!F.src||p.src===F.src)&&(!F.fav||favs.includes(p.id))&&(!q||norm(p.t+" "+p.w+" "+p.p+" "+p.cat+" "+p.area+" "+p.id).includes(q)));
+  $("#count").textContent=list.length+(list.length===1?" prompt":" prompts");
+  const lib=$("#lib");
+  if(!list.length){lib.innerHTML=`<div class="empty" style="grid-column:1/-1"><h3>Nenhum prompt com esses filtros</h3><p>Tente outra palavra ou limpe os filtros.</p><button class="btn small" type="button" id="clearF">Limpar filtros</button></div>`;$("#clearF").onclick=resetFilters;return}
+  lib.innerHTML=list.map((p,i)=>{const fv=favs.includes(p.id);return `<article class="card pcard" style="animation:rise .45s cubic-bezier(.2,.7,.2,1) ${Math.min(i,12)*35}ms both">
+    <div class="top"><span class="pid">PR-${p.id}</span><button class="fav" type="button" data-fav="${p.id}" aria-pressed="${fv}" aria-label="${fv?"Remover dos favoritos":"Adicionar aos favoritos"}">${fv?ICON_STAR:ICON_STAR_O}</button></div>
+    <h3>${esc(p.t)}</h3>
+    <p class="when">${esc(p.w)}</p>
+    <div class="tag-row"><span class="chip">${esc(p.cat)}</span><span class="chip">${esc(p.area)}</span><span class="chip ${SRC_CLASS[p.src]}">${SRC_LABEL[p.src]}</span></div>
+    <div class="tag-row">${p.lv.map(l=>`<span class="chip lv">${l}</span>`).join("")}</div>
+    <div class="meta"><span class="saving">Economia estimada: ~${p.min} min</span><span class="actions"><button class="btn small" type="button" data-copy="${p.id}">Copiar</button><button class="btn small primary" type="button" data-open="${p.id}">Abrir e adaptar</button></span></div>
+  </article>`}).join("");
+}
+function resetFilters(){Object.assign(F,{q:"",lv:"",cat:"",area:"",src:"",fav:false});$("#q").value="";$("#fCat").value="";$("#fArea").value="";$("#fSrc").value="";$$("#fLevel button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===""?"true":"false"));$("#fFav").setAttribute("aria-pressed","false");renderLib()}
+$("#q").addEventListener("input",e=>{F.q=e.target.value;renderLib()});
+$("#fCat").addEventListener("change",e=>{F.cat=e.target.value;renderLib()});
+$("#fArea").addEventListener("change",e=>{F.area=e.target.value;renderLib()});
+$("#fSrc").addEventListener("change",e=>{F.src=e.target.value;renderLib()});
+$("#fLevel").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;F.lv=b.dataset.v;$$("#fLevel button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));renderLib()});
+$("#fFav").addEventListener("click",e=>{F.fav=!F.fav;e.currentTarget.setAttribute("aria-pressed",F.fav);renderLib()});
+$("#lib").addEventListener("click",e=>{
+  const f=e.target.closest("[data-fav]");if(f){const id=f.dataset.fav;favs=favs.includes(id)?favs.filter(x=>x!==id):[...favs,id];store.set("lcp-favs",favs);updateFavCount();
+    const on=favs.includes(id);f.setAttribute("aria-pressed",on);f.innerHTML=on?ICON_STAR:ICON_STAR_O;f.setAttribute("aria-label",on?"Remover dos favoritos":"Adicionar aos favoritos");toast(on?"Adicionado aos favoritos":"Removido dos favoritos");if(F.fav)renderLib();return}
+  const c=e.target.closest("[data-copy]");if(c){copy(P.find(p=>p.id===c.dataset.copy).p,"Prompt copiado. Substitua os campos entre colchetes.");return}
+  const o=e.target.closest("[data-open]");if(o)openPrompt(o.dataset.open);
+});
+
+/* Modal de adaptação */
+let lastFocus=null;
+function openPrompt(id){
+  const p=P.find(x=>x.id===id);const phs=placeholders(p.p);lastFocus=document.activeElement;
+  const root=$("#modalRoot");
+  root.innerHTML=`<div class="modal-bg" id="mbg"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt">
+    <div class="modal-head"><div style="display:grid;gap:.35rem"><span class="pid">PR-${p.id} · ${esc(p.cat)} · ${esc(p.area)}</span><h2 id="mt" style="font-size:1.4rem">${esc(p.t)}</h2><p class="muted">${esc(p.w)}</p></div><button class="x" type="button" id="mx" aria-label="Fechar">×</button></div>
+    <div class="modal-body">
+      <div class="fills">
+        <h4>Preencha os campos</h4>
+        ${phs.length?phs.map((ph,i)=>`<div class="field"><label for="ph${i}">${esc(phLabel(ph))}</label>${/COLE|DESCREVA/.test(ph)?`<textarea class="input" id="ph${i}" data-ph="${esc(ph)}" rows="3" placeholder="Opcional: cole depois, direto no Copilot"></textarea>`:`<input class="input" id="ph${i}" data-ph="${esc(ph)}">`}</div>`).join(""):'<p class="muted">Este prompt não tem campos variáveis.</p>'}
+        <div class="callout info" style="font-size:.92rem"><b>Dica de adaptação</b><p>${esc(p.tip)}</p></div>
+        <p class="muted" style="font-size:.88rem">Fonte: ${SRC_LABEL[p.src]}${p.src==="Arquivo"?". Anexe o arquivo no Copilot Chat antes de enviar.":p.src==="Web"?". Confirme que a pesquisa na web está ativa e abra as fontes citadas.":"."}</p>
+      </div>
+      <div style="display:grid;gap:.7rem;min-width:0">
+        <h4>Prompt pronto</h4>
+        <pre class="code" id="mout"></pre>
+        <div class="actions"><button class="btn primary" type="button" id="mcopy">Copiar prompt adaptado</button><span class="muted" style="font-size:.86rem;align-self:center" id="mleft"></span></div>
+      </div>
+    </div></div></div>`;
+  const render=()=>{let txt=p.p;let left=0;$$("[data-ph]",root).forEach(inp=>{const val=inp.value.trim();if(val)txt=txt.split("["+inp.dataset.ph+"]").join(val);else left++});$("#mout").innerHTML=hl(txt);$("#mout").dataset.raw=txt;$("#mleft").textContent=left?left+(left===1?" campo ainda em aberto":" campos ainda em aberto"):"Todos os campos preenchidos";};
+  root.addEventListener("input",render);render();
+  $("#mcopy").onclick=()=>copy($("#mout").dataset.raw,"Prompt copiado. Cole no Copilot Chat.");
+  const close=()=>{root.innerHTML="";document.removeEventListener("keydown",onKey);if(lastFocus)lastFocus.focus()};
+  const onKey=e=>{if(e.key==="Escape")close();if(e.key==="Tab"){const f=$$("button,input,textarea",root);if(!f.length)return;const first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}};
+  document.addEventListener("keydown",onKey);
+  $("#mx").onclick=close;$("#mbg").addEventListener("click",e=>{if(e.target.id==="mbg")close()});
+  const firstIn=$("[data-ph]",root);(firstIn||$("#mx")).focus();
+}
+
+/* ============ Agentes ============ */
+$("#agents").innerHTML=AG.map((a,i)=>`<div class="card agent" style="animation:rise .5s cubic-bezier(.2,.7,.2,1) ${i*60}ms both">
+  <div class="agent-head"><div class="agent-ico">${a.ini}</div><div><h3>${esc(a.n)}</h3><span class="chip lv" style="margin-top:.3rem">${esc(a.lv)}</span></div></div>
+  <p class="muted">${esc(a.d)}</p>
+  <details class="fold"><summary>Instruções (${a.ins.length.toLocaleString("pt-BR")} caracteres)</summary><div class="inner"><pre class="code">${esc(a.ins)}</pre><button class="btn small primary" type="button" data-agcopy="${i}" style="justify-self:start">Copiar instruções</button></div></details>
+  <details class="fold"><summary>Descrição e prompts iniciais</summary><div class="inner"><p><b>Nome:</b> ${esc(a.n)}</p><p><b>Descrição:</b> ${esc(a.d)}</p><ul class="ticks">${a.st.map(s=>`<li>${esc(s)}</li>`).join("")}</ul><p class="muted" style="font-size:.9rem"><b>Conhecimento:</b> ${esc(a.kn)}</p></div></details>
+</div>`).join("");
+$("#agents").addEventListener("click",e=>{const b=e.target.closest("[data-agcopy]");if(b)copy(AG[+b.dataset.agcopy].ins,"Instruções copiadas. Cole no campo Instruções do agente.")});
+
+/* ============ Desafios ============ */
+let chDone=store.get("lcp-ch",{});let chLv=store.get("lcp-chlv","Coordenação");
+function ringSvg(p){const r=26,c=2*Math.PI*r;return `<svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="bgc" cx="32" cy="32" r="${r}"/><circle class="fgc" cx="32" cy="32" r="${r}" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${(c*(1-p)).toFixed(1)}"/><text x="32" y="37" text-anchor="middle">${Math.round(p*100)}%</text></svg>`}
+function renderWeeks(){
+  $$("#chLevel button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===chLv?"true":"false"));
+  $("#weeks").innerHTML=WEEKS.map((w,wi)=>{
+    const items=w.items.map((it,ii)=>({k:`w${wi}i${ii}`,t:it[0],d:it[1]}));
+    const lc={k:`w${wi}L${chLv}`,t:"Desafio do nível: "+chLv,d:LEVEL_CH[chLv][wi]};
+    const all=[...items,lc];const p=all.filter(x=>chDone[x.k]).length/all.length;
+    return `<div class="card week" data-week="${wi}"><div class="week-head"><div><h3>${esc(w.t)}</h3><p class="muted">${esc(w.s)}</p></div>${ringSvg(p)}</div>
+    ${items.map(x=>`<label class="task"><input type="checkbox" data-k="${x.k}" ${chDone[x.k]?"checked":""}><span><b>${esc(x.t)}</b><small>${esc(x.d)}</small></span></label>`).join("")}
+    <label class="task level-ch"><input type="checkbox" data-k="${lc.k}" ${chDone[lc.k]?"checked":""}><span><b>${esc(lc.t)}</b><small>${esc(lc.d)}</small></span></label></div>`}).join("");
+  updateSideProg();
+}
+function updateSideProg(){let tot=0,done=0;WEEKS.forEach((w,wi)=>{w.items.forEach((_,ii)=>{tot++;if(chDone[`w${wi}i${ii}`])done++});tot++;if(chDone[`w${wi}L${chLv}`])done++});const p=Math.round(done/tot*100);$("#sideProg").textContent=p+"%";$("#sideBar").style.width=p+"%"}
+$("#weeks").addEventListener("change",e=>{const k=e.target.dataset.k;if(!k)return;chDone[k]=e.target.checked;store.set("lcp-ch",chDone);
+  const card=e.target.closest(".week");const wi=+card.dataset.week;const boxes=$$("input[data-k]",card);const p=boxes.filter(b=>b.checked).length/boxes.length;
+  const tmp=document.createElement("div");tmp.innerHTML=ringSvg(p);const old=$(".ring",card);
+  const fg=$(".fgc",old);fg.setAttribute("stroke-dashoffset",$(".fgc",tmp).getAttribute("stroke-dashoffset"));$("text",old).textContent=Math.round(p*100)+"%";
+  if(e.target.checked){const t=e.target.closest(".task");t.classList.remove("done-pop");void t.offsetWidth;t.classList.add("done-pop")}
+  if(p===1)toast("Semana concluída. Registre os resultados no diário de bordo.");
+  updateSideProg()});
+$("#chLevel").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;chLv=b.dataset.v;store.set("lcp-chlv",chLv);renderWeeks()});
+$("#chReset").addEventListener("click",()=>{$("#chResetConfirm").hidden=false});
+$("#chResetNo").addEventListener("click",()=>{$("#chResetConfirm").hidden=true});
+$("#chResetYes").addEventListener("click",()=>{chDone={};store.set("lcp-ch",chDone);$("#chResetConfirm").hidden=true;renderWeeks();toast("Desafio reiniciado")});
+
+/* ============ Metas ============ */
+$("#okrs").innerHTML=OKR.map(o=>`<div class="card okr"><span class="chip lv" style="justify-self:start">${o.lv}</span><h4>Objetivo: ${esc(o.o)}</h4>${o.kr.map(k=>`<div class="kr"><span>${esc(k)}</span></div>`).join("")}</div>`).join("");
+const fmtN=(n,d=0)=>n.toLocaleString("pt-BR",{maximumFractionDigits:d,minimumFractionDigits:d});
+function calc(){const l=+$("#c-l").value||0,h=+$("#c-h").value||0,c=+$("#c-c").value||0,r=Math.min(100,Math.max(0,+$("#c-r").value||0));
+  const hm=l*h*4.33;$("#r-h").textContent=fmtN(hm);$("#r-v").textContent="R$ "+fmtN(hm*12*c);$("#r-r").textContent=fmtN(hm*12*r/100)}
+$$(".calc input").forEach(i=>i.addEventListener("input",calc));calc();
+
+let log=store.get("lcp-log",[]);
+const EXAMPLE=[{d:"Exemplo",t:"Ata do comitê de sinistros",a:60,b:15,q:4},{d:"Exemplo",t:"Resumo do estudo de reajuste",a:90,b:25,q:5},{d:"Exemplo",t:"Revisão de e-mail para corretora",a:20,b:8,q:4}];
+function renderLog(){
+  const rows=log.length?log:EXAMPLE;const ex=!log.length;
+  $("#logBody").innerHTML=rows.map((r,i)=>`<tr class="${ex?"ex-row":""}"><td>${esc(r.d)}</td><td>${esc(r.t)}</td><td class="num">${r.a}</td><td class="num">${r.b}</td><td class="num">${r.a-r.b}</td><td class="num">${r.q}</td><td>${ex?"":`<button class="btn small" type="button" data-del="${i}" aria-label="Excluir registro">Excluir</button>`}</td></tr>`).join("")+(ex?`<tr class="ex-row"><td colspan="7">Linhas de exemplo. Seu primeiro registro substitui estes exemplos.</td></tr>`:"");
+  const n=log.length,mins=log.reduce((s,r)=>s+(r.a-r.b),0),q=n?log.reduce((s,r)=>s+r.q,0)/n:0;
+  $("#lgN").textContent=n;$("#lgH").textContent=fmtN(mins/60,1);$("#lgQ").textContent=n?fmtN(q,1):"0";
+}
+$("#logForm").addEventListener("submit",e=>{e.preventDefault();const t=$("#lg-t").value.trim(),a=+$("#lg-a").value,b=+$("#lg-d").value,q=+$("#lg-q").value;if(!t)return;
+  log.unshift({d:new Date().toLocaleDateString("pt-BR"),t,a,b,q});store.set("lcp-log",log);e.target.reset();$("#lg-q").value="4";renderLog();toast("Uso registrado: "+(a-b)+" minutos economizados")});
+$("#logBody").addEventListener("click",e=>{const b=e.target.closest("[data-del]");if(!b)return;log.splice(+b.dataset.del,1);store.set("lcp-log",log);renderLog()});
+$("#lgCopy").addEventListener("click",()=>{const rows=[["Data","Tarefa","Minutos antes","Minutos com IA","Economia","Qualidade"],...log.map(r=>[r.d,r.t,r.a,r.b,r.a-r.b,r.q])];copy(rows.map(r=>r.join("\t")).join("\n"),log.length?"Tabela copiada. Cole no Excel.":"Só o cabeçalho foi copiado: ainda não há registros.")});
+
+/* Checklist de envio */
+$("#sendCheck").innerHTML=SEND_CHECK.map((s,i)=>`<li><label class="task" style="padding:.55rem .7rem"><input type="checkbox" id="sc${i}"><span>${esc(s)}</span></label></li>`).join("");
+
+/* ============ Início ============ */
+updateFavCount();renderLib();renderWeeks();renderLog();
+show(location.hash.slice(1)||"inicio",false);runCounters();
+})();
+</script>
+
+</body>
+</html>

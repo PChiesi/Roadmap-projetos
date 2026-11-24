@@ -54,3 +54,7 @@ Baixe o [`index.html`](index.html) e abra o arquivo no navegador. Fontes e ícon
 ## Licença
 
 [MIT](LICENSE)
+
+## Guia de liderança com Copilot
+
+A pasta `lideranca-ia/` tem um guia separado para líderes de seguros usarem o Microsoft Copilot Chat e agentes simples: método para montar prompts, biblioteca com 52 prompts adaptáveis, 5 agentes prontos, desafio de 30 dias e medição de resultados. Abra `lideranca-ia/index.html` no navegador ou acesse https://pchiesi.github.io/Roadmap-projetos/lideranca-ia/ depois de publicado.
