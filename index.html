@@ -439,6 +439,11 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 .dm-ic{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--title);color:#fff;font:700 17px var(--f-d);letter-spacing:-.02em}
 .dm-head h2{margin-bottom:4px}
 .dm-top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1.25fr) minmax(0,.9fr);gap:12px}
+.dm-mod{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--title) 4%,var(--surface))}
+.dm-mod-sel{flex:1 1 260px;min-width:0}
+.dm-mod select{width:100%;height:36px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--surface);font-size:14px;color:var(--ink)}
+.dm-mod-act{display:flex;gap:6px;flex-wrap:wrap}
+.dm-mod-act .btn[hidden]{display:none}
 .dm-warn{margin:0;padding:9px 12px;border-radius:10px;font-size:13px;background:color-mix(in srgb,var(--amber) 16%,var(--surface));border:1px solid color-mix(in srgb,var(--amber) 45%,var(--line));color:var(--ink)}
 .dm-wrap{max-height:46vh;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
 .dm{width:100%;min-width:720px;border-collapse:collapse;font-variant-numeric:tabular-nums}
@@ -896,9 +901,11 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Na barra lateral, clique em <b>Planejar D−</b> (logo abaixo de Novo projeto).</li>
         <li>Informe o nome do projeto, o <b>nome do marco</b> (por exemplo, "Início do desenvolvimento (TI)" ou "Go-live") e a <b>data do marco</b>.</li>
         <li>A tabela já vem com as atividades de Produto: Discovery, Escrita da especificação, Validação com negócio, Refinamento com TI + Negócio, Ajustes do refinamento e Validação final com TI. Digite os <b>dias úteis</b> de cada uma; Enter pula para a próxima.</li>
+        <li>Para reaproveitar uma lista, monte a tabela e clique em <b>Salvar como modelo</b>: ficam guardados as atividades, os dias úteis, os responsáveis e o nome do marco. Depois é só escolher o modelo em <b>Modelo de atividades</b>.</li>
+        <li>Para mudar o que abre sempre, escolha o modelo e clique em <b>Usar como padrão</b>. Para voltar à lista original, escolha <b>Lista do programa (Produto)</b> e clique em Usar como padrão. <b>Excluir modelo</b> tira da lista sem mexer nos projetos já criados.</li>
         <li>As datas aparecem ao lado enquanto você digita, e o resumo diz quando o trabalho precisa começar. Em vermelho: não cabe, porque precisaria ter começado antes de hoje.</li>
         <li>Clique em <b>Criar cronograma</b>: o projeto nasce com as atividades em sequência (cada uma depende da anterior) e o marco no fim, com o nome que você deu.</li>
-      </ol>A conta usa só dias úteis: não conta sábado, domingo nem feriado nacional (o Carnaval entra como feriado). Se a data do marco cair num dia sem trabalho, o marco fica nela e a última atividade termina no dia útil anterior. Dá para renomear, mudar a ordem (setas), tirar ou acrescentar atividades; linha com 0 dias fica de fora. Se o marco mudar de data (ou de nome), use <b>Projeto › Replanejar D−</b>: as tarefas se reorganizam para trás e mantêm o % concluído e as observações.</div></details>
+      </ol>Os modelos ficam salvos no seu navegador e vão junto no <b>Salvar backup</b>. A conta usa só dias úteis: não conta sábado, domingo nem feriado nacional (o Carnaval entra como feriado). Se a data do marco cair num dia sem trabalho, o marco fica nela e a última atividade termina no dia útil anterior. Dá para renomear, mudar a ordem (setas), tirar ou acrescentar atividades; linha com 0 dias fica de fora. Se o marco mudar de data (ou de nome), use <b>Projeto › Replanejar D−</b>: as tarefas se reorganizam para trás e mantêm o % concluído e as observações.</div></details>
       <details><summary>Carga da equipe</summary><div><ul>
         <li>Na barra lateral, <b>Carga da equipe</b> mostra uma linha por pessoa e uma coluna por semana, somando as tarefas abertas de <b>todos</b> os projetos.</li>
         <li>O número é quantas tarefas a pessoa tem naquela semana. Amarelo: duas ao mesmo tempo. Vermelho: três ou mais. A coluna da semana atual fica marcada.</li>
@@ -1088,6 +1095,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
   <form method="dialog" class="dlg-in" id="fDm">
     <div class="dm-head"><span class="dm-ic" aria-hidden="true">D−</span><div><h2 id="dmT">Planejar D−</h2><p class="muted">Planejamento de trás para frente. Dê um nome ao marco (por exemplo, o início do desenvolvimento da TI), informe a data dele e quantos <b>dias úteis</b> cada atividade leva: o programa encaixa tudo antes dessa data, sem contar fins de semana e feriados nacionais.</p></div></div>
     <div class="dm-top"><label class="fld">Nome do projeto<input name="nome" maxlength="120" autocomplete="off" placeholder="Ex.: Especificação Auto 2027"></label><label class="fld">Nome do marco<input name="msName" maxlength="120" autocomplete="off" placeholder="Ex.: Início do desenvolvimento (TI)"></label><label class="fld">Data do marco<input type="date" name="anchor"></label></div>
+    <div class="dm-mod" id="dmModBar"><label class="fld dm-mod-sel">Modelo de atividades<select id="dmMod"></select></label><div class="dm-mod-act"><button class="btn small" type="button" id="btnDmSave" title="Guarda as atividades, os dias úteis, os responsáveis e o nome do marco da tabela abaixo">Salvar como modelo</button><button class="btn small" type="button" id="btnDmDef" title="Este modelo passa a abrir sempre que você clicar em Planejar D−">Usar como padrão</button><button class="btn small" type="button" id="btnDmDel">Excluir modelo</button></div></div>
     <p class="dm-warn" id="dmWarn" hidden></p>
     <div class="dm-wrap"><table class="dm"><thead><tr><th class="dm-n">#</th><th>Atividade</th><th class="dm-dh">Dias úteis</th><th class="dm-oh">Responsável</th><th class="dm-th">Datas calculadas</th><th><span class="vh">Ações</span></th></tr></thead><tbody id="dmBody"></tbody>
       <tfoot><tr class="dm-ms"><td class="dm-n"><i></i></td><td colspan="3"><b id="dmMsN"></b></td><td id="dmMsD" colspan="2"></td></tr></tfoot></table></div>
@@ -1366,6 +1374,24 @@ function dminus(anchor, days) {
   return out;
 }
 const DM_ROWS = ['Discovery', 'Escrita da especificação', 'Validação da especificação com negócio', 'Refinamento com TI + Negócio', 'Ajustes da especificação do refinamento anterior', 'Validação final com TI'];
+// Modelos do D−: listas de atividades (com dias úteis e responsáveis) que a pessoa guarda para reaproveitar.
+// Ficam numa chave própria do navegador, fora dos projetos: valem no modo local, na equipe e na nuvem, e vão no backup.
+const DMK = 'roadmap-hdi-dm-modelos', DM_BUILTIN = { id: '', name: 'Lista do programa (Produto)', msName: '', rows: DM_ROWS.map(name => ({ name, days: 0, owner: '' })) };
+function normDmModel(m) {
+  if (!m || typeof m !== 'object' || !Array.isArray(m.rows)) return null;
+  const rows = m.rows.slice(0, 30).map(r => r && typeof r === 'object' ? { name: String(r.name ?? '').trim().slice(0, 200), days: Math.max(0, Math.min(365, Math.floor(+r.days || 0))), owner: String(r.owner ?? '').trim().slice(0, 120) } : null).filter(r => r && (r.name || r.days));
+  if (!rows.length) return null;
+  return { id: String(m.id ?? '').replace(/[^\w-]/g, '').slice(0, 40) || uid(), name: String(m.name || '').trim().slice(0, 80) || 'Modelo sem nome', msName: String(m.msName || '').trim().slice(0, 120), rows };
+}
+function normDmStore(d) {
+  const models = [], ids = new Set();
+  (d && Array.isArray(d.models) ? d.models : []).forEach(m => { const x = normDmModel(m); if (x && !ids.has(x.id) && models.length < 50) { ids.add(x.id); models.push(x); } });
+  const def = d && typeof d.def === 'string' && ids.has(d.def) ? d.def : '';
+  return { models, def };
+}
+const DMS = (() => { try { return normDmStore(JSON.parse(localStorage.getItem(DMK) || 'null')); } catch (e) { return normDmStore(null); } })();
+const dmSave = () => { try { localStorage.setItem(DMK, JSON.stringify(DMS)); } catch (e) { toast('Não consegui salvar o modelo no navegador.'); } };
+const dmModel = id => (id && DMS.models.find(m => m.id === id)) || DM_BUILTIN;
 // cria (p sem dplan) ou replaneja (p com dplan) o projeto: rows = [{ name, days, owner, tid? }]
 function applyDPlan(p, anchor, rows, msName) {
   const span = dminus(anchor, rows.map(r => r.days));
@@ -2740,14 +2766,14 @@ $('#tlist').addEventListener('click', async e => {
 });
 $('#btnNovo').addEventListener('click', () => openNovo(''));
 $('#btnBackup').addEventListener('click', () => {
-  download(new Blob([JSON.stringify({ app: 'roadmap-hdi', versao: 1, salvoEm: n2d(todayN), projects: state.projects, templates: state.templates, marks: state.marks }, null, 1)], { type: 'application/json' }), `roadmaps-backup-${n2d(todayN)}.json`);
+  download(new Blob([JSON.stringify({ app: 'roadmap-hdi', versao: 1, salvoEm: n2d(todayN), projects: state.projects, templates: state.templates, marks: state.marks, dmModelos: DMS }, null, 1)], { type: 'application/json' }), `roadmaps-backup-${n2d(todayN)}.json`);
   toast('Backup salvo');
 });
 $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
 // Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
 // A cada versão nova, troque a data e a lista abaixo.
-const NOVIDADES = { versao: '2026-11-19', secoes: ['Grupos e cores', 'Adicionar e editar tarefas', 'Importar de uma planilha', 'Salvar na nuvem (versão online)'] };
+const NOVIDADES = { versao: '2026-11-24', secoes: ['Planejar D− (de trás para frente)'] };
 {
   const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
   sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
@@ -2787,6 +2813,7 @@ $('#fileOpen').addEventListener('change', async e => {
     for (const p of ps) { const i = state.projects.findIndex(x => x.id === p.id); if (i >= 0) state.projects[i] = p; else state.projects.push(p); }
     if (Array.isArray(d.templates)) for (const t of d.templates) if (okTpl(t) && !state.templates.some(x => x.id === t.id)) state.templates.push(t);
     if (Array.isArray(d.marks)) for (const m of d.marks.map(normMark).filter(Boolean)) if (!state.marks.some(x => x.id === m.id)) state.marks.push(m);
+    if (d.dmModelos) { const dm = normDmStore(d.dmModelos); let n = 0; for (const m of dm.models) if (!DMS.models.some(x => x.id === m.id) && DMS.models.length < 50) { DMS.models.push(m); n++; } if (n) { if (!DMS.def && dm.def && DMS.models.some(x => x.id === dm.def)) DMS.def = dm.def; dmSave(); } }
     state.currentId = ps[0].id;
     save(); closeDrawer(); render('load');
     toast(ps.length === 1 ? '1 projeto carregado' : `${ps.length} projetos carregados`);
@@ -2822,11 +2849,30 @@ function dmCalc() {
   sum.innerHTML = late ? `Não cabe: precisaria ter começado em <b>${fmtDia(first.s)}/${new Date(first.s * DAY).getUTCFullYear()}</b>. Reduza os dias ou reveja a data do marco.`
     : `Comece em <b>${DSEM[dow(first.s)]} ${fmtBR(first.s)}</b>: ${total} ${total === 1 ? 'dia útil' : 'dias úteis'} de preparação até o marco.`;
 }
+// lista de modelos no topo da janela; o padrão aparece marcado
+function dmModList(sel) {
+  const lab = m => esc(m.name) + (m.id === DMS.def ? ' (padrão)' : '');
+  $('#dmMod').innerHTML = `<option value="">${lab(DM_BUILTIN)}</option>` + DMS.models.map(m => `<option value="${m.id}">${lab(m)}</option>`).join('');
+  $('#dmMod').value = DMS.models.some(m => m.id === sel) ? sel : '';
+  dmModBtns();
+}
+function dmModBtns() {
+  const v = $('#dmMod').value;
+  $('#btnDmDef').disabled = v === DMS.def; $('#btnDmDel').hidden = !v;
+  $('#btnDmDef').textContent = v === DMS.def ? 'É o padrão' : 'Usar como padrão';
+}
+// carrega um modelo na tabela (o nome do marco só entra se o modelo tiver um e o campo estiver vazio)
+function dmLoad(m) {
+  $('#dmBody').innerHTML = m.rows.map(r => dmRow({ name: r.name, days: r.days || '', owner: r.owner })).join('');
+  const F = $('#fDm').elements; if (m.msName && !F.msName.value.trim()) F.msName.value = m.msName;
+}
 function openDm(p) {
   dmFor = p || null; const F = $('#fDm').elements, pl = p && p.dplan;
   F.nome.value = p ? p.name : ''; F.anchor.value = pl ? pl.anchor : '';
   F.msName.value = pl ? pl.msName || (p.tasks.find(t => t.id === pl.ms) || {}).name || '' : '';
-  $('#dmBody').innerHTML = (pl ? pl.rows : DM_ROWS.map(name => ({ name, days: '', owner: '' }))).map(dmRow).join('');
+  // no replanejamento a tabela é a do projeto (trocar de modelo apagaria as tarefas); dá só para salvá-la como modelo
+  dmModList(pl ? '' : DMS.def); $('#dmMod').closest('label').hidden = !!pl; $('#btnDmDef').hidden = !!pl; if (pl) $('#btnDmDel').hidden = true;
+  if (pl) $('#dmBody').innerHTML = pl.rows.map(dmRow).join(''); else dmLoad(dmModel(DMS.def));
   $('#dmT').textContent = p ? 'Replanejar D−' : 'Planejar D−'; $('#dmOk').textContent = p ? 'Replanejar' : 'Criar cronograma';
   dmCalc(); const d = $('#dlgDm'); d.returnValue = ''; d.showModal(); (p ? F.anchor : F.nome).focus();
 }
@@ -2838,6 +2884,30 @@ $('#dmBody').addEventListener('click', e => {
   if (b.dataset.dm === 'del') { const nx = tr.nextElementSibling || tr.previousElementSibling; tr.remove(); if (nx) nx.querySelector('.dm-d').focus(); }
   else b.focus();
   dmCalc();
+});
+$('#dmMod').addEventListener('change', () => { dmLoad(dmModel($('#dmMod').value)); dmModBtns(); dmCalc(); });
+$('#btnDmSave').addEventListener('click', async () => {
+  const rows = dmRows().map(r => ({ name: r.name.trim(), days: Math.floor(+r.days || 0), owner: r.owner.trim() })).filter(r => r.name || r.days);
+  if (!rows.length) return toast('Escreva pelo menos uma atividade antes de salvar o modelo.');
+  const curM = DMS.models.find(m => m.id === $('#dmMod').value), F = $('#fDm').elements;
+  const name = await ask({ title: 'Salvar como modelo', text: 'O modelo guarda as atividades, os dias úteis, os responsáveis e o nome do marco. Com o mesmo nome de um modelo que já existe, ele é atualizado.', label: 'Nome do modelo', value: curM ? curM.name : F.msName.value.trim() || F.nome.value.trim() || 'Meu modelo', ok: 'Salvar' });
+  if (!name) return;
+  const same = DMS.models.find(m => norm(m.name) === norm(name));
+  if (!same && DMS.models.length >= 50) return toast('Até 50 modelos. Exclua um que não usa mais.');
+  const m = normDmModel({ id: same ? same.id : uid(), name, msName: F.msName.value, rows });
+  if (same) Object.assign(same, m); else DMS.models.push(m);
+  dmSave(); if (!dmFor || !dmFor.dplan) dmModList(m.id);
+  toast(same ? `Modelo "${m.name}" atualizado.` : `Modelo "${m.name}" salvo. Use "Usar como padrão" para ele abrir sempre.`);
+});
+$('#btnDmDef').addEventListener('click', () => {
+  const m = dmModel($('#dmMod').value); DMS.def = m.id; dmSave(); dmModList(m.id);
+  toast(m.id ? `"${m.name}" agora abre sempre no Planejar D−.` : 'Voltou ao padrão do programa.');
+});
+$('#btnDmDel').addEventListener('click', async () => {
+  const m = DMS.models.find(x => x.id === $('#dmMod').value); if (!m) return;
+  if (!await ask({ title: 'Excluir modelo?', text: `O modelo "${m.name}" sai da lista. Os projetos já criados com ele não mudam.`, ok: 'Excluir', danger: true })) return;
+  DMS.models = DMS.models.filter(x => x !== m); if (DMS.def === m.id) DMS.def = '';
+  dmSave(); dmModList(''); toast(`Modelo "${m.name}" excluído.`);
 });
 $('#btnDmAdd').addEventListener('click', () => { if ($('#dmBody').children.length >= 30) return toast('Até 30 atividades por planejamento.'); $('#dmBody').insertAdjacentHTML('beforeend', dmRow({ name: '', days: '', owner: '' })); dmCalc(); $('#dmBody tr:last-child .dm-a').focus(); });
 // Enter desce para os dias da próxima atividade (como no Excel); não fecha a janela
@@ -3592,7 +3662,11 @@ async function selfTest() {
     const r2 = dp.dplan.rows.filter((_, i) => i !== 3); applyDPlan(dp, d2n('2027-03-05'), r2, 'Go-live');
     const t2 = dp.tasks.find(t => t.id === ts[1].id);
     ok(dp.tasks.length === 7 && t2.progress === 50 && t2.note === 'nota' && !dp.tasks.some(t => t.id === ts[3].id) && dp.tasks.some(t => t.id === 'manual') && dp.tasks.find(t => t.milestone).start === '2027-03-05' && dp.tasks.find(t => t.milestone).name === 'Go-live', 'D−: replanejar mantém progresso e tira a linha removida');
-    ok(dp.tasks.find(t => t.id === ts[4].id).deps[0] === ts[2].id, 'D−: dependências refeitas sem a linha removida'); }
+    ok(dp.tasks.find(t => t.id === ts[4].id).deps[0] === ts[2].id, 'D−: dependências refeitas sem a linha removida');
+    const mm = normDmModel({ id: '<x>', name: ' Meu ', msName: 'Go-live', rows: [{ name: 'A', days: '3.7', owner: 'Ana' }, { name: '', days: 0 }, { name: 'B', days: 999 }] });
+    ok(mm.id === 'x' && mm.name === 'Meu' && mm.rows.length === 2 && mm.rows[0].days === 3 && mm.rows[1].days === 365 && normDmModel({ rows: [] }) === null && normDmModel(null) === null, 'D−: modelo validado');
+    const st = normDmStore({ models: [mm, mm, { rows: 'x' }], def: 'x' });
+    ok(st.models.length === 1 && st.def === 'x' && normDmStore({ models: [mm], def: 'nao' }).def === '' && normDmStore(null).models.length === 0, 'D−: padrão só aponta para modelo existente'); }
   { // reparos da revisão
     let e1 = ''; try { teamParse('  ', true); } catch (e) { e1 = e.message; }
     ok(/vazio/.test(e1) && teamParse('', false).projects.length === 0, 'equipe: arquivo vazio depois de sincronizar não apaga nada');
