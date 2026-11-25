@@ -723,6 +723,70 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 
 /* visão geral dos projetos */
 #dlgAll{width:min(1000px,calc(100vw - 32px))}
+#dlgDelMany{width:min(640px,calc(100vw - 32px))}
+.dx-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.dx-bar .search{flex:1 1 220px}
+.dx-list{display:flex;flex-direction:column;gap:4px;max-height:48vh;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:6px;background:var(--surface)}
+.dx-i{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:8px;cursor:pointer}
+.dx-i[hidden]{display:none}
+.dx-i:hover{background:var(--line-2)}
+.dx-i:has(input:checked){background:color-mix(in srgb,var(--red) 8%,var(--surface))}
+.dx-i input{width:17px;height:17px;accent-color:var(--red);flex:none}
+.dx-i span{display:flex;flex-direction:column;min-width:0}.dx-i b{font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dx-i small{font-size:12px;color:var(--ink-3)}
+.h3-row{display:flex;align-items:center;justify-content:space-between}
+.h3-b{background:none;border:1px solid transparent;color:#8FB59C;width:26px;height:24px;border-radius:7px;display:grid;place-items:center;padding:0}
+.h3-b svg{width:15px;height:15px}
+.h3-b:hover{color:#fff;background:rgba(230,0,24,.35);border-color:rgba(230,0,24,.6)}
+.h3-b:focus-visible{outline:2px solid var(--green-l)}
+#dlgRes{width:min(1180px,calc(100vw - 32px))}
+.rs-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.rs-sc select{height:36px;border:1px solid var(--line);border-radius:10px;padding:0 10px;background:var(--surface);font-size:13px;color:var(--ink)}
+.rs-kpi{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.rs-kpi:empty{display:none}
+.rs-k{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--surface);display:flex;flex-direction:column;gap:2px}
+.rs-k small{font-size:12px;color:var(--ink-3)}.rs-k b{font:700 22px var(--f-d);color:var(--title)}.rs-k span{font-size:12px;color:var(--ink-2)}
+.rs-k.bad{border-color:color-mix(in srgb,var(--red) 40%,var(--line));background:color-mix(in srgb,var(--red) 5%,var(--surface))}.rs-k.bad b{color:var(--red-txt)}
+.rs-k.good b{color:var(--green-txt)}
+.rs-wrap{max-height:46vh}
+.rs th.rs-cap,.rs td.rs-cap{position:sticky;left:var(--lw,240px);z-index:1;background:var(--surface);min-width:76px;text-align:center;border-right:1px solid var(--line-2)}
+.rs th.rs-pk,.rs td.rs-pk{position:sticky;left:calc(var(--lw,240px) + 76px);z-index:1;background:var(--surface);min-width:64px;text-align:center;font-weight:700;color:var(--ink);border-right:1px solid var(--line)}
+.rs thead th.rs-cap,.rs thead th.rs-pk{z-index:3}
+.rs th.ld-p{min-width:240px;max-width:240px;width:240px;box-sizing:border-box}
+.rs td.rs-pk small{display:block;font-size:10.5px;font-weight:700;color:var(--red-txt)}
+.rs td.rs-pk.bad{color:var(--red-txt)}
+.rs td.rs-cap input{width:58px;height:30px;border:1px solid var(--line);border-radius:7px;text-align:center;font-weight:700;font-size:14px;background:var(--surface);color:var(--ink)}
+.rs td.rs-cap input:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18)}
+.rs .r1 i{background:var(--line-2);color:var(--ink-2)}
+.rs .r2 i{background:color-mix(in srgb,var(--amber) 38%,transparent);color:var(--ink)}
+.rs .r3 i{background:var(--red);color:#fff}
+.rs tfoot th,.rs tfoot td{border-top:2px solid var(--line);background:var(--surface-2)}
+.rs tfoot th.ld-p,.rs tfoot td.rs-cap,.rs tfoot td.rs-pk{background:var(--surface-2)}
+.rs-gaps h3{font:700 15px var(--f-d);color:var(--title);margin:4px 0 8px}
+.rs-gaps ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;max-height:28vh;overflow:auto}
+.rs-gaps li{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.2fr) minmax(0,1.3fr);gap:2px 14px;padding:8px 12px;border:1px solid var(--line);border-left:3px solid var(--red);border-radius:10px;background:var(--surface);font-size:13px}
+.rs-gaps li em{font-style:normal;font-weight:700;color:var(--red-txt)}
+.rs-gaps li small{grid-column:1/-1;color:var(--ink-3);font-size:12px}
+.rs-ok{font-size:13.5px;color:var(--green-txt);font-weight:600}
+@media (max-width:860px){.rs-kpi{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-gaps li{grid-template-columns:1fr}.rs th.ld-p{min-width:150px;max-width:150px;width:150px}.rs{--lw:150px}}
+/* impressão da visão geral */
+#pfPrint{display:none}
+@media print{
+  body.pf-print .app,body.pf-print dialog,body.pf-print .toast{display:none!important}
+  body.pf-print #pfPrint{display:block}
+  html:has(body.pf-print),body.pf-print{background:#fff!important;min-height:0!important}
+  #pfPrint .pf{max-height:none;overflow:visible;border:1px solid #DAE3DD;--nw:230px}
+  #pfPrint .pf-head{position:static}
+  #pfPrint .pf-row{break-inside:avoid;min-height:46px}
+  #pfPrint .pf-guide{display:none}
+  #pfPrint .pf-name b{white-space:normal;overflow:visible}
+  #pfPrint *{animation:none!important}
+}
+.pp-h{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:12px}
+.pp-h h1{font:700 24px var(--f-d);color:#003960;margin:0}
+.pp-h p{margin:2px 0 0;font-size:12.5px;color:#46606F}
+.pp-k{display:flex;gap:14px;font-size:12px;color:#46606F}
+.pp-k span{display:inline-flex;align-items:center;gap:6px}
+.pp-k i{width:14px;height:9px;border-radius:5px;background:var(--h)}
+.pp-k i.pp-ms{width:9px;height:9px;border-radius:2px;background:#003960;transform:rotate(45deg)}
 .pf{--nw:250px;max-height:min(64vh,620px);overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
 .pf-head{position:sticky;top:0;z-index:4;display:grid;grid-template-columns:var(--nw) minmax(0,1fr);background:var(--surface);border-bottom:1px solid var(--line)}
 .pf-corner{display:flex;align-items:flex-end;padding:0 14px 8px;font-size:12px;color:var(--ink-3);border-right:1px solid var(--line)}
@@ -815,9 +879,10 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
     <nav class="side-sec" aria-label="Painéis de todos os projetos"><h3>Todos os projetos</h3>
       <button class="nav-i" data-act="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>Visão geral</button>
       <button class="nav-i" data-act="lpOpen" title="Ver vários projetos juntos, um embaixo do outro, na mesma régua de meses"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg>Vários na Linha única</button>
+      <button class="nav-i" data-act="res" title="Onde as atividades ao mesmo tempo passam das pessoas disponíveis, e quantas faltam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><rect x="5" y="11" width="3" height="9" rx="1"/><rect x="10.5" y="6" width="3" height="14" rx="1"/><rect x="16" y="3" width="3" height="17" rx="1"/><path d="M3 8h18" stroke-dasharray="2 2"/></svg>Recursos e conflitos</button>
       <button class="nav-i" data-act="load"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.2 3.2 0 0 1 0 6.4M21 20c0-2.6-1.6-4.8-4-5.6"/></svg>Carga da equipe</button>
       <button class="nav-i" data-act="marks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15h6"/></svg>Datas da empresa</button></nav>
-    <div class="side-sec"><h3>Projetos <span class="h3-n" id="plistN"></span></h3><nav class="plist" id="plist" aria-label="Projetos"></nav></div>
+    <div class="side-sec"><h3 class="h3-row"><span>Projetos <span class="h3-n" id="plistN"></span></span><button class="h3-b edit-only" data-act="delMany" title="Excluir vários projetos de uma vez" aria-label="Excluir vários projetos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button></h3><nav class="plist" id="plist" aria-label="Projetos"></nav></div>
     <div class="side-sec"><h3>Modelos de projeto</h3><ul class="tlist" id="tlist"></ul></div>
     <div class="side-foot">
       <h3>Equipe</h3>
@@ -875,6 +940,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
             <button data-act="dup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg><span>Duplicar projeto</span></button>
             <hr>
             <button data-act="del" class="danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg><span>Excluir projeto</span></button>
+                        <button data-act="delMany" class="danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg><span>Excluir vários projetos</span></button>
           </div>
         </details>
         <details class="menu"><summary class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 13v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6"/></svg>Exportar</summary>
@@ -973,6 +1039,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li><b>Logo acima do cronograma, à direita, o que navega na linha do tempo:</b> na Detalhada, a escala Semana, Mês ou Trimestre e <b>Hoje</b>; na Linha única, o zoom (<b>−</b>, <b>Tudo na tela</b>, <b>Legível</b>, <b>+</b>).</li>
         <li><b>Barra do cronograma, à direita, o que mexe no projeto:</b> o menu <b>Projeto</b> (grupos e cores, critério das cores, linha de base, replanejar D−, salvar como modelo, duplicar e excluir), o menu <b>Exportar</b>, <b>Inserir em lote</b> e, por último, a ação principal, <b>Nova tarefa</b>.</li>
         <li><b>No canto do título:</b> desfazer e refazer, tema claro ou escuro e este Manual.</li>
+        <li>Para apagar vários projetos de uma vez, use a lixeira ao lado de <b>Projetos</b>, na barra lateral, ou <b>Projeto › Excluir vários projetos</b>. Desfazer (Ctrl+Z) traz de volta.</li>
         <li>No celular, a barra lateral fica recolhida: toque em <b>Menu</b> no topo para abrir.</li>
       </ul></div></details>
       <details><summary>Adicionar e editar tarefas</summary><div><ul>
@@ -1031,6 +1098,13 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>As datas aparecem ao lado enquanto você digita, e o resumo diz quando o trabalho precisa começar. Em vermelho: não cabe, porque precisaria ter começado antes de hoje.</li>
         <li>Clique em <b>Criar cronograma</b>: o projeto nasce com as atividades em sequência (cada uma depende da anterior) e o marco no fim, com o nome que você deu.</li>
       </ol>Os modelos ficam salvos no seu navegador e vão junto no <b>Salvar backup</b>. A conta usa só dias úteis: não conta sábado, domingo nem feriado nacional (o Carnaval entra como feriado). Se a data do marco cair num dia sem trabalho, o marco fica nela e a última atividade termina no dia útil anterior. Dá para renomear, mudar a ordem (setas), tirar ou acrescentar atividades; linha com 0 dias fica de fora. Se o marco mudar de data (ou de nome), use <b>Projeto › Replanejar D−</b>: as tarefas se reorganizam para trás e mantêm o % concluído e as observações.</div></details>
+      <details><summary>Recursos e conflitos</summary><div><ul>
+        <li>Na barra lateral, em <b>Todos os projetos</b>, clique em <b>Recursos e conflitos</b>. Cada atividade aberta conta como 1 pessoa ocupada enquanto dura.</li>
+        <li>Escolha como agrupar: <b>Por atividade</b> junta as atividades de mesmo nome de todos os projetos (por exemplo, todas as "Especificação" do D−), <b>Por grupo</b>, <b>Por responsável</b> ou <b>Tudo junto</b>.</li>
+        <li>Em <b>Pessoas</b>, informe quantas você tem em cada linha. As semanas mostram o pico de atividades ao mesmo tempo: amarelo falta 1 pessoa, vermelho faltam 2 ou mais. A coluna <b>Pico</b> diz quantas faltam no pior momento.</li>
+        <li>Os cartões do topo resumem o pico total, quantas pessoas a mais cobririam todos os picos e quantos períodos estão em conflito. A lista <b>Onde vão faltar pessoas</b> traz cada período, quantas pessoas precisa, quantas tem e os projetos envolvidos.</li>
+        <li>Clique numa semana para ver as atividades dela. <b>Baixar Excel</b> gera a planilha com a necessidade por semana e a lista de conflitos. As pessoas informadas ficam salvas neste navegador.</li>
+      </ul></div></details>
       <details><summary>Carga da equipe</summary><div><ul>
         <li>Na barra lateral, <b>Carga da equipe</b> mostra uma linha por pessoa e uma coluna por semana, somando as tarefas abertas de <b>todos</b> os projetos.</li>
         <li>O número é quantas tarefas a pessoa tem naquela semana. Amarelo: duas ao mesmo tempo. Vermelho: três ou mais. A coluna da semana atual fica marcada.</li>
@@ -1067,6 +1141,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ul></div></details>
       <details><summary>Visão geral dos projetos</summary><div><ul>
         <li><b>Visão geral</b>, na barra lateral em <b>Todos os projetos</b>, mostra todos os projetos lado a lado: situação, % concluído, período, atrasadas e próximo marco.</li>
+        <li><b>Imprimir ou salvar PDF</b>, dentro da Visão geral, gera uma página limpa em paisagem com a legenda das cores. <b>Baixar Excel</b> gera uma planilha com a tabela dos projetos (situação, tendência, %, datas, atrasadas, próximo marco) e uma aba com a linha do tempo pintada por mês.</li>
         <li>Cada projeto ocupa uma linha, e todos usam a mesma régua de meses e anos no topo. O traço vermelho é hoje e os losangos são os marcos.</li>
         <li>Passe o mouse sobre a régua ou as linhas: uma linha tracejada mostra a data exata, para ver em que dias os projetos se sobrepõem.</li>
         <li>A cor da barra segue a situação do projeto: verde no prazo, amarelo atenção, vermelho atrasado, azul concluído.</li>
@@ -1175,7 +1250,32 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
     <h2 id="pfT">Visão geral dos projetos</h2>
     <p class="muted">Todos os projetos na mesma régua de datas. Passe o mouse para ver a data exata e onde os projetos se sobrepõem. Clique em um projeto para abrir.</p>
     <div class="pf" id="pfList"></div>
-    <div class="dlg-foot"><button class="btn primary" value="">Fechar</button></div>
+    <div class="dlg-foot"><button class="btn" type="button" id="btnPfXlsx">Baixar Excel</button><button class="btn" type="button" id="btnPfPrint">Imprimir ou salvar PDF</button><button class="btn primary" value="">Fechar</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgDelMany" aria-labelledby="dxT">
+  <form method="dialog" class="dlg-in">
+    <h2 id="dxT">Excluir vários projetos</h2>
+    <p class="muted">Marque os projetos que quer apagar. Dá para voltar com <b>Desfazer</b> (Ctrl+Z) logo depois; para guardar uma cópia, salve um backup antes.</p>
+    <div class="dx-bar"><label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="dxQ" type="search" placeholder="Filtrar por nome" aria-label="Filtrar projetos por nome" autocomplete="off"></label><button class="btn slim" type="button" id="dxAll">Marcar os visíveis</button><button class="btn slim" type="button" id="dxNone">Desmarcar todos</button></div>
+    <div class="dx-list" id="dxList"></div>
+    <p class="muted" id="dxInfo" aria-live="polite"></p>
+    <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn danger" value="ok" id="dxOk" disabled>Excluir</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgRes" aria-labelledby="rsT">
+  <form method="dialog" class="dlg-in">
+    <h2 id="rsT">Recursos e conflitos</h2>
+    <p class="muted">Cada atividade aberta conta como <b>1 pessoa ocupada</b> enquanto dura. Informe quantas pessoas você tem em cada linha: as semanas em amarelo ou vermelho são onde as atividades ao mesmo tempo passam disso, e a lista abaixo diz quando e quantas pessoas vão faltar. Clique numa semana para ver as atividades.</p>
+    <div class="rs-bar"><div class="seg" id="rsMode" role="group" aria-label="Agrupar por"><button type="button" data-rm="act" title="Atividades com o mesmo nome em projetos diferentes ficam na mesma linha (ideal para o D−)">Por atividade</button><button type="button" data-rm="group" title="Uma linha por grupo (fase)">Por grupo</button><button type="button" data-rm="owner" title="Uma linha por responsável">Por responsável</button><button type="button" data-rm="all" title="Uma linha só, somando tudo">Tudo junto</button></div>
+      <label class="fld rs-sc"><span class="vh">Projetos</span><select id="rsScope"></select></label><label class="chk"><input type="checkbox" id="rsFrom" checked> Só de hoje em diante</label></div>
+    <div class="rs-kpi" id="rsKpi"></div>
+    <div class="ld-wrap rs-wrap" id="rsGrid"></div>
+    <div class="ld-det" id="rsDet" aria-live="polite"></div>
+    <div class="rs-gaps" id="rsGaps"></div>
+    <div class="dlg-foot"><button class="btn" type="button" id="btnRsXlsx">Baixar Excel</button><button class="btn primary" value="">Fechar</button></div>
   </form>
 </dialog>
 
@@ -2942,6 +3042,8 @@ const ACT = {
     setTimeout(() => { const m = $('#lpMenu'); m.open = true; m.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); m.querySelector('summary').focus({ preventScroll: true }); });
   },
   dmRe: () => openDm(cur()),
+  res: () => openRes(),
+  delMany: () => openDelMany(),
   load: () => { renderLoad(); const d = $('#dlgLoad'); d.returnValue = ''; d.showModal(); },
   marks: () => { renderMarks(); const d = $('#dlgMarks'); d.returnValue = ''; d.showModal(); },
   report: () => { $('#repBody').innerHTML = repHTML(!RO); const d = $('#dlgRep'); d.returnValue = ''; d.showModal(); },
@@ -3064,7 +3166,7 @@ $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
 // Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
 // A cada versão nova, troque a data e a lista abaixo.
-const NOVIDADES = { versao: '2026-11-27', secoes: ['Ler o cronograma', 'Onde fica cada coisa'] };
+const NOVIDADES = { versao: '2026-11-28', secoes: ['Recursos e conflitos', 'Visão geral dos projetos', 'Onde fica cada coisa'] };
 {
   const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
   sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
@@ -3382,6 +3484,223 @@ function printReport() {
 }
 $('#btnRepPrint').addEventListener('click', printReport);
 $('#btnRepPptx').addEventListener('click', () => ACT.pptx());
+
+/* ---------- planilha genérica (.xlsx) ---------- */
+// sheets: [{ name, rows: [[célula]], widths: [..], freeze: [colunas, linhas], grid: false }]
+// célula: valor simples (texto ou número) ou { v, st } com st = 'h' cabeçalho, 'd' data (v = dia), 'p' porcentagem (0 a 1),
+// 't' título, 'b' negrito, ou um número = índice em fills (fundo colorido, texto branco centralizado)
+function xlsxBook(sheets, fills = []) {
+  const xe = s => String(s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const ST = { h: 1, d: 2, p: 3, t: 4, b: 5 };
+  const cell = (r, c, x) => {
+    const o = x !== null && typeof x === 'object' ? x : { v: x }, s = typeof o.st === 'number' ? 6 + o.st : ST[o.st] || 0;
+    let v = o.v; if (o.st === 'd' && typeof v === 'number') v += 25569;
+    if (v === '' || v == null) return s ? `<c r="${colL(c)}${r}" s="${s}"/>` : '';
+    return typeof v === 'number' ? `<c r="${colL(c)}${r}" s="${s}"><v>${v}</v></c>` : `<c r="${colL(c)}${r}" s="${s}" t="inlineStr"><is><t xml:space="preserve">${xe(v)}</t></is></c>`;
+  };
+  const sheetXml = sh => {
+    const [fx, fy] = sh.freeze || [0, 0];
+    const pane = fx || fy ? `<pane${fx ? ` xSplit="${fx}"` : ''}${fy ? ` ySplit="${fy}"` : ''} topLeftCell="${colL(fx)}${fy + 1}" activePane="${fx && fy ? 'bottomRight' : fy ? 'bottomLeft' : 'topRight'}" state="frozen"/>` : '';
+    const cols = (sh.widths || []).map((w, i) => `<col min="${i + 1}" max="${i + 1}" width="${w}" customWidth="1"/>`).join('');
+    const rows = sh.rows.map((r, i) => `<row r="${i + 1}">${r.map((x, c) => cell(i + 1, c, x)).join('')}</row>`).join('');
+    return `${XHEAD}<worksheet xmlns="${XNS}"><sheetViews><sheetView workbookViewId="0"${sh.grid === false ? ' showGridLines="0"' : ''}>${pane}</sheetView></sheetViews>${cols ? `<cols>${cols}</cols>` : ''}<sheetData>${rows}</sheetData></worksheet>`;
+  };
+  const fill = c => `<fill><patternFill patternType="solid"><fgColor rgb="FF${c.replace('#', '').toUpperCase()}"/><bgColor indexed="64"/></patternFill></fill>`;
+  const white = '<color rgb="FFFFFFFF"/>';
+  const styles = `${XHEAD}<styleSheet xmlns="${XNS}"><numFmts count="1"><numFmt numFmtId="164" formatCode="dd/mm/yyyy"/></numFmts>
+<fonts count="4"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/>${white}<name val="Calibri"/></font><font><b/><sz val="14"/><color rgb="FF003960"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font></fonts>
+<fills count="${3 + fills.length}"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill>${fill('#006729')}${fills.map(fill).join('')}</fills>
+<borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin">${white}</left><right style="thin">${white}</right><top style="thin">${white}</top><bottom style="thin">${white}</bottom><diagonal/></border></borders>
+<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>
+<cellXfs count="${6 + fills.length}"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1" applyAlignment="1"><alignment wrapText="1" vertical="center"/></xf><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/><xf numFmtId="9" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0" applyFont="1"/><xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0" applyFont="1"/>${fills.map((c, i) => `<xf numFmtId="0" fontId="1" fillId="${3 + i}" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center"/></xf>`).join('')}</cellXfs>
+<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`;
+  const RNS = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships', WT = 'application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml';
+  const nm = n => xe(String(n).replace(/[\\/?*[\]:]/g, ' ').slice(0, 31));
+  return zip([
+    ['[Content_Types].xml', `${XHEAD}<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>${sheets.map((s, i) => `<Override PartName="/xl/worksheets/sheet${i + 1}.xml" ContentType="${WT}"/>`).join('')}<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>`],
+    ['_rels/.rels', `${XHEAD}<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="${RNS}/officeDocument" Target="xl/workbook.xml"/></Relationships>`],
+    ['xl/workbook.xml', `${XHEAD}<workbook xmlns="${XNS}" xmlns:r="${RNS}"><sheets>${sheets.map((s, i) => `<sheet name="${nm(s.name)}" sheetId="${i + 1}" r:id="rId${i + 1}"/>`).join('')}</sheets></workbook>`],
+    ['xl/_rels/workbook.xml.rels', `${XHEAD}<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${sheets.map((s, i) => `<Relationship Id="rId${i + 1}" Type="${RNS}/worksheet" Target="worksheets/sheet${i + 1}.xml"/>`).join('')}<Relationship Id="rId${sheets.length + 1}" Type="${RNS}/styles" Target="styles.xml"/></Relationships>`],
+    ['xl/styles.xml', styles],
+    ...sheets.map((s, i) => [`xl/worksheets/sheet${i + 1}.xml`, sheetXml(s)])
+  ]);
+}
+
+/* ---------- visão geral: dados, Excel e impressão ---------- */
+function pfData(ps = state.projects) {
+  return ps.map(p => {
+    const n = p.tasks.length, [hk, hl] = health(p), t = trend(p);
+    const s = n ? Math.min(...p.tasks.map(t => d2n(t.start))) : null, e = n ? Math.max(...p.tasks.map(t => d2n(t.end))) : null;
+    const nx = p.tasks.filter(t => t.milestone && t.progress < 100 && d2n(t.start) >= todayN).sort((a, b) => a.start < b.start ? -1 : 1)[0];
+    return { p, n, hk, hl, trend: t ? TRT[t.dir] : '', pct: pctOf(p), s, e, late: p.tasks.filter(t => status(t) === 'late').length,
+      risk: p.tasks.filter(t => t.risk && status(t) !== 'done').length, nx, ms: p.tasks.filter(t => t.milestone).map(t => d2n(t.start)) };
+  });
+}
+function buildPfXlsx() {
+  const D = pfData(), HK = ['ok', 'risk', 'late', 'done', 'none'], fills = HK.map(k => '#' + HC[k]).concat(['#003960']);
+  const rows1 = [[{ v: 'Visão geral dos projetos', st: 't' }], [`Atualizado em ${fmtLong(todayN)}, ${D.length} ${D.length === 1 ? 'projeto' : 'projetos'}`], [],
+    ['Projeto', 'Área', 'Situação', 'Tendência (7 dias)', '% concluído', 'Início', 'Fim', 'Tarefas', 'Atrasadas', 'Em risco', 'Próximo marco', 'Data do próximo marco'].map(v => ({ v, st: 'h' })),
+    ...D.map(d => [{ v: d.p.name, st: 'b' }, d.p.area || '', { v: d.hl, st: HK.indexOf(d.hk) }, d.trend, { v: d.pct / 100, st: 'p' }, d.s == null ? '' : { v: d.s, st: 'd' }, d.e == null ? '' : { v: d.e, st: 'd' },
+      d.n, d.late, d.risk, d.nx ? d.nx.name : '', d.nx ? { v: d2n(d.nx.start), st: 'd' } : ''])];
+  // linha do tempo por mês: célula pintada com a cor da situação nos meses em que o projeto tem tarefa; ◆ = mês com marco
+  const all = D.filter(d => d.n), a = all.length ? mOfN(Math.min(todayN, ...all.map(d => d.s))) : mOfN(todayN), b = all.length ? mOfN(Math.max(todayN, ...all.map(d => d.e))) : a;
+  const ms = []; for (let m = a; m <= b && ms.length < 120; m++) ms.push(m);
+  const rows2 = [[{ v: 'Linha do tempo dos projetos', st: 't' }], ['Cada célula pintada é um mês com tarefa; a cor é a situação do projeto (verde no prazo, amarelo atenção, vermelho atrasado, azul concluído). ◆ = mês com marco.'], [],
+    [{ v: 'Projeto', st: 'h' }, { v: 'Situação', st: 'h' }, { v: '%', st: 'h' }, ...ms.map(m => ({ v: `${MES[m % 12]}/${String(Math.floor(m / 12)).slice(2)}`, st: m === mOfN(todayN) ? HK.length : 'h' }))],
+    ...D.map(d => [{ v: d.p.name, st: 'b' }, d.hl, { v: d.pct / 100, st: 'p' }, ...ms.map(m => {
+      const on = d.n && m >= mOfN(d.s) && m <= mOfN(d.e), mk = d.ms.some(n => mOfN(n) === m);
+      return on ? { v: mk ? '◆' : '', st: HK.indexOf(d.hk) } : mk ? '◆' : '';
+    })])];
+  return xlsxBook([
+    { name: 'Visão geral', rows: rows1, widths: [34, 24, 13, 16, 12, 12, 12, 9, 10, 10, 30, 14], freeze: [1, 4], grid: false },
+    { name: 'Linha do tempo', rows: rows2, widths: [34, 12, 7, ...ms.map(() => 6.5)], freeze: [3, 4], grid: false }
+  ], fills);
+}
+// imprime só a visão geral, sempre no tema claro e em paisagem
+function printPf() {
+  const box = document.createElement('div'), el = document.documentElement, th = el.dataset.theme;
+  box.id = 'pfPrint';
+  box.innerHTML = `<header class="pp-h"><div><h1>Visão geral dos projetos</h1><p>Atualizado em ${fmtLong(todayN)}, ${state.projects.length} ${state.projects.length === 1 ? 'projeto' : 'projetos'}</p></div><div class="pp-k"><span><i class="hb-ok"></i>No prazo</span><span><i class="hb-risk"></i>Atenção</span><span><i class="hb-late"></i>Atrasado</span><span><i class="hb-done"></i>Concluído</span><span><i class="pp-ms"></i>Marco</span></div></header>` + `<div class="pf">${$('#pfList').innerHTML}</div>`;
+  document.body.appendChild(box);
+  $('#dlgAll').close(); el.dataset.theme = 'light'; document.body.classList.add('pf-print');
+  try { print(); } finally { document.body.classList.remove('pf-print'); el.dataset.theme = th; box.remove(); }
+}
+$('#btnPfPrint').addEventListener('click', printPf);
+$('#btnPfXlsx').addEventListener('click', () => { download(buildPfXlsx(), `visao-geral-projetos-${n2d(todayN)}.xlsx`); toast('Planilha da visão geral exportada'); });
+
+/* ---------- excluir vários projetos ---------- */
+function openDelMany() {
+  $('#dxList').innerHTML = state.projects.map(p => {
+    const n = p.tasks.length, s = n ? Math.min(...p.tasks.map(t => d2n(t.start))) : 0, e = n ? Math.max(...p.tasks.map(t => d2n(t.end))) : 0;
+    return `<label class="dx-i"><input type="checkbox" value="${p.id}"><span><b>${esc(p.name)}</b><small>${n} ${n === 1 ? 'tarefa' : 'tarefas'}${n ? `, ${fmtCurto(s)} a ${fmtLong(e)}` : ''}${p.dplan ? ', planejado em D−' : ''}</small></span></label>`;
+  }).join('');
+  $('#dxQ').value = ''; dxUpd(); const d = $('#dlgDelMany'); d.returnValue = ''; d.showModal(); $('#dxQ').focus();
+}
+function dxUpd() {
+  const k = $('#dxList').querySelectorAll('input:checked').length, all = k === state.projects.length;
+  $('#dxOk').disabled = !k; $('#dxOk').textContent = !k ? 'Excluir' : all ? `Excluir todos os ${k} projetos` : k === 1 ? 'Excluir 1 projeto' : `Excluir ${k} projetos`;
+  $('#dxInfo').textContent = k ? `${k} de ${state.projects.length} ${state.projects.length === 1 ? 'projeto marcado' : 'projetos marcados'}.` : 'Marque os projetos que quer excluir.';
+}
+$('#dxList').addEventListener('change', dxUpd);
+// a busca só esconde; "Marcar os visíveis" marca o que sobrou na tela
+$('#dxQ').addEventListener('input', () => { const q = norm($('#dxQ').value); $('#dxList').querySelectorAll('.dx-i').forEach(l => { l.hidden = !!q && !norm(l.textContent).includes(q); }); });
+$('#dxAll').addEventListener('click', () => { $('#dxList').querySelectorAll('.dx-i:not([hidden]) input').forEach(c => { c.checked = true; }); dxUpd(); });
+$('#dxNone').addEventListener('click', () => { $('#dxList').querySelectorAll('input').forEach(c => { c.checked = false; }); dxUpd(); });
+$('#dlgDelMany').addEventListener('close', () => {
+  if ($('#dlgDelMany').returnValue !== 'ok') return;
+  const ids = new Set([...$('#dxList').querySelectorAll('input:checked')].map(c => c.value)); if (!ids.size) return;
+  const k = ids.size;
+  state.projects = state.projects.filter(p => !ids.has(p.id)); state.lineSel = state.lineSel.filter(id => !ids.has(id));
+  if (!state.projects.length) state.projects.push(blank('Novo projeto'));
+  if (!state.projects.some(p => p.id === state.currentId)) state.currentId = state.projects[0].id;
+  save(); closeDrawer(); render('load');
+  toast(`${k === 1 ? '1 projeto excluído' : k + ' projetos excluídos'}. Para voltar, use Desfazer (Ctrl+Z).`);
+});
+
+/* ---------- recursos e conflitos ---------- */
+// Cada tarefa aberta (não marco, não concluída) ocupa 1 pessoa enquanto dura. Agrupa por atividade, grupo ou responsável,
+// conta quantas acontecem ao mesmo tempo, dia a dia, e compara com as pessoas disponíveis em cada linha.
+const RES_MODES = { act: 'Atividade', group: 'Grupo', owner: 'Responsável', all: 'Tudo junto' };
+const resCap = (mode, key) => { const v = state.resCap && state.resCap[mode] && state.resCap[mode][key]; return Number.isFinite(v) && v >= 0 ? v : 1; };
+function resGrid(ps, mode, from) {
+  const items = ps.flatMap(p => p.tasks.filter(t => !t.milestone && t.progress < 100).map(t => ({ t, p, s: Math.max(d2n(t.start), from ?? -1e9), e: d2n(t.end) }))).filter(x => x.e >= x.s);
+  if (!items.length) return { weeks: [], rows: [], total: null, d0: 0 };
+  const d0 = monday(Math.min(...items.map(x => x.s))), d1 = Math.min(Math.max(...items.map(x => x.e)), d0 + 7 * 156 - 1), N = d1 - d0 + 1;
+  const weeks = []; for (let w = d0; w <= d1; w += 7) weeks.push(w);
+  const keyOf = x => mode === 'act' ? [x.t.name] : mode === 'group' ? [(x.p.groups.find(g => g.id === x.t.groupId) || {}).name || 'Sem grupo'] : mode === 'owner' ? (owns(x.t).length ? owns(x.t) : ['']) : ['Todas as atividades'];
+  const mk = (key, name) => ({ key, name, items: [], day: new Int16Array(N) });
+  const add = (r, x) => { r.items.push(x); for (let d = Math.max(x.s, d0); d <= Math.min(x.e, d1); d++) r.day[d - d0]++; };
+  const rows = new Map(), total = mk('*', 'Total');
+  for (const x of items) {
+    add(total, x);
+    for (const k0 of keyOf(x)) {
+      const key = norm(k0).replace(/\s+/g, ' ');
+      if (!rows.has(key)) rows.set(key, mk(key, String(k0).trim().replace(/\s+/g, ' ') || 'Sem responsável'));
+      add(rows.get(key), x);
+    }
+  }
+  const fin = (r, cap) => {
+    r.cap = cap; r.cells = weeks.map((w, j) => { let pk = 0; for (let i = j * 7; i < Math.min(N, j * 7 + 7); i++) if (r.day[i] > pk) pk = r.day[i]; return pk; });
+    r.max = Math.max(0, ...r.cells);
+    // períodos seguidos em que a demanda passa das pessoas disponíveis
+    r.gaps = []; let g = null;
+    for (let i = 0; i <= N; i++) {
+      const over = i < N && r.day[i] > cap;
+      if (over && !g) g = { a: d0 + i, b: d0 + i, need: r.day[i] };
+      else if (over) { g.b = d0 + i; g.need = Math.max(g.need, r.day[i]); }
+      else if (g) { g.ps = [...new Set(r.items.filter(x => x.s <= g.b && x.e >= g.a).map(x => x.p.name))]; g.miss = g.need - cap; r.gaps.push(g); g = null; }
+    }
+    return r;
+  };
+  const list = [...rows.values()].map(r => fin(r, resCap(mode, r.key))).sort((a, b) => b.max - a.max || a.name.localeCompare(b.name, 'pt-BR'));
+  return { weeks, rows: list, total: fin(total, list.reduce((a, r) => a + r.cap, 0)), d0 };
+}
+let RG = null;
+function resPs() { return $('#rsScope').value === 'line' ? lineProjects() : state.projects; }
+function renderRes() {
+  const mode = state.resMode in RES_MODES ? state.resMode : 'act';
+  document.querySelectorAll('#rsMode button').forEach(b => b.setAttribute('aria-pressed', b.dataset.rm === mode));
+  RG = resGrid(resPs(), mode, $('#rsFrom').checked ? todayN : null);
+  $('#rsDet').innerHTML = '';
+  if (!RG.rows.length) { $('#rsKpi').innerHTML = ''; $('#rsGrid').innerHTML = '<div class="ld-0">Nenhuma atividade aberta com datas nesse período.</div>'; $('#rsGaps').innerHTML = ''; return; }
+  const now = monday(todayN), T = RG.total, gaps = RG.rows.flatMap(r => r.gaps.map(g => ({ ...g, r }))).sort((a, b) => a.a - b.a || b.miss - a.miss);
+  const wPk = T.cells.indexOf(T.max), maxMiss = Math.max(0, ...RG.rows.map(r => Math.max(0, r.max - r.cap)));
+  const sumMiss = RG.rows.reduce((a, r) => a + Math.max(0, r.max - r.cap), 0);
+  $('#rsKpi').innerHTML = `<div class="rs-k"><small>Pico de demanda</small><b>${T.max} ${T.max === 1 ? 'pessoa' : 'pessoas'}</b><span>ao mesmo tempo, semana de ${fmtCurto(RG.weeks[wPk])}</span></div>`
+    + `<div class="rs-k"><small>Pessoas disponíveis</small><b>${T.cap}</b><span>soma das linhas abaixo</span></div>`
+    + `<div class="rs-k${sumMiss ? ' bad' : ' good'}"><small>Para cobrir todos os picos</small><b>${sumMiss ? `+${sumMiss} ${sumMiss === 1 ? 'pessoa' : 'pessoas'}` : 'Sem falta'}</b><span>${sumMiss ? `o maior buraco é de ${maxMiss} numa linha só` : 'a equipe atual dá conta'}</span></div>`
+    + `<div class="rs-k${gaps.length ? ' bad' : ' good'}"><small>Períodos em conflito</small><b>${gaps.length}</b><span>${gaps.length ? `o primeiro começa em ${fmtCurto(gaps[0].a)}` : 'nenhum'}</span></div>`;
+  const head = `<tr><th class="ld-p" scope="col">${RES_MODES[mode]}</th><th class="rs-cap" scope="col" title="Quantas pessoas você tem para esta linha">Pessoas</th><th class="rs-pk" scope="col">Pico</th>${RG.weeks.map(w => `<th scope="col"${w === now ? ' class="now"' : ''} title="Semana de ${fmtLong(w)}">${fmtCurto(w)}</th>`).join('')}</tr>`;
+  const cellH = (r, i, c, j) => { const lv = !c ? 0 : c > r.cap ? (c - r.cap >= 2 ? 3 : 2) : 1;
+    return `<td${RG.weeks[j] === now ? ' class="now"' : ''}><button type="button" class="r${lv}" data-rs="${i}:${j}"${c ? ` aria-label="${esc(r.name)}, semana de ${fmtCurto(RG.weeks[j])}: ${c} ao mesmo tempo, ${r.cap} disponíveis"` : ' disabled aria-label="nada"'}>${c ? `<i>${c}</i>` : ''}</button></td>`; };
+  const body = RG.rows.map((r, i) => `<tr><th class="ld-p" scope="row" title="${esc(r.name)}">${esc(r.name)}</th><td class="rs-cap">${mode === 'all' ? `<b>${r.cap}</b>` : `<input type="number" min="0" max="999" value="${r.cap}" data-cap="${esc(r.key)}" aria-label="Pessoas disponíveis para ${esc(r.name)}">`}</td><td class="rs-pk${r.max > r.cap ? ' bad' : ''}">${r.max}${r.max > r.cap ? `<small>${r.max - r.cap === 1 ? 'falta 1' : `faltam ${r.max - r.cap}`}</small>` : ''}</td>${r.cells.map((c, j) => cellH(r, i, c, j)).join('')}</tr>`).join('');
+  const foot = mode === 'all' ? '' : `<tfoot><tr><th class="ld-p" scope="row">Total</th><td class="rs-cap"><b>${T.cap}</b></td><td class="rs-pk${T.max > T.cap ? ' bad' : ''}">${T.max}</td>${T.cells.map((c, j) => cellH(T, 't', c, j)).join('')}</tr></tfoot>`;
+  $('#rsGrid').innerHTML = `<table class="ld rs"><thead>${head}</thead><tbody>${body}</tbody>${foot}</table>`;
+  const th = $('#rsGrid thead th.now'); if (th) $('#rsGrid').scrollLeft = th.offsetLeft - 320;
+  $('#rsGaps').innerHTML = gaps.length ? `<h3>Onde vão faltar pessoas</h3><ul>${gaps.slice(0, 40).map(g => `<li><b>${esc(g.r.name)}</b><span>${g.a === g.b ? fmtLong(g.a) : `${fmtLong(g.a)} a ${fmtLong(g.b)}`}</span><span>precisa de até <b>${g.need}</b>, tem ${g.r.cap}: <em>${g.miss === 1 ? 'falta 1' : `faltam ${g.miss}`}</em></span><small>${g.ps.map(esc).join(', ')}</small></li>`).join('')}</ul>${gaps.length > 40 ? `<p class="muted">E mais ${gaps.length - 40} períodos (veja na planilha).</p>` : ''}`
+    : '<p class="rs-ok">Nenhum conflito: em todo o período, as atividades simultâneas cabem nas pessoas disponíveis.</p>';
+}
+function openRes() {
+  const multi = lineProjects().length > 1;
+  $('#rsScope').innerHTML = `<option value="all">Todos os projetos (${state.projects.length})</option>${multi ? `<option value="line">Só os da Linha única (${lineProjects().length})</option>` : ''}`;
+  renderRes(); const d = $('#dlgRes'); d.returnValue = ''; d.showModal();
+}
+$('#rsMode').addEventListener('click', e => { const b = e.target.closest('[data-rm]'); if (!b) return; state.resMode = b.dataset.rm; if (!RO) persist(); renderRes(); });
+$('#rsScope').addEventListener('change', renderRes);
+$('#rsFrom').addEventListener('change', renderRes);
+$('#rsGrid').addEventListener('change', e => {
+  const i = e.target.closest('[data-cap]'); if (!i) return;
+  const mode = state.resMode in RES_MODES ? state.resMode : 'act', v = Math.max(0, Math.min(999, Math.floor(+i.value || 0)));
+  state.resCap = state.resCap && typeof state.resCap === 'object' ? state.resCap : {}; (state.resCap[mode] = state.resCap[mode] || {})[i.dataset.cap] = v;
+  if (!RO) persist(); const sl = $('#rsGrid').scrollLeft; renderRes(); $('#rsGrid').scrollLeft = sl;
+  const ni = $('#rsGrid').querySelector(`[data-cap="${CSS.escape(i.dataset.cap)}"]`); if (ni) ni.focus();
+});
+$('#rsGrid').addEventListener('click', e => {
+  const b = e.target.closest('[data-rs]'); if (!b || !RG) return;
+  $('#rsGrid').querySelectorAll('[aria-pressed]').forEach(x => x.removeAttribute('aria-pressed')); b.setAttribute('aria-pressed', 'true');
+  const [i, j] = b.dataset.rs.split(':'), r = i === 't' ? RG.total : RG.rows[+i], w = RG.weeks[+j];
+  const xs = r.items.filter(x => x.s <= w + 6 && x.e >= w).sort((a, b) => a.s - b.s);
+  $('#rsDet').innerHTML = `<b>${esc(r.name)}, semana de ${fmtLong(w)}:</b> até ${r.cells[+j]} ao mesmo tempo, ${r.cap} ${r.cap === 1 ? 'pessoa disponível' : 'pessoas disponíveis'}.<ul>${xs.map(x => `<li><span>${esc(x.p.name)}</span><b>${esc(x.t.name)}</b><span>${fmtCurto(d2n(x.t.start))} a ${fmtCurto(x.e)}</span>${x.t.owner ? `<span>${esc(x.t.owner)}</span>` : ''}</li>`).join('')}</ul>`;
+});
+$('#btnRsXlsx').addEventListener('click', () => {
+  if (!RG || !RG.rows.length) return toast('Nada para exportar nesse período.');
+  const mode = state.resMode in RES_MODES ? state.resMode : 'act', fills = ['#E60018', '#E8A317', '#DCE8DF'];
+  const lv = (r, c) => !c ? '' : { v: c, st: c > r.cap ? (c - r.cap >= 2 ? 0 : 1) : 2 };
+  const grid = [[{ v: 'Necessidade de pessoas por semana', st: 't' }], [`Pico de atividades simultâneas por semana (cada atividade aberta = 1 pessoa), agrupado por ${RES_MODES[mode].toLowerCase()}. Vermelho: faltam 2 ou mais pessoas; amarelo: falta 1. Gerado em ${fmtLong(todayN)}.`], [],
+    [RES_MODES[mode], 'Pessoas disponíveis', 'Pico', 'Faltam no pico', ...RG.weeks.map(w => fmtBR(w).slice(0, 5))].map(v => ({ v, st: 'h' })),
+    ...RG.rows.map(r => [{ v: r.name, st: 'b' }, r.cap, r.max, Math.max(0, r.max - r.cap), ...r.cells.map(c => lv(r, c))]),
+    ...(mode === 'all' ? [] : [[{ v: 'Total', st: 'b' }, RG.total.cap, RG.total.max, Math.max(0, RG.total.max - RG.total.cap), ...RG.total.cells.map(c => lv(RG.total, c))]])];
+  const gaps = RG.rows.flatMap(r => r.gaps.map(g => ({ ...g, r }))).sort((a, b) => a.a - b.a);
+  const list = [[{ v: 'Onde vão faltar pessoas', st: 't' }], [],
+    [RES_MODES[mode], 'De', 'Até', 'Precisa de', 'Disponíveis', 'Faltam', 'Projetos envolvidos'].map(v => ({ v, st: 'h' })),
+    ...gaps.map(g => [{ v: g.r.name, st: 'b' }, { v: g.a, st: 'd' }, { v: g.b, st: 'd' }, g.need, g.r.cap, { v: g.miss, st: g.miss >= 2 ? 0 : 1 }, g.ps.join(', ')])];
+  if (!gaps.length) list.push(['Nenhum conflito no período.']);
+  download(xlsxBook([
+    { name: 'Necessidade por semana', rows: grid, widths: [34, 11, 7, 9, ...RG.weeks.map(() => 6.5)], freeze: [4, 4], grid: false },
+    { name: 'Onde faltam pessoas', rows: list, widths: [34, 12, 12, 11, 11, 9, 60], freeze: [1, 3], grid: false }
+  ], fills), `recursos-e-conflitos-${n2d(todayN)}.xlsx`);
+  toast('Planilha de recursos exportada');
+});
 
 /* ---------- PowerPoint (.pptx) editável ---------- */
 // Formas nativas do PowerPoint (retângulos, losangos, caixas de texto), não imagem: dá para mexer em tudo depois.
@@ -4002,6 +4321,18 @@ async function selfTest() {
     ok(pa.name === 'Projeto da aba' && pa.tasks.length > 0, 'abas: importa a aba escolhida');
     let err = ''; try { await parseXlsx(buf, 'x', 'Não existe'); } catch (e) { err = e.message; }
     ok(/não achei a aba/.test(err), 'abas: aba inexistente dá erro'); }
+  { // recursos e conflitos: 3 "Espec" ao mesmo tempo com 1 pessoa = faltam 2
+    const mkp = (nm, a, b) => normP({ id: 'r' + nm, name: nm, groups: [{ id: 'g', name: 'Fase', color: '#006729' }], tasks: [{ id: 't' + nm, name: 'Espec', groupId: 'g', owner: '', start: a, end: b, progress: 0, milestone: false, risk: false, deps: [], note: '' }] });
+    const rg = resGrid([mkp('A', '2027-03-01', '2027-03-12'), mkp('B', '2027-03-08', '2027-03-19'), mkp('C', '2027-03-10', '2027-03-11')], 'act', null);
+    const r = rg.rows[0];
+    ok(rg.rows.length === 1 && r.name === 'Espec' && r.max === 3 && r.cap === 1 && rg.total.max === 3, 'recursos: pico de simultâneas');
+    ok(r.gaps.length === 1 && r.gaps[0].a === d2n('2027-03-08') && r.gaps[0].b === d2n('2027-03-12') && r.gaps[0].need === 3 && r.gaps[0].miss === 2 && r.gaps[0].ps.join() === 'A,B,C', 'recursos: período em conflito e quantas faltam');
+    const rgg = resGrid([mkp('A', '2027-03-01', '2027-03-12')], 'all', d2n('2027-03-10'));
+    ok(rgg.rows[0].max === 1 && !rgg.rows[0].gaps.length && rgg.rows[0].items[0].s === d2n('2027-03-10'), 'recursos: a partir de hoje e sem conflito');
+    // planilha genérica: o próprio leitor do programa abre o que ela escreve
+    const g = await xlsxGrid(await xlsxBook([{ name: 'A', rows: [['x', 2, { v: d2n('2027-01-05'), st: 'd' }]] }, { name: 'B/2', rows: [[{ v: 'y', st: 0 }]] }], ['#E60018']).arrayBuffer(), n => n.indexOf('A'));
+    ok(g.rows[0][0] === 'x' && g.rows[0][1] === 2 && g.rows[0][2] === d2n('2027-01-05') + 25569 && g.sheets.join() === 'A,B 2', 'planilha genérica: ida e volta');
+    ok(pfData([mkp('A', '2027-03-01', '2027-03-12')])[0].pct === 0 && (await buildPfXlsx().arrayBuffer()).byteLength > 500, 'visão geral: planilha'); }
   { // planejar D−
     const A = d2n('2027-02-20'); // sábado; Carnaval de 2027 em 8 e 9/2
     ok(!isWork(A) && !isWork(d2n('2027-02-08')) && !isWork(d2n('2027-02-09')) && isWork(d2n('2027-02-10')) && prevWork(A) === d2n('2027-02-19'), 'D−: dias úteis');

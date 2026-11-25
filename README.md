@@ -18,6 +18,9 @@ Ferramenta para montar cronogramas e roadmaps de projetos no navegador. É um ú
 - O relatório executivo mostra todos os projetos numa página, do mais crítico para o mais tranquilo, com um campo para as decisões que a diretoria precisa tomar. Dá para imprimir ou salvar em PDF.
 - A exportação para PowerPoint gera slides editáveis (formas nativas, não imagem): resumo dos projetos, linha do tempo de todos na mesma régua e um cronograma por projeto.
 - Ao lado da situação aparece a tendência (melhorou, piorou ou estável em relação a 7 dias atrás), e o critério das cores pode ter tolerância em dias por projeto.
+- **Recursos e conflitos** soma as atividades que acontecem ao mesmo tempo em todos os projetos (por atividade, grupo ou responsável), compara com as pessoas que você tem em cada linha e mostra onde e quantas vão faltar. Exporta para Excel.
+- A Visão geral pode ser impressa (ou salva em PDF) numa página limpa e exportada para Excel, com a tabela dos projetos e a linha do tempo pintada por mês.
+- Dá para excluir vários projetos de uma vez pela lixeira ao lado de Projetos, na barra lateral.
 - A carga da equipe mostra, por pessoa e por semana, quantas tarefas abertas ela tem somando todos os projetos, com amarelo para duas ao mesmo tempo e vermelho para três ou mais.
 - O caminho crítico destaca a sequência de tarefas que define a data final, calculada pelas dependências.
 - Datas da empresa (congelamento, fechamento) e feriados nacionais, calculados sem internet, aparecem como faixas em todos os cronogramas e no PowerPoint.
