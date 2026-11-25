@@ -627,6 +627,9 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 .rp-0{color:var(--ink-2)!important}
 .rp-p i{font-style:normal;font-size:10.5px;font-weight:700;padding:0 5px;border-radius:4px;margin-right:3px}
 .tip-beh{color:#FFD27A;font-weight:600}
+.rag-rt{border:1px solid var(--line);border-radius:12px;padding:8px 12px 12px;margin:0}
+.rag-rt legend{font-weight:700;font-size:13px;color:var(--title);padding:0 4px}.rag-rt legend small{font-weight:400;color:var(--ink-3)}
+.rag-rt p{margin:0 0 8px;font-size:12.5px}
 .rp-l{background:var(--red);color:#fff}.rp-r{background:color-mix(in srgb,var(--amber) 30%,transparent);color:var(--ink)}
 .rp-p textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--surface);font:400 13px/1.35 var(--f-t);color:var(--ink);resize:vertical;min-height:52px}
 .rp-p textarea:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18)}
@@ -1216,9 +1219,10 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ul></div></details>
       <details><summary>Situação do projeto</summary><div><ul>
         <li><b>No prazo</b> (verde): nada atrasado nem em risco.</li>
-        <li><b>Atenção</b> (amarelo): há tarefa marcada como em risco; há tarefa em andamento <b>abaixo do previsto</b> (o % concluído está 25 pontos ou mais abaixo do que o tempo que já passou pede, por exemplo metade do prazo passou e ela está em 0%); ou o fim do projeto passou do que estava na linha de base. Passe o mouse na barra para ver quanto ela deveria estar; o Relatório executivo lista essas tarefas.</li>
-        <li><b>Atrasado</b> (vermelho): há tarefa vencida e não concluída.</li>
-        <li><b>Projeto › Critério das cores</b> define tolerâncias para este projeto: por exemplo, tarefa vencida há até 3 dias fica amarela em vez de vermelha, ou um desvio de até 5 dias da linha de base continua verde. A regra em vigor aparece ao passar o mouse na situação, no relatório e no PowerPoint.</li>
+        <li><b>Atenção</b> (amarelo): há tarefa marcada como em risco; há tarefa de <b>3 a 9 dias úteis atrás do previsto</b>; ou o fim do projeto passou do que estava na linha de base.</li>
+        <li><b>Atrasado</b> (vermelho): há tarefa vencida e não concluída, ou tarefa <b>10 dias úteis ou mais atrás do previsto</b>, mesmo que ainda não tenha vencido. Essa tarefa também conta em <b>Atrasadas</b>, no filtro de status e na cor da barra.</li>
+        <li><b>Dias atrás do previsto</b> = dias úteis que já passaram desde o início da tarefa menos o que o % concluído cobre. Exemplo: começou há 10 dias úteis e está em 0%, está 10 dias atrás; se estivesse em 50% de uma tarefa de 20 dias úteis, estaria em dia. Passe o mouse na barra para ver quantos dias e quanto ela deveria estar; o Relatório executivo mostra isso ao lado de cada tarefa. Atualize o % concluído para o projeto refletir o andamento real.</li>
+        <li><b>Projeto › Critério das cores</b> define tolerâncias para este projeto: por exemplo, tarefa vencida há até 3 dias fica amarela em vez de vermelha, ou um desvio de até 5 dias da linha de base continua verde. Lá também ficam os limites do <b>ritmo das tarefas</b> (3 dias úteis para Atenção e 10 para Atrasado, se não mudar), que valem para todos os projetos de uma vez. A regra em vigor aparece ao passar o mouse na situação, no relatório e no PowerPoint.</li>
         <li>Ao lado da situação aparece a <b>tendência</b>: <b>↑ Melhorou</b>, <b>↓ Piorou</b> ou <b>→ Estável</b>, comparando com a situação de 7 dias atrás (ou do primeiro dia registrado, se o projeto for mais novo). O programa guarda uma foto por dia, sozinho.</li>
         <li><b>Concluído</b> (azul): todas as tarefas em 100%.</li>
         <li>A mesma cor aparece na bolinha ao lado de cada projeto na barra lateral.</li>
@@ -1421,8 +1425,12 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 <dialog id="dlgRag" aria-labelledby="rgT">
   <form method="dialog" class="dlg-in" id="fRag">
     <h2 id="rgT">Critério das cores</h2>
-    <p class="muted">Quantos dias de atraso este projeto aceita antes de mudar de cor. Com 0, qualquer atraso já conta. A regra vale para a tela, o relatório executivo e o PowerPoint.</p>
+    <p class="muted">Os dois primeiros campos valem só para este projeto: quantos dias de atraso ele aceita antes de mudar de cor. Com 0, qualquer atraso já conta. A regra vale para a tela, o relatório executivo e o PowerPoint.</p>
     <div class="two"><label class="fld">Dias de atraso tolerados<input type="number" name="late" min="0" max="365" step="1" inputmode="numeric"></label><label class="fld">Dias de desvio do plano tolerados<input type="number" name="slip" min="0" max="365" step="1" inputmode="numeric"></label></div>
+    <fieldset class="rag-rt"><legend>Ritmo das tarefas <small>(vale para todos os projetos)</small></legend>
+      <p class="muted">Dias úteis atrás do previsto: os dias que já passaram desde o início menos o que o % concluído cobre. Tarefa que começou há 10 dias úteis e está em 0% está 10 dias atrás.</p>
+      <div class="two"><label class="fld">Atenção a partir de (dias úteis)<input type="number" name="rw" min="1" max="60" step="1" inputmode="numeric"></label><label class="fld">Atrasado a partir de (dias úteis)<input type="number" name="rl" min="2" max="120" step="1" inputmode="numeric"></label></div>
+    </fieldset>
     <ul class="rag-rule" id="ragRule"></ul>
     <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok">Salvar critério</button></div>
   </form>
@@ -1541,6 +1549,8 @@ const TPLS = [
 function status(t) {
   if (t.progress >= 100) return 'done';
   if (d2n(t.end) < todayN) return 'late';
+  // começou e está muito atrás do previsto (ex.: 10 dias úteis em 0%): já é atraso, mesmo antes do fim
+  if (!t.milestone && lagOf(t) >= ragCfg().l) return 'late';
   if (t.risk) return 'risk';
   return d2n(t.start) <= todayN ? 'doing' : 'todo';
 }
@@ -1645,27 +1655,42 @@ const slipDays = p => { const b = p.tasks.filter(t => t.be); return b.length ? M
 // Critério das cores, por projeto: quantos dias de atraso e de desvio do plano ainda não mudam a cor (0 = qualquer um já conta)
 const tolN = v => Math.max(0, Math.min(365, Math.round(+v || 0)));
 const tolOf = p => ({ late: tolN(p.tol && p.tol.late), slip: tolN(p.tol && p.tol.slip) });
-// Abaixo do previsto: tarefa em andamento (já começou, ainda não venceu) com o % concluído BEH pontos ou mais
-// abaixo do que o tempo decorrido pede. Ex.: metade do prazo já passou e a tarefa está em 0%.
-const BEH = 25;
-const expPct = t => { const s = d2n(t.start), e = d2n(t.end); return e <= s ? 0 : Math.round(Math.max(0, Math.min(1, (todayN - s + 1) / (e - s + 1))) * 100); };
-const behind = t => !t.milestone && t.progress < 100 && d2n(t.start) <= todayN && d2n(t.end) >= todayN && expPct(t) - t.progress >= BEH;
+// Ritmo: quantos dias úteis a tarefa está atrás do previsto = dias úteis já passados desde o início (até ontem)
+// menos os dias equivalentes ao % concluído. Ex.: começou há 10 dias úteis e está em 0% = 10 dias atrás.
+// A partir de ragCfg().w dias o projeto fica em Atenção; a partir de ragCfg().l a tarefa conta como atrasada.
+// Os limites valem para todos os projetos (Critério das cores).
+const RAG_DEF = { w: 3, l: 10 };
+const ragCfg = () => { let r = null; try { r = state && state.rag; } catch (e) { /* estado ainda carregando */ }
+  const w = Math.max(1, Math.min(60, Math.round(+(r && r.w)) || RAG_DEF.w)), l = Math.max(w + 1, Math.min(120, Math.round(+(r && r.l)) || RAG_DEF.l)); return { w, l }; };
+// dias úteis acumulados desde 03/01/2000 (calculado uma vez, para contar rápido com muitos projetos)
+const WD0 = Math.round(Date.UTC(2000, 0, 3) / DAY); let WDC = null;
+const wdBefore = n => { if (!WDC) { WDC = new Int32Array(40000); let c = 0; for (let i = 0; i < 40000; i++) { WDC[i] = c; if (isWork(WD0 + i)) c++; } } return WDC[Math.max(0, Math.min(39999, n - WD0))]; };
+const wdIn = (a, b) => b < a ? 0 : wdBefore(b + 1) - wdBefore(a);
+function lagOf(t) {
+  if (t.milestone || t.progress >= 100) return 0;
+  const s = d2n(t.start), e = d2n(t.end); if (s >= todayN) return 0;
+  const tot = Math.max(1, wdIn(s, e)), el = wdIn(s, Math.min(todayN - 1, e));
+  return Math.max(0, Math.round(el - t.progress / 100 * tot));
+}
+const expPct = t => { const s = d2n(t.start), e = d2n(t.end); return Math.round(Math.min(1, wdIn(s, Math.min(todayN - 1, e)) / Math.max(1, wdIn(s, e))) * 100); };
+// atrás no ritmo, mas ainda não atrasada (Atenção)
+const behind = t => status(t) !== 'late' && lagOf(t) >= ragCfg().w;
 const behindOf = p => p.tasks.filter(behind);
 function health(p) {
   const open = p.tasks.filter(t => t.progress < 100), T = tolOf(p);
   if (!p.tasks.length) return ['none', 'Sem tarefas'];
   if (!open.length) return ['done', 'Concluído'];
   const late = open.filter(t => status(t) === 'late');
-  if (late.some(t => todayN - d2n(t.end) > T.late)) return ['late', 'Atrasado'];
+  if (late.some(t => d2n(t.end) >= todayN || todayN - d2n(t.end) > T.late)) return ['late', 'Atrasado'];
   if (late.length || open.some(t => t.risk) || open.some(behind) || slipDays(p) > T.slip) return ['risk', 'Atenção'];
   return ['ok', 'No prazo'];
 }
 // a regra em palavras, para a tela, o relatório e o PowerPoint
-function ragRule(p) {
-  const T = tolOf(p), d = n => n === 1 ? '1 dia' : n + ' dias';
+function ragRule(p, rc) {
+  const T = tolOf(p), RC = rc || ragCfg(), d = n => n === 1 ? '1 dia' : n + ' dias';
   return [
-    ['late', 'Atrasado', T.late ? `tarefa não concluída vencida há mais de ${d(T.late)}` : 'tarefa vencida e não concluída'],
-    ['risk', 'Atenção', `${T.late ? `tarefa vencida há até ${d(T.late)}, ` : ''}tarefa marcada em risco, tarefa em andamento com o % concluído ${BEH} pontos ou mais abaixo do esperado pelo tempo que já passou, ou fim do projeto ${T.slip ? `mais de ${d(T.slip)} ` : ''}depois da linha de base`],
+    ['late', 'Atrasado', `${T.late ? `tarefa não concluída vencida há mais de ${d(T.late)}` : 'tarefa vencida e não concluída'}, ou tarefa ${RC.l} dias úteis ou mais atrás do previsto`],
+    ['risk', 'Atenção', `${T.late ? `tarefa vencida há até ${d(T.late)}, ` : ''}tarefa marcada em risco, tarefa de ${RC.w} a ${RC.l - 1} dias úteis atrás do previsto, ou fim do projeto ${T.slip ? `mais de ${d(T.slip)} ` : ''}depois da linha de base`],
     ['ok', 'No prazo', 'nenhum dos casos acima'],
     ['done', 'Concluído', 'todas as tarefas em 100%']
   ];
@@ -2407,7 +2432,7 @@ function markSel() { document.querySelectorAll('.g-row.t').forEach(r => r.classL
 /* ---------- dica sobre a barra ---------- */
 function showTip(t, e) {
   const s = d2n(t.start), en = d2n(t.end), st = status(t), tip = $('#tip');
-  tip.innerHTML = `<b>${esc(t.name)}</b><span>${t.milestone ? fmtLong(s) : `${fmtLong(s)} a ${fmtLong(en)}, ${en - s + 1} dias`}</span><span>${STL[st]}${t.milestone ? '' : ', ' + t.progress + '% concluído'}${t.owner ? ', ' + esc(t.owner) : ''}</span>${behind(t) ? `<span class="tip-beh">Abaixo do previsto: pelo tempo que passou, deveria estar em ${expPct(t)}%</span>` : ''}${t.bs ? `<span>Plano: ${fmtCurto(d2n(t.bs))}${t.milestone ? '' : ' a ' + fmtCurto(d2n(t.be))} (${varTxt(en - d2n(t.be))})</span>` : ''}${t.note ? `<span class="tip-n">${esc(t.note.length > 160 ? t.note.slice(0, 160) + '…' : t.note)}</span>` : ''}`;
+  tip.innerHTML = `<b>${esc(t.name)}</b><span>${t.milestone ? fmtLong(s) : `${fmtLong(s)} a ${fmtLong(en)}, ${en - s + 1} dias`}</span><span>${STL[st]}${t.milestone ? '' : ', ' + t.progress + '% concluído'}${t.owner ? ', ' + esc(t.owner) : ''}</span>${lagOf(t) > 0 && d2n(t.end) >= todayN ? `<span class="tip-beh">${lagOf(t)} ${lagOf(t) === 1 ? 'dia útil' : 'dias úteis'} atrás do previsto: deveria estar em ${expPct(t)}%</span>` : ''}${t.bs ? `<span>Plano: ${fmtCurto(d2n(t.bs))}${t.milestone ? '' : ' a ' + fmtCurto(d2n(t.be))} (${varTxt(en - d2n(t.be))})</span>` : ''}${t.note ? `<span class="tip-n">${esc(t.note.length > 160 ? t.note.slice(0, 160) + '…' : t.note)}</span>` : ''}`;
   tip.classList.add('on');
   tip.style.left = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8) + 'px';
   tip.style.top = Math.min(e.clientY + 18, innerHeight - tip.offsetHeight - 8) + 'px';
@@ -3191,7 +3216,7 @@ const ACT = {
   print: () => print(),
   rag: () => {
     const p = cur(), F = $('#fRag').elements, T = tolOf(p);
-    F.late.value = T.late; F.slip.value = T.slip; $('#ragRule').innerHTML = ragList(p, T);
+    F.late.value = T.late; F.slip.value = T.slip; const RC = ragCfg(); F.rw.value = RC.w; F.rl.value = RC.l; $('#ragRule').innerHTML = ragList(p, T, RC);
     const d = $('#dlgRag'); d.returnValue = ''; d.showModal();
   },
   // destacar feriados liga também a exibição deles (se estiver desligada em Datas da empresa)
@@ -3602,14 +3627,16 @@ $('#mkHol').addEventListener('change', e => { state.showHol = e.target.checked; 
 $('#dlgMarks').addEventListener('close', () => { readMarks(); renderMarks(); });
 
 /* ---------- critério das cores ---------- */
-const ragList = (p, tol) => ragRule({ ...p, tol }).map(([k, l, t]) => `<li><span class="hb hb-${k}">${l}</span>${esc(t)}</li>`).join('');
-$('#fRag').addEventListener('input', () => { const F = $('#fRag').elements; $('#ragRule').innerHTML = ragList(cur(), { late: tolN(F.late.value), slip: tolN(F.slip.value) }); });
+const rcOf = F => { const w = Math.max(1, Math.min(60, Math.round(+F.rw.value) || RAG_DEF.w)); return { w, l: Math.max(w + 1, Math.min(120, Math.round(+F.rl.value) || RAG_DEF.l)) }; };
+const ragList = (p, tol, rc) => ragRule({ ...p, tol }, rc).map(([k, l, t]) => `<li><span class="hb hb-${k}">${l}</span>${esc(t)}</li>`).join('');
+$('#fRag').addEventListener('input', () => { const F = $('#fRag').elements; $('#ragRule').innerHTML = ragList(cur(), { late: tolN(F.late.value), slip: tolN(F.slip.value) }, rcOf(F)); });
 // Enter salva (o primeiro botão do formulário é o Cancelar)
 $('#fRag').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); $('#fRag button[value=ok]').click(); } });
 $('#dlgRag').addEventListener('close', () => {
   if ($('#dlgRag').returnValue !== 'ok') return;
   const p = cur(), F = $('#fRag').elements, tol = { late: tolN(F.late.value), slip: tolN(F.slip.value) };
   if (tol.late || tol.slip) p.tol = tol; else delete p.tol;
+  const rc = rcOf(F); if (rc.w === RAG_DEF.w && rc.l === RAG_DEF.l) delete state.rag; else state.rag = rc;
   save(); render(); toast('Critério das cores salvo: ' + health(p)[1].toLowerCase() + ' com a regra nova.');
 });
 
@@ -3627,7 +3654,7 @@ function repHTML(edit) {
   const ps = repProjects(), cnt = k => ps.filter(p => health(p)[0] === k).length;
   const chips = HCNT.filter(([k]) => cnt(k)).map(([k, a, b]) => `<span class="hb hb-${k}">${cnt(k)} ${cnt(k) === 1 ? a : b}</span>`).join('');
   const rows = ps.map(p => {
-    const per = perOf(p), sl = slipDays(p), ms = nextMs(p, 2), lt = lateOf(p), rk = riskOf(p), ar = [...lt.map(t => ['l', 'atrasada', t]), ...rk.map(t => ['r', 'em risco', t]), ...behindOf(p).filter(t => !t.risk).map(t => ['r', `abaixo do previsto (${t.progress}% de ${expPct(t)}%)`, t])];
+    const per = perOf(p), sl = slipDays(p), ms = nextMs(p, 2), lt = lateOf(p), rk = riskOf(p), ar = [...lt.map(t => ['l', d2n(t.end) >= todayN ? `atrasada ${lagOf(t)} d úteis` : 'atrasada', t]), ...rk.map(t => ['r', 'em risco', t]), ...behindOf(p).filter(t => !t.risk).map(t => ['r', `${lagOf(t)} d úteis atrás`, t])];
     return `<section class="rp-row rp-p hb-${health(p)[0]}">
       <div>${logoBox(p, 'lg-rp')}<b>${esc(p.name)}</b>${p.area ? `<small>${esc(p.area)}</small>` : ''}</div>
       <div data-l="Situação"><span class="hb-w">${hb(p)}${tb(p)}</span><small>${pctOf(p)}% concluído${per ? `, termina ${fmtCurto(per[1])}` : ''}${p.baseAt && sl ? `, ${sl > 0 ? '+' : '−'}${Math.abs(sl)} d do plano` : ''}</small></div>
@@ -4642,11 +4669,15 @@ async function selfTest() {
     const g = await xlsxGrid(await xlsxBook([{ name: 'A', rows: [['x', 2, { v: d2n('2027-01-05'), st: 'd' }]] }, { name: 'B/2', rows: [[{ v: 'y', st: 0 }]] }], ['#E60018']).arrayBuffer(), n => n.indexOf('A'));
     ok(g.rows[0][0] === 'x' && g.rows[0][1] === 2 && g.rows[0][2] === d2n('2027-01-05') + 25569 && g.sheets.join() === 'A,B 2', 'planilha genérica: ida e volta');
     ok(pfData([mkp('A', '2027-03-01', '2027-03-12')])[0].pct === 0 && (await buildPfXlsx().arrayBuffer()).byteLength > 500, 'visão geral: planilha'); }
-  { // abaixo do previsto: metade do prazo passou e a tarefa está em 0% = Atenção
-    const T0 = todayN, mt = (a, b, pr) => ({ id: 'b' + a, name: 'B', groupId: 'g', owner: '', start: n2d(T0 + a), end: n2d(T0 + b), progress: pr, milestone: false, risk: false, deps: [], note: '' });
-    const pb = normP({ id: 'pb', name: 'PB', groups: [{ id: 'g', name: 'G', color: '#006729' }], tasks: [mt(-50, 40, 0)] });
-    ok(behind(pb.tasks[0]) && health(pb)[0] === 'risk', 'abaixo do previsto: vira Atenção');
-    ok(health(normP({ ...pb, tasks: [mt(-50, 40, 50)] }))[0] === 'ok' && health(normP({ ...pb, tasks: [mt(-2, 40, 0)] }))[0] === 'ok', 'abaixo do previsto: em dia ou recém-começada continua No prazo'); }
+  { // ritmo: dias úteis atrás do previsto
+    const T0 = todayN, back = k => { let n = T0; for (let i = 0; i < k; i++) n = prevWork(n); return n; };
+    const mt = (a, b, pr) => ({ id: 'b' + a + pr, name: 'B', groupId: 'g', owner: '', start: n2d(a), end: n2d(b), progress: pr, milestone: false, risk: false, deps: [], note: '' });
+    const P = ts => normP({ id: 'pb', name: 'PB', groups: [{ id: 'g', name: 'G', color: '#006729' }], tasks: ts });
+    const t10 = P([mt(back(10), T0 + 80, 0)]);
+    ok(lagOf(t10.tasks[0]) === 10 && status(t10.tasks[0]) === 'late' && health(t10)[0] === 'late', 'ritmo: 10 dias úteis em 0% = atrasado (mesmo antes do fim)');
+    const t4 = P([mt(back(4), T0 + 80, 0)]);
+    ok(lagOf(t4.tasks[0]) === 4 && status(t4.tasks[0]) !== 'late' && health(t4)[0] === 'risk', 'ritmo: 4 dias úteis atrás = atenção');
+    ok(health(P([mt(back(1), T0 + 80, 0)]))[0] === 'ok' && health(P([mt(back(10), T0 + 4, 70)]))[0] === 'ok' && lagOf(mt(T0, T0 + 9, 0)) === 0, 'ritmo: recém-começada ou em dia continua no prazo'); }
   { // PowerPoint de 1 slide e férias nos recursos
     const mkq = (nm, a, b, ow) => normP({ id: 'q' + nm, name: nm, groups: [{ id: 'g', name: 'Fase', color: '#006729' }], tasks: [{ id: 't' + nm, name: 'Espec', groupId: 'g', owner: ow || '', start: a, end: b, progress: 0, milestone: false, risk: false, deps: [], note: '' }] });
     const many = Array.from({ length: 30 }, (_, i) => mkq('P' + i, '2027-03-01', '2027-03-12'));
@@ -4745,7 +4776,7 @@ async function selfTest() {
     const mg = mergeList([m1, m3], [m2], new Map([[m3.id, JSON.stringify(m3)]]), []);
     ok(mg.map(m => m.id).sort().join() === 'm1,m2', 'datas da empresa: junção no arquivo da equipe'); }
   { // critério das cores, tendência e PowerPoint
-    const g = [{ id: 'g', name: 'G', color: '#006729' }], tk = (e, pr = 0) => ({ id: 't' + e, name: 'T', groupId: 'g', owner: '', start: n2d(todayN - 20), end: n2d(todayN + e), progress: pr, milestone: false, risk: false, deps: [] });
+    const g = [{ id: 'g', name: 'G', color: '#006729' }], tk = (e, pr = 0) => ({ id: 't' + e, name: 'T', groupId: 'g', owner: '', start: n2d(e > 0 ? todayN : todayN - 20), end: n2d(todayN + e), progress: pr, milestone: false, risk: false, deps: [] });
     const hp = { id: 'h', name: 'H & <x>', area: '', groups: g, tasks: [tk(-2), tk(5)] };
     ok(health(hp)[0] === 'late', 'cores: atraso sem tolerância');
     hp.tol = { late: 3 }; ok(health(hp)[0] === 'risk', 'cores: atraso dentro da tolerância');

@@ -17,6 +17,7 @@ Ferramenta para montar cronogramas e roadmaps de projetos no navegador. É um ú
 - A linha de base guarda o plano original e mostra quantos dias cada tarefa atrasou ou adiantou.
 - O relatório executivo mostra todos os projetos numa página, do mais crítico para o mais tranquilo, com um campo para as decisões que a diretoria precisa tomar. Dá para imprimir ou salvar em PDF.
 - A exportação para PowerPoint gera slides editáveis (formas nativas, não imagem): resumo dos projetos, linha do tempo de todos na mesma régua e um cronograma por projeto.
+- A situação considera o ritmo: tarefa que já começou e está 3 dias úteis atrás do previsto deixa o projeto em Atenção, e 10 dias ou mais conta como atrasada (limites ajustáveis em Critério das cores, para todos os projetos).
 - Ao lado da situação aparece a tendência (melhorou, piorou ou estável em relação a 7 dias atrás), e o critério das cores pode ter tolerância em dias por projeto.
 - **Recursos e conflitos** soma as atividades que acontecem ao mesmo tempo em todos os projetos (por atividade, grupo ou responsável), compara com as pessoas que você tem em cada linha (descontando as férias cadastradas) e mostra onde e quantas vão faltar. Exporta para Excel.
 - A Visão geral pode ser impressa (ou salva em PDF) numa página limpa e exportada para Excel (tabela dos projetos e linha do tempo pintada por mês) ou para um PowerPoint de 1 slide com todos os projetos.
