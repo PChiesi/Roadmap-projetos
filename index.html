@@ -4255,7 +4255,7 @@ function slCenVisao(c, from, pg) {
   if (!c.s) return s.xml();
   // legenda: as fases (grupos) com a cor de cada uma
   const gc = new Map(); c.ps.forEach(p => p.groups.forEach(g => { if (!gc.has(norm(g.name)) && p.tasks.some(t => t.groupId === g.id && d2n(t.end) >= from)) gc.set(norm(g.name), [g.name, g.color]); }));
-  let lx = SM; [...gc.values()].slice(0, 8).forEach(([nm, col]) => { s.sp({ x: lx, y: SH - 22, w: 14, h: 8, g: 'roundRect', f: col.slice(1).toUpperCase() }); s.sp({ x: lx + 18, y: SH - 26, w: 92, h: 14, paras: [[cut(nm, 18), { sz: 8, c: '46606F' }]], ins: 0 }); lx += 112; });
+  let lx = SM; [...gc.values()].slice(0, 8).forEach(([nm, col]) => { s.sp({ x: lx, y: SH - 22, w: 14, h: 8, f: col.slice(1).toUpperCase() }); s.sp({ x: lx + 18, y: SH - 26, w: 92, h: 14, paras: [[cut(nm, 18), { sz: 8, c: '46606F' }]], ins: 0 }); lx += 112; });
   const y0 = 112, rh = Math.min(40, (SH - 36 - y0) / Math.max(1, n)), nw = n > 24 ? 170 : 214, x0 = SM + nw, x1 = SW - SM;
   c.ps.forEach((p, i) => { if (i % 2) s.sp({ x: SM, y: y0 + i * rh, w: SW - 2 * SM, h: rh, f: 'F5F8F6' }); });
   const X = sRuler(s, x0, x1, 80, mOfN(c.s), mOfN(c.e), y0 + n * rh);
@@ -4268,9 +4268,9 @@ function slCenVisao(c, from, pg) {
     // uma barra por fase (grupo), do começo ao fim das tarefas dela, cortada no início do período
     p.groups.forEach(g => { const ts = p.tasks.filter(t => t.groupId === g.id && !t.milestone && d2n(t.end) >= from); if (!ts.length) return;
       const a = Math.max(from, Math.min(...ts.map(t => d2n(t.start)))), e = Math.max(...ts.map(t => d2n(t.end))), bx = X(a);
-      s.sp({ x: bx, y: by, w: Math.max(2, X(e + 1) - bx), h: bh, g: 'roundRect', f: g.color.slice(1).toUpperCase(), ln: ['FFFFFF', 0.5] }); });
+      s.sp({ x: bx, y: by, w: Math.max(2, X(e + 1) - bx), h: bh, f: g.color.slice(1).toUpperCase(), ln: ['FFFFFF', 0.5] }); });
     const md = Math.max(4, Math.min(10, rh * 0.5));
-    p.tasks.filter(t => t.milestone && d2n(t.start) >= from).forEach(t => s.sp({ x: X(d2n(t.start) + 0.5) - md / 2, y: y + rh / 2 - md / 2, w: md, h: md, g: 'diamond', f: '003960', ln: ['FFFFFF', 0.5] }));
+    p.tasks.filter(t => t.milestone && d2n(t.start) >= from).forEach(t => s.sp({ x: X(d2n(t.start)) + 0.5, y: y + rh / 2 - md / 2, w: md, h: md, g: 'diamond', f: '003960', ln: ['FFFFFF', 0.5] }));
   });
   return s.xml();
 }
@@ -4279,7 +4279,7 @@ function slCenRes(c, pg) {
   sHead(s, `${c.name}: recursos necessários`, `Pico de atividades ao mesmo tempo, por área e por mês (cada atividade = 1 pessoa da área responsável; uma área não cobre a outra)`, pg);
   if (!R.total) { s.sp({ x: SM, y: 120, w: 600, h: 20, paras: [['Nenhuma atividade no período.', { sz: 12, c: '46606F' }]], ins: 0 }); return s.xml(); }
   const T = R.total, kp = [[`${T.need}`, 'pessoas necessárias', 'soma do pico de cada área', '003960'], [`${T.have}`, 'na equipe atual', 'soma das áreas', '46606F'], [`+${T.hire}`, 'a contratar', T.hire ? 'para cobrir os picos' : 'a equipe atual dá conta', T.hire ? 'E60018' : '006729']];
-  kp.forEach(([v, l, sub, col], i) => { const x = SM + i * 210; s.sp({ x, y: 80, w: 200, h: 52, g: 'roundRect', f: 'F5F8F6', ln: ['DCE4DF', 0.75] }); s.sp({ x: x + 10, y: 84, w: 70, h: 44, paras: [[v, { sz: 24, b: 1, c: col }]], ins: 0 }); s.sp({ x: x + 78, y: 86, w: 118, h: 40, paras: [[l, { sz: 9, b: 1, c: '0B2A3C' }], [sub, { sz: 8, c: '5B6770' }]], ins: 0, an: 'ctr' }); });
+  kp.forEach(([v, l, sub, col], i) => { const x = SM + i * 210; s.sp({ x, y: 80, w: 200, h: 52, f: 'F5F8F6', ln: ['DCE4DF', 0.75] }); s.sp({ x: x + 10, y: 84, w: 70, h: 44, paras: [[v, { sz: 24, b: 1, c: col }]], ins: 0 }); s.sp({ x: x + 78, y: 86, w: 118, h: 40, paras: [[l, { sz: 9, b: 1, c: '0B2A3C' }], [sub, { sz: 8, c: '5B6770' }]], ins: 0, an: 'ctr' }); });
   // colunas: meses (ou trimestres, se forem muitos)
   let cols = R.months.map((m, i) => ({ l: mLbl(m), idx: [i] }));
   if (cols.length > 18) { const q = new Map(); R.months.forEach((m, i) => { const k = Math.floor(m / 3); if (!q.has(k)) q.set(k, { l: `T${k % 4 + 1}/${String(Math.floor(m / 12)).slice(2)}`, idx: [] }); q.get(k).idx.push(i); }); cols = [...q.values()]; }
@@ -4311,16 +4311,16 @@ function slCenCmp(P, D, pg) {
   const gap = 12, cw = (SW - 2 * SM - gap * (n - 1)) / n, y0 = 82, ch = 104, big = n > 3 ? 22 : 30;
   P.forEach((c, i) => {
     const x = SM + i * (cw + gap);
-    s.sp({ x, y: y0, w: cw, h: ch, g: 'roundRect', f: 'FFFFFF', ln: [col(i), 1.25] });
-    s.sp({ x, y: y0, w: cw, h: 22, g: 'roundRect', f: col(i), paras: [[cut(c.name, n > 3 ? 22 : 36), { sz: 11, b: 1, c: 'FFFFFF' }]], al: 'ctr', ins: 4 });
+    s.sp({ x, y: y0, w: cw, h: ch, f: 'FFFFFF', ln: [col(i), 1.25] });
+    s.sp({ x, y: y0, w: cw, h: 22, f: col(i), paras: [[cut(c.name, n > 3 ? 22 : 36), { sz: 11, b: 1, c: 'FFFFFF' }]], al: 'ctr', ins: 4 });
     const half = cw / 2;
     s.sp({ x: x + 8, y: y0 + 26, w: half - 12, h: 40, paras: [[String(nP[i]), { sz: big, b: 1, c: '003960' }]], ins: 0 });
     s.sp({ x: x + 8, y: y0 + 64, w: half - 12, h: 14, paras: [['projetos', { sz: 9, c: '46606F' }]], ins: 0 });
-    if (n > 1 && nP[i] > minP) s.sp({ x: x + 8, y: y0 + 86, w: Math.min(half - 12, 92), h: 14, g: 'roundRect', f: 'DCE8F5', paras: [[`+${nP[i] - minP} ${nP[i] - minP === 1 ? 'projeto' : 'projetos'}`, { sz: 8, b: 1, c: '003960' }]], al: 'ctr', ins: 2 });
+    if (n > 1 && nP[i] > minP) s.sp({ x: x + 8, y: y0 + 86, w: Math.min(half - 12, 92), h: 14, f: 'DCE8F5', paras: [[`+${nP[i] - minP} ${nP[i] - minP === 1 ? 'projeto' : 'projetos'}`, { sz: 8, b: 1, c: '003960' }]], al: 'ctr', ins: 2 });
     s.sp({ x: x + half, y: y0 + 26, w: half - 8, h: 40, paras: [[`+${hP[i]}`, { sz: big, b: 1, c: hP[i] ? 'C80015' : '006729' }]], ins: 0 });
     s.sp({ x: x + half, y: y0 + 62, w: half - 8, h: 12, paras: [['a contratar', { sz: 9, c: '46606F' }]], ins: 0 });
     s.sp({ x: x + half, y: y0 + 73, w: half - 8, h: 12, paras: [[`${T(c).need} necessárias · ${T(c).have} na equipe`, { sz: 7.5, c: '5B6770' }]], ins: 0 });
-    if (n > 1 && hP[i] > minH) s.sp({ x: x + half, y: y0 + 86, w: Math.min(half - 8, 110), h: 14, g: 'roundRect', f: 'FCE4E6', paras: [[`+${hP[i] - minH} ${hP[i] - minH === 1 ? 'pessoa' : 'pessoas'} a mais`, { sz: 8, b: 1, c: 'C80015' }]], al: 'ctr', ins: 2 });
+    if (n > 1 && hP[i] > minH) s.sp({ x: x + half, y: y0 + 86, w: Math.min(half - 8, 110), h: 14, f: 'FCE4E6', paras: [[`+${hP[i] - minH} ${hP[i] - minH === 1 ? 'pessoa' : 'pessoas'} a mais`, { sz: 8, b: 1, c: 'C80015' }]], al: 'ctr', ins: 2 });
   });
   // 2) contratar por equipe: uma barra por cenário em cada área
   const names = [...new Set(P.flatMap(c => c.R.rows.map(r => r.name)))];
@@ -4328,7 +4328,7 @@ function slCenCmp(P, D, pg) {
   const shown = names.filter(nm => P.some(c => rowOf(c, nm).need || rowOf(c, nm).have)).slice(0, 7);
   const cy = y0 + ch + 16;
   s.sp({ x: SM, y: cy, w: 400, h: 18, paras: [['Contratar por equipe', { sz: 13, b: 1, c: '003960' }]], ins: 0 });
-  P.forEach((c, i) => { const lx = SW - SM - (n - i) * 120; s.sp({ x: lx, y: cy + 5, w: 10, h: 10, g: 'roundRect', f: col(i) }); s.sp({ x: lx + 14, y: cy + 1, w: 104, h: 16, paras: [[cut(c.name, 20), { sz: 8, c: '46606F' }]], ins: 0 }); });
+  P.forEach((c, i) => { const lx = SW - SM - (n - i) * 120; s.sp({ x: lx, y: cy + 5, w: 10, h: 10, f: col(i) }); s.sp({ x: lx + 14, y: cy + 1, w: 104, h: 16, paras: [[cut(c.name, 20), { sz: 8, c: '46606F' }]], ins: 0 }); });
   const by = cy + 24, bh = Math.max(7, Math.min(14, (SH - 128 - by) / Math.max(1, shown.length) / n - 2)), gh = n * (bh + 2) + 8;
   const lw = 150, rw = 150, bw = SW - 2 * SM - lw - rw - 40, mx = Math.max(1, ...shown.flatMap(nm => P.map(c => rowOf(c, nm).hire)));
   shown.forEach((nm, k) => {
@@ -4337,7 +4337,7 @@ function slCenCmp(P, D, pg) {
     s.sp({ x: SM + 4, y: gy, w: lw - 8, h: n * (bh + 2), paras: [[cut(nm, 24), { sz: 10, b: 1, c: '0B2A3C' }]], ins: 0 });
     P.forEach((c, i) => {
       const r = rowOf(c, nm), y = gy + i * (bh + 2), w = r.hire ? Math.max(4, bw * r.hire / mx) : 2;
-      s.sp({ x: SM + lw, y, w, h: bh, g: 'roundRect', f: r.hire ? col(i) : 'C5D1CA' });
+      s.sp({ x: SM + lw, y, w, h: bh, f: r.hire ? col(i) : 'C5D1CA' });
       s.sp({ x: SM + lw + w + 6, y: y - 2, w: 40, h: bh + 4, paras: [[r.hire ? `+${r.hire}` : '0', { sz: Math.max(8, bh * 0.85), b: 1, c: r.hire ? 'C80015' : '006729' }]], ins: 0 });
       s.sp({ x: SW - SM - rw, y: y - 2, w: rw, h: bh + 4, paras: [[`precisa ${r.need}  ·  tem ${r.have}`, { sz: Math.max(7, bh * 0.7), c: '5B6770' }]], al: 'r', ins: 0 });
     });
@@ -4345,11 +4345,11 @@ function slCenCmp(P, D, pg) {
   // 3) projetos: só em cada cenário e em comum
   const py = Math.max(by + shown.length * gh + 6, SH - 96), pw = (SW - 2 * SM - gap * n) / (n + 1);
   P.forEach((c, i) => { const x = SM + i * (pw + gap), L = (D.only || [])[i] || [];
-    s.sp({ x, y: py, w: pw, h: 62, g: 'roundRect', f: 'F5F8F6', ln: [col(i), 0.75] });
+    s.sp({ x, y: py, w: pw, h: 62, f: 'F5F8F6', ln: [col(i), 0.75] });
     s.sp({ x: x + 8, y: py + 4, w: pw - 16, h: 16, paras: [[`Só em ${cut(c.name, 26)}: ${L.length}`, { sz: 9.5, b: 1, c: col(i) === 'E8A317' ? '9A6A00' : col(i) }]], ins: 0 });
     s.sp({ x: x + 8, y: py + 20, w: pw - 16, h: 40, an: 't', paras: [[L.length ? cut(L.join(', '), n > 2 ? 90 : 140) : 'nenhum', { sz: 8, c: '46606F' }]], ins: 0 }); });
   const xc = SM + n * (pw + gap);
-  s.sp({ x: xc, y: py, w: pw, h: 62, g: 'roundRect', f: 'E7F1E9', ln: ['006729', 0.75] });
+  s.sp({ x: xc, y: py, w: pw, h: 62, f: 'E7F1E9', ln: ['006729', 0.75] });
   s.sp({ x: xc + 8, y: py + 4, w: pw - 16, h: 30, paras: [[`${D.common || 0}`, { sz: 20, b: 1, c: '006729' }]], ins: 0 });
   s.sp({ x: xc + 8, y: py + 34, w: pw - 16, h: 26, an: 't', paras: [[`${(D.common || 0) === 1 ? 'projeto em comum' : 'projetos em comum'}${D.movedN ? `, ${D.movedN} ${D.movedN === 1 ? 'mudou' : 'mudaram'} de data` : ''}`, { sz: 8.5, c: '46606F' }]], ins: 0 });
   return s.xml();
@@ -4458,8 +4458,8 @@ function slResumo(ps, pg, all) {
   ps.forEach((p, i) => {
     const y = y0 + i * rh, k = health(p)[0], tr = trend(p), per = perOf(p), ms = nextMs(p, 2);
     s.sp({ x: SM, y: y + 2, w: SW - 2 * SM, h: rh - 4, f: i % 2 ? 'FFFFFF' : 'F3F7F4' });
-    s.sp({ x: SM + 6, y: y + 2, w: 220, h: rh - 4, paras: [[cut(p.name, 34), { sz: 12, b: 1, c: '003960' }], ...(p.area ? [[cut(p.area, 44), { sz: 9, c: '46606F' }]] : [])] });
-    s.sp({ x: 268, y: y + rh / 2 - (tr ? 14 : 9), w: 92, h: 18, g: 'roundRect', f: HC[k], paras: [[HLB[k], { sz: 9.5, b: 1, c: k === 'risk' ? '0B2A3C' : 'FFFFFF' }]], al: 'ctr', ins: 2 });
+    s.sp({ x: SM + 6, y: y + 2, w: 220, h: rh - 4, paras: [[cut(p.name, 30), { sz: p.name.length > 26 ? 11 : 12, b: 1, c: '003960' }], ...(p.area ? [[cut(p.area, 44), { sz: 9, c: '46606F' }]] : [])] });
+    s.sp({ x: 268, y: y + rh / 2 - (tr ? 14 : 9), w: 92, h: 18, f: HC[k], paras: [[HLB[k], { sz: 9.5, b: 1, c: k === 'risk' ? '0B2A3C' : 'FFFFFF' }]], al: 'ctr', ins: 2 });
     if (tr) { const tc = TRC[tr.dir];
       s.sp({ x: 269, y: y + rh / 2 + 7, w: 9, h: 10, g: TRG[tr.dir], f: tc });
       s.sp({ x: 281, y: y + rh / 2 + 5, w: 112, h: 14, paras: [[`${TRT[tr.dir]} desde ${fmtCurto(d2n(tr.since))}`, { sz: 8.5, b: 1, c: tc }]], ins: 0 }); }
@@ -4481,9 +4481,9 @@ function slTempo(ps, pg) {
     s.sp({ x: SM, y, w: 208, h: rh, paras: [[cut(p.name, 30), { sz: 11, b: 1, c: '003960' }], [`${pct}%, ${HLB[k].toLowerCase()}${tr ? ', ' + TRT[tr.dir].toLowerCase() : ''}`, { sz: 8.5, c: '46606F' }]], ins: 0 });
     if (!per) return;
     const bx = X(per[0]), bw = Math.max(3, X(per[1] + 1) - bx), bh = Math.min(16, rh * 0.42), by = y + rh / 2 - bh / 2;
-    s.sp({ x: bx, y: by, w: bw, h: bh, g: 'roundRect', f: tint(HC[k], 0.72), ln: [HC[k], 0.75] });
-    if (pct) s.sp({ x: bx, y: by, w: Math.max(2, bw * pct / 100), h: bh, g: 'roundRect', f: HC[k] });
-    p.tasks.filter(t => t.milestone).forEach(t => s.sp({ x: X(d2n(t.start) + 0.5) - 5, y: y + rh / 2 - 5, w: 10, h: 10, g: 'diamond', f: '003960', ln: ['FFFFFF', 0.75] }));
+    s.sp({ x: bx, y: by, w: bw, h: bh, f: tint(HC[k], 0.72), ln: [HC[k], 0.75] });
+    if (pct) s.sp({ x: bx, y: by, w: Math.max(2, bw * pct / 100), h: bh, f: HC[k] });
+    p.tasks.filter(t => t.milestone).forEach(t => s.sp({ x: X(d2n(t.start)) + 0.5, y: y + rh / 2 - 5, w: 10, h: 10, g: 'diamond', f: '003960', ln: ['FFFFFF', 0.75] }));
   });
   return s.xml();
 }
@@ -4492,7 +4492,7 @@ function slVisao(ps, pg) {
   const s = pSlide(), dd = ps.flatMap(p => p.tasks.flatMap(t => [d2n(t.start), d2n(t.end)])), n = ps.length;
   sHead(s, 'Visão geral dos projetos', `Atualizado em ${fmtLong(todayN)}, ${n} ${n === 1 ? 'projeto' : 'projetos'}`, pg);
   // legenda das cores no rodapé, à esquerda
-  [['ok', 'No prazo'], ['risk', 'Atenção'], ['late', 'Atrasado'], ['done', 'Concluído']].forEach(([k, l], i) => { s.sp({ x: SM + i * 78, y: SH - 22, w: 14, h: 8, g: 'roundRect', f: HC[k] }); s.sp({ x: SM + i * 78 + 18, y: SH - 26, w: 60, h: 14, paras: [[l, { sz: 8, c: '46606F' }]], ins: 0 }); });
+  [['ok', 'No prazo'], ['risk', 'Atenção'], ['late', 'Atrasado'], ['done', 'Concluído']].forEach(([k, l], i) => { s.sp({ x: SM + i * 78, y: SH - 22, w: 14, h: 8, f: HC[k] }); s.sp({ x: SM + i * 78 + 18, y: SH - 26, w: 60, h: 14, paras: [[l, { sz: 8, c: '46606F' }]], ins: 0 }); });
   s.sp({ x: SM + 4 * 78 + 3, y: SH - 22, w: 8, h: 8, g: 'diamond', f: '003960' }); s.sp({ x: SM + 4 * 78 + 15, y: SH - 26, w: 50, h: 14, paras: [['Marco', { sz: 8, c: '46606F' }]], ins: 0 });
   if (!dd.length) return s.xml();
   const y0 = 112, rh = Math.min(40, (SH - 36 - y0) / Math.max(1, n)), nw = n > 24 ? 170 : 214, x0 = SM + nw, x1 = SW - SM;
@@ -4506,10 +4506,10 @@ function slVisao(ps, pg) {
     s.sp({ x: SM + 7, y, w: nw - 10, h: rh, paras: two ? [[cut(p.name, 34), { sz: fz, b: 1, c: '003960' }], [`${pct}%, ${HLB[k].toLowerCase()}${tr ? ', ' + TRT[tr.dir].toLowerCase() : ''}`, { sz: Math.max(5.5, fz - 2.5), c: '46606F' }]] : [[`${cut(p.name, nw > 200 ? 34 : 28)}  ·  ${pct}%`, { sz: fz, b: 1, c: '003960' }]], ins: 0 });
     if (!per) return;
     const bx = X(per[0]), bw = Math.max(3, X(per[1] + 1) - bx), bh = Math.max(3, Math.min(16, rh * 0.45)), by = y + rh / 2 - bh / 2;
-    s.sp({ x: bx, y: by, w: bw, h: bh, g: 'roundRect', f: tint(HC[k], 0.72), ln: [HC[k], 0.75] });
-    if (pct) s.sp({ x: bx, y: by, w: Math.max(2, bw * pct / 100), h: bh, g: 'roundRect', f: HC[k] });
+    s.sp({ x: bx, y: by, w: bw, h: bh, f: tint(HC[k], 0.72), ln: [HC[k], 0.75] });
+    if (pct) s.sp({ x: bx, y: by, w: Math.max(2, bw * pct / 100), h: bh, f: HC[k] });
     const md = Math.max(4, Math.min(10, rh * 0.5));
-    p.tasks.filter(t => t.milestone).forEach(t => s.sp({ x: X(d2n(t.start) + 0.5) - md / 2, y: y + rh / 2 - md / 2, w: md, h: md, g: 'diamond', f: '003960', ln: ['FFFFFF', 0.5] }));
+    p.tasks.filter(t => t.milestone).forEach(t => s.sp({ x: X(d2n(t.start)) + 0.5, y: y + rh / 2 - md / 2, w: md, h: md, g: 'diamond', f: '003960', ln: ['FFFFFF', 0.5] }));
   });
   return s.xml();
 }
@@ -4530,8 +4530,8 @@ function slProj(p, ts, part, parts, pg) {
     s.sp({ x: SM + 6, y, w: 238, h: rh, paras: [[cut(t.name, 40), { sz: 9.5, b: t.milestone, c: '0B2A3C' }], ...(rh >= 22 ? [[cut([gOf(t).name, t.owner].filter(Boolean).join(' · '), 48), { sz: 7.5, c: '5B6770' }]] : [])], ins: 0 });
     if (t.milestone) { s.sp({ x: X(a + 0.5) - 6, y: y + rh / 2 - 6, w: 12, h: 12, g: 'diamond', f: c, ln: ['003960', CR.has(t.id) ? 2 : 0.75] }); return; }
     const bx = X(a), bw = Math.max(3, X(e + 1) - bx), bh = Math.min(12, rh * 0.5), by = y + rh / 2 - bh / 2;
-    s.sp({ x: bx, y: by, w: bw, h: bh, g: 'roundRect', f: tint(c, 0.6), ln: st === 'late' ? ['E60018', 1.5] : t.risk && st !== 'done' ? ['E8A317', 1.5] : CR.has(t.id) ? ['003960', 1.5] : null });
-    if (t.progress) s.sp({ x: bx, y: by, w: Math.max(2, bw * t.progress / 100), h: bh, g: 'roundRect', f: c });
+    s.sp({ x: bx, y: by, w: bw, h: bh, f: tint(c, 0.6), ln: st === 'late' ? ['E60018', 1.5] : t.risk && st !== 'done' ? ['E8A317', 1.5] : CR.has(t.id) ? ['003960', 1.5] : null });
+    if (t.progress) s.sp({ x: bx, y: by, w: Math.max(2, bw * t.progress / 100), h: bh, f: c });
   });
   return s.xml() + mark;
 }
