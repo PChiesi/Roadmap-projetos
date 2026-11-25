@@ -617,7 +617,9 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 .di-ex th,.di-ex td{padding:3px 10px;border-right:1px solid var(--line);text-align:left;color:var(--ink-2)}
 .di-ex th{color:var(--ink);font-weight:600}
 .di-ex th:first-child,.di-ex td:first-child{color:var(--ink);font-weight:600}
-.di-ex th:last-child,.di-ex td:last-child{border-right:0;color:var(--title)}
+.di-ex th:nth-last-child(2),.di-ex td:nth-last-child(2){color:var(--title)}
+.di-ex th:last-child,.di-ex td:last-child{border-right:0}
+.di-ex .di-opt{color:var(--ink-3);font-style:italic}.di-ex .di-opt small{font-weight:400}
 .di-src{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
 .di-aba{min-width:200px}
 .di-aba select{height:36px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--surface);font-size:14px;color:var(--ink);width:100%}
@@ -1133,7 +1135,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Os modelos ficam salvos no seu navegador e vão junto no <b>Salvar backup</b>.</li>
         <li>No <b>Replanejar D−</b> não dá para trocar de modelo (isso apagaria as tarefas do projeto), só salvar a tabela atual como modelo.</li>
       </ul><p><b>Vários projetos de uma vez</b></p><ul>
-        <li>Para criar vários projetos de uma vez, clique em <b>Importar vários projetos</b>, dentro do Planejar D−. A planilha tem uma linha por projeto: a <b>primeira coluna</b> é o nome do projeto, as <b>colunas do meio</b> são as atividades (com os dias úteis de cada uma) e a <b>última coluna</b> é a data do marco. Os nomes das atividades e do marco ficam na linha de títulos. Escolha o arquivo (.xlsx ou .csv) ou cole as células copiadas do Excel: a tabela mostra quando cada projeto começa e o que fica de fora antes de criar. Valores como "10***" contam como 10; célula vazia ou 0 tira a atividade daquele projeto; linha sem data do marco fica de fora, com o motivo na prévia. <b>Baixar modelo (.csv)</b> traz uma planilha pronta com as atividades do seu modelo padrão. Importar de novo a mesma planilha replaneja os projetos com o mesmo nome e mantém o % concluído.</li>
+        <li>Para criar vários projetos de uma vez, clique em <b>Importar vários projetos</b>, dentro do Planejar D−. A planilha tem uma linha por projeto: a <b>primeira coluna</b> é o nome do projeto, as <b>colunas do meio</b> são as atividades (com os dias úteis de cada uma) e a <b>última coluna</b> é a data do marco. Opcional: depois do marco, uma coluna com o título <b>Responsável</b>; o nome vale para todas as atividades daquele projeto (vários nomes separados por /, vírgula ou ;) e entra na Carga da equipe e em Recursos por responsável. Os nomes das atividades e do marco ficam na linha de títulos. Escolha o arquivo (.xlsx ou .csv) ou cole as células copiadas do Excel: a tabela mostra quando cada projeto começa e o que fica de fora antes de criar. Valores como "10***" contam como 10; célula vazia ou 0 tira a atividade daquele projeto; linha sem data do marco fica de fora, com o motivo na prévia. <b>Baixar modelo (.csv)</b> traz uma planilha pronta com as atividades do seu modelo padrão. Importar de novo a mesma planilha replaneja os projetos com o mesmo nome e mantém o % concluído; responsável em branco mantém o que já estava.</li>
         <li>Os projetos importados abrem juntos na Linha única.</li>
       </ul></div></details>
       <details><summary>Recursos e conflitos</summary><div><ul>
@@ -1148,7 +1150,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>O número é quantas tarefas a pessoa tem naquela semana. Amarelo: duas ao mesmo tempo. Vermelho: três ou mais. A coluna da semana atual fica marcada.</li>
         <li>Clique numa semana para ver quais tarefas e de quais projetos. Tarefa atrasada continua contando até ser concluída; marcos e tarefas em 100% não contam.</li>
         <li>O nome do responsável é comparado sem diferenciar maiúsculas, acentos e espaços: "Ana Ribeiro" e "ana ribeiro" contam como a mesma pessoa.</li>
-              <li>A Carga da equipe olha <b>pessoa por pessoa</b> e precisa de responsável nas tarefas. Para saber quantas pessoas vão faltar por atividade (por exemplo, em projetos do D− sem responsável), use <b>Recursos e conflitos</b>.</li>
+              <li>A Carga da equipe olha <b>pessoa por pessoa</b> e precisa de responsável nas tarefas. Para saber quantas pessoas vão faltar por atividade (por exemplo, em projetos do D− importados sem a coluna Responsável), use <b>Recursos e conflitos</b>.</li>
       </ul></div></details>
       <details><summary>Caminho crítico</summary><div><ul>
         <li>É a sequência de tarefas que define a data final: se uma delas atrasar, o projeto inteiro atrasa. O programa calcula sozinho a partir das dependências (<b>Depende de</b>).</li>
@@ -1346,10 +1348,10 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 
 <dialog id="dlgDmImp" aria-labelledby="diT">
   <form method="dialog" class="dlg-in" id="fDmImp">
-    <div class="dm-head"><span class="dm-ic" aria-hidden="true">D−</span><div><h2 id="diT">Importar vários projetos no D−</h2><p class="muted">Uma linha por projeto. A <b>primeira coluna</b> é o nome do projeto, as <b>colunas do meio</b> são as atividades com os dias úteis de cada uma, e a <b>última coluna</b> é a data do marco. Os nomes das atividades e do marco vêm da linha de títulos. Célula vazia ou 0: a atividade fica de fora daquele projeto.</p></div></div>
-    <div class="di-ex" aria-hidden="true"><table><tr><th>Projeto</th><th>Discovery</th><th>Especificação</th><th>Refinamento com TI</th><th>Início do desenvolvimento</th></tr><tr><td>Patrimonial</td><td>5</td><td>8</td><td>5</td><td>01/03/2027</td></tr><tr><td>RD e Rural</td><td>11</td><td>17</td><td>8</td><td>15/03/2027</td></tr></table></div>
+    <div class="dm-head"><span class="dm-ic" aria-hidden="true">D−</span><div><h2 id="diT">Importar vários projetos no D−</h2><p class="muted">Uma linha por projeto. A <b>primeira coluna</b> é o nome do projeto, as <b>colunas do meio</b> são as atividades com os dias úteis de cada uma, e a <b>última coluna</b> é a data do marco. Opcional: depois do marco, uma coluna <b>Responsável</b> (vale para todas as atividades do projeto; vários nomes separados por / , ou ;). Os nomes das atividades e do marco vêm da linha de títulos. Célula vazia ou 0: a atividade fica de fora daquele projeto.</p></div></div>
+    <div class="di-ex" aria-hidden="true"><table><tr><th>Projeto</th><th>Discovery</th><th>Especificação</th><th>Refinamento com TI</th><th>Início do desenvolvimento</th><th class="di-opt">Responsável <small>(opcional)</small></th></tr><tr><td>Patrimonial</td><td>5</td><td>8</td><td>5</td><td>01/03/2027</td><td class="di-opt">Ana Ribeiro</td></tr><tr><td>RD e Rural</td><td>11</td><td>17</td><td>8</td><td>15/03/2027</td><td class="di-opt">Bruno / Carla</td></tr></table></div>
     <div class="di-src"><button class="btn" type="button" id="btnDiFile">Escolher planilha (.xlsx ou .csv)</button><input type="file" id="diFile" accept=".xlsx,.csv,.txt" hidden><label class="fld di-aba" id="diAbaL" hidden>Aba<select id="diAba"></select></label><button class="btn" type="button" id="btnDiModelo">Baixar modelo (.csv)</button></div>
-    <label class="fld">Ou cole aqui as células copiadas do Excel, com a linha de títulos<textarea id="diTxt" rows="4" spellcheck="false" placeholder="Projeto&#9;Discovery&#9;Especificação&#9;…&#9;Início do desenvolvimento"></textarea></label>
+    <label class="fld">Ou cole aqui as células copiadas do Excel, com a linha de títulos<textarea id="diTxt" rows="4" spellcheck="false" placeholder="Projeto&#9;Discovery&#9;Especificação&#9;…&#9;Início do desenvolvimento&#9;Responsável (opcional)"></textarea></label>
     <div id="diPrev" class="di-prev" aria-live="polite"></div>
     <label class="chk" id="diUpdL" hidden><input type="checkbox" id="diUpd" checked> Replanejar os projetos D− que já existem com o mesmo nome (mantém o % concluído e as observações)</label>
     <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok" id="diOk" disabled>Criar projetos</button></div>
@@ -1733,18 +1735,22 @@ function dmParseGrid(rows, base1904 = 0) {
   const hi = rows.findIndex(r => r.filter(v => v !== '').length >= 3);
   if (hi < 0) throw Error('não achei o cabeçalho: a primeira linha precisa ter Projeto, as atividades e o marco');
   const H = rows[hi], cols = H.map((v, i) => v !== '' ? i : -1).filter(i => i >= 0);
-  const c0 = cols[0], cm = cols[cols.length - 1], acts = cols.slice(1, -1).map(i => ({ i, name: String(H[i]) }));
+  // coluna opcional de responsável depois do marco: reconhecida pelo título (Responsável, Responsáveis, Dono)
+  const co = cols.length >= 4 && /^(responsave(l|is)|donos?|owner)\b/.test(norm(H[cols[cols.length - 1]])) ? cols[cols.length - 1] : null;
+  const cc = co == null ? cols : cols.slice(0, -1);
+  const c0 = cc[0], cm = cc[cc.length - 1], acts = cc.slice(1, -1).map(i => ({ i, name: String(H[i]) }));
+  if (!acts.length) throw Error('faltam as colunas das atividades entre o nome do projeto e o marco');
   const msName = String(H[cm]);
   const items = [], seen = new Set();
   rows.slice(hi + 1).forEach((r, k) => {
     const name = String(r[c0] ?? '').trim(); if (!name) return;
-    const it = { line: hi + k + 2, name: name.slice(0, 120), anchor: dmDate(r[cm], base1904), days: acts.map(a => dmDays(r[a.i])) };
+    const it = { line: hi + k + 2, name: name.slice(0, 120), anchor: dmDate(r[cm], base1904), days: acts.map(a => dmDays(r[a.i])), owner: co == null ? '' : ownNorm(String(r[co] ?? '').replace(/\s*,\s*/g, ';')).slice(0, 120) };
     if (seen.has(norm(name))) it.err = 'nome repetido na planilha';
     else if (isNaN(it.anchor)) it.err = r[cm] === '' || r[cm] == null ? 'sem data do marco' : `data do marco inválida (${String(r[cm]).slice(0, 20)})`;
     else if (!it.days.some(Boolean)) it.err = 'nenhuma atividade com dias úteis';
     seen.add(norm(name)); items.push(it);
   });
-  return { msName, acts: acts.map(a => a.name), items };
+  return { msName, acts: acts.map(a => a.name), items, ownCol: co != null };
 }
 // texto colado do Excel (tabulação) ou .csv (; ou ,)
 function dmParseText(txt) {
@@ -1758,8 +1764,8 @@ function dmImportApply(parsed, update) {
   for (const it of parsed.items) {
     if (it.err) continue;
     const old = update ? state.projects.find(p => p.dplan && norm(p.name) === norm(it.name)) : null;
-    const rows = parsed.acts.map((name, i) => ({ name, days: it.days[i], owner: '', tid: old ? (old.dplan.rows.find(r => norm(r.name) === norm(name)) || {}).tid || '' : '' }));
-    if (old) { rows.forEach(r => { const o = old.dplan.rows.find(x => x.tid === r.tid); if (o) r.owner = o.owner || ''; }); applyDPlan(old, it.anchor, rows, parsed.msName); upd.push(old); }
+    const rows = parsed.acts.map((name, i) => ({ name, days: it.days[i], owner: it.owner || '', tid: old ? (old.dplan.rows.find(r => norm(r.name) === norm(name)) || {}).tid || '' : '' }));
+    if (old) { rows.forEach(r => { const o = old.dplan.rows.find(x => x.tid === r.tid); if (o && !r.owner) r.owner = o.owner || ''; }); applyDPlan(old, it.anchor, rows, parsed.msName); upd.push(old); }
     else { const p = { id: uid(), name: it.name, area: `Planejado em D− a partir do marco ${parsed.msName}`, groups: [], tasks: [] }; applyDPlan(p, it.anchor, rows, parsed.msName); state.projects.push(normP(p)); made.push(state.projects[state.projects.length - 1]); }
   }
   return { made, upd };
@@ -3376,14 +3382,14 @@ function diShow(parsed, err) {
   const upd = $('#diUpd').checked, ex = new Set(state.projects.filter(p => p.dplan).map(p => norm(p.name)));
   let nNew = 0, nUpd = 0, nLate = 0;
   const body = parsed.items.map(it => {
-    if (it.err) return `<tr class="err"><td>${esc(it.name)}</td><td>—</td><td>—</td><td>—</td><td><span class="di-st err">Fica de fora: ${esc(it.err)}</span> <small>linha ${it.line}</small></td></tr>`;
+    if (it.err) return `<tr class="err"><td>${esc(it.name)}</td><td>—</td><td>—</td><td>—</td>${parsed.ownCol ? '<td>—</td>' : ''}<td><span class="di-st err">Fica de fora: ${esc(it.err)}</span> <small>linha ${it.line}</small></td></tr>`;
     const sp = dminus(it.anchor, it.days), first = sp.find(Boolean), tot = it.days.reduce((a, b) => a + b, 0), isUpd = upd && ex.has(norm(it.name)), late = first.s < todayN;
     isUpd ? nUpd++ : nNew++; if (late) nLate++;
-    return `<tr><td>${esc(it.name)}</td><td>${DSEM[dow(it.anchor)]} ${fmtBR(it.anchor)}</td><td>${DSEM[dow(first.s)]} ${fmtBR(first.s)}</td><td>${tot}</td><td><span class="di-st ${isUpd ? 'upd' : 'new'}">${isUpd ? 'Replaneja o existente' : 'Novo'}</span>${late ? ' <span class="di-st late">Não cabe: começaria antes de hoje</span>' : ''}</td></tr>`;
+    return `<tr><td>${esc(it.name)}</td><td>${DSEM[dow(it.anchor)]} ${fmtBR(it.anchor)}</td><td>${DSEM[dow(first.s)]} ${fmtBR(first.s)}</td><td>${tot}</td>${parsed.ownCol ? `<td>${it.owner ? esc(it.owner) : '<span class="muted">—</span>'}</td>` : ''}<td><span class="di-st ${isUpd ? 'upd' : 'new'}">${isUpd ? 'Replaneja o existente' : 'Novo'}</span>${late ? ' <span class="di-st late">Não cabe: começaria antes de hoje</span>' : ''}</td></tr>`;
   }).join('');
   const bad = parsed.items.filter(it => it.err).length;
-  box.innerHTML = `<p class="di-head">Marco: <b>${esc(parsed.msName)}</b> · ${parsed.acts.length} ${parsed.acts.length === 1 ? 'atividade' : 'atividades'}: ${parsed.acts.map(a => `<b>${esc(a)}</b>`).join(', ')}</p>`
-    + (parsed.items.length ? `<div class="di-wrap"><table class="di-t"><thead><tr><th>Projeto</th><th>Data do marco</th><th>Começa em</th><th>Dias úteis</th><th>Situação</th></tr></thead><tbody>${body}</tbody></table></div>` : '<p class="dm-sum bad">Nenhum projeto abaixo da linha de títulos.</p>')
+  box.innerHTML = `<p class="di-head">Marco: <b>${esc(parsed.msName)}</b>${parsed.ownCol ? ' · com coluna de <b>Responsável</b>' : ''} · ${parsed.acts.length} ${parsed.acts.length === 1 ? 'atividade' : 'atividades'}: ${parsed.acts.map(a => `<b>${esc(a)}</b>`).join(', ')}</p>`
+    + (parsed.items.length ? `<div class="di-wrap"><table class="di-t"><thead><tr><th>Projeto</th><th>Data do marco</th><th>Começa em</th><th>Dias úteis</th>${parsed.ownCol ? '<th>Responsável</th>' : ''}<th>Situação</th></tr></thead><tbody>${body}</tbody></table></div>` : '<p class="dm-sum bad">Nenhum projeto abaixo da linha de títulos.</p>')
     + (nLate ? `<p class="dm-sum bad">${nLate} ${nLate === 1 ? 'projeto não cabe' : 'projetos não cabem'} no prazo: ${nLate === 1 ? 'será criado' : 'serão criados'} assim mesmo, começando antes de hoje.</p>` : '')
     + (bad ? `<p class="dm-sum">${bad} ${bad === 1 ? 'linha fica' : 'linhas ficam'} de fora (veja o motivo na tabela).</p>` : '');
   $('#diUpdL').hidden = !parsed.items.some(it => !it.err && ex.has(norm(it.name)));
@@ -3417,7 +3423,7 @@ $('#diTxt').addEventListener('input', () => { $('#diAbaL').hidden = true; DI_BUF
 $('#diUpd').addEventListener('change', () => { if (DI) diShow(DI); });
 $('#btnDiModelo').addEventListener('click', () => {
   const acts = dmModel(DMS.def).rows.map(r => r.name), n = acts.length;
-  const lines = [['Projeto', ...acts, 'Início do desenvolvimento (TI)'], ['Projeto A', ...Array(n).fill(5), '01/03/2027'], ['Projeto B', ...Array(n).fill(3), '15/03/2027']];
+  const lines = [['Projeto', ...acts, 'Início do desenvolvimento (TI)', 'Responsável'], ['Projeto A', ...Array(n).fill(5), '01/03/2027', 'Ana Ribeiro'], ['Projeto B', ...Array(n).fill(3), '15/03/2027', 'Bruno / Carla']];
   download(new Blob(['\uFEFF' + lines.map(l => l.join(';')).join('\r\n')], { type: 'text/csv' }), 'modelo-d-menos-varios-projetos.csv');
 });
 $('#dlgDmImp').addEventListener('close', () => {
@@ -4492,6 +4498,9 @@ async function selfTest() {
     const gi = dmParseGrid([['', 'Teses'], ['Projeto', 'Discovery', 'Espec', 'Refino', 'Início TI'], ['A', 5, '10***', '', 46447], ['B', 2, 3, 0, '05/03/2027'], ['', 1], ['C', 1, 1, 1, 'x'], ['A', 1, 1, 1, 46447], ['D', 0, '', 0, 46447]]);
     ok(gi.msName === 'Início TI' && gi.acts.join() === 'Discovery,Espec,Refino' && gi.items.length === 5 && gi.items[0].days.join() === '5,10,0' && gi.items[0].anchor === 46447 - 25569 && gi.items[1].anchor === d2n('2027-03-05'), 'D−: importar várias linhas');
     ok(/inválida/.test(gi.items[2].err) && /repetido/.test(gi.items[3].err) && /nenhuma/.test(gi.items[4].err) && !gi.items[0].err && !gi.items[1].err, 'D−: importar aponta o que fica de fora');
+    const go = dmParseText('Projeto\tA1\tA2\tGo-live\tResponsável\nX\t2\t3\t01/06/2027\tAna, Bruno\nY\t1\t1\t02/06/2027\t');
+    ok(go.ownCol && go.msName === 'Go-live' && go.acts.join() === 'A1,A2' && go.items[0].owner === 'Ana / Bruno' && go.items[1].owner === '' && go.items[0].anchor === d2n('2027-06-01'), 'D−: importar com responsável');
+    ok(!dmParseText('Projeto\tA1\tMarco\nX\t2\t01/06/2027').ownCol, 'D−: sem coluna de responsável continua igual');
     const gt = dmParseText('Projeto\tA1\tA2\tGo-live\r\nX\t2\t3\t01/06/2027\r\n');
     ok(gt.items.length === 1 && gt.items[0].days.join() === '2,3' && gt.msName === 'Go-live' && dmParseText('Projeto;A;Marco\nY;4;2027-06-01').items[0].anchor === d2n('2027-06-01'), 'D−: importar texto colado e csv');
     ok(st.models.length === 1 && st.def === 'x' && normDmStore({ models: [mm], def: 'nao' }).def === '' && normDmStore(null).models.length === 0, 'D−: padrão só aponta para modelo existente'); }
