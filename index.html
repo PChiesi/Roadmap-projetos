@@ -253,6 +253,32 @@ button.lg:hover{color:var(--green-txt);border-color:var(--ink-3)}
 .ls.tight .ls-p{gap:12px}.ls.tight .ls-ph{padding-top:8px}
 /* nível Projetos: uma barra mais alta por projeto */
 .ls.lv-proj .ls-b{min-height:40px}
+.lv-pop{min-width:300px}
+.lv-pop button{align-items:flex-start}
+.lv-pop button span{display:flex;flex-direction:column;gap:1px}
+.lv-pop button small{font-size:12px;color:var(--ink-3);white-space:normal;line-height:1.35}
+.lv-pop button[aria-checked=true]{background:color-mix(in srgb,var(--green-l) 14%,transparent)}
+.lv-pop button[aria-checked=true] b::after{content:" ✓";color:var(--green)}
+#lvl summary b{font-weight:700}
+/* Linha única, modo Macro */
+.lm{position:relative;min-width:max-content}
+.lm-h{position:sticky;top:0;z-index:5;display:flex;background:var(--surface);border-bottom:1px solid var(--line)}
+.lm-c{position:sticky;left:0;z-index:6;flex:none;width:var(--nw);display:flex;align-items:flex-end;padding:0 14px 6px;font-size:12px;color:var(--ink-3);background:var(--surface);border-right:1px solid var(--line);box-sizing:border-box}
+.lm-h .ls-ru{position:static;border:0}
+.lm-b{position:relative}
+.lm-bg{position:absolute;top:0;bottom:0;pointer-events:none;z-index:0}
+.lm-bg i{position:absolute;top:0;bottom:0;border-left:1px solid var(--line-2)}
+.lm-bg s{position:absolute;top:0;bottom:0;border-left:2px solid var(--red);z-index:2}
+.lm-bg .mk{position:absolute;top:0;bottom:0}
+.lm-r{display:flex;min-height:52px;border-bottom:1px solid var(--line-2);position:relative}
+.lm-r:hover .lm-l{background:color-mix(in srgb,var(--title) 3%,transparent)}
+.lm-n{position:sticky;left:0;z-index:4;flex:none;width:var(--nw);box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:6px 14px;border:0;border-right:1px solid var(--line);background:var(--surface);text-align:left;cursor:pointer;min-width:0;font:inherit;color:inherit}
+.lm-n:hover{background:var(--surface-2)}
+.lm-r.on .lm-n{box-shadow:inset 3px 0 0 var(--green-l)}
+.lm-n b{font:700 13.5px var(--f-d);color:var(--title)}
+.lm-l{position:relative;flex:none;z-index:1}
+.lm.anim .lm-r{animation:lsIn .45s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--k) * 40ms)}
+@media (prefers-reduced-motion:reduce){.lm.anim .lm-r{animation:none}}
 .ls-holl{font-size:12.5px;color:var(--ink-2);padding:8px 2px 0}
 .ls-holl b{color:color-mix(in srgb,var(--amber) 35%,var(--ink))}
 .k-crit-b[aria-pressed=true]{background:color-mix(in srgb,var(--title) 9%,var(--surface));border-color:color-mix(in srgb,var(--title) 45%,var(--line));color:var(--title);font-weight:600}
@@ -600,6 +626,7 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 .rp-p .hb-w{margin-bottom:2px}
 .rp-0{color:var(--ink-2)!important}
 .rp-p i{font-style:normal;font-size:10.5px;font-weight:700;padding:0 5px;border-radius:4px;margin-right:3px}
+.tip-beh{color:#FFD27A;font-weight:600}
 .rp-l{background:var(--red);color:#fff}.rp-r{background:color-mix(in srgb,var(--amber) 30%,transparent);color:var(--ink)}
 .rp-p textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--surface);font:400 13px/1.35 var(--f-t);color:var(--ink);resize:vertical;min-height:52px}
 .rp-p textarea:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18)}
@@ -791,6 +818,19 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 .rs-gaps li em{font-style:normal;font-weight:700;color:var(--red-txt)}
 .rs-gaps li small{grid-column:1/-1;color:var(--ink-3);font-size:12px}
 .rs-ok{font-size:13.5px;color:var(--green-txt);font-weight:600}
+.rs td.fv{background-image:repeating-linear-gradient(135deg,color-mix(in srgb,#7A4FA0 18%,transparent) 0 4px,transparent 4px 8px)}
+.rs-fv{color:#7A4FA0}
+.rs-vac{border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--surface)}
+.rs-vac summary{font:700 14px var(--f-d);color:var(--title);cursor:pointer}
+.rs-vac .h3-n:not(:empty){background:color-mix(in srgb,#7A4FA0 15%,var(--surface));color:#7A4FA0;display:inline-grid;place-items:center;min-width:20px;height:18px;padding:0 6px;border-radius:99px;font-size:11px;margin-left:4px}
+.rs-vl{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.rs-vi{display:grid;grid-template-columns:minmax(0,1.3fr) 150px 150px minmax(0,1.3fr) 32px;gap:6px;align-items:center}
+.rs-vi input{height:34px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--surface);font-size:13.5px;color:var(--ink);min-width:0}
+.rs-vi input:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18)}
+.rs-vh{font-size:11.5px;font-weight:600;color:var(--ink-3)}
+.rs-vi .icon{width:32px;height:32px;border:1px solid transparent;border-radius:8px;background:none;color:var(--ink-3);font-size:18px}
+.rs-vi .icon:hover{color:var(--red-txt);background:color-mix(in srgb,var(--red) 10%,transparent)}
+@media (max-width:720px){.rs-vi{grid-template-columns:1fr 1fr}.rs-vh{display:none}}
 @media (max-width:860px){.rs-kpi{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-gaps li{grid-template-columns:1fr}.rs th.ld-p{min-width:150px;max-width:150px;width:150px}.rs{--lw:150px}}
 /* impressão da visão geral */
 #pfPrint{display:none}
@@ -948,9 +988,9 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
           <div class="menu-pop lp-pop left" id="lpPop"></div>
         </details>
         <span class="cb-sep" aria-hidden="true"></span>
-        <div class="seg" id="lvl" role="group" aria-label="Nível de resumo da Linha única" hidden>
-          <button data-lv="task" title="Uma peça por tarefa, com nome e datas">Tarefas</button><button data-lv="group" title="Resumo: uma peça por grupo (fase), do começo ao fim das tarefas dele">Fases</button><button data-lv="proj" title="Mais resumido: uma barra por projeto, com o % concluído e o próximo marco">Projetos</button>
-        </div>
+        <details class="menu" id="lvl" hidden><summary class="btn" title="Nível de resumo da Linha única"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h6"/></svg><span>Resumo: <b id="lvlN">Tarefas</b></span></summary>
+          <div class="menu-pop left lv-pop"><button type="button" data-lv="task" role="menuitemradio"><span><b>Tarefas</b><small>Uma peça por tarefa, com nome e datas</small></span></button><button type="button" data-lv="group" role="menuitemradio"><span><b>Fases</b><small>Uma peça por grupo, do começo ao fim das tarefas dele</small></span></button><button type="button" data-lv="proj" role="menuitemradio"><span><b>Projetos</b><small>Uma barra por projeto, com o % e o próximo marco</small></span></button><button type="button" data-lv="macro" role="menuitemradio"><span><b>Macro</b><small>Um projeto por linha, sem cabeçalhos, nas datas reais (como a Visão geral): o melhor para ver onde os projetos se cruzam</small></span></button></div>
+        </details>
       </div>
       <div class="cb-g cb-r">
         <details class="menu edit-only"><summary class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg>Projeto</summary>
@@ -976,6 +1016,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
             <div class="mp-h">Apresentar</div>
             <button data-act="report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg><span>Relatório executivo (1 página)</span></button>
             <button data-act="pptx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8"/></svg><span>PowerPoint (.pptx)</span></button>
+            <button data-act="pptx1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8"/></svg><span>PowerPoint: visão geral em 1 slide</span></button>
             <div class="mp-h">Enviar ou guardar</div>
             <button data-act="xlsx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/></svg><span>Planilha Excel (.xlsx)</span></button>
             <button data-act="html" class="edit-only"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4z"/></svg><span>HTML para envio</span></button>
@@ -1070,7 +1111,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ul></div></details>
       <details><summary>Onde fica cada coisa</summary><div><ul>
         <li><b>Barra lateral, de cima para baixo:</b> criar (<b>Novo projeto</b> e <b>Planejar D−</b>); <b>Todos os projetos</b>, com os painéis que juntam tudo (Visão geral, Vários na Linha única, Carga da equipe e Datas da empresa); a lista dos seus <b>Projetos</b>; os <b>Modelos de projeto</b>; e, no fim, <b>Equipe</b> e <b>Arquivos</b> (backup e planilha modelo).</li>
-        <li><b>Barra do cronograma, à esquerda, o que muda o que você vê:</b> Detalhada ou Linha única, <b>Vários projetos</b> (escolha outros projetos para ver juntos; ao marcar um, a tela passa para a Linha única) e, na Linha única, o resumo por <b>Tarefas</b>, <b>Fases</b> ou <b>Projetos</b>.</li>
+        <li><b>Barra do cronograma, à esquerda, o que muda o que você vê:</b> Detalhada ou Linha única, <b>Vários projetos</b> (escolha outros projetos para ver juntos; ao marcar um, a tela passa para a Linha única) e, na Linha única, o menu <b>Resumo</b> (Tarefas, Fases, Projetos ou Macro).</li>
         <li><b>Logo acima do cronograma, à direita, o que navega na linha do tempo:</b> na Detalhada, a escala Semana, Mês ou Trimestre e <b>Hoje</b>; na Linha única, o zoom (<b>−</b>, <b>Tudo na tela</b>, <b>Legível</b>, <b>+</b>).</li>
         <li><b>Barra do cronograma, à direita, o que mexe no projeto:</b> o menu <b>Projeto</b> (grupos e cores, critério das cores, logo, linha de base, replanejar D−, salvar como modelo, duplicar, excluir e excluir vários), o menu <b>Exportar</b>, <b>Inserir em lote</b> e, por último, a ação principal, <b>Nova tarefa</b>.</li>
         <li><b>No canto do título:</b> desfazer e refazer, tema claro ou escuro e este Manual.</li>
@@ -1143,7 +1184,8 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Escolha como agrupar: <b>Por atividade</b> junta as atividades de mesmo nome de todos os projetos (por exemplo, todas as "Especificação" do D−), <b>Por grupo</b>, <b>Por responsável</b> ou <b>Tudo junto</b>.</li>
         <li>Em <b>Pessoas</b>, informe quantas você tem em cada linha. As semanas mostram o pico de atividades ao mesmo tempo: amarelo falta 1 pessoa, vermelho faltam 2 ou mais. A coluna <b>Pico</b> diz quantas faltam no pior momento.</li>
         <li>Os cartões do topo resumem o pico total, quantas pessoas a mais cobririam todos os picos e quantos períodos estão em conflito. A lista <b>Onde vão faltar pessoas</b> traz cada período, quantas pessoas precisa, quantas tem e os projetos envolvidos.</li>
-        <li>Clique numa semana para ver as atividades dela. <b>Baixar Excel</b> gera a planilha com a necessidade por semana e a lista de conflitos. As pessoas informadas ficam salvas neste navegador.</li>
+        <li>Clique numa semana para ver as atividades dela. <b>Baixar Excel</b> gera a planilha com a necessidade por semana, a lista de conflitos e as férias consideradas. As pessoas informadas ficam salvas neste navegador.</li>
+              <li><b>Férias e ausências</b>, no fim da janela: informe a pessoa, de quando a quando e, se quiser, a atividade ou o grupo em que ela trabalha. Cada dia de férias tira 1 pessoa da conta. Em <b>Por responsável</b>, se a pessoa tem atividade nas férias, aparece como falta para cobrir; em <b>Por atividade</b> ou <b>Por grupo</b>, a férias tira 1 pessoa da linha informada; o <b>Total</b> e <b>Tudo junto</b> contam todas. As semanas com férias ficam listradas, e a lista de conflitos diz de quem são. As férias ficam salvas neste navegador e vão no backup.</li>
       </ul></div></details>
       <details><summary>Carga da equipe</summary><div><ul>
         <li>Na barra lateral, em <b>Todos os projetos</b>, <b>Carga da equipe</b> mostra uma linha por pessoa e uma coluna por semana, somando as tarefas abertas de <b>todos</b> os projetos.</li>
@@ -1170,10 +1212,11 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Na coluna <b>Decisões e pontos de atenção</b>, escreva o que a diretoria precisa decidir ou saber. O texto fica salvo no projeto.</li>
         <li><b>Imprimir ou salvar PDF</b> imprime só o relatório, em paisagem e no tema claro.</li>
         <li><b>Exportar › PowerPoint</b> (ou o botão no relatório) gera um .pptx com: o resumo de todos os projetos, a linha do tempo deles na mesma régua de meses e um cronograma por projeto. Tudo é feito com formas do PowerPoint, então textos, barras e cores podem ser editados depois. Se o projeto tiver logo, ele aparece no canto do slide do projeto.</li>
+              <li>Para apresentar todos os projetos de uma vez, use <b>Exportar › PowerPoint: visão geral em 1 slide</b>.</li>
       </ul></div></details>
       <details><summary>Situação do projeto</summary><div><ul>
         <li><b>No prazo</b> (verde): nada atrasado nem em risco.</li>
-        <li><b>Atenção</b> (amarelo): há tarefa marcada como em risco, ou o fim do projeto passou do que estava na linha de base.</li>
+        <li><b>Atenção</b> (amarelo): há tarefa marcada como em risco; há tarefa em andamento <b>abaixo do previsto</b> (o % concluído está 25 pontos ou mais abaixo do que o tempo que já passou pede, por exemplo metade do prazo passou e ela está em 0%); ou o fim do projeto passou do que estava na linha de base. Passe o mouse na barra para ver quanto ela deveria estar; o Relatório executivo lista essas tarefas.</li>
         <li><b>Atrasado</b> (vermelho): há tarefa vencida e não concluída.</li>
         <li><b>Projeto › Critério das cores</b> define tolerâncias para este projeto: por exemplo, tarefa vencida há até 3 dias fica amarela em vez de vermelha, ou um desvio de até 5 dias da linha de base continua verde. A regra em vigor aparece ao passar o mouse na situação, no relatório e no PowerPoint.</li>
         <li>Ao lado da situação aparece a <b>tendência</b>: <b>↑ Melhorou</b>, <b>↓ Piorou</b> ou <b>→ Estável</b>, comparando com a situação de 7 dias atrás (ou do primeiro dia registrado, se o projeto for mais novo). O programa guarda uma foto por dia, sozinho.</li>
@@ -1182,6 +1225,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ul></div></details>
       <details><summary>Visão geral dos projetos</summary><div><ul>
         <li><b>Visão geral</b>, na barra lateral em <b>Todos os projetos</b>, mostra todos os projetos lado a lado: situação, % concluído, período, atrasadas e próximo marco.</li>
+        <li><b>PowerPoint (1 slide)</b>, dentro da Visão geral ou em <b>Exportar › PowerPoint: visão geral em 1 slide</b>, põe todos os projetos num slide só, no mesmo modelo: um por linha, na mesma régua de meses, com a cor da situação, o % concluído, os marcos, o traço de hoje e a legenda. Com muitos projetos, as linhas e as letras encolhem para caber; tudo continua editável.</li>
         <li><b>Imprimir ou salvar PDF</b>, dentro da Visão geral, gera uma página limpa em paisagem com a legenda das cores. <b>Baixar Excel</b> gera uma planilha com a tabela dos projetos (situação, tendência, %, datas, atrasadas, próximo marco) e uma aba com a linha do tempo pintada por mês.</li>
         <li>Cada projeto ocupa uma linha, e todos usam a mesma régua de meses e anos no topo. O traço vermelho é hoje e os losangos são os marcos.</li>
         <li>Passe o mouse sobre a régua ou as linhas: uma linha tracejada mostra a data exata, para ver em que dias os projetos se sobrepõem.</li>
@@ -1197,7 +1241,8 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       <details><summary>Ler o cronograma</summary><div><ul>
         <li><b>Detalhada</b> mostra uma linha por tarefa, com grupos e dependências. <b>Linha única</b> põe todas as tarefas numa faixa só, encostadas e em ordem de início, cada uma com a cor do grupo, o nome e as datas. O selo vermelho marca o que está acontecendo hoje. A faixa é contínua, sem espaços entre as tarefas; o comprimento de cada bloco dá a ideia da duração. No topo fica uma régua de meses e anos, igual para todos os projetos: cada projeto ocupa as colunas dos meses em que tem tarefa (basta um dia no mês) e o mês atual fica destacado, então dá para ver em que meses os projetos se cruzam. No botão <b>Vários projetos</b> (ou em <b>Vários na Linha única</b>, na barra lateral) você escolhe outros projetos para ver juntos, um abaixo do outro; o HTML para envio leva todos os que estiverem na tela.</li>
         <li><b>Semana, Mês e Trimestre</b> mudam o zoom da linha do tempo na visão Detalhada. <b>Hoje</b> rola o cronograma até o dia atual.</li>
-        <li>Na <b>Linha única</b>, o resumo escolhe o nível de detalhe: <b>Tarefas</b> (uma peça por tarefa), <b>Fases</b> (uma peça por grupo, do começo ao fim das tarefas dele) e <b>Projetos</b> (uma barra por projeto, com o % concluído e o próximo marco). É o jeito mais rápido de comparar projetos com datas muito diferentes.</li>
+        <li>Na <b>Linha única</b>, o menu <b>Resumo</b> escolhe o nível de detalhe: <b>Tarefas</b> (uma peça por tarefa), <b>Fases</b> (uma peça por grupo, do começo ao fim das tarefas dele), <b>Projetos</b> (uma barra por projeto, com o % concluído e o próximo marco) e <b>Macro</b>.</li>
+        <li><b>Macro</b> mostra um projeto por linha, sem cabeçalhos, com as barras nas datas reais, como na Visão geral: a cor é a situação, o preenchimento é o % concluído e os losangos são os marcos. É o melhor jeito de ver onde os projetos se cruzam no tempo. O nome fica preso à esquerda ao rolar, e clicar nele abre o projeto sem tirar os outros da tela. O zoom funciona igual; no automático, o período inteiro cabe na tela.</li>
         <li>O zoom da Linha única fica acima do cronograma: <b>Tudo na tela</b> encaixa o período de todos os projetos na largura da tela, <b>−</b> e <b>+</b> afastam e aproximam (também com <b>Ctrl + rodinha do mouse</b>), e <b>Legível</b> volta à largura que mostra o nome e as datas de cada peça. Com zoom afastado, as peças estreitas mostram só a cor: passe o mouse para ver o nome e as datas.</li>
         <li>O próximo marco pisca de leve, e as tarefas em andamento têm um brilho passando na barra.</li>
         <li>A linha vermelha é o dia de hoje. Tarefas vencidas e não concluídas ficam marcadas como <b>Atrasada</b>; as marcadas como em risco aparecem tracejadas.</li>
@@ -1255,7 +1300,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Tudo fica salvo neste navegador, neste computador. Nada é enviado para a internet, a não ser que você entre na nuvem na versão online.</li>
         <li>Limpar os dados do navegador apaga os projetos. Use <b>Salvar backup (.json)</b> com frequência.</li>
         <li>Para restaurar ou levar para outro computador, use <b>Abrir backup ou planilha</b> e escolha o .json.</li>
-              <li>O backup leva também os logos dos projetos e os modelos de atividades do Planejar D−. As pessoas informadas em Recursos e conflitos, o zoom e o nível de resumo da Linha única são preferências deste navegador e não vão no backup.</li>
+              <li>O backup leva também os logos dos projetos, os modelos de atividades do Planejar D− e as férias cadastradas em Recursos e conflitos. As pessoas informadas em Recursos e conflitos, o zoom e o nível de resumo da Linha única são preferências deste navegador e não vão no backup.</li>
       </ul></div></details>
       <details><summary>Tema claro e escuro</summary><div>O botão de lua ou sol, no canto do título, alterna o tema. A escolha fica salva.</div></details>
     </div>
@@ -1295,7 +1340,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
     <h2 id="pfT">Visão geral dos projetos</h2>
     <p class="muted">Todos os projetos na mesma régua de datas. Passe o mouse para ver a data exata e onde os projetos se sobrepõem. Clique em um projeto para abrir.</p>
     <div class="pf" id="pfList"></div>
-    <div class="dlg-foot"><button class="btn" type="button" id="btnPfXlsx">Baixar Excel</button><button class="btn" type="button" id="btnPfPrint">Imprimir ou salvar PDF</button><button class="btn primary" value="">Fechar</button></div>
+    <div class="dlg-foot"><button class="btn" type="button" data-act="pptx1">PowerPoint (1 slide)</button><button class="btn" type="button" id="btnPfXlsx">Baixar Excel</button><button class="btn" type="button" id="btnPfPrint">Imprimir ou salvar PDF</button><button class="btn primary" value="">Fechar</button></div>
   </form>
 </dialog>
 
@@ -1331,6 +1376,12 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
     <div class="ld-wrap rs-wrap" id="rsGrid"></div>
     <div class="ld-det" id="rsDet" aria-live="polite"></div>
     <div class="rs-gaps" id="rsGaps"></div>
+    <details class="rs-vac" id="rsVac"><summary>Férias e ausências <span class="h3-n" id="rsVacN"></span></summary>
+      <p class="muted">Cada dia de férias tira 1 pessoa da conta. Em <b>Por responsável</b>, vale para a linha da pessoa: se ela tem atividade nas férias, aparece como falta para cobrir. Em <b>Por atividade</b> ou <b>Por grupo</b>, informe em que atividade ou grupo a pessoa trabalha para a férias tirar 1 pessoa daquela linha. O <b>Total</b> e <b>Tudo junto</b> contam todas.</p>
+      <div class="rs-vl" id="rsVl"></div>
+      <datalist id="rsTeams"></datalist>
+      <button class="btn slim" type="button" id="btnVacAdd">+ Adicionar férias</button>
+    </details>
     <div class="dlg-foot"><button class="btn" type="button" id="btnRsXlsx">Baixar Excel</button><button class="btn primary" value="">Fechar</button></div>
   </form>
 </dialog>
@@ -1594,13 +1645,19 @@ const slipDays = p => { const b = p.tasks.filter(t => t.be); return b.length ? M
 // Critério das cores, por projeto: quantos dias de atraso e de desvio do plano ainda não mudam a cor (0 = qualquer um já conta)
 const tolN = v => Math.max(0, Math.min(365, Math.round(+v || 0)));
 const tolOf = p => ({ late: tolN(p.tol && p.tol.late), slip: tolN(p.tol && p.tol.slip) });
+// Abaixo do previsto: tarefa em andamento (já começou, ainda não venceu) com o % concluído BEH pontos ou mais
+// abaixo do que o tempo decorrido pede. Ex.: metade do prazo já passou e a tarefa está em 0%.
+const BEH = 25;
+const expPct = t => { const s = d2n(t.start), e = d2n(t.end); return e <= s ? 0 : Math.round(Math.max(0, Math.min(1, (todayN - s + 1) / (e - s + 1))) * 100); };
+const behind = t => !t.milestone && t.progress < 100 && d2n(t.start) <= todayN && d2n(t.end) >= todayN && expPct(t) - t.progress >= BEH;
+const behindOf = p => p.tasks.filter(behind);
 function health(p) {
   const open = p.tasks.filter(t => t.progress < 100), T = tolOf(p);
   if (!p.tasks.length) return ['none', 'Sem tarefas'];
   if (!open.length) return ['done', 'Concluído'];
   const late = open.filter(t => status(t) === 'late');
   if (late.some(t => todayN - d2n(t.end) > T.late)) return ['late', 'Atrasado'];
-  if (late.length || open.some(t => t.risk) || slipDays(p) > T.slip) return ['risk', 'Atenção'];
+  if (late.length || open.some(t => t.risk) || open.some(behind) || slipDays(p) > T.slip) return ['risk', 'Atenção'];
   return ['ok', 'No prazo'];
 }
 // a regra em palavras, para a tela, o relatório e o PowerPoint
@@ -1608,7 +1665,7 @@ function ragRule(p) {
   const T = tolOf(p), d = n => n === 1 ? '1 dia' : n + ' dias';
   return [
     ['late', 'Atrasado', T.late ? `tarefa não concluída vencida há mais de ${d(T.late)}` : 'tarefa vencida e não concluída'],
-    ['risk', 'Atenção', `${T.late ? `tarefa vencida há até ${d(T.late)}, ` : ''}tarefa marcada em risco ou fim do projeto ${T.slip ? `mais de ${d(T.slip)} ` : ''}depois da linha de base`],
+    ['risk', 'Atenção', `${T.late ? `tarefa vencida há até ${d(T.late)}, ` : ''}tarefa marcada em risco, tarefa em andamento com o % concluído ${BEH} pontos ou mais abaixo do esperado pelo tempo que já passou, ou fim do projeto ${T.slip ? `mais de ${d(T.slip)} ` : ''}depois da linha de base`],
     ['ok', 'No prazo', 'nenhum dos casos acima'],
     ['done', 'Concluído', 'todas as tarefas em 100%']
   ];
@@ -1869,6 +1926,7 @@ if (RO) {
   if (!RO) state.projects.forEach(recordHist); }
 state.marks = (RO ? (Array.isArray(RO.marks) ? RO.marks : []) : Array.isArray(state.marks) ? state.marks : []).map(normMark).filter(Boolean);
 state.showHol = (RO ? RO.showHol : state.showHol) !== false;
+state.vac = (Array.isArray(state.vac) ? state.vac : []).map(normVac).filter(Boolean);
 state.showCrit = state.showCrit !== false;
 state.hlHol = state.hlHol === true;
 // Visão do cronograma também é preferência de tela: "detail" (uma linha por tarefa) ou "line" (todas as barras numa faixa só)
@@ -2224,8 +2282,41 @@ function lineItems(p, lvl) {
   return ts.slice().sort((x, y) => x.start < y.start ? -1 : x.start > y.start ? 1 : x.end < y.end ? -1 : 1)
     .map(t => ({ id: t.id, name: t.name, s: d2n(t.start), e: d2n(t.end), ms: t.milestone, c: gOf(t).color, st: status(t), risk: t.risk, prog: t.progress, open: true }));
 }
+const LVS = ['task', 'group', 'proj', 'macro'];
+// Macro: um projeto por linha, sem cabeçalhos, com as barras nas datas reais (como a Visão geral). O zoom vale aqui também;
+// no automático o período inteiro cabe na largura da tela.
+function renderLineMacro({ fx, fo }) {
+  const Z = lzOk(state.lineZoom) ? state.lineZoom : 'auto', ps = lineProjects(), NW = innerWidth < 860 ? 150 : 240;
+  const full = Math.max(200, ($('#gantt').clientWidth || 1000) - NW - 24);
+  const D = ps.map(p => { const ts = p.tasks.filter(fltOk); return { p, ts, s: ts.length ? Math.min(...ts.map(t => d2n(t.start))) : null, e: ts.length ? Math.max(...ts.map(t => d2n(t.end))) : null }; });
+  const sp = D.filter(d => d.ts.length);
+  const m0 = mOfN(sp.length ? Math.min(todayN, ...sp.map(d => d.s)) : todayN), m1 = mOfN(sp.length ? Math.max(todayN, ...sp.map(d => d.e)) : todayN), M = m1 - m0 + 1;
+  const CW = Z === 'auto' || Z === 'fit' ? Math.max(LZ[0], Math.floor(full / M)) : Z; lineCW = CW;
+  const X = n => { const m = mOfN(n), f = mFirst(m); return (m - m0) * CW + (n - f) / (mFirst(m + 1) - f) * CW; }, W = M * CW;
+  let yr = '', mo = '';
+  for (let k = 0; k < M; k++) {
+    const m = m0 + k, y = Math.floor(m / 12);
+    mo += `<span style="width:${CW}px"${m === mOfN(todayN) ? ' class="now"' : ''} title="${MES[m % 12]} ${y}">${CW >= 30 ? MES[m % 12] : CW >= 14 ? MES[m % 12][0].toUpperCase() : ''}</span>`;
+    if (k === 0 || m % 12 === 0) { const w = Math.min(12 - m % 12, M - k) * CW; yr += `<span style="width:${w}px" title="${y}">${w >= 48 ? y : w >= 28 ? "'" + String(y).slice(2) : ''}</span>`; }
+  }
+  const la = mFirst(m0), lb = mFirst(m1 + 1) - 1;
+  const bg = `<div class="lm-bg" style="left:${NW}px;width:${W}px">${[...Array(M)].map((_, k) => `<i style="left:${k * CW}px"></i>`).join('')}`
+    + marksIn(la, lb).map(k => { const l = X(Math.max(k.s, la)); return `<b class="mk mk-${k.kind}" style="left:${l}px;width:${Math.max(2, X(Math.min(k.e, lb) + 1) - l)}px" title="${esc(mkTip(k))}"></b>`; }).join('')
+    + `<s style="left:${X(todayN) + CW / 60}px"></s></div>`;
+  const rows = D.map((d, k) => {
+    const p = d.p, [hk, hl] = health(p), pct = pctOf(p), here = p.id === state.currentId;
+    const per = d.ts.length ? `${fmtCurto(d.s)} a ${fmtLong(d.e)}` : (p.tasks.length ? 'nada com esse filtro' : 'sem tarefas');
+    const bar = d.ts.length ? `<i class="pf-bar hb-${hk}" style="left:${X(d.s)}px;width:${Math.max(4, X(d.e + 1) - X(d.s))}px" title="${esc(p.name)}: ${per}, ${pct}%, ${hl}"><u style="width:${pct}%"></u></i>` : '';
+    const ms = d.ts.filter(t => t.milestone).map(t => `<i class="pf-ms" style="left:${X(d2n(t.start)) + CW / 60}px" title="${esc(t.name)}, ${fmtLong(d2n(t.start))}"></i>`).join('');
+    return `<div class="lm-r${here ? ' on' : ''}" style="--k:${k}"><button type="button" class="lm-n" data-lmp="${p.id}" title="${here ? 'Projeto aberto' : 'Abrir ' + esc(p.name)}"><span class="pf-nt">${logoBox(p, 'lg-pf')}<b>${esc(p.name)}</b></span><span class="pf-sub">${hb(p)}<small>${pct}%, ${per}</small></span></button><span class="pf-lane lm-l" style="width:${W}px">${bar}${ms}</span></div>`;
+  }).join('');
+  $('#gantt').innerHTML = `<div class="lm${fx === 'load' || fx === 'zoom' ? ' anim' : ''}" style="--nw:${NW}px"><div class="lm-h"><span class="lm-c">${ps.length} ${ps.length === 1 ? 'projeto' : 'projetos'}</span><div class="ls-ru${CW < 40 ? ' narrow' : ''}" style="width:${W}px"><div class="ls-yr">${yr}</div><div class="ls-mo">${mo}</div></div></div><div class="lm-b">${bg}${rows}</div></div>`;
+  if (fx !== 'lz') { const g = $('#gantt'); g.scrollLeft = Math.max(0, X(todayN) - (g.clientWidth - NW) / 2); }
+  hlId = null; renderLz();
+}
 function renderLine({ fx, fo }) {
-  const Z = lzOk(state.lineZoom) ? state.lineZoom : 'auto', lvl = ['task', 'group', 'proj'].includes(state.lineLvl) ? state.lineLvl : 'task';
+  if (state.lineLvl === 'macro') return renderLineMacro({ fx, fo });
+  const Z = lzOk(state.lineZoom) ? state.lineZoom : 'auto', lvl = LVS.includes(state.lineLvl) ? state.lineLvl : 'task';
   const full = ($('#gantt').clientWidth || 1000) - 50;
   // Régua por mês: colunas iguais e cada projeto ocupa os meses inteiros em que tem tarefa (1 dia no mês já conta)
   const ps = lineProjects(), IT = ps.map(p => lineItems(p, lvl));
@@ -2293,11 +2384,14 @@ function renderLine({ fx, fo }) {
 }
 // estado dos botões de zoom e de resumo da Linha única
 function renderLz() {
-  const Z = lzOk(state.lineZoom) ? state.lineZoom : 'auto', lvl = ['task', 'group', 'proj'].includes(state.lineLvl) ? state.lineLvl : 'task';
-  document.querySelectorAll('#lvl button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lv === lvl));
+  const Z = lzOk(state.lineZoom) ? state.lineZoom : 'auto', lvl = LVS.includes(state.lineLvl) ? state.lineLvl : 'task';
+  document.querySelectorAll('#lvl [data-lv]').forEach(b => b.setAttribute('aria-checked', b.dataset.lv === lvl));
+  $('#lvlN').textContent = { task: 'Tarefas', group: 'Fases', proj: 'Projetos', macro: 'Macro' }[lvl];
   $('#lzOut').disabled = lineCW <= LZ[0]; $('#lzIn').disabled = lineCW >= LZ[LZ.length - 1];
-  $('#lzFit').setAttribute('aria-pressed', Z === 'fit');
-  $('#lzAuto').setAttribute('aria-pressed', Z === 'auto');
+  // no Macro o automático já é "tudo na tela": o Legível não se aplica
+  const mac = lvl === 'macro';
+  $('#lzFit').setAttribute('aria-pressed', Z === 'fit' || (mac && Z === 'auto'));
+  $('#lzAuto').setAttribute('aria-pressed', Z === 'auto' && !mac); $('#lzAuto').hidden = mac;
 }
 // muda o zoom mantendo no centro o que estava no centro da tela
 function setLz(z) {
@@ -2313,7 +2407,7 @@ function markSel() { document.querySelectorAll('.g-row.t').forEach(r => r.classL
 /* ---------- dica sobre a barra ---------- */
 function showTip(t, e) {
   const s = d2n(t.start), en = d2n(t.end), st = status(t), tip = $('#tip');
-  tip.innerHTML = `<b>${esc(t.name)}</b><span>${t.milestone ? fmtLong(s) : `${fmtLong(s)} a ${fmtLong(en)}, ${en - s + 1} dias`}</span><span>${STL[st]}${t.milestone ? '' : ', ' + t.progress + '% concluído'}${t.owner ? ', ' + esc(t.owner) : ''}</span>${t.bs ? `<span>Plano: ${fmtCurto(d2n(t.bs))}${t.milestone ? '' : ' a ' + fmtCurto(d2n(t.be))} (${varTxt(en - d2n(t.be))})</span>` : ''}${t.note ? `<span class="tip-n">${esc(t.note.length > 160 ? t.note.slice(0, 160) + '…' : t.note)}</span>` : ''}`;
+  tip.innerHTML = `<b>${esc(t.name)}</b><span>${t.milestone ? fmtLong(s) : `${fmtLong(s)} a ${fmtLong(en)}, ${en - s + 1} dias`}</span><span>${STL[st]}${t.milestone ? '' : ', ' + t.progress + '% concluído'}${t.owner ? ', ' + esc(t.owner) : ''}</span>${behind(t) ? `<span class="tip-beh">Abaixo do previsto: pelo tempo que passou, deveria estar em ${expPct(t)}%</span>` : ''}${t.bs ? `<span>Plano: ${fmtCurto(d2n(t.bs))}${t.milestone ? '' : ' a ' + fmtCurto(d2n(t.be))} (${varTxt(en - d2n(t.be))})</span>` : ''}${t.note ? `<span class="tip-n">${esc(t.note.length > 160 ? t.note.slice(0, 160) + '…' : t.note)}</span>` : ''}`;
   tip.classList.add('on');
   tip.style.left = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8) + 'px';
   tip.style.top = Math.min(e.clientY + 18, innerHeight - tip.offsetHeight - 8) + 'px';
@@ -2545,6 +2639,8 @@ G.addEventListener('pointermove', e => {
 });
 G.addEventListener('pointerleave', () => { if (!drag) { hideTip(); highlight(null); } });
 G.addEventListener('click', e => {
+  const lmp = e.target.closest('[data-lmp]');
+  if (lmp) { if (lmp.dataset.lmp === state.currentId) return; const prev = state.currentId; state.currentId = lmp.dataset.lmp; if (!state.lineSel.includes(prev)) state.lineSel.push(prev); persist(); closeDrawer(); render(); return; }
   const del = e.target.closest('[data-del]'); if (del) return deleteTask(del.dataset.del);
   const dup = e.target.closest('[data-dup]'); if (dup) return duplicateTask(dup.dataset.dup);
   const o = e.target.closest('[data-open]');
@@ -3119,6 +3215,10 @@ const ACT = {
   pptx: () => {
     download(buildPptx(repProjects()), slug(state.projects.length === 1 ? cur().name : 'roadmap-projetos') + '.pptx');
     toast('PowerPoint gerado. Tudo nele é editável: textos, barras e cores.');
+  },
+  pptx1: () => {
+    download(buildPptx(state.projects, true), `visao-geral-1-slide-${n2d(todayN)}.pptx`);
+    toast(`Slide da visão geral gerado com ${state.projects.length} ${state.projects.length === 1 ? 'projeto' : 'projetos'}. Tudo nele é editável.`);
   }
 };
 
@@ -3191,7 +3291,7 @@ $('#view').addEventListener('click', e => {
   state.view = b.dataset.v; persist(); renderTop(); renderGantt('zoom');
 });
 $('#lvl').addEventListener('click', e => {
-  const b = e.target.closest('[data-lv]'); if (!b || b.dataset.lv === state.lineLvl) return;
+  const b = e.target.closest('[data-lv]'); if (!b) return; $('#lvl').open = false; if (b.dataset.lv === state.lineLvl) return;
   state.lineLvl = b.dataset.lv; if (!RO) persist(); renderGantt('zoom');
 });
 $('#lzOut').addEventListener('click', () => setLz(lzStep(-1)));
@@ -3228,14 +3328,14 @@ $('#tlist').addEventListener('click', async e => {
 });
 $('#btnNovo').addEventListener('click', () => openNovo(''));
 $('#btnBackup').addEventListener('click', () => {
-  download(new Blob([JSON.stringify({ app: 'roadmap-hdi', versao: 1, salvoEm: n2d(todayN), projects: state.projects, templates: state.templates, marks: state.marks, dmModelos: DMS }, null, 1)], { type: 'application/json' }), `roadmaps-backup-${n2d(todayN)}.json`);
+  download(new Blob([JSON.stringify({ app: 'roadmap-hdi', versao: 1, salvoEm: n2d(todayN), projects: state.projects, templates: state.templates, marks: state.marks, dmModelos: DMS, ferias: state.vac }, null, 1)], { type: 'application/json' }), `roadmaps-backup-${n2d(todayN)}.json`);
   toast('Backup salvo');
 });
 $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
 // Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
 // A cada versão nova, troque a data e a lista abaixo.
-const NOVIDADES = { versao: '2026-11-25', secoes: ['Logo do projeto', 'Onde fica cada coisa', 'Planejar D− (de trás para frente)', 'Recursos e conflitos', 'Visão geral dos projetos', 'Ler o cronograma'] };
+const NOVIDADES = { versao: '2026-11-25', secoes: ['Situação do projeto', 'Recursos e conflitos', 'Ler o cronograma', 'Visão geral dos projetos', 'Relatório executivo e PowerPoint', 'Logo do projeto', 'Onde fica cada coisa', 'Planejar D− (de trás para frente)'] };
 {
   const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
   sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
@@ -3275,6 +3375,7 @@ $('#fileOpen').addEventListener('change', async e => {
     for (const p of ps) { const i = state.projects.findIndex(x => x.id === p.id); if (i >= 0) state.projects[i] = p; else state.projects.push(p); }
     if (Array.isArray(d.templates)) for (const t of d.templates) if (okTpl(t) && !state.templates.some(x => x.id === t.id)) state.templates.push(t);
     if (Array.isArray(d.marks)) for (const m of d.marks.map(normMark).filter(Boolean)) if (!state.marks.some(x => x.id === m.id)) state.marks.push(m);
+    if (Array.isArray(d.ferias)) for (const v of d.ferias.map(normVac).filter(Boolean)) if (!state.vac.some(x => x.id === v.id)) state.vac.push(v);
     if (d.dmModelos) { const dm = normDmStore(d.dmModelos); let n = 0; for (const m of dm.models) if (!DMS.models.some(x => x.id === m.id) && DMS.models.length < 50) { DMS.models.push(m); n++; } if (n) { if (!DMS.def && dm.def && DMS.models.some(x => x.id === dm.def)) DMS.def = dm.def; dmSave(); } }
     state.currentId = ps[0].id;
     save(); closeDrawer(); render('load');
@@ -3526,7 +3627,7 @@ function repHTML(edit) {
   const ps = repProjects(), cnt = k => ps.filter(p => health(p)[0] === k).length;
   const chips = HCNT.filter(([k]) => cnt(k)).map(([k, a, b]) => `<span class="hb hb-${k}">${cnt(k)} ${cnt(k) === 1 ? a : b}</span>`).join('');
   const rows = ps.map(p => {
-    const per = perOf(p), sl = slipDays(p), ms = nextMs(p, 2), lt = lateOf(p), rk = riskOf(p), ar = [...lt.map(t => ['l', 'atrasada', t]), ...rk.map(t => ['r', 'em risco', t])];
+    const per = perOf(p), sl = slipDays(p), ms = nextMs(p, 2), lt = lateOf(p), rk = riskOf(p), ar = [...lt.map(t => ['l', 'atrasada', t]), ...rk.map(t => ['r', 'em risco', t]), ...behindOf(p).filter(t => !t.risk).map(t => ['r', `abaixo do previsto (${t.progress}% de ${expPct(t)}%)`, t])];
     return `<section class="rp-row rp-p hb-${health(p)[0]}">
       <div>${logoBox(p, 'lg-rp')}<b>${esc(p.name)}</b>${p.area ? `<small>${esc(p.area)}</small>` : ''}</div>
       <div data-l="Situação"><span class="hb-w">${hb(p)}${tb(p)}</span><small>${pctOf(p)}% concluído${per ? `, termina ${fmtCurto(per[1])}` : ''}${p.baseAt && sl ? `, ${sl > 0 ? '+' : '−'}${Math.abs(sl)} d do plano` : ''}</small></div>
@@ -3722,6 +3823,16 @@ $('#dlgDelMany').addEventListener('close', () => {
 // Cada tarefa aberta (não marco, não concluída) ocupa 1 pessoa enquanto dura. Agrupa por atividade, grupo ou responsável,
 // conta quantas acontecem ao mesmo tempo, dia a dia, e compara com as pessoas disponíveis em cada linha.
 const RES_MODES = { act: 'Atividade', group: 'Grupo', owner: 'Responsável', all: 'Tudo junto' };
+// Férias e ausências: { id, name (pessoa), start, end, team (atividade ou grupo em que a pessoa trabalha, opcional) }.
+// Em Recursos e conflitos, cada dia de férias tira 1 pessoa: da linha da pessoa (Por responsável), da linha da atividade
+// ou do grupo informado em team (Por atividade / Por grupo) e do total.
+function normVac(v) {
+  if (!v || typeof v !== 'object') return null;
+  const okd = x => typeof x === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(x) && !isNaN(d2n(x));
+  let a = v.start, b = okd(v.end) ? v.end : v.start; if (!okd(a)) return null; if (b < a) [a, b] = [b, a];
+  return { id: String(v.id ?? '').replace(/[^\w-]/g, '').slice(0, 40) || uid(), name: String(v.name || '').trim().replace(/\s+/g, ' ').slice(0, 120), start: a, end: b, team: String(v.team || '').trim().slice(0, 200) };
+}
+const vacList = () => (Array.isArray(state.vac) ? state.vac : []).filter(v => v.name);
 const resCap = (mode, key) => { const v = state.resCap && state.resCap[mode] && state.resCap[mode][key]; return Number.isFinite(v) && v >= 0 ? v : 1; };
 function resGrid(ps, mode, from) {
   const items = ps.flatMap(p => p.tasks.filter(t => !t.milestone && t.progress < 100).map(t => ({ t, p, s: Math.max(d2n(t.start), from ?? -1e9), e: d2n(t.end) }))).filter(x => x.e >= x.s);
@@ -3740,20 +3851,34 @@ function resGrid(ps, mode, from) {
       add(rows.get(key), x);
     }
   }
+  // férias que valem para a linha: da pessoa (Por responsável), da atividade ou grupo informado, ou todas (Tudo junto e Total)
+  const V = vacList(), nk = v => norm(v).replace(/\s+/g, ' ');
+  const vacOf = r => r.key === '*' || mode === 'all' ? V : V.filter(v => mode === 'owner' ? nk(v.name) === r.key : v.team && nk(v.team) === r.key);
   const fin = (r, cap) => {
-    r.cap = cap; r.cells = weeks.map((w, j) => { let pk = 0; for (let i = j * 7; i < Math.min(N, j * 7 + 7); i++) if (r.day[i] > pk) pk = r.day[i]; return pk; });
-    r.max = Math.max(0, ...r.cells);
-    // períodos seguidos em que a demanda passa das pessoas disponíveis
+    r.cap = cap; r.vacs = vacOf(r);
+    // pessoas disponíveis em cada dia = as da linha menos quem está de férias
+    const cd = new Int16Array(N).fill(cap), fv = new Uint8Array(N);
+    for (const v of r.vacs) for (let d = Math.max(d2n(v.start), d0); d <= Math.min(d2n(v.end), d1); d++) { cd[d - d0] = Math.max(0, cd[d - d0] - 1); fv[d - d0] = 1; }
+    r.cd = cd;
+    r.cells = weeks.map((w, j) => { let pk = 0; for (let i = j * 7; i < Math.min(N, j * 7 + 7); i++) if (r.day[i] > pk) pk = r.day[i]; return pk; });
+    r.over = weeks.map((w, j) => { let o = 0; for (let i = j * 7; i < Math.min(N, j * 7 + 7); i++) o = Math.max(o, r.day[i] - cd[i]); return o; });
+    r.fv = weeks.map((w, j) => { for (let i = j * 7; i < Math.min(N, j * 7 + 7); i++) if (fv[i]) return true; return false; });
+    r.max = Math.max(0, ...r.cells); r.miss = Math.max(0, ...r.over);
+    // períodos seguidos em que a demanda passa das pessoas disponíveis naquele dia
     r.gaps = []; let g = null;
     for (let i = 0; i <= N; i++) {
-      const over = i < N && r.day[i] > cap;
-      if (over && !g) g = { a: d0 + i, b: d0 + i, need: r.day[i] };
-      else if (over) { g.b = d0 + i; g.need = Math.max(g.need, r.day[i]); }
-      else if (g) { g.ps = [...new Set(r.items.filter(x => x.s <= g.b && x.e >= g.a).map(x => x.p.name))]; g.miss = g.need - cap; r.gaps.push(g); g = null; }
+      const over = i < N && r.day[i] > cd[i];
+      if (over && !g) g = { a: d0 + i, b: d0 + i, need: r.day[i], miss: r.day[i] - cd[i], have: cd[i] };
+      else if (over) { g.b = d0 + i; g.need = Math.max(g.need, r.day[i]); g.miss = Math.max(g.miss, r.day[i] - cd[i]); g.have = Math.min(g.have, cd[i]); }
+      else if (g) {
+        g.ps = [...new Set(r.items.filter(x => x.s <= g.b && x.e >= g.a).map(x => x.p.name))];
+        g.vac = [...new Set(r.vacs.filter(v => d2n(v.start) <= g.b && d2n(v.end) >= g.a).map(v => v.name))];
+        r.gaps.push(g); g = null;
+      }
     }
     return r;
   };
-  const list = [...rows.values()].map(r => fin(r, resCap(mode, r.key))).sort((a, b) => b.max - a.max || a.name.localeCompare(b.name, 'pt-BR'));
+  const list = [...rows.values()].map(r => fin(r, resCap(mode, r.key))).sort((a, b) => b.miss - a.miss || b.max - a.max || a.name.localeCompare(b.name, 'pt-BR'));
   return { weeks, rows: list, total: fin(total, list.reduce((a, r) => a + r.cap, 0)), d0 };
 }
 let RG = null;
@@ -3765,23 +3890,44 @@ function renderRes() {
   $('#rsDet').innerHTML = '';
   if (!RG.rows.length) { $('#rsKpi').innerHTML = ''; $('#rsGrid').innerHTML = '<div class="ld-0">Nenhuma atividade aberta com datas nesse período.</div>'; $('#rsGaps').innerHTML = ''; return; }
   const now = monday(todayN), T = RG.total, gaps = RG.rows.flatMap(r => r.gaps.map(g => ({ ...g, r }))).sort((a, b) => a.a - b.a || b.miss - a.miss);
-  const wPk = T.cells.indexOf(T.max), maxMiss = Math.max(0, ...RG.rows.map(r => Math.max(0, r.max - r.cap)));
-  const sumMiss = RG.rows.reduce((a, r) => a + Math.max(0, r.max - r.cap), 0);
+  const wPk = T.cells.indexOf(T.max), maxMiss = Math.max(0, ...RG.rows.map(r => r.miss));
+  const sumMiss = RG.rows.reduce((a, r) => a + r.miss, 0);
   $('#rsKpi').innerHTML = `<div class="rs-k"><small>Pico de demanda</small><b>${T.max} ${T.max === 1 ? 'pessoa' : 'pessoas'}</b><span>ao mesmo tempo, semana de ${fmtCurto(RG.weeks[wPk])}</span></div>`
     + `<div class="rs-k"><small>Pessoas disponíveis</small><b>${T.cap}</b><span>soma das linhas abaixo</span></div>`
     + `<div class="rs-k${sumMiss ? ' bad' : ' good'}"><small>Para cobrir todos os picos</small><b>${sumMiss ? `+${sumMiss} ${sumMiss === 1 ? 'pessoa' : 'pessoas'}` : 'Sem falta'}</b><span>${sumMiss ? `o maior buraco é de ${maxMiss} numa linha só` : 'a equipe atual dá conta'}</span></div>`
     + `<div class="rs-k${gaps.length ? ' bad' : ' good'}"><small>Períodos em conflito</small><b>${gaps.length}</b><span>${gaps.length ? `o primeiro começa em ${fmtCurto(gaps[0].a)}` : 'nenhum'}</span></div>`;
   const head = `<tr><th class="ld-p" scope="col">${RES_MODES[mode]}</th><th class="rs-cap" scope="col" title="Quantas pessoas você tem para esta linha">Pessoas</th><th class="rs-pk" scope="col">Pico</th>${RG.weeks.map(w => `<th scope="col"${w === now ? ' class="now"' : ''} title="Semana de ${fmtLong(w)}">${fmtCurto(w)}</th>`).join('')}</tr>`;
-  const cellH = (r, i, c, j) => { const lv = !c ? 0 : c > r.cap ? (c - r.cap >= 2 ? 3 : 2) : 1;
-    return `<td${RG.weeks[j] === now ? ' class="now"' : ''}><button type="button" class="r${lv}" data-rs="${i}:${j}"${c ? ` aria-label="${esc(r.name)}, semana de ${fmtCurto(RG.weeks[j])}: ${c} ao mesmo tempo, ${r.cap} disponíveis"` : ' disabled aria-label="nada"'}>${c ? `<i>${c}</i>` : ''}</button></td>`; };
-  const body = RG.rows.map((r, i) => `<tr><th class="ld-p" scope="row" title="${esc(r.name)}">${esc(r.name)}</th><td class="rs-cap">${mode === 'all' ? `<b>${r.cap}</b>` : `<input type="number" min="0" max="999" value="${r.cap}" data-cap="${esc(r.key)}" aria-label="Pessoas disponíveis para ${esc(r.name)}">`}</td><td class="rs-pk${r.max > r.cap ? ' bad' : ''}">${r.max}${r.max > r.cap ? `<small>${r.max - r.cap === 1 ? 'falta 1' : `faltam ${r.max - r.cap}`}</small>` : ''}</td>${r.cells.map((c, j) => cellH(r, i, c, j)).join('')}</tr>`).join('');
-  const foot = mode === 'all' ? '' : `<tfoot><tr><th class="ld-p" scope="row">Total</th><td class="rs-cap"><b>${T.cap}</b></td><td class="rs-pk${T.max > T.cap ? ' bad' : ''}">${T.max}</td>${T.cells.map((c, j) => cellH(T, 't', c, j)).join('')}</tr></tfoot>`;
+  const cellH = (r, i, c, j) => { const o = r.over[j], lv = o >= 2 ? 3 : o === 1 ? 2 : c ? 1 : 0, fv = r.fv[j];
+    return `<td class="${RG.weeks[j] === now ? 'now' : ''}${fv ? ' fv' : ''}"${fv ? ` title="Férias nesta semana: ${esc([...new Set(r.vacs.filter(v => d2n(v.start) <= RG.weeks[j] + 6 && d2n(v.end) >= RG.weeks[j]).map(v => v.name))].join(', '))}"` : ''}><button type="button" class="r${lv}" data-rs="${i}:${j}"${c || fv ? ` aria-label="${esc(r.name)}, semana de ${fmtCurto(RG.weeks[j])}: ${c} ao mesmo tempo${o > 0 ? `, ${o === 1 ? 'falta 1 pessoa' : `faltam ${o} pessoas`}` : ''}${fv ? ', com férias' : ''}"` : ' disabled aria-label="nada"'}>${c ? `<i>${c}</i>` : ''}</button></td>`; };
+  const body = RG.rows.map((r, i) => `<tr><th class="ld-p" scope="row" title="${esc(r.name)}">${esc(r.name)}</th><td class="rs-cap">${mode === 'all' ? `<b>${r.cap}</b>` : `<input type="number" min="0" max="999" value="${r.cap}" data-cap="${esc(r.key)}" aria-label="Pessoas disponíveis para ${esc(r.name)}">`}</td><td class="rs-pk${r.miss ? ' bad' : ''}">${r.max}${r.miss ? `<small>${r.miss === 1 ? 'falta 1' : `faltam ${r.miss}`}</small>` : ''}</td>${r.cells.map((c, j) => cellH(r, i, c, j)).join('')}</tr>`).join('');
+  const foot = mode === 'all' ? '' : `<tfoot><tr><th class="ld-p" scope="row">Total</th><td class="rs-cap"><b>${T.cap}</b></td><td class="rs-pk${T.miss ? ' bad' : ''}">${T.max}${T.miss ? `<small>${T.miss === 1 ? 'falta 1' : `faltam ${T.miss}`}</small>` : ''}</td>${T.cells.map((c, j) => cellH(T, 't', c, j)).join('')}</tr></tfoot>`;
   $('#rsGrid').innerHTML = `<table class="ld rs"><thead>${head}</thead><tbody>${body}</tbody>${foot}</table>`;
   const th = $('#rsGrid thead th.now'); if (th) $('#rsGrid').scrollLeft = th.offsetLeft - 320;
-  $('#rsGaps').innerHTML = gaps.length ? `<h3>Onde vão faltar pessoas</h3><ul>${gaps.slice(0, 40).map(g => `<li><b>${esc(g.r.name)}</b><span>${g.a === g.b ? fmtLong(g.a) : `${fmtLong(g.a)} a ${fmtLong(g.b)}`}</span><span>precisa de até <b>${g.need}</b>, tem ${g.r.cap}: <em>${g.miss === 1 ? 'falta 1' : `faltam ${g.miss}`}</em></span><small>${g.ps.map(esc).join(', ')}</small></li>`).join('')}</ul>${gaps.length > 40 ? `<p class="muted">E mais ${gaps.length - 40} períodos (veja na planilha).</p>` : ''}`
+  $('#rsGaps').innerHTML = gaps.length ? `<h3>Onde vão faltar pessoas</h3><ul>${gaps.slice(0, 40).map(g => `<li><b>${esc(g.r.name)}</b><span>${g.a === g.b ? fmtLong(g.a) : `${fmtLong(g.a)} a ${fmtLong(g.b)}`}</span><span>precisa de até <b>${g.need}</b>, tem ${g.have}${g.vac.length ? ' (com férias)' : ''}: <em>${g.miss === 1 ? 'falta 1' : `faltam ${g.miss}`}</em></span><small>${g.ps.map(esc).join(', ')}${g.vac.length ? ` · <b class="rs-fv">Férias: ${g.vac.map(esc).join(', ')}</b>` : ''}</small></li>`).join('')}</ul>${gaps.length > 40 ? `<p class="muted">E mais ${gaps.length - 40} períodos (veja na planilha).</p>` : ''}`
     : '<p class="rs-ok">Nenhum conflito: em todo o período, as atividades simultâneas cabem nas pessoas disponíveis.</p>';
 }
+// lista de férias: editar só reescreve os dados e recalcula a tabela (a lista não é redesenhada enquanto digita)
+function renderVac() {
+  const vs = state.vac; $('#rsVacN').textContent = vs.length || '';
+  $('#rsVl').innerHTML = (vs.length ? '<div class="rs-vi rs-vh"><span>Pessoa</span><span>De</span><span>Até</span><span>Atividade ou grupo (opcional)</span><span></span></div>' : '<p class="muted">Nenhuma férias cadastrada.</p>')
+    + vs.map(v => `<div class="rs-vi" data-id="${v.id}"><input class="v-n" value="${esc(v.name)}" list="owners" maxlength="120" placeholder="Nome da pessoa" aria-label="Pessoa"><input type="date" class="v-a" value="${v.start}" aria-label="Início das férias"><input type="date" class="v-b" value="${v.end}" aria-label="Fim das férias"><input class="v-t" value="${esc(v.team)}" list="rsTeams" maxlength="200" placeholder="Ex.: Especificação" aria-label="Atividade ou grupo em que a pessoa trabalha"><button type="button" class="icon" data-vdel aria-label="Excluir férias de ${esc(v.name || 'pessoa')}">×</button></div>`).join('');
+  const teams = [...new Set(state.projects.flatMap(p => p.tasks.filter(t => !t.milestone).map(t => t.name).concat(p.groups.map(g => g.name))))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  $('#rsTeams').innerHTML = teams.slice(0, 300).map(t => `<option value="${esc(t)}">`).join('');
+}
+function readVac() {
+  state.vac = [...$('#rsVl').querySelectorAll('.rs-vi[data-id]')].map(r => normVac({ id: r.dataset.id, name: r.querySelector('.v-n').value, start: r.querySelector('.v-a').value, end: r.querySelector('.v-b').value || r.querySelector('.v-a').value, team: r.querySelector('.v-t').value })).filter(Boolean);
+  $('#rsVacN').textContent = state.vac.length || '';
+  if (!RO) persist(); const sl = $('#rsGrid').scrollLeft; renderRes(); $('#rsGrid').scrollLeft = sl;
+}
+$('#rsVl').addEventListener('change', readVac);
+$('#rsVl').addEventListener('click', e => { const b = e.target.closest('[data-vdel]'); if (!b) return; b.closest('.rs-vi').remove(); readVac(); renderVac(); });
+$('#btnVacAdd').addEventListener('click', () => {
+  state.vac.push({ id: uid(), name: '', start: n2d(todayN), end: n2d(todayN + 13), team: '' }); renderVac();
+  // linha nova sem nome não entra na conta até ter o nome da pessoa
+  const r = $('#rsVl .rs-vi:last-child .v-n'); if (r) r.focus();
+});
 function openRes() {
+  renderVac(); $('#rsVac').open = state.vac.length > 0;
   const multi = lineProjects().length > 1;
   $('#rsScope').innerHTML = `<option value="all">Todos os projetos (${state.projects.length})</option>${multi ? `<option value="line">Só os da Linha única (${lineProjects().length})</option>` : ''}`;
   renderRes(); const d = $('#dlgRes'); d.returnValue = ''; d.showModal();
@@ -3805,20 +3951,21 @@ $('#rsGrid').addEventListener('click', e => {
 });
 $('#btnRsXlsx').addEventListener('click', () => {
   if (!RG || !RG.rows.length) return toast('Nada para exportar nesse período.');
-  const mode = state.resMode in RES_MODES ? state.resMode : 'act', fills = ['#E60018', '#E8A317', '#DCE8DF'];
-  const lv = (r, c) => !c ? '' : { v: c, st: c > r.cap ? (c - r.cap >= 2 ? 0 : 1) : 2 };
-  const grid = [[{ v: 'Necessidade de pessoas por semana', st: 't' }], [`Pico de atividades simultâneas por semana (cada atividade aberta = 1 pessoa), agrupado por ${RES_MODES[mode].toLowerCase()}. Vermelho: faltam 2 ou mais pessoas; amarelo: falta 1. Gerado em ${fmtLong(todayN)}.`], [],
+  const mode = state.resMode in RES_MODES ? state.resMode : 'act', fills = ['#E60018', '#E8A317', '#DCE8DF', '#7A4FA0'];
+  const lv = (r, c, j) => !c ? (r.fv[j] ? { v: 'F', st: 3 } : '') : { v: c, st: r.over[j] >= 2 ? 0 : r.over[j] === 1 ? 1 : r.fv[j] ? 3 : 2 };
+  const grid = [[{ v: 'Necessidade de pessoas por semana', st: 't' }], [`Pico de atividades simultâneas por semana (cada atividade aberta = 1 pessoa), agrupado por ${RES_MODES[mode].toLowerCase()}. Vermelho: faltam 2 ou mais pessoas; amarelo: falta 1; roxo: semana com férias (F = férias sem atividade). Gerado em ${fmtLong(todayN)}.`], [],
     [RES_MODES[mode], 'Pessoas disponíveis', 'Pico', 'Faltam no pico', ...RG.weeks.map(w => fmtBR(w).slice(0, 5))].map(v => ({ v, st: 'h' })),
-    ...RG.rows.map(r => [{ v: r.name, st: 'b' }, r.cap, r.max, Math.max(0, r.max - r.cap), ...r.cells.map(c => lv(r, c))]),
-    ...(mode === 'all' ? [] : [[{ v: 'Total', st: 'b' }, RG.total.cap, RG.total.max, Math.max(0, RG.total.max - RG.total.cap), ...RG.total.cells.map(c => lv(RG.total, c))]])];
+    ...RG.rows.map(r => [{ v: r.name, st: 'b' }, r.cap, r.max, r.miss, ...r.cells.map((c, j) => lv(r, c, j))]),
+    ...(mode === 'all' ? [] : [[{ v: 'Total', st: 'b' }, RG.total.cap, RG.total.max, RG.total.miss, ...RG.total.cells.map((c, j) => lv(RG.total, c, j))]])];
   const gaps = RG.rows.flatMap(r => r.gaps.map(g => ({ ...g, r }))).sort((a, b) => a.a - b.a);
   const list = [[{ v: 'Onde vão faltar pessoas', st: 't' }], [],
-    [RES_MODES[mode], 'De', 'Até', 'Precisa de', 'Disponíveis', 'Faltam', 'Projetos envolvidos'].map(v => ({ v, st: 'h' })),
-    ...gaps.map(g => [{ v: g.r.name, st: 'b' }, { v: g.a, st: 'd' }, { v: g.b, st: 'd' }, g.need, g.r.cap, { v: g.miss, st: g.miss >= 2 ? 0 : 1 }, g.ps.join(', ')])];
+    [RES_MODES[mode], 'De', 'Até', 'Precisa de', 'Disponíveis', 'Faltam', 'Projetos envolvidos', 'Férias no período'].map(v => ({ v, st: 'h' })),
+    ...gaps.map(g => [{ v: g.r.name, st: 'b' }, { v: g.a, st: 'd' }, { v: g.b, st: 'd' }, g.need, g.have, { v: g.miss, st: g.miss >= 2 ? 0 : 1 }, g.ps.join(', '), g.vac.join(', ')])];
+  const vl = vacList(); if (vl.length) list.push([], [{ v: 'Férias e ausências consideradas', st: 't' }], ['Pessoa', 'De', 'Até', 'Atividade ou grupo'].map(v => ({ v, st: 'h' })), ...vl.map(v => [{ v: v.name, st: 'b' }, { v: d2n(v.start), st: 'd' }, { v: d2n(v.end), st: 'd' }, v.team]));
   if (!gaps.length) list.push(['Nenhum conflito no período.']);
   download(xlsxBook([
     { name: 'Necessidade por semana', rows: grid, widths: [34, 11, 7, 9, ...RG.weeks.map(() => 6.5)], freeze: [4, 4], grid: false },
-    { name: 'Onde faltam pessoas', rows: list, widths: [34, 12, 12, 11, 11, 9, 60], freeze: [1, 3], grid: false }
+    { name: 'Onde faltam pessoas', rows: list, widths: [34, 12, 12, 11, 11, 9, 60, 30], freeze: [1, 3], grid: false }
   ], fills), `recursos-e-conflitos-${n2d(todayN)}.xlsx`);
   toast('Planilha de recursos exportada');
 });
@@ -3914,6 +4061,32 @@ function slTempo(ps, pg) {
   });
   return s.xml();
 }
+// Visão geral num slide só: todos os projetos, um por linha, na mesma régua; a altura da linha e as letras encolhem conforme a quantidade
+function slVisao(ps, pg) {
+  const s = pSlide(), dd = ps.flatMap(p => p.tasks.flatMap(t => [d2n(t.start), d2n(t.end)])), n = ps.length;
+  sHead(s, 'Visão geral dos projetos', `Atualizado em ${fmtLong(todayN)}, ${n} ${n === 1 ? 'projeto' : 'projetos'}`, pg);
+  // legenda das cores no rodapé, à esquerda
+  [['ok', 'No prazo'], ['risk', 'Atenção'], ['late', 'Atrasado'], ['done', 'Concluído']].forEach(([k, l], i) => { s.sp({ x: SM + i * 78, y: SH - 22, w: 14, h: 8, g: 'roundRect', f: HC[k] }); s.sp({ x: SM + i * 78 + 18, y: SH - 26, w: 60, h: 14, paras: [[l, { sz: 8, c: '46606F' }]], ins: 0 }); });
+  s.sp({ x: SM + 4 * 78 + 3, y: SH - 22, w: 8, h: 8, g: 'diamond', f: '003960' }); s.sp({ x: SM + 4 * 78 + 15, y: SH - 26, w: 50, h: 14, paras: [['Marco', { sz: 8, c: '46606F' }]], ins: 0 });
+  if (!dd.length) return s.xml();
+  const y0 = 112, rh = Math.min(40, (SH - 36 - y0) / Math.max(1, n)), nw = n > 24 ? 170 : 214, x0 = SM + nw, x1 = SW - SM;
+  // faixas alternadas primeiro, para a régua, o traço de hoje e as linhas de mês ficarem por cima
+  ps.forEach((p, i) => { if (i % 2) s.sp({ x: SM, y: y0 + i * rh, w: SW - 2 * SM, h: rh, f: 'F5F8F6' }); });
+  const X = sRuler(s, x0, x1, 80, mOfN(Math.min(todayN, ...dd)), mOfN(Math.max(todayN, ...dd)), y0 + n * rh);
+  const two = rh >= 22, fz = Math.max(5.5, Math.min(11, rh * 0.42));
+  ps.forEach((p, i) => {
+    const y = y0 + i * rh, k = health(p)[0], per = perOf(p), tr = trend(p), pct = pctOf(p);
+    s.sp({ x: SM, y: y + rh * 0.2, w: 3, h: rh * 0.6, f: HC[k] });
+    s.sp({ x: SM + 7, y, w: nw - 10, h: rh, paras: two ? [[cut(p.name, 34), { sz: fz, b: 1, c: '003960' }], [`${pct}%, ${HLB[k].toLowerCase()}${tr ? ', ' + TRT[tr.dir].toLowerCase() : ''}`, { sz: Math.max(5.5, fz - 2.5), c: '46606F' }]] : [[`${cut(p.name, nw > 200 ? 34 : 28)}  ·  ${pct}%`, { sz: fz, b: 1, c: '003960' }]], ins: 0 });
+    if (!per) return;
+    const bx = X(per[0]), bw = Math.max(3, X(per[1] + 1) - bx), bh = Math.max(3, Math.min(16, rh * 0.45)), by = y + rh / 2 - bh / 2;
+    s.sp({ x: bx, y: by, w: bw, h: bh, g: 'roundRect', f: tint(HC[k], 0.72), ln: [HC[k], 0.75] });
+    if (pct) s.sp({ x: bx, y: by, w: Math.max(2, bw * pct / 100), h: bh, g: 'roundRect', f: HC[k] });
+    const md = Math.max(4, Math.min(10, rh * 0.5));
+    p.tasks.filter(t => t.milestone).forEach(t => s.sp({ x: X(d2n(t.start) + 0.5) - md / 2, y: y + rh / 2 - md / 2, w: md, h: md, g: 'diamond', f: '003960', ln: ['FFFFFF', 0.5] }));
+  });
+  return s.xml();
+}
 function slProj(p, ts, part, parts, pg) {
   const s = pSlide(), per = perOf(p), k = health(p)[0], tr = trend(p);
   // logo no canto de cima, numa caixa fixa de 120 x 44 pt; a relação rId2 aponta para a imagem (montada em buildPptx)
@@ -3936,10 +4109,11 @@ function slProj(p, ts, part, parts, pg) {
   });
   return s.xml() + mark;
 }
-function buildPptx(ps) {
+// one = true: só o slide da visão geral, com todos os projetos
+function buildPptx(ps, one) {
   const ix = p => { const i = state.projects.indexOf(p); return i < 0 ? 1e9 : i; }, byTime = ps.slice().sort((a, b) => ix(a) - ix(b)), gi = p => t => p.groups.findIndex(g => g.id === t.groupId);
-  const mk = [...chunk(ps, 7).map(c => pg => slResumo(c, pg, ps)), ...chunk(byTime, 8).map(c => pg => slTempo(c, pg))];
-  byTime.filter(p => p.tasks.length).forEach(p => {
+  const mk = one ? [pg => slVisao(byTime, pg)] : [...chunk(ps, 7).map(c => pg => slResumo(c, pg, ps)), ...chunk(byTime, 8).map(c => pg => slTempo(c, pg))];
+  if (!one) byTime.filter(p => p.tasks.length).forEach(p => {
     const g = gi(p), ts = p.tasks.slice().sort((a, b) => g(a) - g(b) || (a.start < b.start ? -1 : a.start > b.start ? 1 : 0)), parts = chunk(ts, 15);
     parts.forEach((c, i) => mk.push(pg => slProj(p, c, i + 1, parts.length, pg)));
   });
@@ -4468,6 +4642,24 @@ async function selfTest() {
     const g = await xlsxGrid(await xlsxBook([{ name: 'A', rows: [['x', 2, { v: d2n('2027-01-05'), st: 'd' }]] }, { name: 'B/2', rows: [[{ v: 'y', st: 0 }]] }], ['#E60018']).arrayBuffer(), n => n.indexOf('A'));
     ok(g.rows[0][0] === 'x' && g.rows[0][1] === 2 && g.rows[0][2] === d2n('2027-01-05') + 25569 && g.sheets.join() === 'A,B 2', 'planilha genérica: ida e volta');
     ok(pfData([mkp('A', '2027-03-01', '2027-03-12')])[0].pct === 0 && (await buildPfXlsx().arrayBuffer()).byteLength > 500, 'visão geral: planilha'); }
+  { // abaixo do previsto: metade do prazo passou e a tarefa está em 0% = Atenção
+    const T0 = todayN, mt = (a, b, pr) => ({ id: 'b' + a, name: 'B', groupId: 'g', owner: '', start: n2d(T0 + a), end: n2d(T0 + b), progress: pr, milestone: false, risk: false, deps: [], note: '' });
+    const pb = normP({ id: 'pb', name: 'PB', groups: [{ id: 'g', name: 'G', color: '#006729' }], tasks: [mt(-50, 40, 0)] });
+    ok(behind(pb.tasks[0]) && health(pb)[0] === 'risk', 'abaixo do previsto: vira Atenção');
+    ok(health(normP({ ...pb, tasks: [mt(-50, 40, 50)] }))[0] === 'ok' && health(normP({ ...pb, tasks: [mt(-2, 40, 0)] }))[0] === 'ok', 'abaixo do previsto: em dia ou recém-começada continua No prazo'); }
+  { // PowerPoint de 1 slide e férias nos recursos
+    const mkq = (nm, a, b, ow) => normP({ id: 'q' + nm, name: nm, groups: [{ id: 'g', name: 'Fase', color: '#006729' }], tasks: [{ id: 't' + nm, name: 'Espec', groupId: 'g', owner: ow || '', start: a, end: b, progress: 0, milestone: false, risk: false, deps: [], note: '' }] });
+    const many = Array.from({ length: 30 }, (_, i) => mkq('P' + i, '2027-03-01', '2027-03-12'));
+    const z1 = await unzip(await buildPptx(many, true).arrayBuffer());
+    ok(Object.keys(z1).filter(k => /slides\/slide\d+\.xml$/.test(k)).length === 1 && new TextDecoder().decode(z1['ppt/slides/slide1.xml']).includes('P29'), 'PowerPoint: 30 projetos num slide');
+    const sv = state.vac;
+    try {
+      state.vac = [normVac({ name: 'Ana', start: '2027-03-08', end: '2027-03-10', team: 'Espec' })];
+      const ro = resGrid([mkq('A', '2027-03-01', '2027-03-12', 'Ana')], 'owner', null).rows[0];
+      ok(ro.gaps.length === 1 && ro.gaps[0].a === d2n('2027-03-08') && ro.gaps[0].b === d2n('2027-03-10') && ro.gaps[0].miss === 1 && ro.gaps[0].vac.join() === 'Ana', 'férias: atividade da pessoa nas férias vira falta');
+      const ra = resGrid([mkq('A', '2027-03-01', '2027-03-12'), mkq('B', '2027-03-01', '2027-03-12')], 'act', null).rows[0];
+      ok(ra.miss === 2 && ra.gaps[0].have === 0, 'férias: tiram 1 pessoa da atividade informada');
+    } finally { state.vac = sv; } }
   { // logo: só aceita imagem reduzida pelo programa
     const px = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
     ok(okLogo({ d: px, w: 10, h: 5 }).w === 10 && !okLogo({ d: 'data:image/svg+xml;base64,AAAA', w: 1, h: 1 }) && !okLogo({ d: 'javascript:alert(1)' }) && !okLogo({ d: 'data:image/png;base64,' + 'A'.repeat(400001) }) && !okLogo(null), 'logo: validação');
