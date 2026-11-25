@@ -724,6 +724,29 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 /* visão geral dos projetos */
 #dlgAll{width:min(1000px,calc(100vw - 32px))}
 #dlgDelMany{width:min(640px,calc(100vw - 32px))}
+/* logo: caixa de tamanho fixo em cada lugar; a imagem encaixa dentro (contain), nunca estica nem empurra o layout */
+.lg-box{flex:none;display:inline-grid;place-items:center;overflow:hidden;background:#fff;border-radius:6px;box-sizing:border-box}
+.lg-box img{display:block;width:100%;height:100%;min-width:0;min-height:0;object-fit:contain}
+.p-logo{flex:none;width:136px;height:68px;padding:8px;display:grid;place-items:center;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(11,42,60,.08);overflow:hidden;cursor:pointer;margin-top:4px}
+.p-logo[hidden]{display:none}
+.p-logo:disabled{cursor:default}
+.p-logo:not(:disabled):hover{border-color:var(--ink-3);box-shadow:0 6px 14px -8px rgba(11,42,60,.35)}
+.p-logo img{display:block;width:100%;height:100%;min-width:0;min-height:0;object-fit:contain}
+.lg-side{width:26px;height:18px;padding:1px;border-radius:4px}
+.lg-pf{width:46px;height:26px;padding:2px;border:1px solid var(--line-2)}
+.lg-ls{width:44px;height:22px;padding:2px;border:1px solid var(--line-2);align-self:center}
+.lg-rp{width:84px;height:34px;padding:3px;border:1px solid var(--line-2);margin-bottom:6px}
+.lg-rp img{object-position:left center}
+.pf-nt{display:flex;align-items:center;gap:8px;min-width:0}
+.pf-nt b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#dlgLogo{width:min(560px,calc(100vw - 32px))}
+.lg-drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:150px;padding:18px;border:2px dashed var(--line);border-radius:14px;background:var(--surface-2);cursor:pointer;text-align:center}
+.lg-drop.over{border-color:var(--green-l);background:color-mix(in srgb,var(--green-l) 10%,var(--surface))}
+.lg-prev{width:136px;height:68px;padding:8px;border:1px solid var(--line);border-radius:14px}
+.lg-prev[hidden]{display:none}
+.lg-hint{font-size:13px;color:var(--ink-2)}
+.lg-bar{display:flex;gap:8px;flex-wrap:wrap}
+.lg-bar .btn[hidden]{display:none}
 .dx-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.dx-bar .search{flex:1 1 220px}
 .dx-list{display:flex;flex-direction:column;gap:4px;max-height:48vh;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:6px;background:var(--surface)}
 .dx-i{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:8px;cursor:pointer}
@@ -848,6 +871,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
   .cb-r{margin-left:0}
   .cb-sep{display:none}
   .p-title{font-size:24px}
+  .p-logo{width:96px;height:48px;padding:6px}
   .main{padding:18px 16px}
   .sm-ms{grid-column:auto}
   .lg-keys{margin-left:0}
@@ -899,6 +923,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 
   <main class="main">
     <header class="top">
+      <button type="button" class="p-logo" id="pLogo" hidden title="Trocar ou remover o logo do projeto"><img id="pLogoImg" alt="Logo do projeto" draggable="false"></button>
       <div class="title-wrap">
         <input class="p-title" id="pTitle" aria-label="Nome do projeto" spellcheck="false" autocomplete="off">
         <input class="p-sub" id="pSub" placeholder="Área ou descrição do projeto" aria-label="Área ou descrição" autocomplete="off">
@@ -931,6 +956,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
             <div class="mp-h">Organizar</div>
             <button data-act="groups"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><circle cx="17.5" cy="17.5" r="3.5"/></svg><span>Grupos e cores</span></button>
             <button data-act="rag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 18a9 9 0 1 1 15 0"/><path d="m12 13 3.5-3.5"/><circle cx="12" cy="13" r="1"/></svg><span>Critério das cores</span></button>
+            <button data-act="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg><span>Adicionar logo</span></button>
             <div class="mp-h">Acompanhar o plano</div>
             <button data-act="baseSet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4h12l-2.5 4L17 12H5"/></svg><span>Salvar linha de base</span></button>
             <button data-act="baseDel" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4h12l-2.5 4L17 12H5"/></svg><span>Remover linha de base</span></button>
@@ -1033,11 +1059,18 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Dê um nome, escolha um modelo (ou comece em branco) e a data de início.</li>
         <li>Para começar direto de um modelo, clique no nome dele em <b>Modelos de projeto</b>, na barra lateral.</li>
       </ol>Para trocar de projeto, clique nele na lista <b>Projetos</b>. O nome e a área do projeto podem ser editados clicando no título.</div></details>
+      <details><summary>Logo do projeto</summary><div><ul>
+        <li>Abra <b>Projeto › Adicionar logo</b>. Escolha uma imagem (PNG, JPG, SVG, WebP ou GIF), arraste para a janela ou cole com Ctrl+V.</li>
+        <li>A imagem pode ser de qualquer tamanho: o programa reduz na hora e mostra sempre na mesma caixa, sem distorcer e sem mexer no resto da tela. Logo muito largo ou muito alto encolhe até caber inteiro.</li>
+        <li>Ele aparece ao lado do título, na lista de projetos da barra lateral, na Visão geral (inclusive na impressão), na Linha única, no Relatório executivo, no canto do slide de cada projeto no PowerPoint e no HTML para envio.</li>
+        <li>Clique no logo, ao lado do título, para trocar ou remover. <b>Usar em todos os projetos</b> copia o mesmo logo para os outros projetos (bom para o logo da empresa).</li>
+        <li>O logo fica guardado no projeto: vai junto no backup, no arquivo da equipe e na nuvem. A planilha Excel não leva imagem.</li>
+      </ul></div></details>
       <details><summary>Onde fica cada coisa</summary><div><ul>
         <li><b>Barra lateral, de cima para baixo:</b> criar (<b>Novo projeto</b> e <b>Planejar D−</b>); <b>Todos os projetos</b>, com os painéis que juntam tudo (Visão geral, Vários na Linha única, Carga da equipe e Datas da empresa); a lista dos seus <b>Projetos</b>; os <b>Modelos de projeto</b>; e, no fim, <b>Equipe</b> e <b>Arquivos</b> (backup e planilha modelo).</li>
         <li><b>Barra do cronograma, à esquerda, o que muda o que você vê:</b> Detalhada ou Linha única, <b>Vários projetos</b> (escolha outros projetos para ver juntos; ao marcar um, a tela passa para a Linha única) e, na Linha única, o resumo por <b>Tarefas</b>, <b>Fases</b> ou <b>Projetos</b>.</li>
         <li><b>Logo acima do cronograma, à direita, o que navega na linha do tempo:</b> na Detalhada, a escala Semana, Mês ou Trimestre e <b>Hoje</b>; na Linha única, o zoom (<b>−</b>, <b>Tudo na tela</b>, <b>Legível</b>, <b>+</b>).</li>
-        <li><b>Barra do cronograma, à direita, o que mexe no projeto:</b> o menu <b>Projeto</b> (grupos e cores, critério das cores, linha de base, replanejar D−, salvar como modelo, duplicar e excluir), o menu <b>Exportar</b>, <b>Inserir em lote</b> e, por último, a ação principal, <b>Nova tarefa</b>.</li>
+        <li><b>Barra do cronograma, à direita, o que mexe no projeto:</b> o menu <b>Projeto</b> (grupos e cores, critério das cores, logo, linha de base, replanejar D−, salvar como modelo, duplicar, excluir e excluir vários), o menu <b>Exportar</b>, <b>Inserir em lote</b> e, por último, a ação principal, <b>Nova tarefa</b>.</li>
         <li><b>No canto do título:</b> desfazer e refazer, tema claro ou escuro e este Manual.</li>
         <li>Para apagar vários projetos de uma vez, use a lixeira ao lado de <b>Projetos</b>, na barra lateral, ou <b>Projeto › Excluir vários projetos</b>. Desfazer (Ctrl+Z) traz de volta.</li>
         <li>No celular, a barra lateral fica recolhida: toque em <b>Menu</b> no topo para abrir.</li>
@@ -1134,7 +1167,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li><b>Exportar › Relatório executivo</b> mostra todos os projetos numa página, do mais crítico para o mais tranquilo: situação e tendência, % concluído, próximos marcos, tarefas atrasadas e em risco.</li>
         <li>Na coluna <b>Decisões e pontos de atenção</b>, escreva o que a diretoria precisa decidir ou saber. O texto fica salvo no projeto.</li>
         <li><b>Imprimir ou salvar PDF</b> imprime só o relatório, em paisagem e no tema claro.</li>
-        <li><b>Exportar › PowerPoint</b> (ou o botão no relatório) gera um .pptx com: o resumo de todos os projetos, a linha do tempo deles na mesma régua de meses e um cronograma por projeto. Tudo é feito com formas do PowerPoint, então textos, barras e cores podem ser editados depois.</li>
+        <li><b>Exportar › PowerPoint</b> (ou o botão no relatório) gera um .pptx com: o resumo de todos os projetos, a linha do tempo deles na mesma régua de meses e um cronograma por projeto. Tudo é feito com formas do PowerPoint, então textos, barras e cores podem ser editados depois. Se o projeto tiver logo, ele aparece no canto do slide do projeto.</li>
       </ul></div></details>
       <details><summary>Situação do projeto</summary><div><ul>
         <li><b>No prazo</b> (verde): nada atrasado nem em risco.</li>
@@ -1187,7 +1220,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ul></div></details>
       <details><summary>Exportar e enviar</summary><div><ul>
         <li><b>Planilha Excel</b>: aba Tarefas com todos os dados, incluindo observações e datas planejadas, e aba Gantt pintada por semana.</li>
-        <li><b>HTML para envio</b>: um arquivo só de leitura para a diretoria. Abre com dois cliques, sem instalar nada.</li>
+        <li><b>HTML para envio</b>: um arquivo só de leitura para a diretoria, com o logo do projeto. Abre com dois cliques, sem instalar nada.</li>
         <li><b>Imprimir ou salvar PDF</b>: sai em A4 deitado, sempre no tema claro. O Relatório executivo e a Visão geral têm o próprio botão de imprimir, que sai só com eles.</li>
               <li>Na <b>Linha única</b> com vários projetos, o HTML para envio leva todos os que estiverem na tela.</li>
         <li>Também exportam para Excel: a <b>Visão geral</b> (tabela dos projetos e linha do tempo por mês, além de Imprimir ou salvar PDF) e <b>Recursos e conflitos</b> (necessidade de pessoas por semana e onde vão faltar).</li>
@@ -1220,7 +1253,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Tudo fica salvo neste navegador, neste computador. Nada é enviado para a internet, a não ser que você entre na nuvem na versão online.</li>
         <li>Limpar os dados do navegador apaga os projetos. Use <b>Salvar backup (.json)</b> com frequência.</li>
         <li>Para restaurar ou levar para outro computador, use <b>Abrir backup ou planilha</b> e escolha o .json.</li>
-              <li>O backup leva também os modelos de atividades do Planejar D−. As pessoas informadas em Recursos e conflitos, o zoom e o nível de resumo da Linha única são preferências deste navegador e não vão no backup.</li>
+              <li>O backup leva também os logos dos projetos e os modelos de atividades do Planejar D−. As pessoas informadas em Recursos e conflitos, o zoom e o nível de resumo da Linha única são preferências deste navegador e não vão no backup.</li>
       </ul></div></details>
       <details><summary>Tema claro e escuro</summary><div>O botão de lua ou sol, no canto do título, alterna o tema. A escolha fica salva.</div></details>
     </div>
@@ -1261,6 +1294,17 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
     <p class="muted">Todos os projetos na mesma régua de datas. Passe o mouse para ver a data exata e onde os projetos se sobrepõem. Clique em um projeto para abrir.</p>
     <div class="pf" id="pfList"></div>
     <div class="dlg-foot"><button class="btn" type="button" id="btnPfXlsx">Baixar Excel</button><button class="btn" type="button" id="btnPfPrint">Imprimir ou salvar PDF</button><button class="btn primary" value="">Fechar</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgLogo" aria-labelledby="lgT">
+  <form method="dialog" class="dlg-in">
+    <h2 id="lgT">Logo do projeto</h2>
+    <p class="muted">Escolha uma imagem (PNG, JPG, SVG, WebP ou GIF), arraste para cá ou cole com Ctrl+V. Pode ser de qualquer tamanho: o programa reduz e mostra sempre na mesma caixa, sem distorcer, no cabeçalho, na lista de projetos, na Visão geral, na Linha única, no relatório e no PowerPoint.</p>
+    <div class="lg-drop" id="lgDrop"><span class="lg-box lg-prev" id="lgPrev"></span><span class="lg-hint" id="lgHint">Nenhum logo ainda</span></div>
+    <input type="file" id="lgFile" accept="image/png,image/jpeg,image/svg+xml,image/webp,image/gif" hidden>
+    <div class="lg-bar"><button class="btn" type="button" id="btnLgPick">Escolher imagem</button><button class="btn quiet" type="button" id="btnLgDel">Remover logo</button><button class="btn" type="button" id="btnLgAll" title="Coloca este mesmo logo em todos os projetos (útil para o logo da empresa)">Usar em todos os projetos</button></div>
+    <div class="dlg-foot"><button class="btn primary" value="">Pronto</button></div>
   </form>
 </dialog>
 
@@ -1531,10 +1575,16 @@ function normP(p) {
   if (p.tol) { const tol = { late: tolN(p.tol.late), slip: tolN(p.tol.slip) }; if (tol.late || tol.slip) out.tol = tol; }
 
   if (p.exec) out.exec = String(p.exec).slice(0, 1500);
+  { const L = okLogo(p.logo); if (L) out.logo = L; }
   if (p.dplan && okd(p.dplan.anchor) && Array.isArray(p.dplan.rows)) out.dplan = { anchor: p.dplan.anchor, msName: String(p.dplan.msName || '').slice(0, 120), ms: sid(p.dplan.ms), gp: sid(p.dplan.gp), gt: sid(p.dplan.gt),
     rows: p.dplan.rows.slice(0, 30).filter(r => r && typeof r === 'object').map(r => ({ name: String(r.name || '').slice(0, 200), days: Math.max(0, Math.min(365, Math.floor(+r.days || 0))), owner: String(r.owner || '').slice(0, 120), tid: sid(r.tid) })) };
   return out;
 }
+// Logo do projeto: imagem já reduzida pelo programa (PNG ou JPEG em base64, no máximo ~300 KB) e o tamanho dela
+const okLogo = L => L && typeof L === 'object' && typeof L.d === 'string' && L.d.length <= 400000 && /^data:image\/(png|jpeg);base64,[A-Za-z0-9+/]+=*$/.test(L.d)
+  ? { d: L.d, w: Math.max(1, Math.min(2000, Math.round(+L.w) || 1)), h: Math.max(1, Math.min(2000, Math.round(+L.h) || 1)) } : null;
+// imagem do logo dentro de uma caixa de tamanho fixo (cls define a caixa); a imagem encaixa sem distorcer
+const logoBox = (p, cls) => p && p.logo ? `<span class="lg-box ${cls}"><img src="${p.logo.d}" alt="" draggable="false"></span>` : '';
 const okTpl = t => t && /^[\w-]{1,40}$/.test(t.id) && Array.isArray(t.groups) && Array.isArray(t.tasks);
 
 // Saúde do projeto em uma palavra, do jeito que a diretoria lê: verde, amarelo ou vermelho
@@ -1886,7 +1936,7 @@ const hb = p => { const [k, l] = health(p); return `<span class="hb hb-${k}">${l
 function renderSide() {
   if (RO) return;
   $('#plistN').textContent = state.projects.length > 1 ? state.projects.length : '';
-  $('#plist').innerHTML = state.projects.map(p => `<button class="pitem${p.id === state.currentId ? ' on' : ''}" data-p="${p.id}"><i class="hd hb-${health(p)[0]}" title="${health(p)[1]}"></i><span><b>${esc(p.name)}</b><small>${p.tasks.length} ${p.tasks.length === 1 ? 'tarefa' : 'tarefas'}, ${pctOf(p)}%</small></span></button>`).join('');
+  $('#plist').innerHTML = state.projects.map(p => `<button class="pitem${p.id === state.currentId ? ' on' : ''}" data-p="${p.id}"><i class="hd hb-${health(p)[0]}" title="${health(p)[1]}"></i>${logoBox(p, 'lg-side')}<span><b>${esc(p.name)}</b><small>${p.tasks.length} ${p.tasks.length === 1 ? 'tarefa' : 'tarefas'}, ${pctOf(p)}%</small></span></button>`).join('');
   $('#tlist').innerHTML = allTpls().map(t => `<li><button class="tl" data-tpl="${t.id}" title="Criar projeto a partir de ${esc(t.name)}"><span>${esc(t.name)}</span></button>${t.builtin ? '' : `<button class="x" data-deltpl="${t.id}" aria-label="Excluir modelo ${esc(t.name)}">×</button>`}</li>`).join('');
   $('#owners').innerHTML = [...new Set(state.projects.flatMap(p => p.tasks.flatMap(owns)).filter(Boolean))].map(o => `<option value="${esc(o)}">`).join('');
 }
@@ -1896,6 +1946,8 @@ function renderTop() {
   if (document.activeElement !== $('#pTitle')) $('#pTitle').value = p.name;
   if (document.activeElement !== $('#pSub')) $('#pSub').value = p.area;
   document.title = p.name + ' | Roadmap';
+  $('#pLogo').hidden = !p.logo; if (p.logo) { if ($('#pLogoImg').getAttribute('src') !== p.logo.d) $('#pLogoImg').src = p.logo.d; } else $('#pLogoImg').removeAttribute('src');
+  $('#pLogo').disabled = RO; $('[data-act="logo"] span').textContent = p.logo ? 'Trocar ou remover logo' : 'Adicionar logo';
   document.querySelectorAll('#zoom button').forEach(b => b.setAttribute('aria-pressed', b.dataset.z === state.zoom));
   document.querySelectorAll('#view button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === state.view));
   $('#zoom').hidden = $('#btnHoje').hidden = state.view === 'line';
@@ -2210,7 +2262,7 @@ function renderLine({ fx, fo }) {
     const pct = all ? Math.round(p.tasks.reduce((a, t) => a + (t.milestone ? (t.progress >= 100 ? 100 : 0) : t.progress) * Math.max(1, t.milestone ? 1 : d2n(t.end) - d2n(t.start) + 1), 0) / p.tasks.reduce((a, t) => a + Math.max(1, t.milestone ? 1 : d2n(t.end) - d2n(t.start) + 1), 0)) : 0;
     const empty = !all ? `<div class="ls-none">${RO ? 'Nada planejado ainda.' : 'Projeto sem tarefas. Use Nova tarefa para começar.'}</div>`
       : !sh ? '<div class="ls-none">Nenhuma tarefa com esse filtro.</div>' : '';
-    return `<section class="ls-p"><header class="ls-ph"><b>${esc(p.name)}</b><span>${per}${all ? ` · ${fo ? sh + ' de ' : ''}${all} ${all === 1 ? 'tarefa' : 'tarefas'} · ${pct}%` : ''}</span></header>`
+    return `<section class="ls-p"><header class="ls-ph">${logoBox(p, 'lg-ls')}<b>${esc(p.name)}</b><span>${per}${all ? ` · ${fo ? sh + ' de ' : ''}${all} ${all === 1 ? 'tarefa' : 'tarefas'} · ${pct}%` : ''}</span></header>`
       + (segs ? `<div class="ls-row" style="margin-left:${(x[0] - m0) * CW}px;width:${span}px">${segs}</div>` : '') + empty + `</section>`;
   };
   $('#btnHoje').disabled = true;
@@ -2667,7 +2719,7 @@ function zip(files) {
   const enc = new TextEncoder(), parts = [], central = [];
   let off = 0;
   for (const [name, text] of files) {
-    const nm = enc.encode(name), data = enc.encode(text), crc = crc32(data);
+    const nm = enc.encode(name), data = typeof text === 'string' ? enc.encode(text) : text, crc = crc32(data);
     const lh = new DataView(new ArrayBuffer(30));
     lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true); lh.setUint16(12, 0x21, true);
     lh.setUint32(14, crc, true); lh.setUint32(18, data.length, true); lh.setUint32(22, data.length, true); lh.setUint16(26, nm.length, true);
@@ -3007,7 +3059,7 @@ const ACT = {
       const s = n ? Math.min(...p.tasks.map(t => d2n(t.start))) : 0, e = n ? Math.max(...p.tasks.map(t => d2n(t.end))) : 0;
       const per = n ? `${fmtCurto(s)} a ${fmtLong(e)}` : 'Sem tarefas';
       return `<button class="pf-row" value="${p.id}" style="--k:${k}">
-        <span class="pf-name"><b title="${esc(p.name)}">${esc(p.name)}</b><span class="pf-sub">${hb(p)}${tb(p)}<small>${pct}%, ${per}${late ? `, <em class="bad">${late} ${late === 1 ? 'atrasada' : 'atrasadas'}</em>` : ''}</small></span></span>
+        <span class="pf-name"><span class="pf-nt">${logoBox(p, 'lg-pf')}<b title="${esc(p.name)}">${esc(p.name)}</b></span><span class="pf-sub">${hb(p)}${tb(p)}<small>${pct}%, ${per}${late ? `, <em class="bad">${late} ${late === 1 ? 'atrasada' : 'atrasadas'}</em>` : ''}</small></span></span>
         <span class="pf-lane" style="--k:${k}">${n ? `<i class="pf-bar hb-${health(p)[0]}" style="left:${pos(s)};width:${wd(s, e)}" title="${esc(p.name)}: ${per}"><u style="width:${pct}%"></u></i>` : ''}${p.tasks.filter(t => t.milestone).map(t => `<i class="pf-ms" style="left:${pos(d2n(t.start) + .5)}" title="${esc(t.name)}, ${fmtLong(d2n(t.start))}"></i>`).join('')}</span></button>`;
     }).join('');
     $('#pfList').innerHTML = head + `<div class="pf-body">${grid}${rows}</div>`;
@@ -3053,6 +3105,7 @@ const ACT = {
   },
   dmRe: () => openDm(cur()),
   res: () => openRes(),
+  logo: () => openLogo(),
   delMany: () => openDelMany(),
   load: () => { renderLoad(); const d = $('#dlgLoad'); d.returnValue = ''; d.showModal(); },
   marks: () => { renderMarks(); const d = $('#dlgMarks'); d.returnValue = ''; d.showModal(); },
@@ -3176,7 +3229,7 @@ $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
 // Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
 // A cada versão nova, troque a data e a lista abaixo.
-const NOVIDADES = { versao: '2026-11-25', secoes: ['Onde fica cada coisa', 'Planejar D− (de trás para frente)', 'Recursos e conflitos', 'Visão geral dos projetos', 'Ler o cronograma'] };
+const NOVIDADES = { versao: '2026-11-25', secoes: ['Logo do projeto', 'Onde fica cada coisa', 'Planejar D− (de trás para frente)', 'Recursos e conflitos', 'Visão geral dos projetos', 'Ler o cronograma'] };
 {
   const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
   sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
@@ -3469,7 +3522,7 @@ function repHTML(edit) {
   const rows = ps.map(p => {
     const per = perOf(p), sl = slipDays(p), ms = nextMs(p, 2), lt = lateOf(p), rk = riskOf(p), ar = [...lt.map(t => ['l', 'atrasada', t]), ...rk.map(t => ['r', 'em risco', t])];
     return `<section class="rp-row rp-p hb-${health(p)[0]}">
-      <div><b>${esc(p.name)}</b>${p.area ? `<small>${esc(p.area)}</small>` : ''}</div>
+      <div>${logoBox(p, 'lg-rp')}<b>${esc(p.name)}</b>${p.area ? `<small>${esc(p.area)}</small>` : ''}</div>
       <div data-l="Situação"><span class="hb-w">${hb(p)}${tb(p)}</span><small>${pctOf(p)}% concluído${per ? `, termina ${fmtCurto(per[1])}` : ''}${p.baseAt && sl ? `, ${sl > 0 ? '+' : '−'}${Math.abs(sl)} d do plano` : ''}</small></div>
       <div data-l="Próximos marcos">${ms.length ? ms.map(t => `<small><b>${fmtCurto(d2n(t.start))}</b> ${esc(t.name)}</small>`).join('') : '<small class="rp-0">Nenhum marco pela frente</small>'}</div>
       <div data-l="Atrasadas e em risco">${ar.length ? ar.slice(0, 3).map(([c, l, t]) => `<small><i class="rp-${c}">${l}</i>${esc(t.name)}</small>`).join('') + (ar.length > 3 ? `<small class="rp-0">e mais ${ar.length - 3}</small>` : '') : '<small class="rp-0">Nenhuma</small>'}</div>
@@ -3577,6 +3630,58 @@ function printPf() {
 }
 $('#btnPfPrint').addEventListener('click', printPf);
 $('#btnPfXlsx').addEventListener('click', () => { download(buildPfXlsx(), `visao-geral-projetos-${n2d(todayN)}.xlsx`); toast('Planilha da visão geral exportada'); });
+
+/* ---------- logo do projeto ---------- */
+// A imagem é desenhada num canvas de no máximo 360 x 180 px (o dobro da maior caixa de exibição, para ficar nítida)
+// e guardada como PNG; se o PNG ficar pesado (foto), vira JPEG com fundo branco. SVG vira imagem também (sem scripts).
+const LOGO_MAX = [360, 180];
+function logoFrom(file) {
+  return new Promise((res, rej) => {
+    if (!file || !/^image\//.test(file.type)) return rej(Error('o arquivo não é uma imagem'));
+    if (file.size > 25e6) return rej(Error('a imagem passa de 25 MB'));
+    const url = URL.createObjectURL(file), im = new Image();
+    im.onload = () => {
+      try {
+        let w = im.naturalWidth || 512, h = im.naturalHeight || 512; if (!w || !h) throw Error('não consegui ler o tamanho da imagem');
+        const k = Math.min(1, LOGO_MAX[0] / w, LOGO_MAX[1] / h); w = Math.max(1, Math.round(w * k)); h = Math.max(1, Math.round(h * k));
+        const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d');
+        g.imageSmoothingQuality = 'high'; g.drawImage(im, 0, 0, w, h);
+        let d = c.toDataURL('image/png');
+        if (d.length > 300000) { const c2 = document.createElement('canvas'); c2.width = w; c2.height = h; const g2 = c2.getContext('2d'); g2.fillStyle = '#fff'; g2.fillRect(0, 0, w, h); g2.drawImage(c, 0, 0); d = c2.toDataURL('image/jpeg', .86); }
+        const L = okLogo({ d, w, h }); if (!L) throw Error('a imagem ficou grande demais mesmo reduzida');
+        res(L);
+      } catch (e) { rej(e); } finally { URL.revokeObjectURL(url); }
+    };
+    im.onerror = () => { URL.revokeObjectURL(url); rej(Error('não consegui abrir essa imagem')); };
+    im.src = url;
+  });
+}
+function renderLogoDlg() {
+  const p = cur(); $('#lgPrev').innerHTML = p.logo ? `<img src="${p.logo.d}" alt="Logo de ${esc(p.name)}">` : '';
+  $('#lgPrev').hidden = !p.logo; $('#lgHint').textContent = p.logo ? 'É assim que ele aparece no cabeçalho' : 'Nenhum logo ainda: escolha, arraste ou cole uma imagem';
+  $('#btnLgDel').hidden = $('#btnLgAll').hidden = !p.logo; if (state.projects.length < 2) $('#btnLgAll').hidden = true;
+  $('#btnLgPick').textContent = p.logo ? 'Trocar imagem' : 'Escolher imagem';
+}
+async function setLogo(file) {
+  try { const L = await logoFrom(file); cur().logo = L; save(); render(); renderLogoDlg(); toast('Logo aplicado ao projeto'); }
+  catch (e) { toast('Não deu para usar essa imagem: ' + e.message + '.'); }
+}
+function openLogo() { renderLogoDlg(); const d = $('#dlgLogo'); d.returnValue = ''; d.showModal(); }
+$('#pLogo').addEventListener('click', () => { if (!RO) openLogo(); });
+$('#btnLgPick').addEventListener('click', () => $('#lgFile').click());
+$('#lgFile').addEventListener('change', e => { const f = e.target.files[0]; e.target.value = ''; if (f) setLogo(f); });
+$('#btnLgDel').addEventListener('click', () => { delete cur().logo; save(); render(); renderLogoDlg(); toast('Logo removido'); });
+$('#btnLgAll').addEventListener('click', async () => {
+  const L = cur().logo, n = state.projects.length - 1; if (!L) return;
+  if (!await ask({ title: 'Usar este logo em todos?', text: `O logo deste projeto vai substituir o logo dos outros ${n} ${n === 1 ? 'projeto' : 'projetos'}. Desfazer (Ctrl+Z) volta atrás.`, ok: 'Usar em todos' })) return;
+  state.projects.forEach(p => { p.logo = { ...L }; }); save(); render(); renderLogoDlg(); toast(`Logo aplicado aos ${n + 1} projetos`);
+});
+const lgDrop = $('#lgDrop');
+['dragenter', 'dragover'].forEach(t => lgDrop.addEventListener(t, e => { e.preventDefault(); lgDrop.classList.add('over'); }));
+['dragleave', 'drop'].forEach(t => lgDrop.addEventListener(t, () => lgDrop.classList.remove('over')));
+lgDrop.addEventListener('drop', e => { e.preventDefault(); const f = [...e.dataTransfer.files].find(x => /^image\//.test(x.type)); if (f) setLogo(f); else toast('Solte um arquivo de imagem.'); });
+lgDrop.addEventListener('click', () => $('#lgFile').click());
+$('#dlgLogo').addEventListener('paste', e => { const f = [...(e.clipboardData?.files || [])].find(x => /^image\//.test(x.type)); if (f) { e.preventDefault(); setLogo(f); } });
 
 /* ---------- excluir vários projetos ---------- */
 function openDelMany() {
@@ -3734,13 +3839,18 @@ function pSlide() {
       + (f ? `<a:solidFill><a:srgbClr val="${f}"/></a:solidFill>` : '<a:noFill/>') + (ln ? `<a:ln w="${E(ln[1] || 1)}"><a:solidFill><a:srgbClr val="${ln[0]}"/></a:solidFill></a:ln>` : '<a:ln><a:noFill/></a:ln>')
       + `</p:spPr><p:txBody><a:bodyPr wrap="square" lIns="${E(ins)}" tIns="${E(1)}" rIns="${E(ins)}" bIns="${E(1)}" anchor="${an}" rtlCol="0"><a:noAutofit/></a:bodyPr><a:lstStyle/>${(paras.length ? paras : [['']]).map(para).join('')}</p:txBody></p:sp>`);
   };
+  // imagem encaixada (sem distorcer) numa caixa de w x h; rid = relação da imagem no slide
+  const pic = ({ x, y, w, h, iw, ih, rid }) => {
+    id++; const k = Math.min(w / iw, h / ih), pw = iw * k, ph = ih * k, px = x + (w - pw), py = y + (h - ph) / 2;
+    out.push(`<p:pic><p:nvPicPr><p:cNvPr id="${id}" name="Logo ${id}"/><p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr><p:nvPr/></p:nvPicPr><p:blipFill><a:blip r:embed="${rid}"/><a:stretch><a:fillRect/></a:stretch></p:blipFill><p:spPr><a:xfrm><a:off x="${E(px)}" y="${E(py)}"/><a:ext cx="${E(pw)}" cy="${E(ph)}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic>`);
+  };
   const xml = () => `${XHEAD}<p:sld xmlns:a="${ANS}" xmlns:r="${ORNS}" xmlns:p="${PNS}"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr/>${out.join('')}</p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>`;
-  return { sp, xml };
+  return { sp, pic, xml };
 }
-function sHead(s, title, sub, pg) {
+function sHead(s, title, sub, pg, rw = 0) {
   s.sp({ x: 0, y: 0, w: SW, h: 6, f: '006729' });
-  s.sp({ x: SM, y: 18, w: SW - 2 * SM, h: 36, paras: [[cut(title, 64), { sz: 24, b: 1, c: '003960' }]], ins: 0 });
-  if (sub) s.sp({ x: SM, y: 54, w: SW - 2 * SM, h: 20, paras: [[cut(sub, 150), { sz: 12, c: '46606F' }]], ins: 0 });
+  s.sp({ x: SM, y: 18, w: SW - 2 * SM - rw, h: 36, paras: [[cut(title, rw ? 52 : 64), { sz: 24, b: 1, c: '003960' }]], ins: 0 });
+  if (sub) s.sp({ x: SM, y: 54, w: SW - 2 * SM - rw, h: 20, paras: [[cut(sub, rw ? 125 : 150), { sz: 12, c: '46606F' }]], ins: 0 });
   s.sp({ x: SM, y: SH - 24, w: SW - 2 * SM, h: 14, paras: [[`Gerado em ${fmtBR(todayN)}  ·  ${pg}`, { sz: 9, c: '5B6770' }]], ins: 0, al: 'r' });
 }
 // régua de anos e meses entre os meses ma e mb; devolve a posição x de um dia
@@ -3800,8 +3910,11 @@ function slTempo(ps, pg) {
 }
 function slProj(p, ts, part, parts, pg) {
   const s = pSlide(), per = perOf(p), k = health(p)[0], tr = trend(p);
-  sHead(s, p.name + (parts > 1 ? ` (${part} de ${parts})` : ''), [p.area, per && `${fmtLong(per[0])} a ${fmtLong(per[1])}`, `${pctOf(p)}% concluído`, HLB[k] + (tr ? `, ${TRT[tr.dir].toLowerCase()}` : '')].filter(Boolean).join('  ·  '), pg);
-  if (!per) return s.xml();
+  // logo no canto de cima, numa caixa fixa de 120 x 44 pt; a relação rId2 aponta para a imagem (montada em buildPptx)
+  if (p.logo) s.pic({ x: SW - SM - 120, y: 14, w: 120, h: 44, iw: p.logo.w, ih: p.logo.h, rid: 'rId2' });
+  sHead(s, p.name + (parts > 1 ? ` (${part} de ${parts})` : ''), [p.area, per && `${fmtLong(per[0])} a ${fmtLong(per[1])}`, `${pctOf(p)}% concluído`, HLB[k] + (tr ? `, ${TRT[tr.dir].toLowerCase()}` : '')].filter(Boolean).join('  ·  '), pg, p.logo ? 132 : 0);
+  const mark = p.logo ? `<!--logo:${p.id}-->` : '';
+  if (!per) return s.xml() + mark;
   const y0 = 120, rh = Math.min(26, (SH - 44 - y0) / Math.max(1, ts.length)), x0 = SM + 250, x1 = SW - SM;
   const X = sRuler(s, x0, x1, 86, mOfN(per[0]), mOfN(per[1]), y0 + ts.length * rh);
   const gOf = t => p.groups.find(g => g.id === t.groupId) || p.groups[0], CR = critical(p);
@@ -3815,7 +3928,7 @@ function slProj(p, ts, part, parts, pg) {
     s.sp({ x: bx, y: by, w: bw, h: bh, g: 'roundRect', f: tint(c, 0.6), ln: st === 'late' ? ['E60018', 1.5] : t.risk && st !== 'done' ? ['E8A317', 1.5] : CR.has(t.id) ? ['003960', 1.5] : null });
     if (t.progress) s.sp({ x: bx, y: by, w: Math.max(2, bw * t.progress / 100), h: bh, g: 'roundRect', f: c });
   });
-  return s.xml();
+  return s.xml() + mark;
 }
 function buildPptx(ps) {
   const ix = p => { const i = state.projects.indexOf(p); return i < 0 ? 1e9 : i; }, byTime = ps.slice().sort((a, b) => ix(a) - ix(b)), gi = p => t => p.groups.findIndex(g => g.id === t.groupId);
@@ -3825,13 +3938,18 @@ function buildPptx(ps) {
     parts.forEach((c, i) => mk.push(pg => slProj(p, c, i + 1, parts.length, pg)));
   });
   const slides = mk.map((f, i) => f(`${i + 1} de ${mk.length}`)), CT = 'application/vnd.openxmlformats-officedocument.presentationml.';
+  // logos: um arquivo de imagem por projeto, ligado aos slides daquele projeto
+  const media = [], logoOf = [];
+  slides.forEach((x, i) => { const m = x.match(/<!--logo:([\w-]+)-->/), p = m && ps.find(q => q.id === m[1]); if (!p || !p.logo) return;
+    let f = media.find(q => q.p === p); if (!f) { const ext = p.logo.d.startsWith('data:image/png') ? 'png' : 'jpeg'; f = { p, ext, name: `logo${media.length + 1}.${ext}`, data: Uint8Array.from(atob(p.logo.d.split(',')[1]), c => c.charCodeAt(0)) }; media.push(f); }
+    logoOf[i] = f; });
   const rels = list => `${XHEAD}<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${list.map(([t, tg], i) => `<Relationship Id="rId${i + 1}" Type="${ORNS}/${t}" Target="${tg}"/>`).join('')}</Relationships>`;
   const NS = `xmlns:a="${ANS}" xmlns:r="${ORNS}" xmlns:p="${PNS}"`, tree = '<p:spTree><p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr/></p:spTree>';
   const clr = [['dk1', '0B2A3C'], ['lt1', 'FFFFFF'], ['dk2', '003960'], ['lt2', 'F1F5F2'], ['accent1', '006729'], ['accent2', '003960'], ['accent3', '65A518'], ['accent4', '0083A9'], ['accent5', 'E8A317'], ['accent6', 'E60018'], ['hlink', '0083A9'], ['folHlink', '7A4FA0']].map(([n, v]) => `<a:${n}><a:srgbClr val="${v}"/></a:${n}>`).join('');
   const x3 = t => t + t + t, font = f => `<a:latin typeface="${f}"/><a:ea typeface=""/><a:cs typeface=""/>`;
   const theme = `${XHEAD}<a:theme xmlns:a="${ANS}" name="Roadmap"><a:themeElements><a:clrScheme name="Roadmap">${clr}</a:clrScheme><a:fontScheme name="Roadmap"><a:majorFont>${font('Segoe UI Semibold')}</a:majorFont><a:minorFont>${font('Segoe UI')}</a:minorFont></a:fontScheme><a:fmtScheme name="Roadmap"><a:fillStyleLst>${x3('<a:solidFill><a:schemeClr val="phClr"/></a:solidFill>')}</a:fillStyleLst><a:lnStyleLst>${x3('<a:ln w="9525"><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:ln>')}</a:lnStyleLst><a:effectStyleLst>${x3('<a:effectStyle><a:effectLst/></a:effectStyle>')}</a:effectStyleLst><a:bgFillStyleLst>${x3('<a:solidFill><a:schemeClr val="phClr"/></a:solidFill>')}</a:bgFillStyleLst></a:fmtScheme></a:themeElements></a:theme>`;
   const files = [
-    ['[Content_Types].xml', `${XHEAD}<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/ppt/presentation.xml" ContentType="${CT}presentation.main+xml"/><Override PartName="/ppt/slideMasters/slideMaster1.xml" ContentType="${CT}slideMaster+xml"/><Override PartName="/ppt/slideLayouts/slideLayout1.xml" ContentType="${CT}slideLayout+xml"/><Override PartName="/ppt/theme/theme1.xml" ContentType="application/vnd.openxmlformats-officedocument.theme+xml"/><Override PartName="/ppt/presProps.xml" ContentType="${CT}presProps+xml"/><Override PartName="/ppt/viewProps.xml" ContentType="${CT}viewProps+xml"/><Override PartName="/ppt/tableStyles.xml" ContentType="${CT}tableStyles+xml"/>${slides.map((_, i) => `<Override PartName="/ppt/slides/slide${i + 1}.xml" ContentType="${CT}slide+xml"/>`).join('')}</Types>`],
+    ['[Content_Types].xml', `${XHEAD}<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Default Extension="jpeg" ContentType="image/jpeg"/><Override PartName="/ppt/presentation.xml" ContentType="${CT}presentation.main+xml"/><Override PartName="/ppt/slideMasters/slideMaster1.xml" ContentType="${CT}slideMaster+xml"/><Override PartName="/ppt/slideLayouts/slideLayout1.xml" ContentType="${CT}slideLayout+xml"/><Override PartName="/ppt/theme/theme1.xml" ContentType="application/vnd.openxmlformats-officedocument.theme+xml"/><Override PartName="/ppt/presProps.xml" ContentType="${CT}presProps+xml"/><Override PartName="/ppt/viewProps.xml" ContentType="${CT}viewProps+xml"/><Override PartName="/ppt/tableStyles.xml" ContentType="${CT}tableStyles+xml"/>${slides.map((_, i) => `<Override PartName="/ppt/slides/slide${i + 1}.xml" ContentType="${CT}slide+xml"/>`).join('')}</Types>`],
     ['_rels/.rels', rels([['officeDocument', 'ppt/presentation.xml']])],
     ['ppt/presentation.xml', `${XHEAD}<p:presentation ${NS} saveSubsetFonts="1"><p:sldMasterIdLst><p:sldMasterId id="2147483648" r:id="rId1"/></p:sldMasterIdLst><p:sldIdLst>${slides.map((_, i) => `<p:sldId id="${256 + i}" r:id="rId${i + 6}"/>`).join('')}</p:sldIdLst><p:sldSz cx="12192000" cy="6858000"/><p:notesSz cx="6858000" cy="9144000"/></p:presentation>`],
     ['ppt/_rels/presentation.xml.rels', rels([['slideMaster', 'slideMasters/slideMaster1.xml'], ['theme', 'theme/theme1.xml'], ['presProps', 'presProps.xml'], ['viewProps', 'viewProps.xml'], ['tableStyles', 'tableStyles.xml'], ...slides.map((_, i) => ['slide', `slides/slide${i + 1}.xml`])])],
@@ -3843,7 +3961,8 @@ function buildPptx(ps) {
     ['ppt/slideMasters/_rels/slideMaster1.xml.rels', rels([['slideLayout', '../slideLayouts/slideLayout1.xml'], ['theme', '../theme/theme1.xml']])],
     ['ppt/slideLayouts/slideLayout1.xml', `${XHEAD}<p:sldLayout ${NS} type="blank" preserve="1"><p:cSld name="Em branco">${tree}</p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sldLayout>`],
     ['ppt/slideLayouts/_rels/slideLayout1.xml.rels', rels([['slideMaster', '../slideMasters/slideMaster1.xml']])],
-    ...slides.flatMap((x, i) => [[`ppt/slides/slide${i + 1}.xml`, x], [`ppt/slides/_rels/slide${i + 1}.xml.rels`, rels([['slideLayout', '../slideLayouts/slideLayout1.xml']])]])
+    ...slides.flatMap((x, i) => [[`ppt/slides/slide${i + 1}.xml`, x], [`ppt/slides/_rels/slide${i + 1}.xml.rels`, rels([['slideLayout', '../slideLayouts/slideLayout1.xml'], ...(logoOf[i] ? [['image', `../media/${logoOf[i].name}`]] : [])])]]),
+    ...media.map(f => [`ppt/media/${f.name}`, f.data])
   ];
   return new Blob([zip(files)], { type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' });
 }
@@ -4343,6 +4462,13 @@ async function selfTest() {
     const g = await xlsxGrid(await xlsxBook([{ name: 'A', rows: [['x', 2, { v: d2n('2027-01-05'), st: 'd' }]] }, { name: 'B/2', rows: [[{ v: 'y', st: 0 }]] }], ['#E60018']).arrayBuffer(), n => n.indexOf('A'));
     ok(g.rows[0][0] === 'x' && g.rows[0][1] === 2 && g.rows[0][2] === d2n('2027-01-05') + 25569 && g.sheets.join() === 'A,B 2', 'planilha genérica: ida e volta');
     ok(pfData([mkp('A', '2027-03-01', '2027-03-12')])[0].pct === 0 && (await buildPfXlsx().arrayBuffer()).byteLength > 500, 'visão geral: planilha'); }
+  { // logo: só aceita imagem reduzida pelo programa
+    const px = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
+    ok(okLogo({ d: px, w: 10, h: 5 }).w === 10 && !okLogo({ d: 'data:image/svg+xml;base64,AAAA', w: 1, h: 1 }) && !okLogo({ d: 'javascript:alert(1)' }) && !okLogo({ d: 'data:image/png;base64,' + 'A'.repeat(400001) }) && !okLogo(null), 'logo: validação');
+    const lp = normP({ id: 'lg', name: 'L', logo: { d: px, w: 4000, h: 9 }, groups: [], tasks: [{ id: 'a', name: 'A', start: '2027-01-04', end: '2027-01-08' }] });
+    ok(lp.logo && lp.logo.w === 2000 && !normP({ name: 'x', logo: 'data:x', groups: [], tasks: [] }).logo, 'logo: fica no projeto');
+    const z = await unzip(await buildPptx([lp]).arrayBuffer()), sl = Object.keys(z).filter(k => /slides\/slide\d+\.xml$/.test(k)).map(k => new TextDecoder().decode(z[k])).find(x => x.includes('<p:pic>'));
+    ok(z['ppt/media/logo1.png'] && sl && new TextDecoder().decode(z['[Content_Types].xml']).includes('image/png'), 'logo: vai para o PowerPoint'); }
   { // planejar D−
     const A = d2n('2027-02-20'); // sábado; Carnaval de 2027 em 8 e 9/2
     ok(!isWork(A) && !isWork(d2n('2027-02-08')) && !isWork(d2n('2027-02-09')) && isWork(d2n('2027-02-10')) && prevWork(A) === d2n('2027-02-19'), 'D−: dias úteis');

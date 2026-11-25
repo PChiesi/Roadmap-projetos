@@ -27,6 +27,7 @@ Ferramenta para montar cronogramas e roadmaps de projetos no navegador. É um ú
 - O Manual marca o que mudou na última versão, e o botão avisa quem ainda não viu.
 - O HTML para envio é uma cópia só para leitura, que abre com dois cliques em qualquer computador.
 - No modo equipe, várias pessoas editam o mesmo roadmap por um arquivo .json numa pasta do SharePoint ou OneDrive sincronizada.
+- Cada projeto pode ter um logo (**Projeto › Adicionar logo**). Imagem de qualquer tamanho é reduzida e aparece sempre na mesma caixa, sem distorcer: no título, na lista de projetos, na Visão geral, na Linha única, no relatório, no PowerPoint e no HTML para envio.
 - Cada tarefa aceita mais de um responsável (aparecem juntos na mesma linha, como "Ana / Bruno") e tem um checklist de até 15 itens no painel lateral, para marcar o que já foi feito.
 - O botão **Editar grupos**, no começo da linha de grupos, abre a tela para renomear, mudar a cor, criar ou excluir grupos.
 - Os menus seguem uma ordem fixa: na barra lateral, criar, painéis de todos os projetos, lista de projetos, modelos, equipe e arquivos; na barra do cronograma, à esquerda o que muda a visualização e à direita o que mexe no projeto, com **Nova tarefa** no fim; logo acima do cronograma ficam a escala, o Hoje e o zoom da Linha única. No celular, a barra lateral abre pelo botão **Menu**.
