@@ -756,6 +756,40 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 /* visão geral dos projetos */
 #dlgAll{width:min(1000px,calc(100vw - 32px))}
 #dlgDelMany{width:min(640px,calc(100vw - 32px))}
+#dlgCen{width:min(680px,calc(100vw - 32px))}
+#dlgCmp{width:min(1180px,calc(100vw - 32px))}
+.cm-top{display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
+.cm-f{flex:1;border:1px solid var(--line);border-radius:12px;padding:6px 12px 10px;margin:0;min-width:0}
+.cm-f legend{font-weight:700;font-size:13px;color:var(--title);padding:0 4px}
+.cm-l{display:flex;gap:6px 18px;flex-wrap:wrap}.cm-l small{color:var(--ink-3)}
+.cm-from input{height:36px;border:1px solid var(--line);border-radius:10px;padding:0 10px;background:var(--surface);font-size:14px;color:var(--ink)}
+.cm-eq{border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--surface)}
+.cm-eq summary{font:700 14px var(--f-d);color:var(--title);cursor:pointer}.cm-eq summary small{font:400 12px var(--f-t);color:var(--ink-3)}
+.cm-tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px 14px;margin-top:8px}
+.cm-ti{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px}
+.cm-ti span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cm-ti input{width:64px;height:30px;border:1px solid var(--line);border-radius:7px;text-align:center;font-weight:700;background:var(--surface);color:var(--ink)}
+.cm-prev{display:flex;flex-direction:column;gap:12px;max-height:46vh;overflow:auto}
+.cm-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.cm-c{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--surface)}
+.cm-c h4{margin:0 0 8px;font:700 15px var(--f-d);color:var(--title)}
+.cm-c dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;margin:0 0 10px}
+.cm-c dt{font-size:11.5px;color:var(--ink-3)}.cm-c dd{margin:0;font:700 17px var(--f-d);color:var(--ink)}.cm-c dd small{font:400 12px var(--f-t);color:var(--ink-3)}
+.cm-c dd.bad,.cm-t td.bad,.cm-d .bad{color:var(--red-txt)}.cm-c dd.good,.cm-d .good{color:var(--green-txt)}
+.cm-t{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+.cm-t th{text-align:left;font-weight:600;color:var(--ink-3);font-size:11.5px;padding:4px 6px;border-bottom:1px solid var(--line)}
+.cm-t td{padding:4px 6px;border-bottom:1px solid var(--line-2)}.cm-t td small{color:var(--ink-3)}
+.cm-t td.bad{font-weight:700}
+.cm-d{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cm-d>div{border:1px solid var(--line);border-radius:14px;padding:10px 14px;background:var(--surface)}
+.cm-d h4{margin:0 0 6px;font:700 14px var(--f-d)}.cm-d ul{margin:0;padding-left:18px;font-size:13px;display:flex;flex-direction:column;gap:4px}
+@media (max-width:720px){.cm-d{grid-template-columns:1fr}}
+
+.cn-list{display:flex;flex-direction:column;gap:6px}
+.cn-i{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.cn-i input{height:34px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--surface);font-size:14px;font-weight:600;color:var(--ink);min-width:0}
+.cn-i small{font-size:12px;color:var(--ink-3);white-space:nowrap}
+@media (max-width:560px){.cn-i{grid-template-columns:1fr 1fr}.cn-i input{grid-column:1/-1}}
 .pf-tb{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
 .pf-so select{height:34px;border:1px solid var(--line);border-radius:9px;padding:0 10px;background:var(--surface);font-size:13px;color:var(--ink)}
 .pf-fl{display:flex;gap:6px;flex-wrap:wrap}
@@ -795,6 +829,13 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 .dx-i input{width:17px;height:17px;accent-color:var(--red);flex:none}
 .dx-i span{display:flex;flex-direction:column;min-width:0}.dx-i b{font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dx-i small{font-size:12px;color:var(--ink-3)}
 .h3-row{display:flex;align-items:center;justify-content:space-between}
+.cen-box{display:flex;align-items:flex-end;gap:4px;margin:0 0 10px}
+.cen-sel{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0}
+.cen-sel span{font:600 12px var(--f-t);color:#8FB59C;text-transform:uppercase;letter-spacing:.06em;padding:0 4px}
+.cen-sel select{width:100%;height:34px;border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:0 8px;background:rgba(255,255,255,.08);color:#fff;font-size:13px;font-weight:600}
+.cen-sel select option{color:#0B2A3C;background:#fff}
+.cen-box[hidden]{display:none}
+.cen-b{height:34px;width:30px}.cen-b:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28)}
 .h3-b{background:none;border:1px solid transparent;color:#8FB59C;width:26px;height:24px;border-radius:7px;display:grid;place-items:center;padding:0}
 .h3-b svg{width:15px;height:15px}
 .h3-b:hover{color:#fff;background:rgba(230,0,24,.35);border-color:rgba(230,0,24,.6)}
@@ -956,9 +997,10 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       <button class="nav-i" data-act="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>Visão geral</button>
       <button class="nav-i" data-act="lpOpen" title="Ver vários projetos juntos, um embaixo do outro, na mesma régua de meses"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg>Vários na Linha única</button>
       <button class="nav-i" data-act="res" title="Onde as atividades ao mesmo tempo passam das pessoas disponíveis, e quantas faltam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><rect x="5" y="11" width="3" height="9" rx="1"/><rect x="10.5" y="6" width="3" height="14" rx="1"/><rect x="16" y="3" width="3" height="17" rx="1"/><path d="M3 8h18" stroke-dasharray="2 2"/></svg>Recursos e conflitos</button>
+      <button class="nav-i" data-act="cmp" title="Apresentação com a visão geral e os recursos de cada cenário e a comparação entre eles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="16" rx="1.5"/><path d="M5.5 9h2M5.5 13h2M16.5 9h2M16.5 13h2"/></svg>Comparar cenários</button>
       <button class="nav-i" data-act="load"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.2 3.2 0 0 1 0 6.4M21 20c0-2.6-1.6-4.8-4-5.6"/></svg>Carga da equipe</button>
       <button class="nav-i" data-act="marks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15h6"/></svg>Datas da empresa</button></nav>
-    <div class="side-sec"><h3 class="h3-row"><span>Projetos <span class="h3-n" id="plistN"></span></span><button class="h3-b edit-only" data-act="delMany" title="Excluir vários projetos de uma vez" aria-label="Excluir vários projetos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button></h3><nav class="plist" id="plist" aria-label="Projetos"></nav></div>
+    <div class="side-sec"><div class="cen-box" id="cenBox" hidden><label class="cen-sel"><span>Cenário</span><select id="cenSel" aria-label="Cenário que aparece na lista e nos painéis"></select></label><button class="h3-b cen-b edit-only" data-act="cenMng" title="Renomear, copiar ou excluir cenários" aria-label="Gerenciar cenários"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div><h3 class="h3-row"><span>Projetos <span class="h3-n" id="plistN"></span></span><button class="h3-b edit-only" data-act="delMany" title="Excluir vários projetos de uma vez" aria-label="Excluir vários projetos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button></h3><nav class="plist" id="plist" aria-label="Projetos"></nav></div>
     <div class="side-sec"><h3>Modelos de projeto</h3><ul class="tlist" id="tlist"></ul></div>
     <div class="side-foot">
       <h3>Equipe</h3>
@@ -1014,6 +1056,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
             <button data-act="baseDel" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4h12l-2.5 4L17 12H5"/></svg><span>Remover linha de base</span></button>
             <button data-act="dmRe" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M15 15.5h-6M11.5 13 9 15.5l2.5 2.5"/></svg><span>Replanejar D−</span></button>
             <div class="mp-h">Reaproveitar</div>
+            <button data-act="cenMove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg><span>Mover para cenário</span></button>
             <button data-act="saveTpl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/><path d="M12 7v6M9 10h6"/></svg><span>Salvar como modelo</span></button>
             <button data-act="dup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg><span>Duplicar projeto</span></button>
             <hr>
@@ -1027,6 +1070,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
             <button data-act="report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg><span>Relatório executivo (1 página)</span></button>
             <button data-act="pptx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8"/></svg><span>PowerPoint (.pptx)</span></button>
             <button data-act="pptx1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8"/></svg><span>PowerPoint: visão geral em 1 slide</span></button>
+            <button data-act="cmp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8"/></svg><span>Comparar cenários (PowerPoint)</span></button>
             <div class="mp-h">Enviar ou guardar</div>
             <button data-act="xlsx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/></svg><span>Planilha Excel (.xlsx)</span></button>
             <button data-act="html" class="edit-only"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4z"/></svg><span>HTML para envio</span></button>
@@ -1120,10 +1164,10 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>O logo fica guardado no projeto: vai junto no backup, no arquivo da equipe e na nuvem. A planilha Excel não leva imagem.</li>
       </ul></div></details>
       <details><summary>Onde fica cada coisa</summary><div><ul>
-        <li><b>Barra lateral, de cima para baixo:</b> criar (<b>Novo projeto</b> e <b>Planejar D−</b>); <b>Todos os projetos</b>, com os painéis que juntam tudo (Visão geral, Vários na Linha única, Carga da equipe e Datas da empresa); a lista dos seus <b>Projetos</b>; os <b>Modelos de projeto</b>; e, no fim, <b>Equipe</b> e <b>Arquivos</b> (backup e planilha modelo).</li>
+        <li><b>Barra lateral, de cima para baixo:</b> criar (<b>Novo projeto</b> e <b>Planejar D−</b>); <b>Todos os projetos</b>, com os painéis que juntam tudo (Visão geral, Vários na Linha única, Recursos e conflitos, Comparar cenários, Carga da equipe e Datas da empresa); o seletor de <b>Cenário</b> (quando houver) e a lista dos seus <b>Projetos</b>; os <b>Modelos de projeto</b>; e, no fim, <b>Equipe</b> e <b>Arquivos</b> (backup e planilha modelo).</li>
         <li><b>Barra do cronograma, à esquerda, o que muda o que você vê:</b> Detalhada ou Linha única, <b>Vários projetos</b> (escolha outros projetos para ver juntos; ao marcar um, a tela passa para a Linha única) e, na Linha única, o menu <b>Resumo</b> (Tarefas, Fases, Projetos ou Macro).</li>
         <li><b>Logo acima do cronograma, à direita, o que navega na linha do tempo:</b> na Detalhada, a escala Semana, Mês ou Trimestre e <b>Hoje</b>; na Linha única, o zoom (<b>−</b>, <b>Tudo na tela</b>, <b>Legível</b>, <b>+</b>).</li>
-        <li><b>Barra do cronograma, à direita, o que mexe no projeto:</b> o menu <b>Projeto</b> (grupos e cores, critério das cores, logo, linha de base, replanejar D−, salvar como modelo, duplicar, excluir e excluir vários), o menu <b>Exportar</b>, <b>Inserir em lote</b> e, por último, a ação principal, <b>Nova tarefa</b>.</li>
+        <li><b>Barra do cronograma, à direita, o que mexe no projeto:</b> o menu <b>Projeto</b> (grupos e cores, critério das cores, logo, linha de base, replanejar D−, mover para cenário, salvar como modelo, duplicar, excluir e excluir vários), o menu <b>Exportar</b>, <b>Inserir em lote</b> e, por último, a ação principal, <b>Nova tarefa</b>.</li>
         <li><b>No canto do título:</b> desfazer e refazer, tema claro ou escuro e este Manual.</li>
         <li>Para apagar vários projetos de uma vez, use a lixeira ao lado de <b>Projetos</b>, na barra lateral, ou <b>Projeto › Excluir vários projetos</b>. Desfazer (Ctrl+Z) traz de volta.</li>
         <li>No celular, a barra lateral fica recolhida: toque em <b>Menu</b> no topo para abrir.</li>
@@ -1188,6 +1232,14 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ul><p><b>Vários projetos de uma vez</b></p><ul>
         <li>Para criar vários projetos de uma vez, clique em <b>Importar vários projetos</b>, dentro do Planejar D−. A planilha tem uma linha por projeto: a <b>primeira coluna</b> é o nome do projeto, as <b>colunas do meio</b> são as atividades (com os dias úteis de cada uma) e a <b>última coluna</b> é a data do marco. Opcional: depois do marco, uma coluna com o título <b>Responsável</b>; o nome vale para todas as atividades daquele projeto (vários nomes separados por /, vírgula ou ;) e entra na Carga da equipe e em Recursos por responsável. Os nomes das atividades e do marco ficam na linha de títulos. Escolha o arquivo (.xlsx ou .csv) ou cole as células copiadas do Excel: a tabela mostra quando cada projeto começa e o que fica de fora antes de criar. Valores como "10***" contam como 10; célula vazia ou 0 tira a atividade daquele projeto; linha sem data do marco fica de fora, com o motivo na prévia. <b>Baixar modelo (.csv)</b> traz uma planilha pronta com as atividades do seu modelo padrão. Importar de novo a mesma planilha replaneja os projetos com o mesmo nome e mantém o % concluído; responsável em branco mantém o que já estava.</li>
         <li>Os projetos importados abrem juntos na Linha única.</li>
+      </ul></div></details>
+      <details><summary>Cenários e orçamento</summary><div><ul>
+        <li>Um <b>cenário</b> é um grupo de projetos guardado à parte, por exemplo "Orçamento 2027 – A" e "Orçamento 2027 – B". Cada projeto fica em um cenário ou em nenhum, e pode haver quantos cenários você quiser.</li>
+        <li>Para criar: use <b>Abrir backup ou planilha</b> com o .json do cenário. O programa pergunta <b>em qual cenário</b> os projetos entram: dê um nome novo. Também dá para mover um projeto em <b>Projeto › Mover para cenário</b>. Importar o mesmo projeto em outro cenário cria uma cópia, sem mexer no original.</li>
+        <li>Com cenários, aparece o seletor <b>Cenário</b> na barra lateral, acima da lista de projetos. A lista e todos os painéis (Visão geral, Linha única, Recursos e conflitos, Carga da equipe, Relatório e PowerPoint) passam a olhar só o cenário escolhido. <b>Todos os projetos</b> volta a mostrar tudo. Projeto novo entra no cenário aberto.</li>
+        <li>A engrenagem ao lado do seletor abre <b>Cenários</b>: renomear, <b>Copiar</b> um cenário inteiro (para montar uma alternativa e mudar as datas) e <b>Excluir</b> um cenário com os projetos dele (Desfazer volta atrás).</li>
+        <li><b>Comparar cenários</b>, na barra lateral em Todos os projetos (ou em Exportar), monta a apresentação de orçamento. Marque os cenários e o mês de início (por exemplo nov/26). Para cada cenário saem dois slides: a <b>visão geral</b> (um projeto por linha, sem % e sem situação, com a cor das fases e os marcos) e os <b>recursos necessários</b> (por função, o pico de atividades ao mesmo tempo em cada mês, a equipe atual e quantas pessoas contratar). Com dois cenários ou mais, o último slide traz as <b>principais diferenças</b> e <b>o que é igual</b>: contratações, pico, projetos só em um cenário, projetos que mudaram de data e funções com necessidade diferente.</li>
+        <li>A função vem do campo <b>Responsável</b> das tarefas (por exemplo "Analista de negócio", "Dev", "QA"); cada atividade aberta conta como 1 pessoa enquanto dura. Informe a <b>Equipe atual por função</b> na janela: <b>Contratar</b> é o pico menos a equipe. A mesma conta aparece na janela antes de baixar o PowerPoint.</li>
       </ul></div></details>
       <details><summary>Recursos e conflitos</summary><div><ul>
         <li>Na barra lateral, em <b>Todos os projetos</b>, clique em <b>Recursos e conflitos</b>. Cada atividade aberta conta como 1 pessoa ocupada enquanto dura.</li>
@@ -1368,6 +1420,26 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
   </form>
 </dialog>
 
+<dialog id="dlgCmp" aria-labelledby="cmT">
+  <form method="dialog" class="dlg-in">
+    <h2 id="cmT">Comparar cenários</h2>
+    <p class="muted">Monta a apresentação de orçamento: para cada cenário marcado, um slide com a <b>visão geral</b> dos projetos (sem % e sem situação, com a cor das fases) e um slide com os <b>recursos necessários por função</b> (pico de atividades ao mesmo tempo, mês a mês, e quantas pessoas contratar); no fim, um slide com as <b>diferenças e igualdades</b>. Tudo a partir do mês escolhido.</p>
+    <div class="cm-top"><fieldset class="cm-f"><legend>Cenários</legend><div class="cm-l" id="cmList"></div></fieldset><label class="fld cm-from">A partir de<input type="month" id="cmFrom"></label></div>
+    <details class="cm-eq" open><summary>Equipe atual por função <small>(para calcular quantas pessoas contratar)</small></summary><div id="cmTeam"></div></details>
+    <div id="cmPrev" class="cm-prev"></div>
+    <div class="dlg-foot"><button class="btn" value="">Fechar</button><button class="btn primary" type="button" id="cmOk">Baixar PowerPoint</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgCen" aria-labelledby="cnT">
+  <form method="dialog" class="dlg-in">
+    <h2 id="cnT">Cenários</h2>
+    <p class="muted">Cenários separam grupos de projetos, como orçamentos alternativos para o ano que vem. Cada projeto fica em um cenário (ou em nenhum). Escolha o cenário na barra lateral para a lista e os painéis olharem só para ele. Renomeie aqui, copie um cenário inteiro para montar uma alternativa, ou exclua um cenário e os projetos dele.</p>
+    <div class="cn-list" id="cnList"></div>
+    <div class="dlg-foot"><button class="btn primary" value="">Fechar</button></div>
+  </form>
+</dialog>
+
 <dialog id="dlgDelMany" aria-labelledby="dxT">
   <form method="dialog" class="dlg-in">
     <h2 id="dxT">Excluir vários projetos</h2>
@@ -1492,7 +1564,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
   <form method="dialog" class="dlg-in">
     <h2 id="askT"></h2>
     <p class="muted" id="askP"></p>
-    <label class="fld" id="askL"><span></span><input name="v" autocomplete="off"></label>
+    <label class="fld" id="askL"><span></span><input name="v" autocomplete="off"></label><datalist id="cenList"></datalist>
     <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok" id="askOk"></button></div>
   </form>
 </dialog>
@@ -1648,6 +1720,7 @@ function normP(p) {
 
   if (p.exec) out.exec = String(p.exec).slice(0, 1500);
   { const L = okLogo(p.logo); if (L) out.logo = L; }
+  { const c = String(p.cen ?? '').trim().replace(/\s+/g, ' ').slice(0, 80); if (c) out.cen = c; }
   if (p.dplan && okd(p.dplan.anchor) && Array.isArray(p.dplan.rows)) out.dplan = { anchor: p.dplan.anchor, msName: String(p.dplan.msName || '').slice(0, 120), ms: sid(p.dplan.ms), gp: sid(p.dplan.gp), gt: sid(p.dplan.gt),
     rows: p.dplan.rows.slice(0, 30).filter(r => r && typeof r === 'object').map(r => ({ name: String(r.name || '').slice(0, 200), days: Math.max(0, Math.min(365, Math.floor(+r.days || 0))), owner: String(r.owner || '').slice(0, 120), tid: sid(r.tid) })) };
   return out;
@@ -1854,10 +1927,10 @@ function dmImportApply(parsed, update) {
   const made = [], upd = [];
   for (const it of parsed.items) {
     if (it.err) continue;
-    const old = update ? state.projects.find(p => p.dplan && norm(p.name) === norm(it.name)) : null;
+    const old = update ? scopeP().find(p => p.dplan && norm(p.name) === norm(it.name)) : null;
     const rows = parsed.acts.map((name, i) => ({ name, days: it.days[i], owner: it.owner || '', tid: old ? (old.dplan.rows.find(r => norm(r.name) === norm(name)) || {}).tid || '' : '' }));
     if (old) { rows.forEach(r => { const o = old.dplan.rows.find(x => x.tid === r.tid); if (o && !r.owner) r.owner = o.owner || ''; }); applyDPlan(old, it.anchor, rows, parsed.msName); upd.push(old); }
-    else { const p = { id: uid(), name: it.name, area: `Planejado em D− a partir do marco ${parsed.msName}`, groups: [], tasks: [] }; applyDPlan(p, it.anchor, rows, parsed.msName); state.projects.push(normP(p)); made.push(state.projects[state.projects.length - 1]); }
+    else { const p = { id: uid(), name: it.name, area: `Planejado em D− a partir do marco ${parsed.msName}`, groups: [], tasks: [] }; applyDPlan(p, it.anchor, rows, parsed.msName); state.projects.push(inCen(normP(p))); made.push(state.projects[state.projects.length - 1]); }
   }
   return { made, upd };
 }
@@ -1967,7 +2040,15 @@ state.hlHol = state.hlHol === true;
 if (state.view !== 'line') state.view = 'detail';
 // Projetos que aparecem juntos na Linha única (o aberto sempre aparece)
 if (!Array.isArray(state.lineSel)) state.lineSel = [];
-const lineProjects = () => state.projects.filter(p => p.id === state.currentId || state.lineSel.includes(p.id));
+// Cenários: cada projeto pode ter um cenário (p.cen). state.cen = '*' (todos), '' (sem cenário) ou o nome de um cenário.
+// Os painéis que juntam projetos (lista, Visão geral, Linha única, Recursos, Carga, Relatório) olham só o cenário escolhido.
+const CEN = () => typeof state.cen === 'string' ? state.cen : '*';
+const cenOf = p => p.cen || '';
+const scopeP = () => CEN() === '*' ? state.projects : state.projects.filter(p => cenOf(p) === CEN());
+const cenNames = () => [...new Set(state.projects.map(cenOf).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt-BR', { numeric: true }));
+// projeto novo entra no cenário que está aberto
+const inCen = p => { const c = CEN(); if (c !== '*' && c && !p.cen) p.cen = c; return p; };
+const lineProjects = () => { const sc = new Set(scopeP().map(p => p.id)); return state.projects.filter(p => p.id === state.currentId || (state.lineSel.includes(p.id) && sc.has(p.id))); };
 // Grupos recolhidos são preferência de tela de cada pessoa: ficam fora do projeto para não virar "alteração" no arquivo da equipe
 if (!Array.isArray(state.collapsed)) state.collapsed = [];
 const isCol = g => state.collapsed.includes(g.id);
@@ -2033,8 +2114,12 @@ const hb = p => { const [k, l] = health(p); return `<span class="hb hb-${k}">${l
 
 function renderSide() {
   if (RO) return;
-  $('#plistN').textContent = state.projects.length > 1 ? state.projects.length : '';
-  $('#plist').innerHTML = state.projects.map(p => `<button class="pitem${p.id === state.currentId ? ' on' : ''}" data-p="${p.id}"><i class="hd hb-${health(p)[0]}" title="${health(p)[1]}"></i>${logoBox(p, 'lg-side')}<span><b>${esc(p.name)}</b><small>${p.tasks.length} ${p.tasks.length === 1 ? 'tarefa' : 'tarefas'}, ${pctOf(p)}%</small></span></button>`).join('');
+  const SP = scopeP(), cs = cenNames(), none = state.projects.filter(p => !p.cen).length;
+  $('#cenBox').hidden = !cs.length && CEN() === '*';
+  $('#cenSel').innerHTML = `<option value="*">Todos os projetos (${state.projects.length})</option>${cs.length && none ? `<option value="">Sem cenário (${none})</option>` : ''}${cs.map(c => `<option value="${esc(c)}">${esc(c)} (${state.projects.filter(p => p.cen === c).length})</option>`).join('')}`;
+  $('#cenSel').value = CEN();
+  $('#plistN').textContent = SP.length > 1 ? SP.length : '';
+  $('#plist').innerHTML = SP.map(p => `<button class="pitem${p.id === state.currentId ? ' on' : ''}" data-p="${p.id}"><i class="hd hb-${health(p)[0]}" title="${health(p)[1]}"></i>${logoBox(p, 'lg-side')}<span><b>${esc(p.name)}</b><small>${p.tasks.length} ${p.tasks.length === 1 ? 'tarefa' : 'tarefas'}, ${pctOf(p)}%</small></span></button>`).join('');
   $('#tlist').innerHTML = allTpls().map(t => `<li><button class="tl" data-tpl="${t.id}" title="Criar projeto a partir de ${esc(t.name)}"><span>${esc(t.name)}</span></button>${t.builtin ? '' : `<button class="x" data-deltpl="${t.id}" aria-label="Excluir modelo ${esc(t.name)}">×</button>`}</li>`).join('');
   $('#owners').innerHTML = [...new Set(state.projects.flatMap(p => p.tasks.flatMap(owns)).filter(Boolean))].map(o => `<option value="${esc(o)}">`).join('');
 }
@@ -2051,10 +2136,10 @@ function renderTop() {
   $('#zoom').hidden = $('#btnHoje').hidden = state.view === 'line';
   $('#lvl').hidden = $('#lz').hidden = state.view !== 'line';
   // o seletor de vários projetos fica sempre à vista (com 2 projetos ou mais); escolher um leva para a Linha única
-  const lm = $('#lpMenu'); lm.hidden = state.projects.length < 2;
+  const lm = $('#lpMenu'); lm.hidden = scopeP().length < 2;
   if (!lm.hidden) {
     const n = state.view === 'line' ? lineProjects().length : 0; $('#lpN').textContent = n > 1 ? n : '';
-    $('#lpPop').innerHTML = `<div class="lp-h">Ver juntos na Linha única</div>` + state.projects.map(p => {
+    $('#lpPop').innerHTML = `<div class="lp-h">Ver juntos na Linha única</div>` + scopeP().map(p => {
       const on = p.id === state.currentId || state.lineSel.includes(p.id), here = p.id === state.currentId;
       return `<label class="lp-i"><input type="checkbox" data-lp="${p.id}"${on ? ' checked' : ''}${here ? ' disabled' : ''}><span>${esc(p.name)}${here ? ' <em>aberto</em>' : ''}</span></label>`;
     }).join('') + `<div class="lp-f"><button data-lpall="1">Todos</button><button data-lpall="0">Só o aberto</button></div>`;
@@ -2769,12 +2854,12 @@ G.addEventListener('keydown', e => {
 });
 
 /* ---------- diálogos ---------- */
-function ask({ title, text = '', label = '', value = null, ok = 'Confirmar', danger = false }) {
+function ask({ title, text = '', label = '', value = null, ok = 'Confirmar', danger = false, optional = false, list = '' }) {
   return new Promise(res => {
     const d = $('#dlgAsk'), L = $('#askL'), inp = L.querySelector('input'), b = $('#askOk');
     $('#askT').textContent = title; $('#askP').textContent = text;
     L.hidden = value === null; L.querySelector('span').textContent = label;
-    inp.value = value ?? ''; inp.required = value !== null;
+    inp.value = value ?? ''; inp.required = value !== null && !optional; if (list) inp.setAttribute('list', list); else inp.removeAttribute('list');
     b.textContent = ok; b.classList.toggle('danger', danger); b.classList.toggle('primary', !danger);
     d.returnValue = '';
     d.onclose = () => res(d.returnValue === 'ok' ? (value === null ? true : inp.value.trim()) : null);
@@ -2797,7 +2882,7 @@ $('#dlgNovo').addEventListener('close', () => {
   let p;
   try { p = tpl ? instantiate(tpl, d2n(F.start.value), name) : blank(name); }
   catch (e) { return toast('Esse modelo está com defeito e não pôde ser usado.'); }
-  state.projects.push(p); state.currentId = p.id;
+  state.projects.push(inCen(p)); state.currentId = p.id;
   save(); closeDrawer(); render('load');
   toast('Projeto criado');
 });
@@ -3217,6 +3302,15 @@ const ACT = {
   },
   dmRe: () => openDm(cur()),
   res: () => openRes(),
+  cmp: () => openCmp(),
+  cenMng: () => { renderCen(); const d = $('#dlgCen'); d.returnValue = ''; d.showModal(); },
+  cenMove: async () => {
+    const p = cur(); $('#cenList').innerHTML = cenNames().map(c => `<option value="${esc(c)}">`).join('');
+    const c = await ask({ title: 'Mover para cenário', text: `Em qual cenário fica "${p.name}"? Escreva um nome novo, escolha um existente ou deixe em branco para tirar de qualquer cenário.`, label: 'Cenário', value: p.cen || '', optional: true, list: 'cenList', ok: 'Mover' });
+    if (c === null) return; if (c) p.cen = c.slice(0, 80); else delete p.cen;
+    if (CEN() !== '*') state.cen = cenOf(p);
+    save(); render(); toast(c ? `"${p.name}" está no cenário "${c}".` : `"${p.name}" está sem cenário.`);
+  },
   logo: () => openLogo(),
   delMany: () => openDelMany(),
   load: () => { renderLoad(); const d = $('#dlgLoad'); d.returnValue = ''; d.showModal(); },
@@ -3258,7 +3352,7 @@ const PF_SORT = { sev: 'Situação', start: 'Início', end: 'Fim', name: 'Nome',
 function pfProjects() {
   const f = state.pfFlt || '', so = state.pfSort in PF_SORT ? state.pfSort : 'list';
   const per = p => p.tasks.length ? [Math.min(...p.tasks.map(t => d2n(t.start))), Math.max(...p.tasks.map(t => d2n(t.end)))] : [1e9, 1e9];
-  let ps = state.projects.filter(p => !f || health(p)[0] === f);
+  let ps = scopeP().filter(p => !f || health(p)[0] === f);
   if (so === 'sev') ps = ps.slice().sort((a, b) => SEV[health(a)[0]] - SEV[health(b)[0]] || per(a)[1] - per(b)[1]);
   else if (so === 'start') ps = ps.slice().sort((a, b) => per(a)[0] - per(b)[0]);
   else if (so === 'end') ps = ps.slice().sort((a, b) => per(a)[1] - per(b)[1]);
@@ -3266,9 +3360,9 @@ function pfProjects() {
   return ps;
 }
 function renderPf() {
-  const so = state.pfSort in PF_SORT ? state.pfSort : 'list', f = state.pfFlt || '', cnt = k => state.projects.filter(p => health(p)[0] === k).length;
+  const so = state.pfSort in PF_SORT ? state.pfSort : 'list', f = state.pfFlt || '', cnt = k => scopeP().filter(p => health(p)[0] === k).length;
   $('#pfBar').innerHTML = `<label class="fld pf-so">Ordenar por<select id="pfSort">${Object.entries(PF_SORT).map(([k, l]) => `<option value="${k}"${k === so ? ' selected' : ''}>${l}</option>`).join('')}</select></label>`
-    + `<div class="pf-fl" role="group" aria-label="Mostrar só"><button type="button" data-pff="" aria-pressed="${!f}">Todos <b>${state.projects.length}</b></button>${[['late', 'Atrasados'], ['risk', 'Atenção'], ['ok', 'No prazo'], ['done', 'Concluídos']].filter(([k]) => cnt(k) || f === k).map(([k, l]) => `<button type="button" data-pff="${k}" aria-pressed="${f === k}"><i class="hd hb-${k}"></i>${l} <b>${cnt(k)}</b></button>`).join('')}</div>`;
+    + `<div class="pf-fl" role="group" aria-label="Mostrar só"><button type="button" data-pff="" aria-pressed="${!f}">Todos <b>${scopeP().length}</b></button>${[['late', 'Atrasados'], ['risk', 'Atenção'], ['ok', 'No prazo'], ['done', 'Concluídos']].filter(([k]) => cnt(k) || f === k).map(([k, l]) => `<button type="button" data-pff="${k}" aria-pressed="${f === k}"><i class="hd hb-${k}"></i>${l} <b>${cnt(k)}</b></button>`).join('')}</div>`;
     const ps = pfProjects(), days = ps.flatMap(p => p.tasks.flatMap(t => [d2n(t.start), d2n(t.end)]));
     // régua em meses inteiros, do mês do começo mais cedo ao do fim mais tarde, com hoje sempre dentro
     const da = new Date(Math.min(todayN, ...days) * DAY), db = new Date(Math.max(todayN, ...days) * DAY);
@@ -3335,7 +3429,7 @@ $('#lpPop').addEventListener('change', e => {
 });
 $('#lpPop').addEventListener('click', e => {
   const b = e.target.closest('[data-lpall]'); if (!b) return;
-  state.lineSel = b.dataset.lpall === '1' ? state.projects.map(p => p.id).filter(id => id !== state.currentId) : [];
+  state.lineSel = b.dataset.lpall === '1' ? scopeP().map(p => p.id).filter(id => id !== state.currentId) : [];
   if (b.dataset.lpall === '1') state.view = 'line';
   if (!RO) persist(); renderTop(); renderGantt('zoom'); $('#lpMenu').open = true;
 });
@@ -3368,6 +3462,12 @@ $('#pSub').addEventListener('input', e => { cur().area = e.target.value; save();
 const sideOpen = on => { $('.side').classList.toggle('open', on); $('#sideTog').setAttribute('aria-expanded', on); };
 $('#sideTog').addEventListener('click', () => sideOpen(!$('.side').classList.contains('open')));
 $('#sideMore').addEventListener('click', e => { if (e.target.closest('button:not(.x):not([data-team])')) sideOpen(false); });
+$('#cenSel').addEventListener('change', e => {
+  state.cen = e.target.value; const sp = scopeP();
+  if (sp.length && !sp.some(p => p.id === state.currentId)) state.currentId = sp[0].id;
+  state.lineSel = state.lineSel.filter(id => sp.some(p => p.id === id));
+  persist(); closeDrawer(); render('load');
+});
 $('#plist').addEventListener('click', e => {
   const b = e.target.closest('[data-p]'); if (!b || b.dataset.p === state.currentId) return;
   state.currentId = b.dataset.p; save(); closeDrawer(); render('load');
@@ -3388,7 +3488,7 @@ $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
 // Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
 // A cada versão nova, troque a data e a lista abaixo.
-const NOVIDADES = { versao: '2026-11-25', secoes: ['Situação do projeto', 'Recursos e conflitos', 'Ler o cronograma', 'Visão geral dos projetos', 'Relatório executivo e PowerPoint', 'Logo do projeto', 'Onde fica cada coisa', 'Planejar D− (de trás para frente)'] };
+const NOVIDADES = { versao: '2026-11-25', secoes: ['Cenários e orçamento', 'Situação do projeto', 'Recursos e conflitos', 'Ler o cronograma', 'Visão geral dos projetos', 'Relatório executivo e PowerPoint', 'Logo do projeto', 'Onde fica cada coisa', 'Planejar D− (de trás para frente)'] };
 {
   const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
   sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
@@ -3415,7 +3515,7 @@ $('#fileOpen').addEventListener('change', async e => {
       const abas = (await xlsxSheets(buf)).filter(n => !['gantt', 'como preencher'].includes(norm(n)));
       if (abas.length > 1) return importSheets(buf, abas);
       const { p, skipped } = await parseXlsx(buf, base);
-      state.projects.push(p); state.currentId = p.id;
+      state.projects.push(inCen(p)); state.currentId = p.id;
       save(); closeDrawer(); render('load');
       toast(`${p.tasks.length} tarefas importadas${skipped ? `, ${skipped} linhas ignoradas por falta de nome ou data` : ''}`);
       return;
@@ -3423,6 +3523,14 @@ $('#fileOpen').addEventListener('change', async e => {
     const d = JSON.parse(await f.text());
     const ps = (Array.isArray(d.projects) ? d.projects : []).map(normP);
     if (!ps.length) throw Error('o arquivo não tem projetos');
+    // em qual cenário entram: o que vier digitado vale para todos os projetos do arquivo; em branco = sem cenário
+    const fileCen = [...new Set(ps.map(cenOf))], sug = fileCen.length === 1 && fileCen[0] ? fileCen[0] : CEN() !== '*' && CEN() ? CEN() : '';
+    $('#cenList').innerHTML = cenNames().map(c => `<option value="${esc(c)}">`).join('');
+    const cn = await ask({ title: `Importar ${ps.length} ${ps.length === 1 ? 'projeto' : 'projetos'}`, text: 'Em qual cenário eles entram? Use um nome novo (por exemplo "Orçamento 2027 – A") para guardar à parte e comparar com outros cenários, escolha um que já existe, ou deixe em branco para juntar com os projetos sem cenário.', label: 'Cenário', value: sug, optional: true, list: 'cenList', ok: 'Importar' });
+    if (cn === null) return;
+    ps.forEach(p => { if (cn) p.cen = cn.slice(0, 80); else delete p.cen; });
+    // o mesmo projeto importado em outro cenário vira uma cópia (o original continua no cenário dele)
+    ps.forEach(p => { const x = state.projects.find(q => q.id === p.id); if (x && cenOf(x) !== cenOf(p)) p.id = uid(); });
     const clash = ps.filter(p => state.projects.some(x => x.id === p.id));
     if (clash.length && !await ask({ title: 'Substituir projetos?', text: `${clash.length} ${clash.length === 1 ? 'projeto do arquivo já existe' : 'projetos do arquivo já existem'} aqui e ${clash.length === 1 ? 'será substituído' : 'serão substituídos'} pela versão do backup.`, ok: 'Substituir' })) return;
     for (const p of ps) { const i = state.projects.findIndex(x => x.id === p.id); if (i >= 0) state.projects[i] = p; else state.projects.push(p); }
@@ -3430,9 +3538,9 @@ $('#fileOpen').addEventListener('change', async e => {
     if (Array.isArray(d.marks)) for (const m of d.marks.map(normMark).filter(Boolean)) if (!state.marks.some(x => x.id === m.id)) state.marks.push(m);
     if (Array.isArray(d.ferias)) for (const v of d.ferias.map(normVac).filter(Boolean)) if (!state.vac.some(x => x.id === v.id)) state.vac.push(v);
     if (d.dmModelos) { const dm = normDmStore(d.dmModelos); let n = 0; for (const m of dm.models) if (!DMS.models.some(x => x.id === m.id) && DMS.models.length < 50) { DMS.models.push(m); n++; } if (n) { if (!DMS.def && dm.def && DMS.models.some(x => x.id === dm.def)) DMS.def = dm.def; dmSave(); } }
-    state.currentId = ps[0].id;
+    state.currentId = ps[0].id; if (CEN() !== '*' && CEN() !== cenOf(ps[0])) state.cen = cenOf(ps[0]);
     save(); closeDrawer(); render('load');
-    toast(ps.length === 1 ? '1 projeto carregado' : `${ps.length} projetos carregados`);
+    toast((ps.length === 1 ? '1 projeto carregado' : `${ps.length} projetos carregados`) + (cn ? ` no cenário "${cn}"` : ''));
   } catch (err) { toast('Não consegui abrir o arquivo: ' + err.message + '.'); }
 });
 
@@ -3533,7 +3641,7 @@ function diShow(parsed, err) {
   const box = $('#diPrev'), ok = $('#diOk');
   if (err) { box.innerHTML = `<p class="dm-sum bad">Não consegui ler: ${esc(err)}.</p>`; ok.disabled = true; $('#diUpdL').hidden = true; return; }
   if (!parsed) { box.innerHTML = ''; ok.disabled = true; $('#diUpdL').hidden = true; return; }
-  const upd = $('#diUpd').checked, ex = new Set(state.projects.filter(p => p.dplan).map(p => norm(p.name)));
+  const upd = $('#diUpd').checked, ex = new Set(scopeP().filter(p => p.dplan).map(p => norm(p.name)));
   let nNew = 0, nUpd = 0, nLate = 0;
   const body = parsed.items.map(it => {
     if (it.err) return `<tr class="err"><td>${esc(it.name)}</td><td>—</td><td>—</td><td>—</td>${parsed.ownCol ? '<td>—</td>' : ''}<td><span class="di-st err">Fica de fora: ${esc(it.err)}</span> <small>linha ${it.line}</small></td></tr>`;
@@ -3609,7 +3717,7 @@ $('#dlgDm').addEventListener('close', () => {
   const F = $('#fDm').elements, rows = dmRows(), a = d2n(F.anchor.value), msName = F.msName.value.trim();
   const name = F.nome.value.trim() || `D− ${msName}`;
   let p = dmFor && state.projects.includes(dmFor) ? dmFor : null;
-  if (!p) { p = { id: uid(), name, area: `Planejado em D− a partir do marco ${msName}`, groups: [], tasks: [] }; applyDPlan(p, a, rows, msName); state.projects.push(normP(p)); p = state.projects[state.projects.length - 1]; }
+  if (!p) { p = { id: uid(), name, area: `Planejado em D− a partir do marco ${msName}`, groups: [], tasks: [] }; applyDPlan(p, a, rows, msName); state.projects.push(inCen(normP(p))); p = state.projects[state.projects.length - 1]; }
   else { p.name = name; applyDPlan(p, a, rows, msName); }
   state.currentId = p.id; save(); closeDrawer(); render('load');
   const s0 = Math.min(...p.tasks.filter(t => !t.milestone).map(t => d2n(t.start)));
@@ -3619,7 +3727,7 @@ $('#dlgDm').addEventListener('close', () => {
 /* ---------- carga da equipe ---------- */
 let LG = null;
 function renderLoad() {
-  LG = loadGrid(state.projects); const now = monday(todayN);
+  LG = loadGrid(scopeP()); const now = monday(todayN);
   $('#ldDet').innerHTML = '';
   if (!LG.people.length) { $('#ldGrid').innerHTML = '<div class="ld-0">Nenhuma tarefa aberta com datas por aqui. Quando houver tarefas com responsável, a carga aparece aqui.</div>'; return; }
   const head = `<tr><th class="ld-p" scope="col">Pessoa</th>${LG.weeks.map(w => `<th scope="col"${w === now ? ' class="now"' : ''} title="Semana de ${fmtLong(w)}">${fmtCurto(w)}</th>`).join('')}</tr>`;
@@ -3671,7 +3779,7 @@ $('#dlgRag').addEventListener('close', () => {
 /* ---------- relatório executivo (1 página) ---------- */
 const SEV = { late: 0, risk: 1, ok: 2, none: 3, done: 4 };
 const HCNT = [['late', 'atrasado', 'atrasados'], ['risk', 'em atenção', 'em atenção'], ['ok', 'no prazo', 'no prazo'], ['done', 'concluído', 'concluídos']];
-const repProjects = () => state.projects.slice().sort((a, b) => SEV[health(a)[0]] - SEV[health(b)[0]]);
+const repProjects = () => scopeP().slice().sort((a, b) => SEV[health(a)[0]] - SEV[health(b)[0]]);
 const perOf = p => p.tasks.length ? [Math.min(...p.tasks.map(t => d2n(t.start))), Math.max(...p.tasks.map(t => d2n(t.end)))] : null;
 const nextMs = (p, k) => p.tasks.filter(t => t.milestone && t.progress < 100 && d2n(t.start) >= todayN).sort((a, b) => a.start < b.start ? -1 : 1).slice(0, k);
 const lateOf = p => p.tasks.filter(t => status(t) === 'late');
@@ -3845,11 +3953,41 @@ lgDrop.addEventListener('drop', e => { e.preventDefault(); const f = [...e.dataT
 lgDrop.addEventListener('click', () => $('#lgFile').click());
 $('#dlgLogo').addEventListener('paste', e => { const f = [...(e.clipboardData?.files || [])].find(x => /^image\//.test(x.type)); if (f) { e.preventDefault(); setLogo(f); } });
 
+/* ---------- cenários: renomear, copiar, excluir ---------- */
+function renderCen() {
+  const cs = cenNames();
+  $('#cnList').innerHTML = cs.length ? cs.map(c => { const n = state.projects.filter(p => p.cen === c).length;
+    return `<div class="cn-i" data-cen="${esc(c)}"><input value="${esc(c)}" maxlength="80" aria-label="Nome do cenário ${esc(c)}"><small>${n} ${n === 1 ? 'projeto' : 'projetos'}</small><button type="button" class="btn slim" data-cn="copy">Copiar</button><button type="button" class="btn slim quiet" data-cn="del">Excluir</button></div>`; }).join('')
+    : '<p class="muted">Ainda não há cenários. Para criar um, abra um backup (.json) e dê um nome de cenário, ou use <b>Projeto › Mover para cenário</b>.</p>';
+}
+$('#cnList').addEventListener('change', e => {
+  const r = e.target.closest('.cn-i'); if (!r) return; const old = r.dataset.cen, nw = e.target.value.trim().replace(/\s+/g, ' ').slice(0, 80);
+  if (!nw || nw === old) { e.target.value = old; return; }
+  state.projects.forEach(p => { if (p.cen === old) p.cen = nw; }); if (CEN() === old) state.cen = nw;
+  save(); render(); renderCen(); toast(`Cenário renomeado para "${nw}".`);
+});
+$('#cnList').addEventListener('click', async e => {
+  const b = e.target.closest('[data-cn]'); if (!b) return; const c = b.closest('.cn-i').dataset.cen, ps = state.projects.filter(p => p.cen === c);
+  if (b.dataset.cn === 'copy') {
+    let nm = c + ' (cópia)'; while (cenNames().includes(nm)) nm += '+';
+    const v = await ask({ title: 'Copiar cenário', text: `Os ${ps.length} projetos de "${c}" serão copiados para um cenário novo, para você ajustar datas e projetos sem mexer no original.`, label: 'Nome do cenário novo', value: nm, ok: 'Copiar' });
+    if (!v) return; if (cenNames().includes(v)) return toast('Já existe um cenário com esse nome.');
+    ps.forEach(p => { const k = cloneP(p); k.cen = v.slice(0, 80); state.projects.push(k); });
+    save(); render(); renderCen(); toast(`Cenário "${v}" criado com ${ps.length} ${ps.length === 1 ? 'projeto' : 'projetos'}.`);
+  } else {
+    if (!await ask({ title: `Excluir o cenário "${c}"?`, text: `Os ${ps.length} projetos dele serão apagados. Desfazer (Ctrl+Z) volta atrás logo depois.`, ok: 'Excluir cenário e projetos', danger: true })) return;
+    const ids = new Set(ps.map(p => p.id)); state.projects = state.projects.filter(p => !ids.has(p.id));
+    if (!state.projects.length) state.projects.push(blank('Novo projeto'));
+    if (CEN() === c) state.cen = '*'; if (!state.projects.some(p => p.id === state.currentId)) state.currentId = state.projects[0].id;
+    save(); closeDrawer(); render('load'); renderCen(); toast(`Cenário "${c}" excluído. Para voltar, use Desfazer (Ctrl+Z).`);
+  }
+});
+
 /* ---------- excluir vários projetos ---------- */
 function openDelMany() {
   $('#dxList').innerHTML = state.projects.map(p => {
     const n = p.tasks.length, s = n ? Math.min(...p.tasks.map(t => d2n(t.start))) : 0, e = n ? Math.max(...p.tasks.map(t => d2n(t.end))) : 0;
-    return `<label class="dx-i"><input type="checkbox" value="${p.id}"><span><b>${esc(p.name)}</b><small>${n} ${n === 1 ? 'tarefa' : 'tarefas'}${n ? `, ${fmtCurto(s)} a ${fmtLong(e)}` : ''}${p.dplan ? ', planejado em D−' : ''}</small></span></label>`;
+    return `<label class="dx-i"><input type="checkbox" value="${p.id}"><span><b>${esc(p.name)}</b><small>${n} ${n === 1 ? 'tarefa' : 'tarefas'}${n ? `, ${fmtCurto(s)} a ${fmtLong(e)}` : ''}${p.dplan ? ', planejado em D−' : ''}${p.cen ? `, cenário ${esc(p.cen)}` : ''}</small></span></label>`;
   }).join('');
   $('#dxQ').value = ''; dxUpd(); const d = $('#dlgDelMany'); d.returnValue = ''; d.showModal(); $('#dxQ').focus();
 }
@@ -3937,7 +4075,7 @@ function resGrid(ps, mode, from) {
   return { weeks, rows: list, total: fin(total, list.reduce((a, r) => a + r.cap, 0)), d0 };
 }
 let RG = null;
-function resPs() { return $('#rsScope').value === 'line' ? lineProjects() : state.projects; }
+function resPs() { return $('#rsScope').value === 'line' ? lineProjects() : scopeP(); }
 function renderRes() {
   const mode = state.resMode in RES_MODES ? state.resMode : 'act';
   document.querySelectorAll('#rsMode button').forEach(b => b.setAttribute('aria-pressed', b.dataset.rm === mode));
@@ -3984,7 +4122,7 @@ $('#btnVacAdd').addEventListener('click', () => {
 function openRes() {
   renderVac(); $('#rsVac').open = state.vac.length > 0;
   const multi = lineProjects().length > 1;
-  $('#rsScope').innerHTML = `<option value="all">Todos os projetos (${state.projects.length})</option>${multi ? `<option value="line">Só os da Linha única (${lineProjects().length})</option>` : ''}`;
+  $('#rsScope').innerHTML = `<option value="all">${CEN() === '*' ? 'Todos os projetos' : CEN() ? `Cenário ${esc(CEN())}` : 'Sem cenário'} (${scopeP().length})</option>${multi ? `<option value="line">Só os da Linha única (${lineProjects().length})</option>` : ''}`;
   renderRes(); const d = $('#dlgRes'); d.returnValue = ''; d.showModal();
 }
 $('#rsMode').addEventListener('click', e => { const b = e.target.closest('[data-rm]'); if (!b) return; state.resMode = b.dataset.rm; if (!RO) persist(); renderRes(); });
@@ -4023,6 +4161,167 @@ $('#btnRsXlsx').addEventListener('click', () => {
     { name: 'Onde faltam pessoas', rows: list, widths: [34, 12, 12, 11, 11, 9, 60, 30], freeze: [1, 3], grid: false }
   ], fills), `recursos-e-conflitos-${n2d(todayN)}.xlsx`);
   toast('Planilha de recursos exportada');
+});
+
+/* ---------- comparar cenários (orçamento) ---------- */
+// Recursos por função, mês a mês, a partir de from: pico de atividades abertas ao mesmo tempo (cada atividade = 1 pessoa).
+// Contratar = pico − equipe atual daquela função (informada na janela).
+const mLbl = m => `${MES[m % 12]}/${String(Math.floor(m / 12)).slice(2)}`;
+const teamOf = key => { const v = state.team && state.team[key]; return Number.isFinite(v) && v >= 0 ? v : 0; };
+function cenRes(ps, from) {
+  const items = ps.flatMap(p => p.tasks.filter(t => !t.milestone && t.progress < 100).map(t => ({ p, t, s: Math.max(d2n(t.start), from), e: d2n(t.end) }))).filter(x => x.e >= x.s);
+  if (!items.length) return { months: [], rows: [], total: null, from };
+  const d1 = Math.min(Math.max(...items.map(x => x.e)), from + 366 * 5), N = d1 - from + 1, m0 = mOfN(from), m1 = mOfN(d1);
+  const months = []; for (let m = m0; m <= m1; m++) months.push(m);
+  const mk = (key, name) => ({ key, name, day: new Int16Array(N), items: [] });
+  const rows = new Map(), total = mk('*', 'Total ao mesmo tempo');
+  const add = (r, x) => { r.items.push(x); for (let d = x.s; d <= Math.min(x.e, d1); d++) r.day[d - from]++; };
+  for (const x of items) { add(total, x); for (const o of owns(x.t).length ? owns(x.t) : ['']) { const key = norm(o).replace(/\s+/g, ' '); if (!rows.has(key)) rows.set(key, mk(key, o.trim().replace(/\s+/g, ' ') || 'Sem responsável')); add(rows.get(key), x); } }
+  const fin = r => {
+    r.cells = months.map(m => { let pk = 0; for (let d = Math.max(mFirst(m), from); d <= Math.min(mFirst(m + 1) - 1, d1); d++) pk = Math.max(pk, r.day[d - from]); return pk; });
+    r.need = Math.max(0, ...r.cells); r.peakM = months[r.cells.indexOf(r.need)]; r.have = r.key === '*' ? 0 : teamOf(r.key); r.hire = Math.max(0, r.need - r.have); return r;
+  };
+  const list = [...rows.values()].map(fin).sort((a, b) => b.need - a.need || a.name.localeCompare(b.name, 'pt-BR'));
+  fin(total); total.have = list.reduce((a, r) => a + r.have, 0); total.hire = list.reduce((a, r) => a + r.hire, 0);
+  return { months, rows: list, total, from, end: d1 };
+}
+// um cenário pronto para a apresentação
+function cenPack(name, from) {
+  const ps = state.projects.filter(p => cenOf(p) === name), R = cenRes(ps, from);
+  const per = ps.map(p => { const ts = p.tasks.filter(t => d2n(t.end) >= from); return ts.length ? [Math.max(from, Math.min(...ts.map(t => d2n(t.start)))), Math.max(...ts.map(t => d2n(t.end)))] : null; });
+  const ok = per.filter(Boolean);
+  return { name, ps, R, s: ok.length ? Math.min(...ok.map(x => x[0])) : null, e: ok.length ? Math.max(...ok.map(x => x[1])) : null, per };
+}
+// diferenças e igualdades entre os cenários (texto pronto para a tela e o slide)
+function cenDiff(P) {
+  const key = p => norm(p.name).replace(/\s+/g, ' ');
+  const sets = P.map(c => new Map(c.ps.map((p, i) => [key(p), { p, per: c.per[i] }])));
+  const all = [...new Set(sets.flatMap(m => [...m.keys()]))], common = all.filter(k => sets.every(m => m.has(k)));
+  const diff = [], same = [];
+  const hires = P.map(c => c.R.total ? c.R.total.hire : 0), peaks = P.map(c => c.R.total ? c.R.total.need : 0);
+  if (P.length > 1) {
+    const hi = hires.indexOf(Math.max(...hires)), lo = hires.indexOf(Math.min(...hires));
+    if (hires[hi] !== hires[lo]) diff.push(`Contratações: ${P.map((c, i) => `+${hires[i]} em ${c.name}`).join(', ')}; ${P[hi].name} pede ${hires[hi] - hires[lo]} ${hires[hi] - hires[lo] === 1 ? 'pessoa' : 'pessoas'} a mais.`);
+    else same.push(`Mesmo número de contratações: +${hires[0]} ${hires[0] === 1 ? 'pessoa' : 'pessoas'} em cada cenário.`);
+    if (new Set(peaks).size > 1) diff.push(`Pico de pessoas ao mesmo tempo: ${P.map((c, i) => `${c.name} ${peaks[i]}${c.R.total ? ` (${mLbl(c.R.total.peakM)})` : ''}`).join(', ')}.`);
+    else same.push(`Mesmo pico de pessoas ao mesmo tempo: ${peaks[0]}.`);
+    P.forEach((c, i) => { const only = [...sets[i].keys()].filter(k => !common.includes(k)).map(k => sets[i].get(k).p.name); if (only.length) diff.push(`Só em ${c.name} (${only.length}): ${only.slice(0, 6).join(', ')}${only.length > 6 ? ` e mais ${only.length - 6}` : ''}.`); });
+    if (common.length) same.push(`${common.length} ${common.length === 1 ? 'projeto aparece' : 'projetos aparecem'} em todos os cenários.`);
+    const moved = common.map(k => { const ends = sets.map(m => m.get(k).per ? m.get(k).per[1] : null); if (ends.some(x => x == null)) return null; const dd = Math.max(...ends) - Math.min(...ends); return dd > 6 ? { name: sets[0].get(k).p.name, ends, dd } : null; }).filter(Boolean).sort((a, b) => b.dd - a.dd);
+    if (moved.length) diff.push(`${moved.length} ${moved.length === 1 ? 'projeto em comum mudou' : 'projetos em comum mudaram'} de data (fim, na ordem dos cenários): ${moved.slice(0, 5).map(x => `${x.name} (${x.ends.map(e => mLbl(mOfN(e))).join(' × ')})`).join(', ')}${moved.length > 5 ? ` e mais ${moved.length - 5}` : ''}.`);
+    else if (common.length) same.push('Os projetos em comum terminam nas mesmas datas (diferença de até uma semana).');
+    const roles = [...new Set(P.flatMap(c => c.R.rows.map(r => r.name)))];
+    const needOf = (c, n) => (c.R.rows.find(r => r.name === n) || { need: 0 }).need;
+    const rd = roles.filter(n => new Set(P.map(c => needOf(c, n))).size > 1), rs = roles.filter(n => !rd.includes(n));
+    if (rd.length) diff.push(`Funções com necessidade diferente: ${rd.slice(0, 6).map(n => `${n} (${P.map(c => needOf(c, n)).join(' × ')})`).join(', ')}.`);
+    if (rs.length) same.push(`Mesma necessidade em: ${rs.slice(0, 8).map(n => `${n} (${needOf(P[0], n)})`).join(', ')}.`);
+    const ends = P.map(c => c.e);
+    if (ends.every(x => x != null) && Math.max(...ends) - Math.min(...ends) > 6) diff.push(`Último projeto termina em: ${P.map(c => `${c.name} ${mLbl(mOfN(c.e))}`).join(', ')}.`);
+    else if (ends.every(x => x != null)) same.push(`Os cenários terminam no mesmo mês (${mLbl(mOfN(ends[0]))}).`);
+  }
+  return { diff, same, common: common.length };
+}
+// ---- slides ----
+function slCenVisao(c, from, pg) {
+  const s = pSlide(), n = c.ps.length;
+  sHead(s, `${c.name}: visão geral dos projetos`, `${n} ${n === 1 ? 'projeto' : 'projetos'}${c.s ? `  ·  ${mLbl(mOfN(c.s))} a ${mLbl(mOfN(c.e))}` : ''}  ·  a partir de ${mLbl(mOfN(from))}`, pg);
+  if (!c.s) return s.xml();
+  // legenda: as fases (grupos) com a cor de cada uma
+  const gc = new Map(); c.ps.forEach(p => p.groups.forEach(g => { if (!gc.has(norm(g.name)) && p.tasks.some(t => t.groupId === g.id && d2n(t.end) >= from)) gc.set(norm(g.name), [g.name, g.color]); }));
+  let lx = SM; [...gc.values()].slice(0, 8).forEach(([nm, col]) => { s.sp({ x: lx, y: SH - 22, w: 14, h: 8, g: 'roundRect', f: col.slice(1).toUpperCase() }); s.sp({ x: lx + 18, y: SH - 26, w: 92, h: 14, paras: [[cut(nm, 18), { sz: 8, c: '46606F' }]], ins: 0 }); lx += 112; });
+  const y0 = 112, rh = Math.min(40, (SH - 36 - y0) / Math.max(1, n)), nw = n > 24 ? 170 : 214, x0 = SM + nw, x1 = SW - SM;
+  c.ps.forEach((p, i) => { if (i % 2) s.sp({ x: SM, y: y0 + i * rh, w: SW - 2 * SM, h: rh, f: 'F5F8F6' }); });
+  const X = sRuler(s, x0, x1, 80, mOfN(c.s), mOfN(c.e), y0 + n * rh);
+  const two = rh >= 22, fz = Math.max(5.5, Math.min(11, rh * 0.42)), bh = Math.max(3, Math.min(16, rh * 0.45));
+  c.ps.forEach((p, i) => {
+    const y = y0 + i * rh, per = c.per[i];
+    s.sp({ x: SM + 4, y, w: nw - 8, h: rh, paras: two ? [[cut(p.name, 34), { sz: fz, b: 1, c: '003960' }], [per ? `${fmtBR(per[0])} a ${fmtBR(per[1])}` : 'antes do período', { sz: Math.max(5.5, fz - 2.5), c: '46606F' }]] : [[cut(p.name, nw > 200 ? 38 : 30), { sz: fz, b: 1, c: '003960' }]], ins: 0 });
+    if (!per) return;
+    const by = y + rh / 2 - bh / 2;
+    // uma barra por fase (grupo), do começo ao fim das tarefas dela, cortada no início do período
+    p.groups.forEach(g => { const ts = p.tasks.filter(t => t.groupId === g.id && !t.milestone && d2n(t.end) >= from); if (!ts.length) return;
+      const a = Math.max(from, Math.min(...ts.map(t => d2n(t.start)))), e = Math.max(...ts.map(t => d2n(t.end))), bx = X(a);
+      s.sp({ x: bx, y: by, w: Math.max(2, X(e + 1) - bx), h: bh, g: 'roundRect', f: g.color.slice(1).toUpperCase(), ln: ['FFFFFF', 0.5] }); });
+    const md = Math.max(4, Math.min(10, rh * 0.5));
+    p.tasks.filter(t => t.milestone && d2n(t.start) >= from).forEach(t => s.sp({ x: X(d2n(t.start) + 0.5) - md / 2, y: y + rh / 2 - md / 2, w: md, h: md, g: 'diamond', f: '003960', ln: ['FFFFFF', 0.5] }));
+  });
+  return s.xml();
+}
+function slCenRes(c, pg) {
+  const s = pSlide(), R = c.R;
+  sHead(s, `${c.name}: recursos necessários`, `Pico de atividades ao mesmo tempo, por função e por mês (cada atividade = 1 pessoa)`, pg);
+  if (!R.total) { s.sp({ x: SM, y: 120, w: 600, h: 20, paras: [['Nenhuma atividade no período.', { sz: 12, c: '46606F' }]], ins: 0 }); return s.xml(); }
+  const T = R.total, kp = [[`${T.need}`, 'pessoas ao mesmo tempo no pico', mLbl(T.peakM), '003960'], [`${T.have}`, 'na equipe atual', 'soma das funções', '46606F'], [`+${T.hire}`, 'a contratar', T.hire ? 'para cobrir os picos' : 'a equipe atual dá conta', T.hire ? 'E60018' : '006729']];
+  kp.forEach(([v, l, sub, col], i) => { const x = SM + i * 210; s.sp({ x, y: 80, w: 200, h: 52, g: 'roundRect', f: 'F5F8F6', ln: ['DCE4DF', 0.75] }); s.sp({ x: x + 10, y: 84, w: 70, h: 44, paras: [[v, { sz: 24, b: 1, c: col }]], ins: 0 }); s.sp({ x: x + 78, y: 86, w: 118, h: 40, paras: [[l, { sz: 9, b: 1, c: '0B2A3C' }], [sub, { sz: 8, c: '5B6770' }]], ins: 0, an: 'ctr' }); });
+  // colunas: meses (ou trimestres, se forem muitos)
+  let cols = R.months.map((m, i) => ({ l: mLbl(m), idx: [i] }));
+  if (cols.length > 18) { const q = new Map(); R.months.forEach((m, i) => { const k = Math.floor(m / 3); if (!q.has(k)) q.set(k, { l: `T${k % 4 + 1}/${String(Math.floor(m / 12)).slice(2)}`, idx: [] }); q.get(k).idx.push(i); }); cols = [...q.values()]; }
+  const rows = [...R.rows, T], top = 146, nw = 168, ew = 54, cw = (SW - 2 * SM - nw - 3 * ew) / cols.length, rh = Math.min(30, (SH - 36 - top) / (rows.length + 1));
+  const fz = Math.max(6, Math.min(9.5, rh * 0.45)), cell = (x, y, w, txt, o = {}) => s.sp({ x, y, w, h: rh, f: o.f, paras: [[txt, { sz: o.sz || fz, b: o.b, c: o.c || '0B2A3C' }]], al: o.al || 'ctr', ins: 2 });
+  cell(SM, top, nw, 'Função', { b: 1, al: 'l', c: '46606F' }); cols.forEach((k, j) => cell(SM + nw + j * cw, top, cw, k.l, { sz: Math.max(5.5, Math.min(8, cw * 0.28)), c: '46606F', b: 1 }));
+  ['Pico', 'Equipe', 'Contratar'].forEach((h, j) => cell(SM + nw + cols.length * cw + j * ew, top, ew, h, { b: 1, c: '46606F' }));
+  rows.forEach((r, i) => {
+    const y = top + (i + 1) * rh, isT = r === T;
+    if (isT) s.sp({ x: SM, y: y - 1, w: SW - 2 * SM, h: 1, f: '9AADB7' }); else if (i % 2) s.sp({ x: SM, y, w: SW - 2 * SM, h: rh, f: 'F5F8F6' });
+    cell(SM, y, nw, cut(r.name, 30), { b: 1, al: 'l', c: isT ? '003960' : '0B2A3C' });
+    cols.forEach((k, j) => { const v = Math.max(...k.idx.map(ix => r.cells[ix])); if (!v) return; const over = !isT && v > r.have;
+      cell(SM + nw + j * cw + 1, y + 1, cw - 2, String(v), { f: over ? 'FCE4E6' : 'E7F1E9', c: over ? 'C80015' : '006729', b: 1 }); });
+    const xe = SM + nw + cols.length * cw;
+    cell(xe, y, ew, String(r.need), { b: 1 }); cell(xe + ew, y, ew, String(r.have), { c: '46606F' }); cell(xe + 2 * ew, y, ew, r.hire ? `+${r.hire}` : '0', { b: 1, c: r.hire ? 'C80015' : '006729' });
+  });
+  s.sp({ x: SM, y: SH - 24, w: 560, h: 14, paras: [['Vermelho: o mês pede mais pessoas do que a equipe atual daquela função  ·  verde: a equipe atual cobre', { sz: 8, c: '5B6770' }]], ins: 0 });
+  return s.xml();
+}
+function slCenCmp(P, D, pg) {
+  const s = pSlide();
+  sHead(s, 'Comparação dos cenários', P.map(c => c.name).join('  ×  '), pg);
+  const metr = [['Projetos', c => String(c.ps.length)], ['Período', c => c.s ? `${mLbl(mOfN(c.s))} a ${mLbl(mOfN(c.e))}` : '—'], ['Pico ao mesmo tempo', c => c.R.total ? `${c.R.total.need} (${mLbl(c.R.total.peakM)})` : '0'], ['Equipe atual', c => c.R.total ? String(c.R.total.have) : '0'], ['A contratar', c => c.R.total ? `+${c.R.total.hire}` : '+0']];
+  const top = 84, nw = 170, cw = Math.min(200, (SW - 2 * SM - nw) / P.length), rh = 20;
+  s.sp({ x: SM, y: top, w: nw, h: rh, paras: [['', {}]], ins: 0 });
+  P.forEach((c, j) => s.sp({ x: SM + nw + j * cw, y: top, w: cw - 4, h: rh, f: '003960', paras: [[cut(c.name, 28), { sz: 10, b: 1, c: 'FFFFFF' }]], al: 'ctr', ins: 2 }));
+  metr.forEach(([l, f], i) => { const y = top + (i + 1) * rh; if (i % 2) s.sp({ x: SM, y, w: nw + P.length * cw - 4, h: rh, f: 'F5F8F6' });
+    s.sp({ x: SM, y, w: nw, h: rh, paras: [[l, { sz: 9.5, b: 1, c: '46606F' }]], ins: 4 });
+    P.forEach((c, j) => s.sp({ x: SM + nw + j * cw, y, w: cw - 4, h: rh, paras: [[f(c), { sz: 10, b: l === 'A contratar', c: l === 'A contratar' ? 'C80015' : '0B2A3C' }]], al: 'ctr', ins: 2 })); });
+  const yb = top + (metr.length + 1) * rh + 16, half = (SW - 2 * SM - 20) / 2;
+  const block = (x, title, list, col) => {
+    s.sp({ x, y: yb, w: half, h: 22, paras: [[title, { sz: 13, b: 1, c: col }]], ins: 0 });
+    s.sp({ x, y: yb + 24, w: half, h: SH - 40 - yb - 24, an: 't', paras: (list.length ? list : ['Nada a destacar.']).slice(0, 8).map(t => [`•  ${cut(t, 260)}`, { sz: 10, c: '0B2A3C' }]), ins: 0 });
+  };
+  block(SM, 'Principais diferenças', D.diff, 'C80015'); block(SM + half + 20, 'O que é igual', D.same, '006729');
+  return s.xml();
+}
+// ---- janela ----
+function cmpSel() { return [...$('#cmList').querySelectorAll('input:checked')].map(i => i.value); }
+function cmpFrom() { const v = $('#cmFrom').value; const m = /^(\d{4})-(\d{2})$/.exec(v); return m ? Math.round(Date.UTC(+m[1], +m[2] - 1, 1) / DAY) : mFirst(mOfN(todayN)); }
+function renderCmp() {
+  const sel = cmpSel(), from = cmpFrom(), P = sel.map(n => cenPack(n, from));
+  // equipe atual por função (todas as funções dos cenários marcados)
+  const roles = new Map(); P.forEach(c => c.R.rows.forEach(r => { if (!roles.has(r.key)) roles.set(r.key, r.name); }));
+  $('#cmTeam').innerHTML = roles.size ? `<div class="cm-tg">${[...roles].sort((a, b) => a[1].localeCompare(b[1], 'pt-BR')).map(([k, n]) => `<label class="cm-ti"><span title="${esc(n)}">${esc(n)}</span><input type="number" min="0" max="999" value="${teamOf(k)}" data-team="${esc(k)}" aria-label="Equipe atual de ${esc(n)}"></label>`).join('')}</div>` : '<p class="muted">Marque um cenário para ver as funções.</p>';
+  if (!P.length) { $('#cmPrev').innerHTML = ''; $('#cmOk').disabled = true; return; }
+  const D = cenDiff(P);
+  const card = c => { const T = c.R.total; return `<div class="cm-c"><h4>${esc(c.name)}</h4><dl><div><dt>Projetos</dt><dd>${c.ps.length}</dd></div><div><dt>Período</dt><dd>${c.s ? `${mLbl(mOfN(c.s))} a ${mLbl(mOfN(c.e))}` : '—'}</dd></div><div><dt>Pico ao mesmo tempo</dt><dd>${T ? `${T.need} <small>${mLbl(T.peakM)}</small>` : 0}</dd></div><div><dt>A contratar</dt><dd class="${T && T.hire ? 'bad' : 'good'}">+${T ? T.hire : 0}</dd></div></dl>
+    ${T ? `<table class="cm-t"><thead><tr><th>Função</th><th>Pico</th><th>Equipe</th><th>Contratar</th></tr></thead><tbody>${c.R.rows.map(r => `<tr><td>${esc(r.name)}</td><td>${r.need} <small>${mLbl(r.peakM)}</small></td><td>${r.have}</td><td class="${r.hire ? 'bad' : ''}">${r.hire ? '+' + r.hire : '0'}</td></tr>`).join('')}</tbody></table>` : ''}</div>`; };
+  $('#cmPrev').innerHTML = `<div class="cm-cards">${P.map(card).join('')}</div>` + (P.length > 1 ? `<div class="cm-d"><div><h4 class="bad">Principais diferenças</h4><ul>${(D.diff.length ? D.diff : ['Nada a destacar.']).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div><div><h4 class="good">O que é igual</h4><ul>${(D.same.length ? D.same : ['Nada a destacar.']).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div></div>` : '<p class="muted">Marque dois cenários ou mais para ver as diferenças.</p>');
+  const n = P.length * 2 + (P.length > 1 ? 1 : 0); $('#cmOk').disabled = false; $('#cmOk').textContent = `Baixar PowerPoint (${n} ${n === 1 ? 'slide' : 'slides'})`;
+}
+function openCmp() {
+  const cs = cenNames();
+  if (!cs.length) return toast('Ainda não há cenários. Abra o backup (.json) de cada cenário e dê um nome para ele, ou use Projeto › Mover para cenário.');
+  const prev = Array.isArray(state.cmpSel) ? state.cmpSel.filter(c => cs.includes(c)) : [], on = prev.length ? prev : cs.slice(0, 3);
+  $('#cmList').innerHTML = cs.map(c => `<label class="chk"><input type="checkbox" value="${esc(c)}"${on.includes(c) ? ' checked' : ''}> ${esc(c)} <small>(${state.projects.filter(p => p.cen === c).length})</small></label>`).join('');
+  $('#cmFrom').value = state.cmpFrom || n2d(mFirst(mOfN(todayN))).slice(0, 7);
+  renderCmp(); const d = $('#dlgCmp'); d.returnValue = ''; d.showModal();
+}
+$('#cmList').addEventListener('change', () => { state.cmpSel = cmpSel(); if (!RO) persist(); renderCmp(); });
+$('#cmFrom').addEventListener('change', () => { state.cmpFrom = $('#cmFrom').value; if (!RO) persist(); renderCmp(); });
+$('#cmTeam').addEventListener('change', e => { const i = e.target.closest('[data-team]'); if (!i) return; state.team = state.team && typeof state.team === 'object' ? state.team : {}; state.team[i.dataset.team] = Math.max(0, Math.min(999, Math.floor(+i.value || 0))); if (!RO) persist(); const k = i.dataset.team; renderCmp(); const ni = $('#cmTeam').querySelector(`[data-team="${CSS.escape(k)}"]`); if (ni) ni.focus(); });
+$('#cmOk').addEventListener('click', () => {
+  const sel = cmpSel(), from = cmpFrom(); if (!sel.length) return;
+  const P = sel.map(n => cenPack(n, from)), D = cenDiff(P);
+  const mk = [...P.flatMap(c => [pg => slCenVisao(c, from, pg), pg => slCenRes(c, pg)]), ...(P.length > 1 ? [pg => slCenCmp(P, D, pg)] : [])];
+  download(buildPptx(state.projects, mk), `cenarios-${slug(sel.join('-x-')).slice(0, 60)}.pptx`);
+  toast(`Apresentação gerada com ${mk.length} slides. Tudo nela é editável.`);
 });
 
 /* ---------- PowerPoint (.pptx) editável ---------- */
@@ -4164,10 +4463,10 @@ function slProj(p, ts, part, parts, pg) {
   });
   return s.xml() + mark;
 }
-// one = true: só o slide da visão geral, com todos os projetos
+// one = true: só o slide da visão geral, com todos os projetos; one = lista de funções de slide: monta só esses
 function buildPptx(ps, one) {
   const ix = p => { const i = state.projects.indexOf(p); return i < 0 ? 1e9 : i; }, byTime = ps.slice().sort((a, b) => ix(a) - ix(b)), gi = p => t => p.groups.findIndex(g => g.id === t.groupId);
-  const mk = one ? [pg => slVisao(ps, pg)] : [...chunk(ps, 7).map(c => pg => slResumo(c, pg, ps)), ...chunk(byTime, 8).map(c => pg => slTempo(c, pg))];
+  const mk = Array.isArray(one) ? one : one ? [pg => slVisao(ps, pg)] : [...chunk(ps, 7).map(c => pg => slResumo(c, pg, ps)), ...chunk(byTime, 8).map(c => pg => slTempo(c, pg))];
   if (!one) byTime.filter(p => p.tasks.length).forEach(p => {
     const g = gi(p), ts = p.tasks.slice().sort((a, b) => g(a) - g(b) || (a.start < b.start ? -1 : a.start > b.start ? 1 : 0)), parts = chunk(ts, 15);
     parts.forEach((c, i) => mk.push(pg => slProj(p, c, i + 1, parts.length, pg)));
@@ -4214,7 +4513,7 @@ function importSheets(buf, abas) {
       .map(r => { const sheet = abas[+r.querySelector('input[type=checkbox]').dataset.i]; return { sheet, name: r.querySelector('.ab-n').value.trim() || sheet }; });
     const ok = [], bad = []; let tasks = 0;
     for (const { sheet, name } of pick) {
-      try { const { p } = await parseXlsx(buf, name, sheet); state.projects.push(p); ok.push(p); tasks += p.tasks.length; }
+      try { const { p } = await parseXlsx(buf, name, sheet); state.projects.push(inCen(p)); ok.push(p); tasks += p.tasks.length; }
       catch (err) { bad.push(`${sheet} (${err.message})`); }
     }
     if (ok.length) { state.currentId = ok[0].id; save(); closeDrawer(); render('load'); }
@@ -4697,6 +4996,20 @@ async function selfTest() {
     const g = await xlsxGrid(await xlsxBook([{ name: 'A', rows: [['x', 2, { v: d2n('2027-01-05'), st: 'd' }]] }, { name: 'B/2', rows: [[{ v: 'y', st: 0 }]] }], ['#E60018']).arrayBuffer(), n => n.indexOf('A'));
     ok(g.rows[0][0] === 'x' && g.rows[0][1] === 2 && g.rows[0][2] === d2n('2027-01-05') + 25569 && g.sheets.join() === 'A,B 2', 'planilha genérica: ida e volta');
     ok(pfData([mkp('A', '2027-03-01', '2027-03-12')])[0].pct === 0 && (await buildPfXlsx().arrayBuffer()).byteLength > 500, 'visão geral: planilha'); }
+  { // cenários: recursos por função e comparação
+    const mkc = (nm, cen, a, b, ow) => normP({ id: 'c' + nm + cen, name: nm, cen, groups: [{ id: 'g', name: 'Fase', color: '#006729' }], tasks: [{ id: 't', name: 'X', groupId: 'g', owner: ow, start: a, end: b, progress: 0, milestone: false, risk: false, deps: [], note: '' }] });
+    ok(mkc('a', ' Orç  A ', '2027-01-04', '2027-01-08', 'Dev').cen === 'Orç A' && !normP({ name: 'x', groups: [], tasks: [] }).cen, 'cenário: guardado no projeto');
+    const from = d2n('2027-01-01'), A = [mkc('P1', 'A', '2027-01-04', '2027-02-26', 'Dev'), mkc('P2', 'A', '2027-02-01', '2027-03-31', 'Dev'), mkc('P3', 'A', '2026-12-01', '2027-01-15', 'QA')];
+    const R = cenRes(A, from), dev = R.rows.find(r => r.name === 'Dev');
+    ok(R.months.length === 3 && dev.need === 2 && dev.cells.join() === '1,2,1' && R.rows.find(r => r.name === 'QA').cells.join() === '1,0,0' && R.total.need === 2, 'cenário: pico por função e por mês, cortado no início');
+    const st = state.team; try { state.team = { dev: 1 }; const RT = cenRes(A, from); ok(RT.rows.find(r => r.name === 'Dev').hire === 1 && RT.rows.find(r => r.name === 'QA').hire === 1 && RT.total.hire === 2 && RT.total.have === 1, 'cenário: contratar = pico − equipe, por função'); } finally { state.team = st; }
+    const sv = state.projects; try {
+      state.projects = [...A, mkc('P1', 'B', '2027-01-04', '2027-05-28', 'Dev'), mkc('P9', 'B', '2027-02-01', '2027-03-31', 'Dev'), mkc('P8', 'B', '2027-02-01', '2027-03-31', 'Dev')];
+      const D = cenDiff(['A', 'B'].map(n => cenPack(n, from)));
+      ok(D.diff.some(t => /Só em A/.test(t) && /P2/.test(t)) && D.diff.some(t => /Só em B/.test(t)) && D.diff.some(t => /mud(ou|aram) de data/.test(t) && /P1/.test(t)) && D.same.some(t => /1 projeto aparece em todos/.test(t)), 'cenário: diferenças e igualdades');
+      const z = await unzip(await buildPptx(state.projects, [pg => slCenVisao(cenPack('A', from), from, pg), pg => slCenRes(cenPack('A', from), pg), pg => slCenCmp(['A', 'B'].map(n => cenPack(n, from)), D, pg)]).arrayBuffer());
+      ok(Object.keys(z).filter(k => /slides\/slide\d+\.xml$/.test(k)).length === 3, 'cenário: apresentação com 3 slides');
+    } finally { state.projects = sv; } }
   { // ritmo: dias úteis atrás do previsto
     const T0 = todayN, back = k => { let n = T0; for (let i = 0; i < k; i++) n = prevWork(n); return n; };
     const mt = (a, b, pr) => ({ id: 'b' + a + pr, name: 'B', groupId: 'g', owner: '', start: n2d(a), end: n2d(b), progress: pr, milestone: false, risk: false, deps: [], note: '' });
