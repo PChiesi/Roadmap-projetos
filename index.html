@@ -782,6 +782,8 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 .cm-t th{text-align:left;font-weight:600;color:var(--ink-3);font-size:11.5px;padding:4px 6px;border-bottom:1px solid var(--line)}
 .cm-t td{padding:4px 6px;border-bottom:1px solid var(--line-2)}.cm-t td small{color:var(--ink-3)}
 .cm-t td.bad{font-weight:700}
+.cm-h{border:1px solid var(--line);border-radius:14px;padding:10px 14px;background:var(--surface)}.cm-h h4{margin:0 0 6px;font:700 14px var(--f-d);color:var(--title)}
+.cm-h td b{font-size:14px}.cm-tt td{border-top:2px solid var(--line);font-weight:700}
 .cm-d{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .cm-d>div{border:1px solid var(--line);border-radius:14px;padding:10px 14px;background:var(--surface)}
 .cm-d h4{margin:0 0 6px;font:700 14px var(--f-d)}.cm-d ul{margin:0;padding-left:18px;font-size:13px;display:flex;flex-direction:column;gap:4px}
@@ -1240,7 +1242,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Para criar: use <b>Abrir backup ou planilha</b> com o .json do cenário. O programa pergunta <b>em qual cenário</b> os projetos entram: dê um nome novo. Também dá para mover um projeto em <b>Projeto › Mover para cenário</b>. Importar o mesmo projeto em outro cenário cria uma cópia, sem mexer no original.</li>
         <li>Com cenários, aparece o seletor <b>Cenário</b> na barra lateral, acima da lista de projetos. A lista e todos os painéis (Visão geral, Linha única, Recursos e conflitos, Carga da equipe, Relatório e PowerPoint) passam a olhar só o cenário escolhido. <b>Todos os projetos</b> volta a mostrar tudo. Projeto novo entra no cenário aberto.</li>
         <li>A engrenagem ao lado do seletor abre <b>Cenários</b>: renomear, <b>Copiar</b> um cenário inteiro (para montar uma alternativa e mudar as datas) e <b>Excluir</b> um cenário com os projetos dele (Desfazer volta atrás).</li>
-        <li><b>Comparar cenários</b>, na barra lateral em Todos os projetos (ou em Exportar), monta a apresentação de orçamento. Marque os cenários e o mês de início (por exemplo nov/26). Para cada cenário saem dois slides: a <b>visão geral</b> (um projeto por linha, sem % e sem situação, com a cor das fases e os marcos) e os <b>recursos necessários</b> (por função, o pico de atividades ao mesmo tempo em cada mês, a equipe atual e quantas pessoas contratar). Com dois cenários ou mais, o último slide traz as <b>principais diferenças</b> e <b>o que é igual</b>: contratações, pico, projetos só em um cenário, projetos que mudaram de data e funções com necessidade diferente.</li>
+        <li><b>Comparar cenários</b>, na barra lateral em Todos os projetos (ou em Exportar), monta a apresentação de orçamento. Marque os cenários e o mês de início (por exemplo nov/26). Para cada cenário saem dois slides: a <b>visão geral</b> (um projeto por linha, sem % e sem situação, com a cor das fases e os marcos) e os <b>recursos necessários</b> (por função, o pico de atividades ao mesmo tempo em cada mês, a equipe atual e quantas pessoas contratar). Com dois cenários ou mais, o último slide compara os cenários de forma visual: um cartão por cenário com o número de <b>projetos</b> e de <b>pessoas a contratar</b> em destaque (o cenário com mais ganha o selo "+N projetos" e "+N pessoas a mais"), um gráfico de <b>Contratar por equipe</b> com uma barra por cenário em cada área (e quanto cada um precisa e tem) e, embaixo, os projetos que só existem em cada cenário e os em comum. A janela mostra a mesma tabela de contratação por equipe, e as diferenças e igualdades em texto.</li>
         <li>A área vem do campo <b>Responsável</b> das tarefas: <b>Projetos</b>, <b>Análise de Produtos</b>, <b>Pricing</b> ou <b>Sustentação</b> (acento, maiúscula e espaços não importam; "Analise de produtos" conta como Análise de Produtos). Tarefa com duas áreas ("Projetos / Pricing") conta 1 pessoa em cada. Cada atividade aberta conta como 1 pessoa da área enquanto dura.</li>
         <li>Informe a <b>Equipe atual por área</b> na janela: <b>Contratar</b> é o pico menos a equipe, <b>área por área</b>, porque uma área não cobre a outra (gente sobrando em Sustentação não reduz a falta em Pricing). <b>Pessoas necessárias</b> é a soma do maior pico de cada área, e a linha <b>Total</b> soma as áreas mês a mês. As quatro áreas sempre aparecem nos slides, nesta ordem, mesmo sem atividade no cenário; responsável fora da lista aparece depois. Para mudar a lista, edite <b>Áreas da equipe</b> na mesma janela. O tamanho da equipe de cada área é o mesmo usado em <b>Recursos e conflitos › Por responsável</b>: mudar num lugar muda no outro.</li>
       </ul></div></details>
@@ -4218,7 +4220,7 @@ function cenDiff(P) {
   const key = p => norm(p.name).replace(/\s+/g, ' ');
   const sets = P.map(c => new Map(c.ps.map((p, i) => [key(p), { p, per: c.per[i] }])));
   const all = [...new Set(sets.flatMap(m => [...m.keys()]))], common = all.filter(k => sets.every(m => m.has(k)));
-  const diff = [], same = [];
+  const diff = [], same = [], onlyL = P.map(() => []); let movedN = 0;
   const hires = P.map(c => c.R.total ? c.R.total.hire : 0), peaks = P.map(c => c.R.total ? c.R.total.need : 0);
   if (P.length > 1) {
     const hi = hires.indexOf(Math.max(...hires)), lo = hires.indexOf(Math.min(...hires));
@@ -4227,9 +4229,12 @@ function cenDiff(P) {
     else same.push(`Mesmo número de contratações: +${hires[0]} ${hires[0] === 1 ? 'pessoa' : 'pessoas'} em cada cenário.`);
     if (new Set(peaks).size > 1) diff.push(`Pessoas necessárias (soma do pico de cada área): ${P.map((c, i) => `${peaks[i]} em ${c.name}`).join(', ')}.`);
     else same.push(`Mesmo número de pessoas necessárias: ${peaks[0]} (soma do pico de cada área).`);
-    P.forEach((c, i) => { const only = [...sets[i].keys()].filter(k => !common.includes(k)).map(k => sets[i].get(k).p.name); if (only.length) diff.push(`Só em ${c.name} (${only.length}): ${only.slice(0, 6).join(', ')}${only.length > 6 ? ` e mais ${only.length - 6}` : ''}.`); });
+    P.forEach((c, i) => { const only = [...sets[i].keys()].filter(k => sets.every((m, j) => j === i || !m.has(k))).map(k => sets[i].get(k).p.name); onlyL[i] = only; if (only.length) diff.push(`Só em ${c.name} (${only.length}): ${only.slice(0, 6).join(', ')}${only.length > 6 ? ` e mais ${only.length - 6}` : ''}.`); });
     if (common.length) same.push(`${common.length} ${common.length === 1 ? 'projeto aparece' : 'projetos aparecem'} em todos os cenários.`);
+    const some = all.filter(k => !common.includes(k) && sets.filter(m => m.has(k)).length > 1).length;
+    if (some) diff.push(`${some} ${some === 1 ? 'projeto aparece' : 'projetos aparecem'} em mais de um cenário, mas não em todos.`);
     const moved = common.map(k => { const ends = sets.map(m => m.get(k).per ? m.get(k).per[1] : null); if (ends.some(x => x == null)) return null; const dd = Math.max(...ends) - Math.min(...ends); return dd > 6 ? { name: sets[0].get(k).p.name, ends, dd } : null; }).filter(Boolean).sort((a, b) => b.dd - a.dd);
+    movedN = moved.length;
     if (moved.length) diff.push(`${moved.length} ${moved.length === 1 ? 'projeto em comum mudou' : 'projetos em comum mudaram'} de data (fim, na ordem dos cenários): ${moved.slice(0, 5).map(x => `${x.name} (${x.ends.map(e => mLbl(mOfN(e))).join(' × ')})`).join(', ')}${moved.length > 5 ? ` e mais ${moved.length - 5}` : ''}.`);
     else if (common.length) same.push('Os projetos em comum terminam nas mesmas datas (diferença de até uma semana).');
     const roles = [...new Set(P.flatMap(c => c.R.rows.map(r => r.name)))];
@@ -4241,7 +4246,7 @@ function cenDiff(P) {
     if (ends.every(x => x != null) && Math.max(...ends) - Math.min(...ends) > 6) diff.push(`Último projeto termina em: ${P.map(c => `${c.name} ${mLbl(mOfN(c.e))}`).join(', ')}.`);
     else if (ends.every(x => x != null)) same.push(`Os cenários terminam no mesmo mês (${mLbl(mOfN(ends[0]))}).`);
   }
-  return { diff, same, common: common.length };
+  return { diff, same, common: common.length, only: onlyL, movedN };
 }
 // ---- slides ----
 function slCenVisao(c, from, pg) {
@@ -4295,22 +4300,58 @@ function slCenRes(c, pg) {
   s.sp({ x: SM, y: SH - 24, w: 560, h: 14, paras: [['Vermelho: o mês pede mais pessoas do que a equipe atual daquela área  ·  verde: a equipe atual cobre', { sz: 8, c: '5B6770' }]], ins: 0 });
   return s.xml();
 }
+const CEN_C = ['003960', '006729', 'E8A317', '7A4FA0', '0083A9', 'E60018'];
+// Comparação visual: cartões com os números grandes, barras de contratação por equipe e a faixa dos projetos
 function slCenCmp(P, D, pg) {
-  const s = pSlide();
+  const s = pSlide(), n = P.length, col = i => CEN_C[i % CEN_C.length];
   sHead(s, 'Comparação dos cenários', P.map(c => c.name).join('  ×  '), pg);
-  const metr = [['Projetos', c => String(c.ps.length)], ['Período', c => c.s ? `${mLbl(mOfN(c.s))} a ${mLbl(mOfN(c.e))}` : '—'], ['Pessoas necessárias', c => c.R.total ? String(c.R.total.need) : '0'], ['Equipe atual', c => c.R.total ? String(c.R.total.have) : '0'], ['A contratar', c => c.R.total ? `+${c.R.total.hire}` : '+0']];
-  const top = 84, nw = 170, cw = Math.min(200, (SW - 2 * SM - nw) / P.length), rh = 20;
-  s.sp({ x: SM, y: top, w: nw, h: rh, paras: [['', {}]], ins: 0 });
-  P.forEach((c, j) => s.sp({ x: SM + nw + j * cw, y: top, w: cw - 4, h: rh, f: '003960', paras: [[cut(c.name, 28), { sz: 10, b: 1, c: 'FFFFFF' }]], al: 'ctr', ins: 2 }));
-  metr.forEach(([l, f], i) => { const y = top + (i + 1) * rh; if (i % 2) s.sp({ x: SM, y, w: nw + P.length * cw - 4, h: rh, f: 'F5F8F6' });
-    s.sp({ x: SM, y, w: nw, h: rh, paras: [[l, { sz: 9.5, b: 1, c: '46606F' }]], ins: 4 });
-    P.forEach((c, j) => s.sp({ x: SM + nw + j * cw, y, w: cw - 4, h: rh, paras: [[f(c), { sz: 10, b: l === 'A contratar', c: l === 'A contratar' ? 'C80015' : '0B2A3C' }]], al: 'ctr', ins: 2 })); });
-  const yb = top + (metr.length + 1) * rh + 16, half = (SW - 2 * SM - 20) / 2;
-  const block = (x, title, list, col) => {
-    s.sp({ x, y: yb, w: half, h: 22, paras: [[title, { sz: 13, b: 1, c: col }]], ins: 0 });
-    s.sp({ x, y: yb + 24, w: half, h: SH - 40 - yb - 24, an: 't', paras: (list.length ? list : ['Nada a destacar.']).slice(0, 8).map(t => [`•  ${cut(t, 260)}`, { sz: 10, c: '0B2A3C' }]), ins: 0 });
-  };
-  block(SM, 'Principais diferenças', D.diff, 'C80015'); block(SM + half + 20, 'O que é igual', D.same, '006729');
+  const T = c => c.R.total || { need: 0, have: 0, hire: 0 }, nP = P.map(c => c.ps.length), hP = P.map(c => T(c).hire);
+  const minP = Math.min(...nP), minH = Math.min(...hP);
+  // 1) cartões
+  const gap = 12, cw = (SW - 2 * SM - gap * (n - 1)) / n, y0 = 82, ch = 104, big = n > 3 ? 22 : 30;
+  P.forEach((c, i) => {
+    const x = SM + i * (cw + gap);
+    s.sp({ x, y: y0, w: cw, h: ch, g: 'roundRect', f: 'FFFFFF', ln: [col(i), 1.25] });
+    s.sp({ x, y: y0, w: cw, h: 22, g: 'roundRect', f: col(i), paras: [[cut(c.name, n > 3 ? 22 : 36), { sz: 11, b: 1, c: 'FFFFFF' }]], al: 'ctr', ins: 4 });
+    const half = cw / 2;
+    s.sp({ x: x + 8, y: y0 + 26, w: half - 12, h: 40, paras: [[String(nP[i]), { sz: big, b: 1, c: '003960' }]], ins: 0 });
+    s.sp({ x: x + 8, y: y0 + 64, w: half - 12, h: 14, paras: [['projetos', { sz: 9, c: '46606F' }]], ins: 0 });
+    if (n > 1 && nP[i] > minP) s.sp({ x: x + 8, y: y0 + 86, w: Math.min(half - 12, 92), h: 14, g: 'roundRect', f: 'DCE8F5', paras: [[`+${nP[i] - minP} ${nP[i] - minP === 1 ? 'projeto' : 'projetos'}`, { sz: 8, b: 1, c: '003960' }]], al: 'ctr', ins: 2 });
+    s.sp({ x: x + half, y: y0 + 26, w: half - 8, h: 40, paras: [[`+${hP[i]}`, { sz: big, b: 1, c: hP[i] ? 'C80015' : '006729' }]], ins: 0 });
+    s.sp({ x: x + half, y: y0 + 62, w: half - 8, h: 12, paras: [['a contratar', { sz: 9, c: '46606F' }]], ins: 0 });
+    s.sp({ x: x + half, y: y0 + 73, w: half - 8, h: 12, paras: [[`${T(c).need} necessárias · ${T(c).have} na equipe`, { sz: 7.5, c: '5B6770' }]], ins: 0 });
+    if (n > 1 && hP[i] > minH) s.sp({ x: x + half, y: y0 + 86, w: Math.min(half - 8, 110), h: 14, g: 'roundRect', f: 'FCE4E6', paras: [[`+${hP[i] - minH} ${hP[i] - minH === 1 ? 'pessoa' : 'pessoas'} a mais`, { sz: 8, b: 1, c: 'C80015' }]], al: 'ctr', ins: 2 });
+  });
+  // 2) contratar por equipe: uma barra por cenário em cada área
+  const names = [...new Set(P.flatMap(c => c.R.rows.map(r => r.name)))];
+  const rowOf = (c, nm) => c.R.rows.find(r => r.name === nm) || { need: 0, have: 0, hire: 0 };
+  const shown = names.filter(nm => P.some(c => rowOf(c, nm).need || rowOf(c, nm).have)).slice(0, 7);
+  const cy = y0 + ch + 16;
+  s.sp({ x: SM, y: cy, w: 400, h: 18, paras: [['Contratar por equipe', { sz: 13, b: 1, c: '003960' }]], ins: 0 });
+  P.forEach((c, i) => { const lx = SW - SM - (n - i) * 120; s.sp({ x: lx, y: cy + 5, w: 10, h: 10, g: 'roundRect', f: col(i) }); s.sp({ x: lx + 14, y: cy + 1, w: 104, h: 16, paras: [[cut(c.name, 20), { sz: 8, c: '46606F' }]], ins: 0 }); });
+  const by = cy + 24, bh = Math.max(7, Math.min(14, (SH - 128 - by) / Math.max(1, shown.length) / n - 2)), gh = n * (bh + 2) + 8;
+  const lw = 150, rw = 150, bw = SW - 2 * SM - lw - rw - 40, mx = Math.max(1, ...shown.flatMap(nm => P.map(c => rowOf(c, nm).hire)));
+  shown.forEach((nm, k) => {
+    const gy = by + k * gh;
+    if (k % 2) s.sp({ x: SM, y: gy - 3, w: SW - 2 * SM, h: gh - 2, f: 'F5F8F6' });
+    s.sp({ x: SM + 4, y: gy, w: lw - 8, h: n * (bh + 2), paras: [[cut(nm, 24), { sz: 10, b: 1, c: '0B2A3C' }]], ins: 0 });
+    P.forEach((c, i) => {
+      const r = rowOf(c, nm), y = gy + i * (bh + 2), w = r.hire ? Math.max(4, bw * r.hire / mx) : 2;
+      s.sp({ x: SM + lw, y, w, h: bh, g: 'roundRect', f: r.hire ? col(i) : 'C5D1CA' });
+      s.sp({ x: SM + lw + w + 6, y: y - 2, w: 40, h: bh + 4, paras: [[r.hire ? `+${r.hire}` : '0', { sz: Math.max(8, bh * 0.85), b: 1, c: r.hire ? 'C80015' : '006729' }]], ins: 0 });
+      s.sp({ x: SW - SM - rw, y: y - 2, w: rw, h: bh + 4, paras: [[`precisa ${r.need}  ·  tem ${r.have}`, { sz: Math.max(7, bh * 0.7), c: '5B6770' }]], al: 'r', ins: 0 });
+    });
+  });
+  // 3) projetos: só em cada cenário e em comum
+  const py = Math.max(by + shown.length * gh + 6, SH - 96), pw = (SW - 2 * SM - gap * n) / (n + 1);
+  P.forEach((c, i) => { const x = SM + i * (pw + gap), L = (D.only || [])[i] || [];
+    s.sp({ x, y: py, w: pw, h: 62, g: 'roundRect', f: 'F5F8F6', ln: [col(i), 0.75] });
+    s.sp({ x: x + 8, y: py + 4, w: pw - 16, h: 16, paras: [[`Só em ${cut(c.name, 26)}: ${L.length}`, { sz: 9.5, b: 1, c: col(i) === 'E8A317' ? '9A6A00' : col(i) }]], ins: 0 });
+    s.sp({ x: x + 8, y: py + 20, w: pw - 16, h: 40, an: 't', paras: [[L.length ? cut(L.join(', '), n > 2 ? 90 : 140) : 'nenhum', { sz: 8, c: '46606F' }]], ins: 0 }); });
+  const xc = SM + n * (pw + gap);
+  s.sp({ x: xc, y: py, w: pw, h: 62, g: 'roundRect', f: 'E7F1E9', ln: ['006729', 0.75] });
+  s.sp({ x: xc + 8, y: py + 4, w: pw - 16, h: 30, paras: [[`${D.common || 0}`, { sz: 20, b: 1, c: '006729' }]], ins: 0 });
+  s.sp({ x: xc + 8, y: py + 34, w: pw - 16, h: 26, an: 't', paras: [[`${(D.common || 0) === 1 ? 'projeto em comum' : 'projetos em comum'}${D.movedN ? `, ${D.movedN} ${D.movedN === 1 ? 'mudou' : 'mudaram'} de data` : ''}`, { sz: 8.5, c: '46606F' }]], ins: 0 });
   return s.xml();
 }
 // ---- janela ----
@@ -4327,7 +4368,9 @@ function renderCmp() {
   const D = cenDiff(P);
   const card = c => { const T = c.R.total; return `<div class="cm-c"><h4>${esc(c.name)}</h4><dl><div><dt>Projetos</dt><dd>${c.ps.length}</dd></div><div><dt>Período</dt><dd>${c.s ? `${mLbl(mOfN(c.s))} a ${mLbl(mOfN(c.e))}` : '—'}</dd></div><div><dt>Pessoas necessárias</dt><dd>${T ? T.need : 0} <small>soma das áreas</small></dd></div><div><dt>Equipe atual</dt><dd>${T ? T.have : 0}</dd></div><div><dt>A contratar</dt><dd class="${T && T.hire ? 'bad' : 'good'}">+${T ? T.hire : 0}</dd></div></dl>
     ${T ? `<table class="cm-t"><thead><tr><th>Área</th><th>Pico</th><th>Equipe</th><th>Contratar</th></tr></thead><tbody>${c.R.rows.map(r => `<tr><td>${esc(r.name)}</td><td>${r.need} <small>${mLbl(r.peakM)}</small></td><td>${r.have}</td><td class="${r.hire ? 'bad' : ''}">${r.hire ? '+' + r.hire : '0'}</td></tr>`).join('')}</tbody></table>` : ''}</div>`; };
-  $('#cmPrev').innerHTML = `<div class="cm-cards">${P.map(card).join('')}</div>` + (P.length > 1 ? `<div class="cm-d"><div><h4 class="bad">Principais diferenças</h4><ul>${(D.diff.length ? D.diff : ['Nada a destacar.']).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div><div><h4 class="good">O que é igual</h4><ul>${(D.same.length ? D.same : ['Nada a destacar.']).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div></div>` : '<p class="muted">Marque dois cenários ou mais para ver as diferenças.</p>');
+  const nms = [...new Set(P.flatMap(c => c.R.rows.map(r => r.name)))], rw = (c, nm) => c.R.rows.find(r => r.name === nm) || { need: 0, have: 0, hire: 0 };
+  const hireT = P.length > 1 ? `<div class="cm-h"><h4>Contratar por equipe</h4><table class="cm-t"><thead><tr><th>Equipe</th>${P.map(c => `<th>${esc(c.name)}</th>`).join('')}</tr></thead><tbody>${nms.filter(nm => P.some(c => rw(c, nm).need || rw(c, nm).have)).map(nm => `<tr><td>${esc(nm)}</td>${P.map(c => { const r = rw(c, nm); return `<td class="${r.hire ? 'bad' : ''}"><b>${r.hire ? '+' + r.hire : '0'}</b> <small>precisa ${r.need}, tem ${r.have}</small></td>`; }).join('')}</tr>`).join('')}<tr class="cm-tt"><td>Total</td>${P.map(c => `<td class="${c.R.total && c.R.total.hire ? 'bad' : ''}"><b>+${c.R.total ? c.R.total.hire : 0}</b> <small>${c.ps.length} projetos</small></td>`).join('')}</tr></tbody></table></div>` : '';
+  $('#cmPrev').innerHTML = `<div class="cm-cards">${P.map(card).join('')}</div>` + hireT + (P.length > 1 ? `<div class="cm-d"><div><h4 class="bad">Principais diferenças</h4><ul>${(D.diff.length ? D.diff : ['Nada a destacar.']).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div><div><h4 class="good">O que é igual</h4><ul>${(D.same.length ? D.same : ['Nada a destacar.']).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div></div>` : '<p class="muted">Marque dois cenários ou mais para ver as diferenças.</p>');
   const n = P.length * 2 + (P.length > 1 ? 1 : 0); $('#cmOk').disabled = false; $('#cmOk').textContent = `Baixar PowerPoint (${n} ${n === 1 ? 'slide' : 'slides'})`;
 }
 function openCmp() {
@@ -5038,6 +5081,10 @@ async function selfTest() {
       state.projects = [...A, mkc('P1', 'B', '2027-01-04', '2027-05-28', 'Dev'), mkc('P9', 'B', '2027-02-01', '2027-03-31', 'Dev'), mkc('P8', 'B', '2027-02-01', '2027-03-31', 'Dev')];
       const D = cenDiff(['A', 'B'].map(n => cenPack(n, from)));
       ok(D.diff.some(t => /Só em A/.test(t) && /P2/.test(t)) && D.diff.some(t => /Só em B/.test(t)) && D.diff.some(t => /mud(ou|aram) de data/.test(t) && /P1/.test(t)) && D.same.some(t => /1 projeto aparece em todos/.test(t)), 'cenário: diferenças e igualdades');
+      state.projects.push(...A.map(p => ({ ...p, id: p.id + 'C', cen: 'C' })));
+      const D3 = cenDiff(['A', 'B', 'C'].map(n => cenPack(n, from)));
+      ok(D3.only[0].length === 0 && D3.only[1].join() === 'P9,P8' && D3.only[2].length === 0 && D3.common === 1 && D3.diff.some(t => /mais de um cenário, mas não em todos/.test(t)), 'cenário: com 3, "só em" é só daquele cenário');
+      state.projects = state.projects.filter(p => p.cen !== 'C');
       const z = await unzip(await buildPptx(state.projects, [pg => slCenVisao(cenPack('A', from), from, pg), pg => slCenRes(cenPack('A', from), pg), pg => slCenCmp(['A', 'B'].map(n => cenPack(n, from)), D, pg)]).arrayBuffer());
       ok(Object.keys(z).filter(k => /slides\/slide\d+\.xml$/.test(k)).length === 3, 'cenário: apresentação com 3 slides');
     } finally { state.projects = sv; } }
