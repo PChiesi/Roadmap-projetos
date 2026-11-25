@@ -110,12 +110,14 @@ button{cursor:pointer}
 .util{display:flex;gap:6px;align-items:center;flex:none;padding-top:6px}
 .util-g{display:inline-flex;gap:4px;padding-right:6px;margin-right:2px;border-right:1px solid var(--line)}
 /* barra de comandos: à esquerda o que muda a visualização, à direita o que age no projeto; a ação principal fica no fim */
-.cmdbar{position:relative;z-index:25;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.cmdbar{position:relative;z-index:25;display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .cb-g{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.cmdbar .btn{padding:0 11px;gap:7px}
-.cmdbar .seg button{padding:0 10px}
+.cmdbar .btn{padding:0 10px;gap:6px}
+.cmdbar .seg button{padding:0 9px}
+.cmdbar .cb-g{gap:5px}
 .cb-r{margin-left:auto}
 .cb-sep{width:1px;height:24px;background:var(--line);flex:none}
+.cb-sep:has(+ [hidden]){display:none}
 .btn svg{width:16px;height:16px;flex:none}
 .seg-ic button{display:inline-flex;align-items:center;gap:6px}
 .seg-ic svg{width:15px;height:15px}
@@ -232,6 +234,25 @@ button.lg:hover{color:var(--green-txt);border-color:var(--ink-3)}
 .hol-on .mk .mk-hn{display:block;top:8px;left:50%;z-index:3;transform:translateX(-50%) rotate(180deg);writing-mode:vertical-rl;font-size:11px;font-weight:700;letter-spacing:.01em;color:color-mix(in srgb,var(--amber) 35%,var(--ink));line-height:1;padding:6px 2px;border-radius:5px;background:color-mix(in srgb,var(--amber) 24%,var(--surface));box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .hol-on .mk-s.mk-fer{background:var(--amber)}
 .ls-tl .mk .mk-hn{display:none!important}
+.tl-nav{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-left:auto}
+.lz{display:inline-flex;gap:4px;align-items:center}
+.lz .btn{gap:6px}
+.lz .lz-b{width:36px;padding:0;justify-content:center}
+.lz .btn[aria-pressed=true]{background:var(--seg-on);border-color:var(--ink-3);box-shadow:inset 0 1px 2px rgba(11,42,60,.12)}
+.lz .btn:disabled{opacity:.4;cursor:default;transform:none}
+/* peças estreitas: só o nome (w1) ou só a cor (w0); o nome completo fica na dica */
+.ls-i.w1 .ls-b small{display:none}
+.ls-i.w1 .ls-b b{-webkit-line-clamp:1}
+.ls-i.w0 .ls-b{padding:0;min-height:30px}
+.ls-i.w0 .ls-b>b,.ls-i.w0 .ls-b>small{display:none}
+.ls.tight .ls-i{margin-left:-3px}
+.ls.tight .ls-i:first-child{margin-left:0}
+.ls.tight .ls-b{clip-path:polygon(0 0,calc(100% - 4px) 0,100% 50%,calc(100% - 4px) 100%,0 100%,4px 50%);padding-left:10px;padding-right:8px}
+.ls.tight .ls-i:first-child .ls-b{clip-path:polygon(0 0,calc(100% - 4px) 0,100% 50%,calc(100% - 4px) 100%,0 100%);padding-left:8px}
+.ls-i.ms-i.w0 .ls-b{clip-path:polygon(50% 10%,100% 50%,50% 90%,0 50%)!important;border-radius:0}
+.ls.tight .ls-p{gap:12px}.ls.tight .ls-ph{padding-top:8px}
+/* nível Projetos: uma barra mais alta por projeto */
+.ls.lv-proj .ls-b{min-height:40px}
 .ls-holl{font-size:12.5px;color:var(--ink-2);padding:8px 2px 0}
 .ls-holl b{color:color-mix(in srgb,var(--amber) 35%,var(--ink))}
 .k-crit-b[aria-pressed=true]{background:color-mix(in srgb,var(--title) 9%,var(--surface));border-color:color-mix(in srgb,var(--title) 45%,var(--line));color:var(--title);font-weight:600}
@@ -327,10 +348,14 @@ button.tn:hover{color:var(--green-txt)}
 .ls-yr,.ls-mo{display:flex;height:24px}
 .ls-yr span,.ls-mo span{flex:none;display:flex;align-items:center;padding:0 8px;font-size:12px;white-space:nowrap;overflow:hidden;border-left:1px solid var(--line-2)}
 .ls-yr span{font-weight:700;color:var(--ink);border-bottom:1px solid var(--line-2)}
+.ls-yr span{text-overflow:clip}
+.ls-yr span,.ls-mo span{box-sizing:border-box}
+.ls-ru.narrow span{padding:0 2px;justify-content:center}
 .ls-mo span{color:var(--ink-3)}
 .ls-mo span.now{color:var(--red-txt);font-weight:700}
 .ls-p{display:flex;flex-direction:column;gap:20px;position:relative}
-.ls-ph{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding-top:16px}
+.ls-ph{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding-top:16px;position:sticky;left:12px;width:max-content;max-width:calc(var(--gw,100vw) - 40px);z-index:3}
+.ls-ph b{background:color-mix(in srgb,var(--surface) 80%,transparent);border-radius:4px}
 .ls-ph b{font:700 14px var(--f-d);color:var(--ink)}
 .ls-ph span{font-size:12px;color:var(--ink-3)}
 .ls-none{font-size:13px;color:var(--ink-3);padding:6px 0}
@@ -831,10 +856,9 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
           <div class="menu-pop lp-pop left" id="lpPop"></div>
         </details>
         <span class="cb-sep" aria-hidden="true"></span>
-        <div class="seg" id="zoom" role="group" aria-label="Escala do cronograma">
-          <button data-z="week">Semana</button><button data-z="month">Mês</button><button data-z="quarter">Trimestre</button>
+        <div class="seg" id="lvl" role="group" aria-label="Nível de resumo da Linha única" hidden>
+          <button data-lv="task" title="Uma peça por tarefa, com nome e datas">Tarefas</button><button data-lv="group" title="Resumo: uma peça por grupo (fase), do começo ao fim das tarefas dele">Fases</button><button data-lv="proj" title="Mais resumido: uma barra por projeto, com o % concluído e o próximo marco">Projetos</button>
         </div>
-        <button class="btn" id="btnHoje" data-act="hoje" title="Rolar o cronograma até o dia de hoje"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><circle cx="12" cy="15.5" r="1.5" fill="currentColor"/></svg>Hoje</button>
       </div>
       <div class="cb-g cb-r">
         <details class="menu edit-only"><summary class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg>Projeto</summary>
@@ -877,6 +901,18 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       <select id="fSt" aria-label="Filtrar por status"></select>
       <button class="btn slim" id="fClear" data-act="fClear" hidden>Limpar filtros</button>
       <span class="f-info" id="fInfo" aria-live="polite"></span>
+      <div class="tl-nav">
+        <div class="seg" id="zoom" role="group" aria-label="Escala do cronograma">
+          <button data-z="week">Semana</button><button data-z="month">Mês</button><button data-z="quarter">Trimestre</button>
+        </div>
+        <button class="btn slim" id="btnHoje" data-act="hoje" title="Rolar o cronograma até o dia de hoje"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><circle cx="12" cy="15.5" r="1.5" fill="currentColor"/></svg>Hoje</button>
+      <div class="lz" id="lz" role="group" aria-label="Zoom da Linha única" hidden>
+        <button class="btn slim lz-b" id="lzOut" aria-label="Diminuir o zoom" title="Diminuir o zoom (Ctrl + rodinha do mouse)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M8 11h6"/></svg></button>
+        <button class="btn slim" id="lzFit" aria-pressed="false" title="Encaixa o período inteiro de todos os projetos na largura da tela"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V5h4M20 9V5h-4M4 15v4h4M20 15v4h-4"/></svg>Tudo na tela</button>
+        <button class="btn slim" id="lzAuto" aria-pressed="false" title="Largura que mostra o nome e as datas de cada peça (pode rolar para o lado)">Legível</button>
+        <button class="btn slim lz-b" id="lzIn" aria-label="Aumentar o zoom" title="Aumentar o zoom (Ctrl + rodinha do mouse)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M8 11h6M11 8v6"/></svg></button>
+      </div>
+      </div>
       <span class="sel-info" id="selInfo" hidden aria-live="polite"><b></b><button class="btn slim" data-act="selClear">Limpar seleção</button></span>
     </div>
     <div class="gantt" id="gantt"></div>
@@ -933,7 +969,8 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ol>Para trocar de projeto, clique nele na lista <b>Projetos</b>. O nome e a área do projeto podem ser editados clicando no título.</div></details>
       <details><summary>Onde fica cada coisa</summary><div><ul>
         <li><b>Barra lateral, de cima para baixo:</b> criar (<b>Novo projeto</b> e <b>Planejar D−</b>); <b>Todos os projetos</b>, com os painéis que juntam tudo (Visão geral, Vários na Linha única, Carga da equipe e Datas da empresa); a lista dos seus <b>Projetos</b>; os <b>Modelos de projeto</b>; e, no fim, <b>Equipe</b> e <b>Arquivos</b> (backup e planilha modelo).</li>
-        <li><b>Barra do cronograma, à esquerda, o que muda o que você vê:</b> Detalhada ou Linha única, <b>Vários projetos</b> (escolha outros projetos para ver juntos; ao marcar um, a tela passa para a Linha única), a escala Semana, Mês ou Trimestre e <b>Hoje</b>.</li>
+        <li><b>Barra do cronograma, à esquerda, o que muda o que você vê:</b> Detalhada ou Linha única, <b>Vários projetos</b> (escolha outros projetos para ver juntos; ao marcar um, a tela passa para a Linha única) e, na Linha única, o resumo por <b>Tarefas</b>, <b>Fases</b> ou <b>Projetos</b>.</li>
+        <li><b>Logo acima do cronograma, à direita, o que navega na linha do tempo:</b> na Detalhada, a escala Semana, Mês ou Trimestre e <b>Hoje</b>; na Linha única, o zoom (<b>−</b>, <b>Tudo na tela</b>, <b>Legível</b>, <b>+</b>).</li>
         <li><b>Barra do cronograma, à direita, o que mexe no projeto:</b> o menu <b>Projeto</b> (grupos e cores, critério das cores, linha de base, replanejar D−, salvar como modelo, duplicar e excluir), o menu <b>Exportar</b>, <b>Inserir em lote</b> e, por último, a ação principal, <b>Nova tarefa</b>.</li>
         <li><b>No canto do título:</b> desfazer e refazer, tema claro ou escuro e este Manual.</li>
         <li>No celular, a barra lateral fica recolhida: toque em <b>Menu</b> no topo para abrir.</li>
@@ -1043,7 +1080,9 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ul></div></details>
       <details><summary>Ler o cronograma</summary><div><ul>
         <li><b>Detalhada</b> mostra uma linha por tarefa, com grupos e dependências. <b>Linha única</b> põe todas as tarefas numa faixa só, encostadas e em ordem de início, cada uma com a cor do grupo, o nome e as datas. O selo vermelho marca o que está acontecendo hoje. A faixa é contínua, sem espaços entre as tarefas; o comprimento de cada bloco dá a ideia da duração. No topo fica uma régua de meses e anos, igual para todos os projetos: cada projeto ocupa as colunas dos meses em que tem tarefa (basta um dia no mês) e o mês atual fica destacado, então dá para ver em que meses os projetos se cruzam. No botão <b>Vários projetos</b> (ou em <b>Vários na Linha única</b>, na barra lateral) você escolhe outros projetos para ver juntos, um abaixo do outro; o HTML para envio leva todos os que estiverem na tela.</li>
-        <li><b>Semana, Mês e Trimestre</b> mudam o zoom da linha do tempo. <b>Hoje</b> rola o cronograma até o dia atual.</li>
+        <li><b>Semana, Mês e Trimestre</b> mudam o zoom da linha do tempo na visão Detalhada. <b>Hoje</b> rola o cronograma até o dia atual.</li>
+        <li>Na <b>Linha única</b>, o resumo escolhe o nível de detalhe: <b>Tarefas</b> (uma peça por tarefa), <b>Fases</b> (uma peça por grupo, do começo ao fim das tarefas dele) e <b>Projetos</b> (uma barra por projeto, com o % concluído e o próximo marco). É o jeito mais rápido de comparar projetos com datas muito diferentes.</li>
+        <li>O zoom da Linha única fica acima do cronograma: <b>Tudo na tela</b> encaixa o período de todos os projetos na largura da tela, <b>−</b> e <b>+</b> afastam e aproximam (também com <b>Ctrl + rodinha do mouse</b>), e <b>Legível</b> volta à largura que mostra o nome e as datas de cada peça. Com zoom afastado, as peças estreitas mostram só a cor: passe o mouse para ver o nome e as datas.</li>
         <li>O próximo marco pisca de leve, e as tarefas em andamento têm um brilho passando na barra.</li>
         <li>A linha vermelha é o dia de hoje. Tarefas vencidas e não concluídas ficam marcadas como <b>Atrasada</b>; as marcadas como em risco aparecem tracejadas.</li>
         <li>O resumo no topo mostra o andamento geral, o período, atrasos, riscos e os próximos marcos.</li>
@@ -1750,6 +1789,7 @@ function renderTop() {
   document.querySelectorAll('#zoom button').forEach(b => b.setAttribute('aria-pressed', b.dataset.z === state.zoom));
   document.querySelectorAll('#view button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === state.view));
   $('#zoom').hidden = $('#btnHoje').hidden = state.view === 'line';
+  $('#lvl').hidden = $('#lz').hidden = state.view !== 'line';
   // o seletor de vários projetos fica sempre à vista (com 2 projetos ou mais); escolher um leva para a Linha única
   const lm = $('#lpMenu'); lm.hidden = state.projects.length < 2;
   if (!lm.hidden) {
@@ -1988,24 +2028,56 @@ function inkOn(hex) {
 }
 const lineDates = (s, e, ms) => ms ? fmtLong(s) : new Date(s * DAY).getUTCFullYear() === new Date(e * DAY).getUTCFullYear() ? `${fmtCurto(s)} a ${fmtCurto(e)}` : `${fmtLong(s)} a ${fmtLong(e)}`;
 
+// Zoom da Linha única: 'auto' = legível (o mês cresce até caber o texto); 'fit' = o período todo na largura da tela;
+// número = pixels por mês. Nível: 'task' (uma peça por tarefa), 'group' (uma por grupo/fase), 'proj' (uma barra por projeto)
+const LZ = [12, 20, 32, 48, 72, 104, 150, 220, 320, 460];
+const lzOk = z => z === 'auto' || z === 'fit' || (typeof z === 'number' && z >= LZ[0] && z <= LZ[LZ.length - 1]);
+let lineCW = 0; // largura do mês na última pintura (para o + e o − partirem do que está na tela)
+// peças de um projeto no nível escolhido: { id, name, s, e, ms, c, st, risk, prog, open }
+function lineItems(p, lvl) {
+  const ts = p.tasks.filter(fltOk), dd = t => d2n(t.end) - d2n(t.start) + 1;
+  const agg = (list, extra) => {
+    const s = Math.min(...list.map(t => d2n(t.start))), e = Math.max(...list.map(t => d2n(t.end))), w = t => t.milestone ? 1 : Math.max(1, dd(t));
+    const prog = Math.round(list.reduce((a, t) => a + (t.milestone ? (t.progress >= 100 ? 100 : 0) : t.progress) * w(t), 0) / list.reduce((a, t) => a + w(t), 0));
+    const sts = list.map(status), st = sts.includes('late') ? 'late' : sts.every(x => x === 'done') ? 'done' : '';
+    return { s, e, ms: list.every(t => t.milestone) && s === e, st, risk: list.some(t => t.risk && status(t) !== 'done'), prog, ...extra };
+  };
+  if (!ts.length) return [];
+  if (lvl === 'proj') {
+    const it = agg(ts, { id: 'p-' + p.id, name: '', c: (p.groups[0] || {}).color || PAL[1] });
+    const nx = ts.filter(t => t.milestone && t.progress < 100).sort((x, y) => x.start < y.start ? -1 : 1)[0];
+    it.name = nx ? `Próximo marco: ${nx.name}` : `${ts.length} ${ts.length === 1 ? 'tarefa' : 'tarefas'}`; it.ms = false;
+    it.tip = `${p.name}: ${lineDates(it.s, it.e)} · ${it.prog}%` + (nx ? ` · próximo marco ${nx.name} em ${fmtBR(d2n(nx.start))}` : '');
+    return [it];
+  }
+  if (lvl === 'group') return p.groups.map(g => { const l = ts.filter(t => t.groupId === g.id); return l.length ? agg(l, { id: 'g-' + g.id, name: g.name, c: g.color, n: l.length }) : null; })
+    .filter(Boolean).sort((x, y) => x.s - y.s || x.e - y.e).map(it => ({ ...it, tip: `${it.name}: ${it.ms ? fmtLong(it.s) : lineDates(it.s, it.e)} · ${it.n} ${it.n === 1 ? 'tarefa' : 'tarefas'} · ${it.prog}%` }));
+  const gOf = t => p.groups.find(g => g.id === t.groupId) || p.groups[0];
+  return ts.slice().sort((x, y) => x.start < y.start ? -1 : x.start > y.start ? 1 : x.end < y.end ? -1 : 1)
+    .map(t => ({ id: t.id, name: t.name, s: d2n(t.start), e: d2n(t.end), ms: t.milestone, c: gOf(t).color, st: status(t), risk: t.risk, prog: t.progress, open: true }));
+}
 function renderLine({ fx, fo }) {
-  const MINW = 92, MSW = 104, OV = 8, days = t => d2n(t.end) - d2n(t.start) + 1;
+  const Z = lzOk(state.lineZoom) ? state.lineZoom : 'auto', lvl = ['task', 'group', 'proj'].includes(state.lineLvl) ? state.lineLvl : 'task';
   const full = ($('#gantt').clientWidth || 1000) - 50;
   // Régua por mês: colunas iguais e cada projeto ocupa os meses inteiros em que tem tarefa (1 dia no mês já conta)
-  const ps = lineProjects(), vis = p => p.tasks.filter(fltOk);
-  const spans = ps.map(p => { const ts = vis(p); return ts.length ? [mOfN(Math.min(...ts.map(t => d2n(t.start)))), mOfN(Math.max(...ts.map(t => d2n(t.end))))] : null; });
+  const ps = lineProjects(), IT = ps.map(p => lineItems(p, lvl));
+  const spans = IT.map(l => l.length ? [mOfN(Math.min(...l.map(t => t.s))), mOfN(Math.max(...l.map(t => t.e)))] : null);
   const sp = spans.filter(Boolean), m0 = sp.length ? Math.min(...sp.map(x => x[0])) : 0, M = sp.length ? Math.max(...sp.map(x => x[1])) - m0 + 1 : 0;
-  // a coluna cresce até caber o texto mínimo das tarefas do projeto mais apertado; se passar da tela, rola para o lado
-  const need = (p, x) => { const ts = vis(p); return (ts.reduce((a, t) => a + (t.milestone ? MSW : MINW), 0) - OV * (ts.length - 1)) / (x[1] - x[0] + 1); };
-  const CW = M ? Math.max(64, Math.floor(full / M), ...ps.map((p, i) => spans[i] ? Math.ceil(need(p, spans[i])) : 0)) : 0;
+  // no automático a coluna cresce até caber o texto mínimo das peças do projeto mais apertado (pode rolar para o lado);
+  // com zoom escolhido a largura do mês é fixa e as peças encolhem: as estreitas mostram só a cor (o nome fica na dica)
+  const A = Z === 'auto', MINW = A ? (lvl === 'proj' ? 140 : 92) : 6, MSW = A ? 104 : 0;
+  const need = (l, x) => (l.reduce((a, t) => a + (t.ms ? 104 : MINW), 0) - 8 * (l.length - 1)) / (x[1] - x[0] + 1);
+  const CW = !M ? 0 : A ? Math.max(64, Math.floor(full / M), ...IT.map((l, i) => spans[i] ? Math.ceil(need(l, spans[i])) : 0)) : Z === 'fit' ? Math.max(6, Math.floor(full / M)) : Z;
+  lineCW = CW;
+  const OV = CW < 48 && !A ? 3 : 8, days = t => t.e - t.s + 1;
   const strip = (p, pi) => {
-    const gOf = t => p.groups.find(g => g.id === t.groupId) || p.groups[0];
-    const ts = p.tasks.filter(fltOk).slice().sort((x, y) => x.start < y.start ? -1 : x.start > y.start ? 1 : x.end < y.end ? -1 : 1);
-    // larguras: a faixa é repartida pelos dias de cada tarefa; quem ficaria estreita demais para o texto sobe até o mínimo
+    const ts = IT[pi];
+    // larguras: a faixa é repartida pelos dias de cada peça; quem ficaria estreita demais sobe até o mínimo
     // e o resto é repartido de novo entre as demais. Se nem assim couber, a faixa rola para o lado.
     const x = spans[pi], span = x ? (x[1] - x[0] + 1) * CW : full;
+    const msW = t => t.ms ? (MSW || Math.min(104, Math.max(16, Math.round(span / Math.max(1, ts.length) / 2)))) : 0;
     const avail = span + OV * Math.max(0, ts.length - 1);
-    const wid = {}; let rest = ts.filter(t => !t.milestone), room = avail - ts.filter(t => t.milestone).length * MSW;
+    const wid = {}; let rest = ts.filter(t => !t.ms), room = avail - ts.reduce((a, t) => a + msW(t), 0);
     for (let k = 0; k < 50 && rest.length; k++) {
       const kd = room / rest.reduce((a, t) => a + days(t), 0), small = rest.filter(t => days(t) * kd < MINW);
       if (!small.length) { rest.forEach(t => { wid[t.id] = Math.floor(days(t) * kd); }); break; }
@@ -2013,16 +2085,19 @@ function renderLine({ fx, fo }) {
       if (room <= 0) { rest.forEach(t => { wid[t.id] = MINW; }); break; }
     }
     const segs = ts.map((t, n) => {
-      const s = d2n(t.start), e = d2n(t.end), st = status(t), c = gOf(t).color, now = s <= todayN && todayN <= e;
-      const tag = st === 'late' ? 'Atrasada' : t.risk && st !== 'done' ? 'Em risco' : st === 'done' ? 'Concluída' : t.milestone ? '' : t.progress ? t.progress + '%' : '';
-      return `<div class="ls-i${now ? ' now' : ''}${t.milestone ? ' ms-i' : ''}" style="flex:0 0 ${t.milestone ? MSW : wid[t.id] || MINW}px;--c:${c};--tx:${inkOn(c)};--i:${n}">${now ? '<span class="ls-hoje">hoje</span>' : ''}`
-        + `<div class="ls-b st-${st}${t.risk ? ' risk' : ''}${t.milestone ? ' ms-b' : ''}" ${RO ? '' : `data-open="${t.id}" data-pj="${p.id}" role="button" tabindex="0"`} data-tt="${t.id}">`
-        + `<b>${esc(t.name)}</b><small>${lineDates(s, e, t.milestone)}${tag ? ` <em>${tag}</em>` : ''}</small>`
-        + (t.milestone ? '' : `<i style="width:${t.progress}%"></i>`) + `</div></div>`;
+      const w = t.ms ? msW(t) : wid[t.id] || MINW, now = t.s <= todayN && todayN <= t.e;
+      const tag = t.st === 'late' ? 'Atrasada' : t.risk && t.st !== 'done' ? 'Em risco' : t.st === 'done' ? 'Concluída' : t.ms ? '' : t.prog ? t.prog + '%' : '';
+      // texto conforme o espaço: sem texto, só o nome, ou nome e datas
+      const fit = w < 40 ? ' w0' : w < 86 ? ' w1' : '';
+      const tip = t.tip || `${t.name}: ${lineDates(t.s, t.e, t.ms)}${tag ? ' · ' + tag : ''}`;
+      return `<div class="ls-i${now ? ' now' : ''}${t.ms ? ' ms-i' : ''}${fit}" style="flex:0 0 ${w}px;--c:${t.c};--tx:${inkOn(t.c)};--i:${n}">${now && w >= 40 ? '<span class="ls-hoje">hoje</span>' : ''}`
+        + `<div class="ls-b st-${t.st}${t.risk ? ' risk' : ''}${t.ms ? ' ms-b' : ''}" ${t.open && !RO ? `data-open="${t.id}" data-pj="${p.id}" role="button" tabindex="0" data-tt="${t.id}"` : t.open ? `data-tt="${t.id}"` : `title="${esc(tip)}"`}${fit && t.open ? ` aria-label="${esc(tip)}"` : ''}>`
+        + `<b>${esc(t.name)}</b><small>${lineDates(t.s, t.e, t.ms)}${tag ? ` <em>${tag}</em>` : ''}</small>`
+        + (t.ms ? '' : `<i style="width:${t.prog}%"></i>`) + `</div></div>`;
     }).join('');
-    const all = p.tasks.length, sh = ts.length;
+    const all = p.tasks.length, sh = p.tasks.filter(fltOk).length;
     const per = all ? `${fmtLong(Math.min(...p.tasks.map(t => d2n(t.start))))} a ${fmtLong(Math.max(...p.tasks.map(t => d2n(t.end))))}` : 'sem tarefas';
-    const pct = all ? Math.round(p.tasks.reduce((a, t) => a + (t.milestone ? (t.progress >= 100 ? 100 : 0) : t.progress) * Math.max(1, t.milestone ? 1 : days(t)), 0) / p.tasks.reduce((a, t) => a + Math.max(1, t.milestone ? 1 : days(t)), 0)) : 0;
+    const pct = all ? Math.round(p.tasks.reduce((a, t) => a + (t.milestone ? (t.progress >= 100 ? 100 : 0) : t.progress) * Math.max(1, t.milestone ? 1 : d2n(t.end) - d2n(t.start) + 1), 0) / p.tasks.reduce((a, t) => a + Math.max(1, t.milestone ? 1 : d2n(t.end) - d2n(t.start) + 1), 0)) : 0;
     const empty = !all ? `<div class="ls-none">${RO ? 'Nada planejado ainda.' : 'Projeto sem tarefas. Use Nova tarefa para começar.'}</div>`
       : !sh ? '<div class="ls-none">Nenhuma tarefa com esse filtro.</div>' : '';
     return `<section class="ls-p"><header class="ls-ph"><b>${esc(p.name)}</b><span>${per}${all ? ` · ${fo ? sh + ' de ' : ''}${all} ${all === 1 ? 'tarefa' : 'tarefas'} · ${pct}%` : ''}</span></header>`
@@ -2032,8 +2107,8 @@ function renderLine({ fx, fo }) {
   let yr = '', mo = '', nowCol = '';
   for (let k = 0; k < M; k++) {
     const m = m0 + k, y = Math.floor(m / 12);
-    mo += `<span style="width:${CW}px"${m === mOfN(todayN) ? ' class="now"' : ''}>${MES[m % 12]}</span>`;
-    if (k === 0 || m % 12 === 0) yr += `<span style="width:${Math.min(12 - m % 12, M - k) * CW}px">${y}</span>`;
+    mo += `<span style="width:${CW}px"${m === mOfN(todayN) ? ' class="now"' : ''} title="${MES[m % 12]} ${y}">${CW >= 30 ? MES[m % 12] : CW >= 14 ? MES[m % 12][0].toUpperCase() : ''}</span>`;
+    if (k === 0 || m % 12 === 0) { const w = Math.min(12 - m % 12, M - k) * CW; yr += `<span style="width:${w}px" title="${y}">${w >= 48 ? y : w >= 28 ? "'" + String(y).slice(2) : ''}</span>`; }
   }
   const kn = mOfN(todayN) - m0;
   if (M && kn >= 0 && kn < M) nowCol = `<i class="ls-now" style="left:${kn * CW}px;width:${CW}px"></i>`;
@@ -2042,11 +2117,28 @@ function renderLine({ fx, fo }) {
   if (M) nowCol += marksIn(la, lb).map(k => { const l = lsX(Math.max(k.s, la)); return `<i class="mk mk-${k.kind}" style="left:${l}px;width:${Math.max(2, lsX(Math.min(k.e, lb) + 1) - l)}px" title="${esc(mkTip(k))}">${k.kind === 'eq' ? `<span>${esc(k.name)}</span>` : `<span class="mk-hn">${esc(k.name)}</span>`}</i>`; }).join('');
   const hl = state.hlHol && M ? marksIn(la, lb).filter(k => k.kind === 'fer') : [];
   const holl = hl.length ? `<div class="ls-holl"><b>Feriados no período:</b> ${hl.map(k => `${esc(k.name)} (${k.s === k.e ? fmtBR(k.s).slice(0, 5) : `${fmtBR(k.s).slice(0, 5)} e ${fmtBR(k.e).slice(0, 5)}`})`).join(', ')}</div>` : '';
-  const ruler = M ? `<div class="ls-ru"><div class="ls-yr">${yr}</div><div class="ls-mo">${mo}</div></div>` : '';
-  $('#gantt').innerHTML = `<div class="ls${ps.length > 1 ? ' multi' : ''}${fx === 'load' || fx === 'zoom' ? ' anim' : ''}${state.hlHol ? ' hol-on' : ''}"><div class="ls-tl" style="--cw:${CW}px;width:${M * CW || full}px">${nowCol}${ruler}${holl}${ps.map(strip).join('')}</div></div>`;
-  $('#gantt').scrollLeft = 0;
+  const ruler = M ? `<div class="ls-ru${CW < 40 ? ' narrow' : ''}"><div class="ls-yr">${yr}</div><div class="ls-mo">${mo}</div></div>` : '';
+  $('#gantt').innerHTML = `<div class="ls${ps.length > 1 ? ' multi' : ''}${fx === 'load' || fx === 'zoom' ? ' anim' : ''}${state.hlHol ? ' hol-on' : ''}${OV === 3 ? ' tight' : ''} lv-${lvl}"><div class="ls-tl" style="--cw:${CW}px;--gw:${full + 50}px;width:${M * CW || full}px">${nowCol}${ruler}${holl}${ps.map(strip).join('')}</div></div>`;
+  if (fx !== 'lz') $('#gantt').scrollLeft = 0;
   hlId = null;
+  renderLz();
 }
+// estado dos botões de zoom e de resumo da Linha única
+function renderLz() {
+  const Z = lzOk(state.lineZoom) ? state.lineZoom : 'auto', lvl = ['task', 'group', 'proj'].includes(state.lineLvl) ? state.lineLvl : 'task';
+  document.querySelectorAll('#lvl button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lv === lvl));
+  $('#lzOut').disabled = lineCW <= LZ[0]; $('#lzIn').disabled = lineCW >= LZ[LZ.length - 1];
+  $('#lzFit').setAttribute('aria-pressed', Z === 'fit');
+  $('#lzAuto').setAttribute('aria-pressed', Z === 'auto');
+}
+// muda o zoom mantendo no centro o que estava no centro da tela
+function setLz(z) {
+  const g = $('#gantt'), r = g.scrollWidth > g.clientWidth ? (g.scrollLeft + g.clientWidth / 2) / g.scrollWidth : 0;
+  state.lineZoom = z; if (!RO) persist();
+  renderGantt('lz');
+  if (r) g.scrollLeft = r * g.scrollWidth - g.clientWidth / 2;
+}
+const lzStep = d => { const cw = lineCW || LZ[4]; return d > 0 ? LZ.find(v => v > cw * 1.05) ?? LZ[LZ.length - 1] : [...LZ].reverse().find(v => v < cw / 1.05) ?? LZ[0]; };
 
 function markSel() { document.querySelectorAll('.g-row.t').forEach(r => r.classList.toggle('sel', r.dataset.row === openId)); }
 
@@ -2927,6 +3019,21 @@ $('#view').addEventListener('click', e => {
   const b = e.target.closest('[data-v]'); if (!b || b.dataset.v === state.view) return;
   state.view = b.dataset.v; persist(); renderTop(); renderGantt('zoom');
 });
+$('#lvl').addEventListener('click', e => {
+  const b = e.target.closest('[data-lv]'); if (!b || b.dataset.lv === state.lineLvl) return;
+  state.lineLvl = b.dataset.lv; if (!RO) persist(); renderGantt('zoom');
+});
+$('#lzOut').addEventListener('click', () => setLz(lzStep(-1)));
+$('#lzIn').addEventListener('click', () => setLz(lzStep(1)));
+$('#lzFit').addEventListener('click', () => setLz('fit'));
+$('#lzAuto').addEventListener('click', () => setLz('auto'));
+// Ctrl + rodinha (ou pinça no touchpad) aproxima e afasta a Linha única
+let lzT = 0;
+$('#gantt').addEventListener('wheel', e => {
+  if (state.view !== 'line' || !(e.ctrlKey || e.metaKey)) return;
+  e.preventDefault(); const now = Date.now(); if (now - lzT < 120) return; lzT = now;
+  setLz(lzStep(e.deltaY < 0 ? 1 : -1));
+}, { passive: false });
 $('#zoom').addEventListener('click', e => {
   const b = e.target.closest('[data-z]'); if (!b || b.dataset.z === state.zoom) return;
   state.zoom = b.dataset.z; save(); renderTop(); renderGantt('zoom');
@@ -2957,7 +3064,7 @@ $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
 // Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
 // A cada versão nova, troque a data e a lista abaixo.
-const NOVIDADES = { versao: '2026-11-26', secoes: ['Planejar D− (de trás para frente)'] };
+const NOVIDADES = { versao: '2026-11-27', secoes: ['Ler o cronograma', 'Onde fica cada coisa'] };
 {
   const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
   sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
