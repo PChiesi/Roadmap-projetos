@@ -585,6 +585,33 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 @media (max-width:860px){.rp-row{grid-template-columns:1fr;gap:10px}.rp-head{display:none}.rp-p>[data-l]::before{content:attr(data-l);font-size:10.5px;font-weight:700;color:var(--ink-2);text-transform:uppercase;letter-spacing:.04em}#dlgRep .dlg-foot{flex-wrap:wrap}#dlgRep .dlg-foot .btn{flex:1 1 auto}}
 @media print{body.rep-print .app,body.rep-print dialog,body.rep-print .toast{display:none!important}body.rep-print #repPrint{display:block}html:has(body.rep-print),body.rep-print{background:#fff!important;min-height:0!important}body.rep-print .rp{border:0}.rp-row{break-inside:avoid}.rp-row{grid-template-columns:1.25fr 1fr 1.1fr 1.1fr 1.5fr!important}.rp-head{display:grid!important}}
 #dlgAbas{width:min(620px,calc(100vw - 32px))}
+#dlgDmImp{width:min(980px,calc(100vw - 32px))}
+.dm-bar-l{display:flex;gap:8px;flex-wrap:wrap}
+.di-ex{overflow:auto;border:1px dashed var(--line);border-radius:10px;padding:6px 8px;background:color-mix(in srgb,var(--title) 4%,var(--surface))}
+.di-ex table{border-collapse:collapse;font-size:12.5px;white-space:nowrap}
+.di-ex th,.di-ex td{padding:3px 10px;border-right:1px solid var(--line);text-align:left;color:var(--ink-2)}
+.di-ex th{color:var(--ink);font-weight:600}
+.di-ex th:first-child,.di-ex td:first-child{color:var(--ink);font-weight:600}
+.di-ex th:last-child,.di-ex td:last-child{border-right:0;color:var(--title)}
+.di-src{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+.di-aba{min-width:200px}
+.di-aba select{height:36px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--surface);font-size:14px;color:var(--ink);width:100%}
+#diTxt{width:100%;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface);font:13px/1.45 ui-monospace,Menlo,Consolas,monospace;color:var(--ink);resize:vertical}
+#diTxt:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18)}
+.di-prev:empty{display:none}
+.di-head{font-size:13.5px;color:var(--ink-2);margin:0 0 8px}
+.di-head b{color:var(--ink)}
+.di-wrap{max-height:38vh;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.di-t{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.di-t th{position:sticky;top:0;background:var(--surface);text-align:left;font-size:12px;font-weight:600;color:var(--ink-2);padding:7px 10px;border-bottom:1px solid var(--line)}
+.di-t td{padding:6px 10px;border-bottom:1px solid var(--line-2);white-space:nowrap}
+.di-t td:first-child{white-space:normal;font-weight:600;color:var(--ink)}
+.di-st{display:inline-block;padding:1px 8px;border-radius:99px;font-size:11.5px;font-weight:700}
+.di-st.new{background:color-mix(in srgb,var(--green) 14%,var(--surface));color:var(--green)}
+.di-st.upd{background:color-mix(in srgb,var(--title) 12%,var(--surface));color:var(--title)}
+.di-st.late{background:color-mix(in srgb,var(--amber) 20%,var(--surface));color:var(--ink)}
+.di-st.err{background:color-mix(in srgb,var(--red) 12%,var(--surface));color:var(--red-txt)}
+.di-t tr.err td{color:var(--ink-3)}
 .ab-list{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow:auto}
 .ab-i{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
 .ab-i label{display:flex;align-items:center;gap:9px;font-size:13.5px;min-width:0;cursor:pointer}
@@ -961,6 +988,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Na barra lateral, clique em <b>Planejar D−</b> (logo abaixo de Novo projeto).</li>
         <li>Informe o nome do projeto, o <b>nome do marco</b> (por exemplo, "Início do desenvolvimento (TI)" ou "Go-live") e a <b>data do marco</b>.</li>
         <li>A tabela já vem com as atividades de Produto: Discovery, Escrita da especificação, Validação com negócio, Refinamento com TI + Negócio, Ajustes do refinamento e Validação final com TI. Digite os <b>dias úteis</b> de cada uma; Enter pula para a próxima.</li>
+        <li>Para criar vários projetos de uma vez, clique em <b>Importar vários projetos</b>, dentro do Planejar D−. A planilha tem uma linha por projeto: a <b>primeira coluna</b> é o nome do projeto, as <b>colunas do meio</b> são as atividades (com os dias úteis de cada uma) e a <b>última coluna</b> é a data do marco. Os nomes das atividades e do marco ficam na linha de títulos. Escolha o arquivo (.xlsx ou .csv) ou cole as células copiadas do Excel: a tabela mostra quando cada projeto começa e o que fica de fora antes de criar. Importar de novo a mesma planilha replaneja os projetos com o mesmo nome e mantém o % concluído.</li>
         <li>Para reaproveitar uma lista, monte a tabela e clique em <b>Salvar como modelo</b>: ficam guardados as atividades, os dias úteis, os responsáveis e o nome do marco. Depois é só escolher o modelo em <b>Modelo de atividades</b>.</li>
         <li>Para mudar o que abre sempre, escolha o modelo e clique em <b>Usar como padrão</b>. Para voltar à lista original, escolha <b>Lista do programa (Produto)</b> e clique em Usar como padrão. <b>Excluir modelo</b> tira da lista sem mexer nos projetos já criados.</li>
         <li>As datas aparecem ao lado enquanto você digita, e o resumo diz quando o trabalho precisa começar. Em vermelho: não cabe, porque precisaria ter começado antes de hoje.</li>
@@ -1123,6 +1151,18 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
   </form>
 </dialog>
 
+<dialog id="dlgDmImp" aria-labelledby="diT">
+  <form method="dialog" class="dlg-in" id="fDmImp">
+    <div class="dm-head"><span class="dm-ic" aria-hidden="true">D−</span><div><h2 id="diT">Importar vários projetos no D−</h2><p class="muted">Uma linha por projeto. A <b>primeira coluna</b> é o nome do projeto, as <b>colunas do meio</b> são as atividades com os dias úteis de cada uma, e a <b>última coluna</b> é a data do marco. Os nomes das atividades e do marco vêm da linha de títulos. Célula vazia ou 0: a atividade fica de fora daquele projeto.</p></div></div>
+    <div class="di-ex" aria-hidden="true"><table><tr><th>Projeto</th><th>Discovery</th><th>Especificação</th><th>Refinamento com TI</th><th>Início do desenvolvimento</th></tr><tr><td>Patrimonial</td><td>5</td><td>8</td><td>5</td><td>01/03/2027</td></tr><tr><td>RD e Rural</td><td>11</td><td>17</td><td>8</td><td>15/03/2027</td></tr></table></div>
+    <div class="di-src"><button class="btn" type="button" id="btnDiFile">Escolher planilha (.xlsx ou .csv)</button><input type="file" id="diFile" accept=".xlsx,.csv,.txt" hidden><label class="fld di-aba" id="diAbaL" hidden>Aba<select id="diAba"></select></label><button class="btn" type="button" id="btnDiModelo">Baixar modelo (.csv)</button></div>
+    <label class="fld">Ou cole aqui as células copiadas do Excel, com a linha de títulos<textarea id="diTxt" rows="4" spellcheck="false" placeholder="Projeto&#9;Discovery&#9;Especificação&#9;…&#9;Início do desenvolvimento"></textarea></label>
+    <div id="diPrev" class="di-prev" aria-live="polite"></div>
+    <label class="chk" id="diUpdL" hidden><input type="checkbox" id="diUpd" checked> Replanejar os projetos D− que já existem com o mesmo nome (mantém o % concluído e as observações)</label>
+    <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok" id="diOk" disabled>Criar projetos</button></div>
+  </form>
+</dialog>
+
 <dialog id="dlgAbas" aria-labelledby="abT">
   <form method="dialog" class="dlg-in">
     <h2 id="abT">Importar vários projetos</h2>
@@ -1159,7 +1199,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
     <p class="dm-warn" id="dmWarn" hidden></p>
     <div class="dm-wrap"><table class="dm"><thead><tr><th class="dm-n">#</th><th>Atividade</th><th class="dm-dh">Dias úteis</th><th class="dm-oh">Responsável</th><th class="dm-th">Datas calculadas</th><th><span class="vh">Ações</span></th></tr></thead><tbody id="dmBody"></tbody>
       <tfoot><tr class="dm-ms"><td class="dm-n"><i></i></td><td colspan="3"><b id="dmMsN"></b></td><td id="dmMsD" colspan="2"></td></tr></tfoot></table></div>
-    <div class="dm-bar"><button class="btn" type="button" id="btnDmAdd">Adicionar atividade</button><div class="dm-sum" id="dmSum" aria-live="polite"></div></div>
+    <div class="dm-bar"><div class="dm-bar-l"><button class="btn" type="button" id="btnDmAdd">Adicionar atividade</button><button class="btn" type="button" id="btnDmImp" title="Uma linha por projeto: nome, dias úteis de cada atividade e a data do marco">Importar vários projetos</button></div><div class="dm-sum" id="dmSum" aria-live="polite"></div></div>
     <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok" id="dmOk">Criar cronograma</button></div>
   </form>
 </dialog>
@@ -1477,6 +1517,53 @@ function applyDPlan(p, anchor, rows, msName) {
   const ids = new Set(p.tasks.map(t => t.id)); p.tasks.forEach(t => { t.deps = t.deps.filter(d => ids.has(d)); });
   p.dplan = { anchor: n2d(anchor), msName: ms.name, rows: saved, ms: ms.id, gp: gP.id, gt: gT.id };
   return p;
+}
+// Importação D− em lote: 1ª coluna = projeto, colunas do meio = atividades (dias úteis), última = data do marco.
+// Os nomes das atividades e do marco vêm do cabeçalho (a primeira linha com 3 ou mais células preenchidas).
+const dmCell = v => v == null ? '' : typeof v === 'string' ? v.trim() : v;
+// "10***" ou "5 dias" contam como 10 e 5; vazio é 0 (a atividade fica de fora desse projeto)
+const dmDays = v => { if (typeof v === 'number') return Math.max(0, Math.min(365, Math.round(v))); const m = String(v ?? '').trim().match(/^\d+([.,]\d+)?/); return m ? Math.max(0, Math.min(365, Math.round(+m[0].replace(',', '.')))) : 0; };
+function dmDate(v, base1904 = 0) {
+  if (typeof v === 'number') return v > 20000 && v < 80000 ? Math.floor(v) - 25569 + base1904 : NaN;
+  const t = String(v ?? '').trim().split(/[ T]/)[0], d = ltDate(t);
+  if (d) return d2n(d);
+  const n = /^\d{5}(\.\d+)?$/.test(t) ? +t : NaN; return n > 20000 && n < 80000 ? Math.floor(n) - 25569 + base1904 : NaN;
+}
+function dmParseGrid(rows, base1904 = 0) {
+  rows = rows.map(r => Array.from(r || [], dmCell));
+  const hi = rows.findIndex(r => r.filter(v => v !== '').length >= 3);
+  if (hi < 0) throw Error('não achei o cabeçalho: a primeira linha precisa ter Projeto, as atividades e o marco');
+  const H = rows[hi], cols = H.map((v, i) => v !== '' ? i : -1).filter(i => i >= 0);
+  const c0 = cols[0], cm = cols[cols.length - 1], acts = cols.slice(1, -1).map(i => ({ i, name: String(H[i]) }));
+  const msName = String(H[cm]);
+  const items = [], seen = new Set();
+  rows.slice(hi + 1).forEach((r, k) => {
+    const name = String(r[c0] ?? '').trim(); if (!name) return;
+    const it = { line: hi + k + 2, name: name.slice(0, 120), anchor: dmDate(r[cm], base1904), days: acts.map(a => dmDays(r[a.i])) };
+    if (seen.has(norm(name))) it.err = 'nome repetido na planilha';
+    else if (isNaN(it.anchor)) it.err = r[cm] === '' || r[cm] == null ? 'sem data do marco' : `data do marco inválida (${String(r[cm]).slice(0, 20)})`;
+    else if (!it.days.some(Boolean)) it.err = 'nenhuma atividade com dias úteis';
+    seen.add(norm(name)); items.push(it);
+  });
+  return { msName, acts: acts.map(a => a.name), items };
+}
+// texto colado do Excel (tabulação) ou .csv (; ou ,)
+function dmParseText(txt) {
+  const lines = String(txt).replace(/^\uFEFF/, '').split(/\r?\n/).filter(l => l.trim());
+  const sep = lines.some(l => l.includes('\t')) ? '\t' : lines.some(l => l.includes(';')) ? ';' : ',';
+  return dmParseGrid(lines.map(l => l.split(sep).map(c => c.trim().replace(/^"(.*)"$/, '$1'))));
+}
+// cria ou replaneja (mesmo nome de um projeto D− que já existe) cada linha válida
+function dmImportApply(parsed, update) {
+  const made = [], upd = [];
+  for (const it of parsed.items) {
+    if (it.err) continue;
+    const old = update ? state.projects.find(p => p.dplan && norm(p.name) === norm(it.name)) : null;
+    const rows = parsed.acts.map((name, i) => ({ name, days: it.days[i], owner: '', tid: old ? (old.dplan.rows.find(r => norm(r.name) === norm(name)) || {}).tid || '' : '' }));
+    if (old) { rows.forEach(r => { const o = old.dplan.rows.find(x => x.tid === r.tid); if (o) r.owner = o.owner || ''; }); applyDPlan(old, it.anchor, rows, parsed.msName); upd.push(old); }
+    else { const p = { id: uid(), name: it.name, area: `Planejado em D− a partir do marco ${parsed.msName}`, groups: [], tasks: [] }; applyDPlan(p, it.anchor, rows, parsed.msName); state.projects.push(normP(p)); made.push(state.projects[state.projects.length - 1]); }
+  }
+  return { made, upd };
 }
 // Datas da empresa (congelamento, fechamento...): valem para todos os projetos e vão para o arquivo da equipe
 function normMark(m) {
@@ -2515,6 +2602,28 @@ async function xlsxSheets(buf) {
   if (!z['xl/workbook.xml']) throw Error('planilha incompleta (xl/workbook.xml)');
   return [...new DOMParser().parseFromString(new TextDecoder().decode(z['xl/workbook.xml']), 'application/xml').getElementsByTagName('sheet')].map(s => s.getAttribute('name'));
 }
+// Lê uma aba como grade de células (texto, número ou booleano). pick escolhe a aba pela lista de abas; sem ele, a primeira
+async function xlsxGrid(buf, pick) {
+  const z = await unzip(buf), dec = new TextDecoder();
+  const X = f => { if (!z[f]) throw Error('planilha incompleta (' + f + ')'); return new DOMParser().parseFromString(dec.decode(z[f]), 'application/xml'); };
+  const tags = (d, n) => [...d.getElementsByTagName(n)];
+  const ss = z['xl/sharedStrings.xml'] ? tags(X('xl/sharedStrings.xml'), 'si').map(si => tags(si, 't').map(t => t.textContent).join('')) : [];
+  const wbx = X('xl/workbook.xml'), sheets = tags(wbx, 'sheet');
+  const base1904 = /^(1|true)$/.test(tags(wbx, 'workbookPr')[0]?.getAttribute('date1904') || '') ? 1462 : 0;
+  const sh = pick ? pick(sheets.map(x => x.getAttribute('name'))) : 0, el = sheets[sh];
+  if (!el) throw Error('nenhuma aba encontrada');
+  const rel = tags(X('xl/_rels/workbook.xml.rels'), 'Relationship').find(r => r.getAttribute('Id') === el.getAttribute('r:id'));
+  const tg = rel.getAttribute('Target'), path = tg.startsWith('/') ? tg.slice(1) : 'xl/' + tg.replace(/^\.\//, '');
+  const rows = tags(X(path), 'row').map(r => {
+    const out = [];
+    tags(r, 'c').forEach(c => {
+      const ref = c.getAttribute('r'), t = c.getAttribute('t'), v = c.getElementsByTagName('v')[0]?.textContent;
+      out[ref ? colIdx(ref) : out.length] = t === 's' ? ss[+v] : t === 'inlineStr' ? tags(c, 't').map(x => x.textContent).join('') : t === 'str' || t === 'e' ? (v ?? '') : t === 'b' ? v === '1' : v == null ? '' : +v;
+    });
+    return out;
+  });
+  return { rows, base1904, sheet: el.getAttribute('name'), sheets: sheets.map(x => x.getAttribute('name')) };
+}
 // sheetName escolhe a aba; sem ele, usa "Tarefas" ou a primeira
 async function parseXlsx(buf, name, sheetName) {
   const z = await unzip(buf), dec = new TextDecoder();
@@ -2848,7 +2957,7 @@ $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
 // Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
 // A cada versão nova, troque a data e a lista abaixo.
-const NOVIDADES = { versao: '2026-11-25', secoes: ['Onde fica cada coisa', 'Ler o cronograma', 'Planejar D− (de trás para frente)'] };
+const NOVIDADES = { versao: '2026-11-26', secoes: ['Planejar D− (de trás para frente)'] };
 {
   const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
   sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
@@ -2983,6 +3092,71 @@ $('#btnDmDel').addEventListener('click', async () => {
   if (!await ask({ title: 'Excluir modelo?', text: `O modelo "${m.name}" sai da lista. Os projetos já criados com ele não mudam.`, ok: 'Excluir', danger: true })) return;
   DMS.models = DMS.models.filter(x => x !== m); if (DMS.def === m.id) DMS.def = '';
   dmSave(); dmModList(''); toast(`Modelo "${m.name}" excluído.`);
+});
+/* importar vários projetos no D− */
+let DI = null; // { parsed } da última leitura válida
+const DI_BUF = { buf: null, sheets: [] };
+function diShow(parsed, err) {
+  DI = parsed && !err ? parsed : null;
+  const box = $('#diPrev'), ok = $('#diOk');
+  if (err) { box.innerHTML = `<p class="dm-sum bad">Não consegui ler: ${esc(err)}.</p>`; ok.disabled = true; $('#diUpdL').hidden = true; return; }
+  if (!parsed) { box.innerHTML = ''; ok.disabled = true; $('#diUpdL').hidden = true; return; }
+  const upd = $('#diUpd').checked, ex = new Set(state.projects.filter(p => p.dplan).map(p => norm(p.name)));
+  let nNew = 0, nUpd = 0, nLate = 0;
+  const body = parsed.items.map(it => {
+    if (it.err) return `<tr class="err"><td>${esc(it.name)}</td><td>—</td><td>—</td><td>—</td><td><span class="di-st err">Fica de fora: ${esc(it.err)}</span> <small>linha ${it.line}</small></td></tr>`;
+    const sp = dminus(it.anchor, it.days), first = sp.find(Boolean), tot = it.days.reduce((a, b) => a + b, 0), isUpd = upd && ex.has(norm(it.name)), late = first.s < todayN;
+    isUpd ? nUpd++ : nNew++; if (late) nLate++;
+    return `<tr><td>${esc(it.name)}</td><td>${DSEM[dow(it.anchor)]} ${fmtBR(it.anchor)}</td><td>${DSEM[dow(first.s)]} ${fmtBR(first.s)}</td><td>${tot}</td><td><span class="di-st ${isUpd ? 'upd' : 'new'}">${isUpd ? 'Replaneja o existente' : 'Novo'}</span>${late ? ' <span class="di-st late">Não cabe: começaria antes de hoje</span>' : ''}</td></tr>`;
+  }).join('');
+  const bad = parsed.items.filter(it => it.err).length;
+  box.innerHTML = `<p class="di-head">Marco: <b>${esc(parsed.msName)}</b> · ${parsed.acts.length} ${parsed.acts.length === 1 ? 'atividade' : 'atividades'}: ${parsed.acts.map(a => `<b>${esc(a)}</b>`).join(', ')}</p>`
+    + (parsed.items.length ? `<div class="di-wrap"><table class="di-t"><thead><tr><th>Projeto</th><th>Data do marco</th><th>Começa em</th><th>Dias úteis</th><th>Situação</th></tr></thead><tbody>${body}</tbody></table></div>` : '<p class="dm-sum bad">Nenhum projeto abaixo da linha de títulos.</p>')
+    + (nLate ? `<p class="dm-sum bad">${nLate} ${nLate === 1 ? 'projeto não cabe' : 'projetos não cabem'} no prazo: ${nLate === 1 ? 'será criado' : 'serão criados'} assim mesmo, começando antes de hoje.</p>` : '')
+    + (bad ? `<p class="dm-sum">${bad} ${bad === 1 ? 'linha fica' : 'linhas ficam'} de fora (veja o motivo na tabela).</p>` : '');
+  $('#diUpdL').hidden = !parsed.items.some(it => !it.err && ex.has(norm(it.name)));
+  const n = nNew + nUpd; ok.disabled = !n || !parsed.acts.length;
+  ok.textContent = !n ? 'Criar projetos' : nUpd && !nNew ? `Replanejar ${nUpd}` : nUpd ? `Criar ${nNew} e replanejar ${nUpd}` : nNew === 1 ? 'Criar 1 projeto' : `Criar ${nNew} projetos`;
+}
+const diText = () => { const t = $('#diTxt').value; if (!t.trim()) return diShow(null); try { diShow(dmParseText(t)); } catch (e) { diShow(null, e.message); } };
+async function diSheet() {
+  try { const g = await xlsxGrid(DI_BUF.buf, () => +$('#diAba').value); diShow(dmParseGrid(g.rows, g.base1904)); } catch (e) { diShow(null, e.message); }
+}
+function openDmImp() {
+  $('#diTxt').value = ''; $('#diFile').value = ''; $('#diAbaL').hidden = true; DI_BUF.buf = null; diShow(null);
+  const d = $('#dlgDmImp'); d.returnValue = ''; d.showModal(); $('#btnDiFile').focus();
+}
+$('#btnDmImp').addEventListener('click', () => { $('#dlgDm').close(); openDmImp(); });
+$('#btnDiFile').addEventListener('click', () => $('#diFile').click());
+$('#diFile').addEventListener('change', async e => {
+  const f = e.target.files[0]; if (!f) return; $('#diTxt').value = '';
+  try {
+    if (/\.xlsx$/i.test(f.name)) {
+      DI_BUF.buf = await f.arrayBuffer(); const names = (await xlsxGrid(DI_BUF.buf)).sheets;
+      // abre na aba "Upload" ou "D−" se houver; senão na primeira
+      const pref = names.findIndex(n => /^(upload|d ?[-−]|importar)/i.test(norm(n)));
+      $('#diAba').innerHTML = names.map((n, i) => `<option value="${i}">${esc(n)}</option>`).join(''); $('#diAba').value = String(Math.max(0, pref));
+      $('#diAbaL').hidden = names.length < 2; await diSheet();
+    } else { $('#diAbaL').hidden = true; DI_BUF.buf = null; $('#diTxt').value = await f.text(); diText(); }
+  } catch (err) { diShow(null, err.message); }
+});
+$('#diAba').addEventListener('change', diSheet);
+$('#diTxt').addEventListener('input', () => { $('#diAbaL').hidden = true; DI_BUF.buf = null; diText(); });
+$('#diUpd').addEventListener('change', () => { if (DI) diShow(DI); });
+$('#btnDiModelo').addEventListener('click', () => {
+  const acts = dmModel(DMS.def).rows.map(r => r.name), n = acts.length;
+  const lines = [['Projeto', ...acts, 'Início do desenvolvimento (TI)'], ['Projeto A', ...Array(n).fill(5), '01/03/2027'], ['Projeto B', ...Array(n).fill(3), '15/03/2027']];
+  download(new Blob(['\uFEFF' + lines.map(l => l.join(';')).join('\r\n')], { type: 'text/csv' }), 'modelo-d-menos-varios-projetos.csv');
+});
+$('#dlgDmImp').addEventListener('close', () => {
+  if ($('#dlgDmImp').returnValue !== 'ok' || !DI) return;
+  const { made, upd } = dmImportApply(DI, $('#diUpd').checked);
+  const all = made.concat(upd); if (!all.length) return;
+  state.currentId = all[0].id;
+  // mostra os importados juntos na Linha única
+  state.lineSel = all.slice(1).map(p => p.id); if (all.length > 1) state.view = 'line';
+  save(); closeDrawer(); render('load');
+  toast([made.length ? `${made.length} ${made.length === 1 ? 'projeto criado' : 'projetos criados'}` : '', upd.length ? `${upd.length} ${upd.length === 1 ? 'replanejado' : 'replanejados'}` : ''].filter(Boolean).join(' e ') + ` a partir do marco "${DI.msName}".`);
 });
 $('#btnDmAdd').addEventListener('click', () => { if ($('#dmBody').children.length >= 30) return toast('Até 30 atividades por planejamento.'); $('#dmBody').insertAdjacentHTML('beforeend', dmRow({ name: '', days: '', owner: '' })); dmCalc(); $('#dmBody tr:last-child .dm-a').focus(); });
 // Enter desce para os dias da próxima atividade (como no Excel); não fecha a janela
@@ -3741,6 +3915,11 @@ async function selfTest() {
     const mm = normDmModel({ id: '<x>', name: ' Meu ', msName: 'Go-live', rows: [{ name: 'A', days: '3.7', owner: 'Ana' }, { name: '', days: 0 }, { name: 'B', days: 999 }] });
     ok(mm.id === 'x' && mm.name === 'Meu' && mm.rows.length === 2 && mm.rows[0].days === 3 && mm.rows[1].days === 365 && normDmModel({ rows: [] }) === null && normDmModel(null) === null, 'D−: modelo validado');
     const st = normDmStore({ models: [mm, mm, { rows: 'x' }], def: 'x' });
+    const gi = dmParseGrid([['', 'Teses'], ['Projeto', 'Discovery', 'Espec', 'Refino', 'Início TI'], ['A', 5, '10***', '', 46447], ['B', 2, 3, 0, '05/03/2027'], ['', 1], ['C', 1, 1, 1, 'x'], ['A', 1, 1, 1, 46447], ['D', 0, '', 0, 46447]]);
+    ok(gi.msName === 'Início TI' && gi.acts.join() === 'Discovery,Espec,Refino' && gi.items.length === 5 && gi.items[0].days.join() === '5,10,0' && gi.items[0].anchor === 46447 - 25569 && gi.items[1].anchor === d2n('2027-03-05'), 'D−: importar várias linhas');
+    ok(/inválida/.test(gi.items[2].err) && /repetido/.test(gi.items[3].err) && /nenhuma/.test(gi.items[4].err) && !gi.items[0].err && !gi.items[1].err, 'D−: importar aponta o que fica de fora');
+    const gt = dmParseText('Projeto\tA1\tA2\tGo-live\r\nX\t2\t3\t01/06/2027\r\n');
+    ok(gt.items.length === 1 && gt.items[0].days.join() === '2,3' && gt.msName === 'Go-live' && dmParseText('Projeto;A;Marco\nY;4;2027-06-01').items[0].anchor === d2n('2027-06-01'), 'D−: importar texto colado e csv');
     ok(st.models.length === 1 && st.def === 'x' && normDmStore({ models: [mm], def: 'nao' }).def === '' && normDmStore(null).models.length === 0, 'D−: padrão só aponta para modelo existente'); }
   { // reparos da revisão
     let e1 = ''; try { teamParse('  ', true); } catch (e) { e1 = e.message; }
