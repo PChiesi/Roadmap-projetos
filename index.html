@@ -1031,7 +1031,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       <details open><summary>Criar um projeto</summary><div><ol>
         <li>Clique em <b>Novo projeto</b> na barra lateral.</li>
         <li>Dê um nome, escolha um modelo (ou comece em branco) e a data de início.</li>
-        <li>Para começar direto de um modelo, clique no nome dele em <b>Modelos</b>.</li>
+        <li>Para começar direto de um modelo, clique no nome dele em <b>Modelos de projeto</b>, na barra lateral.</li>
       </ol>Para trocar de projeto, clique nele na lista <b>Projetos</b>. O nome e a área do projeto podem ser editados clicando no título.</div></details>
       <details><summary>Onde fica cada coisa</summary><div><ul>
         <li><b>Barra lateral, de cima para baixo:</b> criar (<b>Novo projeto</b> e <b>Planejar D−</b>); <b>Todos os projetos</b>, com os painéis que juntam tudo (Visão geral, Vários na Linha única, Carga da equipe e Datas da empresa); a lista dos seus <b>Projetos</b>; os <b>Modelos de projeto</b>; e, no fim, <b>Equipe</b> e <b>Arquivos</b> (backup e planilha modelo).</li>
@@ -1043,7 +1043,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>No celular, a barra lateral fica recolhida: toque em <b>Menu</b> no topo para abrir.</li>
       </ul></div></details>
       <details><summary>Adicionar e editar tarefas</summary><div><ul>
-        <li><b>Nova tarefa</b> no topo cria uma tarefa no primeiro grupo. O <b>+</b> ao lado de um grupo cria nele.</li>
+        <li><b>Nova tarefa</b>, no fim da barra do cronograma, cria uma tarefa no primeiro grupo. O <b>+</b> ao lado de um grupo cria nele.</li>
         <li>Clique no nome ou na barra da tarefa para abrir os detalhes: nome, grupo, responsáveis, datas, % concluído, marco, em risco, checklist e dependências.</li>
         <li>Para ter mais de um responsável, clique em <b>+ Adicionar pessoa</b>: cada nome fica numa linha do painel. No cronograma eles aparecem juntos, separados por barra (Ana / Bruno), e a carga da equipe e o filtro contam cada pessoa.</li>
         <li>O <b>Checklist</b> guarda até 15 itens do que precisa ser feito dentro da atividade. Escreva o item e aperte Enter; marque a caixa quando estiver feito. Ele só aparece aqui no painel.</li>
@@ -1051,8 +1051,8 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Use <b>Observações</b> para registrar o motivo de um atraso, uma decisão pendente ou o próximo passo. O texto aparece ao passar o mouse na barra e vai para a planilha.</li>
       </ul></div></details>
       <details><summary>Desfazer e refazer</summary><div><ul>
-        <li>As setas no topo desfazem e refazem a última mudança. Pelo teclado: <b>Ctrl+Z</b> e <b>Ctrl+Y</b>.</li>
-        <li>Vale para tudo: datas, nomes, ordem, tarefas e projetos excluídos.</li>
+        <li>As setas no canto do título desfazem e refazem a última mudança. Pelo teclado: <b>Ctrl+Z</b> e <b>Ctrl+Y</b>.</li>
+        <li>Vale para tudo: datas, nomes, ordem, tarefas e projetos excluídos (inclusive vários de uma vez) e projetos importados.</li>
         <li>O histórico é desta sessão. Ao fechar o app, ou quando chegam mudanças de um colega no arquivo da equipe, ele recomeça.</li>
       </ul></div></details>
       <details><summary>Mudar a ordem de tarefas e grupos</summary><div><ul>
@@ -1092,12 +1092,17 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Na barra lateral, clique em <b>Planejar D−</b> (logo abaixo de Novo projeto).</li>
         <li>Informe o nome do projeto, o <b>nome do marco</b> (por exemplo, "Início do desenvolvimento (TI)" ou "Go-live") e a <b>data do marco</b>.</li>
         <li>A tabela já vem com as atividades de Produto: Discovery, Escrita da especificação, Validação com negócio, Refinamento com TI + Negócio, Ajustes do refinamento e Validação final com TI. Digite os <b>dias úteis</b> de cada uma; Enter pula para a próxima.</li>
-        <li>Para criar vários projetos de uma vez, clique em <b>Importar vários projetos</b>, dentro do Planejar D−. A planilha tem uma linha por projeto: a <b>primeira coluna</b> é o nome do projeto, as <b>colunas do meio</b> são as atividades (com os dias úteis de cada uma) e a <b>última coluna</b> é a data do marco. Os nomes das atividades e do marco ficam na linha de títulos. Escolha o arquivo (.xlsx ou .csv) ou cole as células copiadas do Excel: a tabela mostra quando cada projeto começa e o que fica de fora antes de criar. Importar de novo a mesma planilha replaneja os projetos com o mesmo nome e mantém o % concluído.</li>
-        <li>Para reaproveitar uma lista, monte a tabela e clique em <b>Salvar como modelo</b>: ficam guardados as atividades, os dias úteis, os responsáveis e o nome do marco. Depois é só escolher o modelo em <b>Modelo de atividades</b>.</li>
-        <li>Para mudar o que abre sempre, escolha o modelo e clique em <b>Usar como padrão</b>. Para voltar à lista original, escolha <b>Lista do programa (Produto)</b> e clique em Usar como padrão. <b>Excluir modelo</b> tira da lista sem mexer nos projetos já criados.</li>
         <li>As datas aparecem ao lado enquanto você digita, e o resumo diz quando o trabalho precisa começar. Em vermelho: não cabe, porque precisaria ter começado antes de hoje.</li>
         <li>Clique em <b>Criar cronograma</b>: o projeto nasce com as atividades em sequência (cada uma depende da anterior) e o marco no fim, com o nome que você deu.</li>
-      </ol>Os modelos ficam salvos no seu navegador e vão junto no <b>Salvar backup</b>. A conta usa só dias úteis: não conta sábado, domingo nem feriado nacional (o Carnaval entra como feriado). Se a data do marco cair num dia sem trabalho, o marco fica nela e a última atividade termina no dia útil anterior. Dá para renomear, mudar a ordem (setas), tirar ou acrescentar atividades; linha com 0 dias fica de fora. Se o marco mudar de data (ou de nome), use <b>Projeto › Replanejar D−</b>: as tarefas se reorganizam para trás e mantêm o % concluído e as observações.</div></details>
+</ol>A conta usa só dias úteis: não conta sábado, domingo nem feriado nacional (o Carnaval entra como feriado). Se a data do marco cair num dia sem trabalho, o marco fica nela e a última atividade termina no dia útil anterior. Dá para renomear, mudar a ordem (setas), tirar ou acrescentar atividades; linha com 0 dias fica de fora. Se o marco mudar de data (ou de nome), use <b>Projeto › Replanejar D−</b>: as tarefas se reorganizam para trás e mantêm o % concluído e as observações.<p><b>Modelos de atividades</b></p><ul>
+        <li>Para reaproveitar uma lista, monte a tabela e clique em <b>Salvar como modelo</b>: ficam guardados as atividades, os dias úteis, os responsáveis e o nome do marco. Depois é só escolher o modelo em <b>Modelo de atividades</b>.</li>
+        <li>Para mudar o que abre sempre, escolha o modelo e clique em <b>Usar como padrão</b>. Para voltar à lista original, escolha <b>Lista do programa (Produto)</b> e clique em Usar como padrão. <b>Excluir modelo</b> tira da lista sem mexer nos projetos já criados.</li>
+        <li>Os modelos ficam salvos no seu navegador e vão junto no <b>Salvar backup</b>.</li>
+        <li>No <b>Replanejar D−</b> não dá para trocar de modelo (isso apagaria as tarefas do projeto), só salvar a tabela atual como modelo.</li>
+      </ul><p><b>Vários projetos de uma vez</b></p><ul>
+        <li>Para criar vários projetos de uma vez, clique em <b>Importar vários projetos</b>, dentro do Planejar D−. A planilha tem uma linha por projeto: a <b>primeira coluna</b> é o nome do projeto, as <b>colunas do meio</b> são as atividades (com os dias úteis de cada uma) e a <b>última coluna</b> é a data do marco. Os nomes das atividades e do marco ficam na linha de títulos. Escolha o arquivo (.xlsx ou .csv) ou cole as células copiadas do Excel: a tabela mostra quando cada projeto começa e o que fica de fora antes de criar. Valores como "10***" contam como 10; célula vazia ou 0 tira a atividade daquele projeto; linha sem data do marco fica de fora, com o motivo na prévia. <b>Baixar modelo (.csv)</b> traz uma planilha pronta com as atividades do seu modelo padrão. Importar de novo a mesma planilha replaneja os projetos com o mesmo nome e mantém o % concluído.</li>
+        <li>Os projetos importados abrem juntos na Linha única.</li>
+      </ul></div></details>
       <details><summary>Recursos e conflitos</summary><div><ul>
         <li>Na barra lateral, em <b>Todos os projetos</b>, clique em <b>Recursos e conflitos</b>. Cada atividade aberta conta como 1 pessoa ocupada enquanto dura.</li>
         <li>Escolha como agrupar: <b>Por atividade</b> junta as atividades de mesmo nome de todos os projetos (por exemplo, todas as "Especificação" do D−), <b>Por grupo</b>, <b>Por responsável</b> ou <b>Tudo junto</b>.</li>
@@ -1106,10 +1111,11 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Clique numa semana para ver as atividades dela. <b>Baixar Excel</b> gera a planilha com a necessidade por semana e a lista de conflitos. As pessoas informadas ficam salvas neste navegador.</li>
       </ul></div></details>
       <details><summary>Carga da equipe</summary><div><ul>
-        <li>Na barra lateral, <b>Carga da equipe</b> mostra uma linha por pessoa e uma coluna por semana, somando as tarefas abertas de <b>todos</b> os projetos.</li>
+        <li>Na barra lateral, em <b>Todos os projetos</b>, <b>Carga da equipe</b> mostra uma linha por pessoa e uma coluna por semana, somando as tarefas abertas de <b>todos</b> os projetos.</li>
         <li>O número é quantas tarefas a pessoa tem naquela semana. Amarelo: duas ao mesmo tempo. Vermelho: três ou mais. A coluna da semana atual fica marcada.</li>
         <li>Clique numa semana para ver quais tarefas e de quais projetos. Tarefa atrasada continua contando até ser concluída; marcos e tarefas em 100% não contam.</li>
         <li>O nome do responsável é comparado sem diferenciar maiúsculas, acentos e espaços: "Ana Ribeiro" e "ana ribeiro" contam como a mesma pessoa.</li>
+              <li>A Carga da equipe olha <b>pessoa por pessoa</b> e precisa de responsável nas tarefas. Para saber quantas pessoas vão faltar por atividade (por exemplo, em projetos do D− sem responsável), use <b>Recursos e conflitos</b>.</li>
       </ul></div></details>
       <details><summary>Caminho crítico</summary><div><ul>
         <li>É a sequência de tarefas que define a data final: se uma delas atrasar, o projeto inteiro atrasa. O programa calcula sozinho a partir das dependências (<b>Depende de</b>).</li>
@@ -1118,7 +1124,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>No PowerPoint, o cronograma de cada projeto mostra o mesmo contorno.</li>
       </ul></div></details>
       <details><summary>Datas da empresa e feriados</summary><div><ul>
-        <li>Na barra lateral, <b>Datas da empresa</b> guarda datas que valem para todos os projetos, como congelamento de produção ou fechamento do mês: nome, início e fim.</li>
+        <li>Na barra lateral, em <b>Todos os projetos</b>, <b>Datas da empresa</b> guarda datas que valem para todos os projetos, como congelamento de produção ou fechamento do mês: nome, início e fim.</li>
         <li>Elas aparecem como faixas azuis em todos os cronogramas, na Linha única, na Visão geral e no PowerPoint. Passe o mouse na marca da régua para ver o nome e as datas.</li>
         <li>Os feriados nacionais (incluindo Carnaval, Sexta-feira Santa e Corpus Christi) são calculados sozinhos e aparecem como faixas listradas. Dá para desligar em <b>Mostrar feriados nacionais</b>.</li>
         <li>O botão <b>Feriados</b> na legenda, ao lado de Caminho crítico, destaca os feriados no cronograma em amarelo e escreve o nome de cada um na faixa. Clique de novo para voltar ao normal; a escolha fica salva.</li>
@@ -1172,16 +1178,19 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Clique em <b>Baixar planilha modelo</b> na barra lateral.</li>
         <li>Preencha uma linha por tarefa: Grupo, Tarefa, Responsável, Início e Fim. As datas podem ser no formato 31/12/2026. Para mais de um responsável, separe os nomes com ; ou / (Ana / Bruno).</li>
         <li>Salve e use <b>Abrir backup ou planilha</b>. A planilha vira um projeto novo.</li>
-      </ol>O que ficar vazio é preenchido por padrão: sem grupo vai para "Geral", sem fim termina no mesmo dia. Colunas extras (Dias, % concluído, Marco, Depende de, Cor do grupo, Observações, Início e Fim planejados) são aceitas; a aba <b>Como preencher</b> da planilha modelo explica cada uma.</div></details>
+      </ol>O que ficar vazio é preenchido por padrão: sem grupo vai para "Geral", sem fim termina no mesmo dia. Colunas extras (Dias, % concluído, Marco, Depende de, Cor do grupo, Observações, Início e Fim planejados) são aceitas; a aba <b>Como preencher</b> da planilha modelo explica cada uma. Para criar vários projetos do D− de uma planilha com uma linha por projeto, use <b>Planejar D− › Importar vários projetos</b>.</div></details>
       <details><summary>Modelos</summary><div><ul>
         <li><b>Projeto › Salvar como modelo</b> guarda grupos, tarefas, durações e dependências do projeto atual.</li>
-        <li>O modelo aparece em <b>Modelos</b>. Ao usar, as datas se ajustam à nova data de início.</li>
+        <li>O modelo aparece em <b>Modelos de projeto</b>, na barra lateral. Ao usar, as datas se ajustam à nova data de início.</li>
         <li>O <b>×</b> ao lado de um modelo salvo exclui o modelo. Projetos já criados com ele não mudam.</li>
+              <li>Estes modelos guardam um projeto inteiro. Os <b>modelos de atividades do Planejar D−</b> são outra coisa: ficam dentro do Planejar D− (veja a seção dele).</li>
       </ul></div></details>
       <details><summary>Exportar e enviar</summary><div><ul>
         <li><b>Planilha Excel</b>: aba Tarefas com todos os dados, incluindo observações e datas planejadas, e aba Gantt pintada por semana.</li>
         <li><b>HTML para envio</b>: um arquivo só de leitura para a diretoria. Abre com dois cliques, sem instalar nada.</li>
-        <li><b>Imprimir ou salvar PDF</b>: sai em A4 deitado, sempre no tema claro.</li>
+        <li><b>Imprimir ou salvar PDF</b>: sai em A4 deitado, sempre no tema claro. O Relatório executivo e a Visão geral têm o próprio botão de imprimir, que sai só com eles.</li>
+              <li>Na <b>Linha única</b> com vários projetos, o HTML para envio leva todos os que estiverem na tela.</li>
+        <li>Também exportam para Excel: a <b>Visão geral</b> (tabela dos projetos e linha do tempo por mês, além de Imprimir ou salvar PDF) e <b>Recursos e conflitos</b> (necessidade de pessoas por semana e onde vão faltar).</li>
       </ul></div></details>
       <details><summary>Trabalhar em equipe (SharePoint)</summary><div><ol>
         <li>Na biblioteca do SharePoint da área, clique em <b>Sincronizar</b>. A pasta aparece no Explorador de Arquivos, dentro do OneDrive da empresa.</li>
@@ -1211,8 +1220,9 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Tudo fica salvo neste navegador, neste computador. Nada é enviado para a internet, a não ser que você entre na nuvem na versão online.</li>
         <li>Limpar os dados do navegador apaga os projetos. Use <b>Salvar backup (.json)</b> com frequência.</li>
         <li>Para restaurar ou levar para outro computador, use <b>Abrir backup ou planilha</b> e escolha o .json.</li>
+              <li>O backup leva também os modelos de atividades do Planejar D−. As pessoas informadas em Recursos e conflitos, o zoom e o nível de resumo da Linha única são preferências deste navegador e não vão no backup.</li>
       </ul></div></details>
-      <details><summary>Tema claro e escuro</summary><div>O botão de lua ou sol no topo alterna o tema. A escolha fica salva.</div></details>
+      <details><summary>Tema claro e escuro</summary><div>O botão de lua ou sol, no canto do título, alterna o tema. A escolha fica salva.</div></details>
     </div>
     <div class="dlg-foot"><button class="btn primary" value="ok">Entendi</button></div>
   </form>
@@ -3166,7 +3176,7 @@ $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
 // Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
 // A cada versão nova, troque a data e a lista abaixo.
-const NOVIDADES = { versao: '2026-11-28', secoes: ['Recursos e conflitos', 'Visão geral dos projetos', 'Onde fica cada coisa'] };
+const NOVIDADES = { versao: '2026-11-25', secoes: ['Onde fica cada coisa', 'Planejar D− (de trás para frente)', 'Recursos e conflitos', 'Visão geral dos projetos', 'Ler o cronograma'] };
 {
   const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
   sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
