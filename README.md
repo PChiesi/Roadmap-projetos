@@ -9,7 +9,7 @@ Ferramenta para montar cronogramas e roadmaps de projetos no navegador. É um ú
 ## O que dá para fazer
 
 - A visão Detalhada é um Gantt com uma linha por tarefa: grupos coloridos, dependências, marcos, % concluído e zoom por semana, mês ou trimestre. Arraste uma barra para mudar as datas.
-- A Linha única resume o projeto numa faixa de tarefas em sequência, com nome e datas. Com vários projetos, eles ficam um embaixo do outro sobre a mesma régua de meses, e dá para ver em que meses se cruzam.
+- A Linha única resume o projeto numa faixa de tarefas em sequência, com nome e datas. Com vários projetos (botão **Vários projetos** na barra do cronograma, ou **Vários na Linha única** na barra lateral), eles ficam um embaixo do outro sobre a mesma régua de meses, e dá para ver em que meses se cruzam.
 - A Visão geral põe todos os projetos numa linha do tempo e mostra se cada um está no prazo, em atenção, atrasado ou concluído.
 - Planejar D− monta o cronograma de trás para frente a partir de um marco: você dá um nome ao marco (por exemplo, o início do desenvolvimento da TI), informa a data dele e quantos dias úteis cada atividade leva, e o programa encaixa tudo antes dessa data, sem fins de semana e feriados. Se o marco mudar de data, é só replanejar. Dá para salvar a lista de atividades (com dias úteis, responsáveis e nome do marco) como modelo e escolher qual modelo abre por padrão.
 - Inserir em lote abre uma tabela com Seção, Atividade, Responsável, Início, Fim e Marco. Você digita ou cola do Excel, cria seções novas ali mesmo, e o programa preenche o que ficar vazio.
@@ -26,6 +26,7 @@ Ferramenta para montar cronogramas e roadmaps de projetos no navegador. É um ú
 - No modo equipe, várias pessoas editam o mesmo roadmap por um arquivo .json numa pasta do SharePoint ou OneDrive sincronizada.
 - Cada tarefa aceita mais de um responsável (aparecem juntos na mesma linha, como "Ana / Bruno") e tem um checklist de até 15 itens no painel lateral, para marcar o que já foi feito.
 - O botão **Editar grupos**, no começo da linha de grupos, abre a tela para renomear, mudar a cor, criar ou excluir grupos.
+- Os menus seguem uma ordem fixa: na barra lateral, criar, painéis de todos os projetos, lista de projetos, modelos, equipe e arquivos; na barra do cronograma, à esquerda o que muda a visualização e à direita o que mexe no projeto, com **Nova tarefa** no fim. No celular, a barra lateral abre pelo botão **Menu**.
 - Também tem busca e filtros, desfazer e refazer (Ctrl+Z / Ctrl+Y), modelos de projeto, tema claro e escuro e um Manual dentro do programa.
 
 ![Linha única com a régua de meses](docs/captura-linha-unica.png)

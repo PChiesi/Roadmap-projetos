@@ -26,7 +26,8 @@ button{cursor:pointer}
 --sel:#1D1F1E;--seg:#18181C;--seg-on:#2B2B31;--title:#F4F4F5;--green-txt:#86C94A;--todo:#3A3A40;--arrow:#55565D;--arrow-hl:#D4D4D8;--band:rgba(255,255,255,.025);--wk:rgba(255,255,255,.02);--tip:#26262B;--lift:28%;--glass:rgba(24,24,28,.62);--edge:rgba(255,255,255,.08);--sh:inset 0 1px 0 rgba(255,255,255,.05),0 18px 40px -22px rgba(0,0,0,.95);--au1:rgba(101,165,24,.17);--au2:rgba(0,131,169,.15)}
 :root[data-theme=dark] .side{border-right:1px solid var(--line);color:var(--ink);background:linear-gradient(168deg,#0D1A11,var(--side) 52%)}
 :root[data-theme=dark] .brand small,:root[data-theme=dark] .side h3,:root[data-theme=dark] .pitem small,:root[data-theme=dark] .side-note,:root[data-theme=dark] .side .x{color:var(--ink-3)}
-:root[data-theme=dark] .pitem,:root[data-theme=dark] .tl,:root[data-theme=dark] .side-btn{color:var(--ink-2)}
+:root[data-theme=dark] .pitem,:root[data-theme=dark] .tl,:root[data-theme=dark] .side-btn,:root[data-theme=dark] .nav-i{color:var(--ink-2)}
+:root[data-theme=dark] .nav-i:hover{color:var(--ink)}
 :root[data-theme=dark] .side-btn,:root[data-theme=dark] .tl{border-color:var(--line)}
 :root[data-theme=dark] .side-foot{border-color:var(--line)}
 :root[data-theme=dark] .seg button[aria-pressed=true]{box-shadow:0 1px 2px rgba(0,0,0,.4)}
@@ -74,6 +75,17 @@ button{cursor:pointer}
 .side-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);box-shadow:0 6px 16px -10px rgba(0,0,0,.8)}
 .side-btn:hover svg{transform:scale(1.15)}
 .side .h3-gap{margin-top:10px}
+/* itens de navegação da barra lateral: ícone + texto, sem caixa (a caixa fica só para as ações de criar) */
+.side-new{display:flex;flex-direction:column;gap:8px}
+.side-sec{display:flex;flex-direction:column;gap:2px}
+.nav-i{display:flex;align-items:center;gap:10px;width:100%;background:none;border:1px solid transparent;color:#D5E6DB;text-align:left;padding:7px 10px;border-radius:9px;font-size:13.5px;font-weight:500}
+.nav-i svg{width:17px;height:17px;flex:none;color:var(--green-l)}
+.nav-i:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-i:focus-visible,.side-tog:focus-visible{outline:2px solid var(--green-l);outline-offset:1px}
+.h3-n:not(:empty){display:inline-grid;place-items:center;min-width:20px;height:18px;padding:0 6px;border-radius:99px;background:rgba(255,255,255,.12);color:#D5E6DB;font-size:11px;letter-spacing:0;margin-left:4px}
+.side-more{display:contents}
+.side-tog{display:none;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:8px 12px;font-weight:600;font-size:13.5px}
+.side-tog svg{width:18px;height:18px}
 .team-box{display:flex;flex-direction:column;gap:6px}
 .team{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);color:#E3EEE7;padding:9px 11px;border-radius:9px;font-size:13px;transition:transform .2s cubic-bezier(.3,1.4,.5,1),background-color .15s,border-color .15s}
 .team:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);transform:translateY(-1px)}
@@ -92,10 +104,21 @@ button{cursor:pointer}
 
 /* área principal */
 .main{padding:26px 32px 28px;display:flex;flex-direction:column;gap:18px;min-width:0}
-.top{display:flex;gap:20px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
-.top{row-gap:14px}
-.title-wrap{flex:1 1 100%;min-width:0;display:flex;flex-direction:column}
-.top .actions{margin-left:auto}
+.top{display:flex;gap:16px;align-items:flex-start;justify-content:space-between}
+.title-wrap{flex:1 1 auto;min-width:0;display:flex;flex-direction:column}
+/* utilidades (desfazer, tema, manual): discretas, no canto do título */
+.util{display:flex;gap:6px;align-items:center;flex:none;padding-top:6px}
+.util-g{display:inline-flex;gap:4px;padding-right:6px;margin-right:2px;border-right:1px solid var(--line)}
+/* barra de comandos: à esquerda o que muda a visualização, à direita o que age no projeto; a ação principal fica no fim */
+.cmdbar{position:relative;z-index:25;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.cb-g{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.cmdbar .btn{padding:0 11px;gap:7px}
+.cmdbar .seg button{padding:0 10px}
+.cb-r{margin-left:auto}
+.cb-sep{width:1px;height:24px;background:var(--line);flex:none}
+.btn svg{width:16px;height:16px;flex:none}
+.seg-ic button{display:inline-flex;align-items:center;gap:6px}
+.seg-ic svg{width:15px;height:15px}
 .p-title{font:700 clamp(28px,3.2vw,44px)/1.08 var(--f-d);letter-spacing:-.028em;border:0;background:none;padding:2px 0;width:100%;color:var(--title);border-radius:0}
 .p-sub{border:0;background:none;color:var(--ink-2);font-size:15px;padding:4px 0;width:100%}
 .p-title:focus,.p-sub:focus{outline:none;box-shadow:0 2px 0 var(--green-l)}
@@ -118,7 +141,15 @@ button{cursor:pointer}
 .menu{position:relative}
 .menu summary::after{content:"";width:6px;height:6px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-2px) rotate(45deg);margin-left:4px;opacity:.55}
 .menu-pop{position:absolute;right:0;top:calc(100% + 6px);background:color-mix(in srgb,var(--surface) 86%,transparent);-webkit-backdrop-filter:blur(20px) saturate(1.5);backdrop-filter:blur(20px) saturate(1.5);border:1px solid var(--line);border-radius:13px;padding:5px;min-width:220px;z-index:30;box-shadow:0 18px 40px -14px rgba(11,42,60,.35);display:flex;flex-direction:column;animation:pop .28s cubic-bezier(.2,1.3,.4,1);transform-origin:top right}
-.menu-pop button{border:0;background:none;text-align:left;padding:9px 10px;border-radius:7px;font-size:13.5px}
+.menu-pop button{border:0;background:none;text-align:left;padding:8px 10px;border-radius:7px;font-size:13.5px;display:flex;align-items:center;gap:10px;color:var(--ink)}
+.menu-pop button[hidden]{display:none}
+.menu-pop button svg{width:16px;height:16px;flex:none;color:var(--ink-2)}
+.menu-pop .mp-h{font-size:11px;font-weight:700;color:var(--ink-3);padding:8px 10px 3px;text-transform:uppercase;letter-spacing:.05em}
+.menu-pop .mp-h:first-child{padding-top:4px}
+.menu-pop hr{border:0;border-top:1px solid var(--line);margin:5px 4px}
+.menu-pop.left{left:0;right:auto;transform-origin:top left}
+.cmdbar .menu-pop{background:var(--surface)}
+.menu-pop .danger svg{color:var(--red-txt)}
 .menu-pop button:hover{background:var(--line-2)}
 .menu-pop .danger{color:var(--red-txt)}
 @keyframes pop{from{opacity:0;transform:translateY(-6px) scale(.94)}}
@@ -126,7 +157,7 @@ button{cursor:pointer}
 /* movimento comum dos botões: sobe no hover, afunda no clique */
 :is(.btn,.btn-new,.side-btn,.tl,.pitem,.theme,.seg button,.menu-pop button,button.lg){transition:transform .2s cubic-bezier(.3,1.4,.5,1),background-color .15s,border-color .15s,box-shadow .2s,color .15s}
 :is(.btn,.btn-new,.side-btn,.tl,.theme):hover{transform:translateY(-1px)}
-:is(.pitem,.menu-pop button):hover{transform:translateX(2px)}
+:is(.pitem,.nav-i,.menu-pop button):hover{transform:translateX(2px)}
 :is(.btn,.btn-new,.side-btn,.tl,.pitem,.theme,.seg button,.menu-pop button,button.lg):active{transform:scale(.96);transition-duration:.08s}
 
 /* resumo */
@@ -690,15 +721,16 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 
 @media (max-width:860px){
   .app{grid-template-columns:minmax(0,1fr)}
-  .side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px}
-  .side-sec,.side-note,.side-foot h3{display:none}
-  .plist{flex-direction:row;overflow:auto;width:100%}
-  .pitem{flex:none;max-width:210px}
-  .side > div:has(#plist){width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-  .side > div:has(#plist) > h3,.side > div:has(#plist) > .plist{grid-column:1/-1}
-  .side > div:has(#plist) .side-btn{flex-direction:column;align-items:flex-start;gap:6px;padding:9px 10px;font-size:12.5px;line-height:1.25}
-  .side-foot{margin:0;width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:0;padding:0}
-  .side-foot .side-btn{font-size:12.5px;line-height:1.25}
+  /* no celular a barra lateral vira uma faixa com a marca e o botão Menu, que abre o resto */
+  .side{position:sticky;z-index:40;height:auto;max-height:100vh;flex-direction:row;flex-wrap:wrap;align-items:center;gap:12px;padding:12px 16px}
+  .brand{flex:1;padding:0}
+  .side-tog{display:flex}
+  .side-more{display:none;width:100%;flex-direction:column;gap:18px;padding:4px 0 8px}
+  .side.open .side-more{display:flex}
+  .side-foot{margin:0}
+  .top{flex-wrap:wrap}
+  .cb-r{margin-left:0}
+  .cb-sep{display:none}
   .p-title{font-size:24px}
   .main{padding:18px 16px}
   .sm-ms{grid-column:auto}
@@ -709,7 +741,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 @media print{
   @page{size:A4 landscape;margin:10mm}
   body{background:#fff}
-  .side,.actions,.tools,.drawer,.toast,.tip,body::before,body::after{display:none!important}
+  .side,.util,.cmdbar,.tools,.drawer,.toast,.tip,body::before,body::after{display:none!important}
   .sm{-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;border-color:#ccc}
   .app{display:block}.main{padding:0}
   .gantt{max-height:none;overflow:visible;border:0}
@@ -724,19 +756,27 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       <svg width="30" height="30" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="8" fill="#006729"/><rect x="5" y="7" width="11" height="3.5" rx="1.75" fill="#65A518"/><rect x="10" y="12.25" width="13" height="3.5" rx="1.75" fill="#fff"/><rect x="7" y="17.5" width="7" height="3.5" rx="1.75" fill="#9FC2AC"/></svg>
       <div><b>Roadmaps</b><small>Projetos e entregas</small></div>
     </div>
-    <button class="btn-new" id="btnNovo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Novo projeto</button>
-    <button class="btn-dm edit-only" data-act="dm" title="Planejar de trás para frente a partir de um marco, em dias úteis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M15 15.5h-6M11.5 13 9 15.5l2.5 2.5"/></svg><span>Planejar D−<small>a partir de um marco</small></span></button>
-    <div><h3>Projetos</h3><button class="side-btn all" data-act="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>Visão geral</button><button class="side-btn all" data-act="marks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15h6"/></svg>Datas da empresa</button><button class="side-btn all" data-act="load"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.2 3.2 0 0 1 0 6.4M21 20c0-2.6-1.6-4.8-4-5.6"/></svg>Carga da equipe</button><nav class="plist" id="plist" aria-label="Projetos"></nav></div>
-    <div class="side-sec"><h3>Modelos</h3><ul class="tlist" id="tlist"></ul></div>
+    <button class="side-tog" id="sideTog" type="button" aria-expanded="false" aria-controls="sideMore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Menu</span></button>
+    <div class="side-more" id="sideMore">
+    <div class="side-new"><button class="btn-new" id="btnNovo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Novo projeto</button>
+    <button class="btn-dm edit-only" data-act="dm" title="Planejar de trás para frente a partir de um marco, em dias úteis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M15 15.5h-6M11.5 13 9 15.5l2.5 2.5"/></svg><span>Planejar D−<small>a partir de um marco</small></span></button></div>
+    <nav class="side-sec" aria-label="Painéis de todos os projetos"><h3>Todos os projetos</h3>
+      <button class="nav-i" data-act="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>Visão geral</button>
+      <button class="nav-i" data-act="lpOpen" title="Ver vários projetos juntos, um embaixo do outro, na mesma régua de meses"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg>Vários na Linha única</button>
+      <button class="nav-i" data-act="load"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.2 3.2 0 0 1 0 6.4M21 20c0-2.6-1.6-4.8-4-5.6"/></svg>Carga da equipe</button>
+      <button class="nav-i" data-act="marks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15h6"/></svg>Datas da empresa</button></nav>
+    <div class="side-sec"><h3>Projetos <span class="h3-n" id="plistN"></span></h3><nav class="plist" id="plist" aria-label="Projetos"></nav></div>
+    <div class="side-sec"><h3>Modelos de projeto</h3><ul class="tlist" id="tlist"></ul></div>
     <div class="side-foot">
       <h3>Equipe</h3>
       <div id="team" class="team-box"></div>
       <h3 class="h3-gap">Arquivos</h3>
-      <button class="side-btn" id="btnBackup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></svg>Salvar backup (.json)</button>
-      <button class="side-btn" id="btnOpen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4M7 9l5-5 5 5M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/></svg>Abrir backup ou planilha</button>
-      <button class="side-btn" id="btnModelo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M10 4v16"/></svg>Baixar planilha modelo</button>
+      <button class="nav-i" id="btnBackup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></svg>Salvar backup (.json)</button>
+      <button class="nav-i" id="btnOpen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>Abrir backup ou planilha</button>
+      <button class="nav-i" id="btnModelo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M12 11v6M9 14l3 3 3-3"/></svg>Baixar planilha modelo</button>
       <input type="file" id="fileOpen" accept=".json,.xlsx" hidden>
       <p class="side-note">Tudo fica salvo neste computador. Nada é enviado para a internet.</p>
+    </div>
     </div>
   </aside>
 
@@ -746,48 +786,62 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <input class="p-title" id="pTitle" aria-label="Nome do projeto" spellcheck="false" autocomplete="off">
         <input class="p-sub" id="pSub" placeholder="Área ou descrição do projeto" aria-label="Área ou descrição" autocomplete="off">
       </div>
-      <div class="actions">
-        <button class="btn edit-only" id="btnManual" title="Como usar cada função"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>Manual</button>
-        <button class="theme edit-only" id="btnUndo" data-act="undo" aria-label="Desfazer" title="Desfazer (Ctrl+Z)" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button>
-        <button class="theme edit-only" id="btnRedo" data-act="redo" aria-label="Refazer" title="Refazer (Ctrl+Y)" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H10a6 6 0 0 0 0 12h3"/></svg></button>
+      <div class="util">
+        <span class="util-g edit-only"><button class="theme edit-only" id="btnUndo" data-act="undo" aria-label="Desfazer" title="Desfazer (Ctrl+Z)" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button><button class="theme edit-only" id="btnRedo" data-act="redo" aria-label="Refazer" title="Refazer (Ctrl+Y)" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H10a6 6 0 0 0 0 12h3"/></svg></button></span>
         <button class="theme" id="btnTheme" aria-label="Tema escuro" aria-pressed="false" title="Alternar entre tema claro e escuro">
           <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
           <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
         </button>
-        <div class="seg" id="view" role="group" aria-label="Visão do cronograma">
-          <button data-v="detail" title="Uma linha por tarefa, com grupos e dependências">Detalhada</button><button data-v="line" title="Resumo executivo: todas as tarefas numa faixa contínua, com cores, nomes e datas">Linha única</button>
-        </div>
-        <details class="menu" id="lpMenu" hidden><summary class="btn" title="Escolher os projetos que aparecem na Linha única">Projetos <span class="lp-n" id="lpN"></span></summary>
-          <div class="menu-pop lp-pop" id="lpPop"></div>
-        </details>
-        <div class="seg" id="zoom" role="group" aria-label="Escala do Gantt">
-          <button data-z="week">Semana</button><button data-z="month">Mês</button><button data-z="quarter">Trimestre</button>
-        </div>
-        <details class="menu edit-only"><summary class="btn">Projeto</summary>
-          <div class="menu-pop">
-            <button data-act="groups">Grupos e cores</button>
-            <button data-act="baseSet">Salvar linha de base</button>
-            <button data-act="baseDel" hidden>Remover linha de base</button>
-            <button data-act="rag">Critério das cores</button>
-            <button data-act="dmRe" hidden>Replanejar D−</button>
-            <button data-act="saveTpl">Salvar como modelo</button>
-            <button data-act="dup">Duplicar projeto</button>
-            <button data-act="del" class="danger">Excluir projeto</button>
-          </div>
-        </details>
-        <details class="menu"><summary class="btn">Exportar</summary>
-          <div class="menu-pop">
-            <button data-act="report">Relatório executivo (1 página)</button>
-            <button data-act="pptx">PowerPoint (.pptx)</button>
-            <button data-act="xlsx">Planilha Excel (.xlsx)</button>
-            <button data-act="html" class="edit-only">HTML para envio</button>
-            <button data-act="print">Imprimir ou salvar PDF</button>
-          </div>
-        </details>
-        <button class="btn edit-only" data-act="batch" title="Digitar ou colar várias tarefas de uma vez">Inserir em lote</button>
-        <button class="btn primary edit-only" data-act="newTask">Nova tarefa</button>
+        <button class="btn edit-only" id="btnManual" title="Como usar cada função"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>Manual</button>
       </div>
     </header>
+    <div class="cmdbar" role="toolbar" aria-label="Cronograma">
+      <div class="cb-g">
+        <div class="seg seg-ic" id="view" role="group" aria-label="Visão do cronograma">
+          <button data-v="detail" title="Uma linha por tarefa, com grupos e dependências"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M7 12h13M4 18h7"/></svg>Detalhada</button><button data-v="line" title="Resumo executivo: todas as tarefas numa faixa contínua. Dá para ver vários projetos juntos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="6" rx="2"/><path d="M9 9v6M15 9v6"/></svg>Linha única</button>
+        </div>
+        <details class="menu" id="lpMenu" hidden><summary class="btn" title="Escolher os projetos que aparecem juntos na Linha única"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg><span>Vários projetos</span><span class="lp-n" id="lpN"></span></summary>
+          <div class="menu-pop lp-pop left" id="lpPop"></div>
+        </details>
+        <span class="cb-sep" aria-hidden="true"></span>
+        <div class="seg" id="zoom" role="group" aria-label="Escala do cronograma">
+          <button data-z="week">Semana</button><button data-z="month">Mês</button><button data-z="quarter">Trimestre</button>
+        </div>
+        <button class="btn" id="btnHoje" data-act="hoje" title="Rolar o cronograma até o dia de hoje"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><circle cx="12" cy="15.5" r="1.5" fill="currentColor"/></svg>Hoje</button>
+      </div>
+      <div class="cb-g cb-r">
+        <details class="menu edit-only"><summary class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg>Projeto</summary>
+          <div class="menu-pop">
+            <div class="mp-h">Organizar</div>
+            <button data-act="groups"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><circle cx="17.5" cy="17.5" r="3.5"/></svg><span>Grupos e cores</span></button>
+            <button data-act="rag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 18a9 9 0 1 1 15 0"/><path d="m12 13 3.5-3.5"/><circle cx="12" cy="13" r="1"/></svg><span>Critério das cores</span></button>
+            <div class="mp-h">Acompanhar o plano</div>
+            <button data-act="baseSet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4h12l-2.5 4L17 12H5"/></svg><span>Salvar linha de base</span></button>
+            <button data-act="baseDel" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4h12l-2.5 4L17 12H5"/></svg><span>Remover linha de base</span></button>
+            <button data-act="dmRe" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M15 15.5h-6M11.5 13 9 15.5l2.5 2.5"/></svg><span>Replanejar D−</span></button>
+            <div class="mp-h">Reaproveitar</div>
+            <button data-act="saveTpl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/><path d="M12 7v6M9 10h6"/></svg><span>Salvar como modelo</span></button>
+            <button data-act="dup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg><span>Duplicar projeto</span></button>
+            <hr>
+            <button data-act="del" class="danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg><span>Excluir projeto</span></button>
+          </div>
+        </details>
+        <details class="menu"><summary class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 13v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6"/></svg>Exportar</summary>
+          <div class="menu-pop">
+            <div class="mp-h">Apresentar</div>
+            <button data-act="report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg><span>Relatório executivo (1 página)</span></button>
+            <button data-act="pptx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8"/></svg><span>PowerPoint (.pptx)</span></button>
+            <div class="mp-h">Enviar ou guardar</div>
+            <button data-act="xlsx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/></svg><span>Planilha Excel (.xlsx)</span></button>
+            <button data-act="html" class="edit-only"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4z"/></svg><span>HTML para envio</span></button>
+            <button data-act="print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V3h10v6"/><path d="M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="7" y="14" width="10" height="7" rx="1"/></svg><span>Imprimir ou salvar PDF</span></button>
+          </div>
+        </details>
+        <span class="cb-sep edit-only" aria-hidden="true"></span>
+        <button class="btn edit-only" data-act="batch" title="Digitar ou colar várias tarefas de uma vez"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/></svg>Inserir em lote</button>
+        <button class="btn primary edit-only" data-act="newTask"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Nova tarefa</button>
+      </div>
+    </div>
     <section class="summary" id="summary" aria-label="Resumo do projeto"></section>
     <section class="legend" id="legend" aria-label="Legenda"></section>
     <div class="tools" id="tools">
@@ -797,7 +851,6 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       <button class="btn slim" id="fClear" data-act="fClear" hidden>Limpar filtros</button>
       <span class="f-info" id="fInfo" aria-live="polite"></span>
       <span class="sel-info" id="selInfo" hidden aria-live="polite"><b></b><button class="btn slim" data-act="selClear">Limpar seleção</button></span>
-      <button class="btn slim" id="btnHoje" data-act="hoje" title="Rolar o cronograma até o dia de hoje">Ir para hoje</button>
     </div>
     <div class="gantt" id="gantt"></div>
     <footer class="ro-foot ro-only" id="roFoot"></footer>
@@ -851,6 +904,13 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Dê um nome, escolha um modelo (ou comece em branco) e a data de início.</li>
         <li>Para começar direto de um modelo, clique no nome dele em <b>Modelos</b>.</li>
       </ol>Para trocar de projeto, clique nele na lista <b>Projetos</b>. O nome e a área do projeto podem ser editados clicando no título.</div></details>
+      <details><summary>Onde fica cada coisa</summary><div><ul>
+        <li><b>Barra lateral, de cima para baixo:</b> criar (<b>Novo projeto</b> e <b>Planejar D−</b>); <b>Todos os projetos</b>, com os painéis que juntam tudo (Visão geral, Vários na Linha única, Carga da equipe e Datas da empresa); a lista dos seus <b>Projetos</b>; os <b>Modelos de projeto</b>; e, no fim, <b>Equipe</b> e <b>Arquivos</b> (backup e planilha modelo).</li>
+        <li><b>Barra do cronograma, à esquerda, o que muda o que você vê:</b> Detalhada ou Linha única, <b>Vários projetos</b> (escolha outros projetos para ver juntos; ao marcar um, a tela passa para a Linha única), a escala Semana, Mês ou Trimestre e <b>Hoje</b>.</li>
+        <li><b>Barra do cronograma, à direita, o que mexe no projeto:</b> o menu <b>Projeto</b> (grupos e cores, critério das cores, linha de base, replanejar D−, salvar como modelo, duplicar e excluir), o menu <b>Exportar</b>, <b>Inserir em lote</b> e, por último, a ação principal, <b>Nova tarefa</b>.</li>
+        <li><b>No canto do título:</b> desfazer e refazer, tema claro ou escuro e este Manual.</li>
+        <li>No celular, a barra lateral fica recolhida: toque em <b>Menu</b> no topo para abrir.</li>
+      </ul></div></details>
       <details><summary>Adicionar e editar tarefas</summary><div><ul>
         <li><b>Nova tarefa</b> no topo cria uma tarefa no primeiro grupo. O <b>+</b> ao lado de um grupo cria nele.</li>
         <li>Clique no nome ou na barra da tarefa para abrir os detalhes: nome, grupo, responsáveis, datas, % concluído, marco, em risco, checklist e dependências.</li>
@@ -941,7 +1001,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>A mesma cor aparece na bolinha ao lado de cada projeto na barra lateral.</li>
       </ul></div></details>
       <details><summary>Visão geral dos projetos</summary><div><ul>
-        <li><b>Visão geral</b>, na barra lateral, mostra todos os projetos lado a lado: situação, % concluído, período, atrasadas e próximo marco.</li>
+        <li><b>Visão geral</b>, na barra lateral em <b>Todos os projetos</b>, mostra todos os projetos lado a lado: situação, % concluído, período, atrasadas e próximo marco.</li>
         <li>Cada projeto ocupa uma linha, e todos usam a mesma régua de meses e anos no topo. O traço vermelho é hoje e os losangos são os marcos.</li>
         <li>Passe o mouse sobre a régua ou as linhas: uma linha tracejada mostra a data exata, para ver em que dias os projetos se sobrepõem.</li>
         <li>A cor da barra segue a situação do projeto: verde no prazo, amarelo atenção, vermelho atrasado, azul concluído.</li>
@@ -954,8 +1014,8 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Com filtro ligado não dá para mudar a ordem arrastando. <b>Limpar filtros</b> volta ao normal.</li>
       </ul></div></details>
       <details><summary>Ler o cronograma</summary><div><ul>
-        <li><b>Detalhada</b> mostra uma linha por tarefa, com grupos e dependências. <b>Linha única</b> põe todas as tarefas numa faixa só, encostadas e em ordem de início, cada uma com a cor do grupo, o nome e as datas. O selo vermelho marca o que está acontecendo hoje. A faixa é contínua, sem espaços entre as tarefas; o comprimento de cada bloco dá a ideia da duração. No topo fica uma régua de meses e anos, igual para todos os projetos: cada projeto ocupa as colunas dos meses em que tem tarefa (basta um dia no mês) e o mês atual fica destacado, então dá para ver em que meses os projetos se cruzam. No botão <b>Projetos</b> você escolhe outros projetos para ver juntos, um abaixo do outro; o HTML para envio leva todos os que estiverem na tela.</li>
-        <li><b>Semana, Mês e Trimestre</b> mudam o zoom da linha do tempo. <b>Ir para hoje</b> rola o cronograma até o dia atual.</li>
+        <li><b>Detalhada</b> mostra uma linha por tarefa, com grupos e dependências. <b>Linha única</b> põe todas as tarefas numa faixa só, encostadas e em ordem de início, cada uma com a cor do grupo, o nome e as datas. O selo vermelho marca o que está acontecendo hoje. A faixa é contínua, sem espaços entre as tarefas; o comprimento de cada bloco dá a ideia da duração. No topo fica uma régua de meses e anos, igual para todos os projetos: cada projeto ocupa as colunas dos meses em que tem tarefa (basta um dia no mês) e o mês atual fica destacado, então dá para ver em que meses os projetos se cruzam. No botão <b>Vários projetos</b> (ou em <b>Vários na Linha única</b>, na barra lateral) você escolhe outros projetos para ver juntos, um abaixo do outro; o HTML para envio leva todos os que estiverem na tela.</li>
+        <li><b>Semana, Mês e Trimestre</b> mudam o zoom da linha do tempo. <b>Hoje</b> rola o cronograma até o dia atual.</li>
         <li>O próximo marco pisca de leve, e as tarefas em andamento têm um brilho passando na barra.</li>
         <li>A linha vermelha é o dia de hoje. Tarefas vencidas e não concluídas ficam marcadas como <b>Atrasada</b>; as marcadas como em risco aparecem tracejadas.</li>
         <li>O resumo no topo mostra o andamento geral, o período, atrasos, riscos e os próximos marcos.</li>
@@ -1589,6 +1649,7 @@ const hb = p => { const [k, l] = health(p); return `<span class="hb hb-${k}">${l
 
 function renderSide() {
   if (RO) return;
+  $('#plistN').textContent = state.projects.length > 1 ? state.projects.length : '';
   $('#plist').innerHTML = state.projects.map(p => `<button class="pitem${p.id === state.currentId ? ' on' : ''}" data-p="${p.id}"><i class="hd hb-${health(p)[0]}" title="${health(p)[1]}"></i><span><b>${esc(p.name)}</b><small>${p.tasks.length} ${p.tasks.length === 1 ? 'tarefa' : 'tarefas'}, ${pctOf(p)}%</small></span></button>`).join('');
   $('#tlist').innerHTML = allTpls().map(t => `<li><button class="tl" data-tpl="${t.id}" title="Criar projeto a partir de ${esc(t.name)}"><span>${esc(t.name)}</span></button>${t.builtin ? '' : `<button class="x" data-deltpl="${t.id}" aria-label="Excluir modelo ${esc(t.name)}">×</button>`}</li>`).join('');
   $('#owners').innerHTML = [...new Set(state.projects.flatMap(p => p.tasks.flatMap(owns)).filter(Boolean))].map(o => `<option value="${esc(o)}">`).join('');
@@ -1602,10 +1663,11 @@ function renderTop() {
   document.querySelectorAll('#zoom button').forEach(b => b.setAttribute('aria-pressed', b.dataset.z === state.zoom));
   document.querySelectorAll('#view button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === state.view));
   $('#zoom').hidden = $('#btnHoje').hidden = state.view === 'line';
-  const lm = $('#lpMenu'); lm.hidden = state.view !== 'line' || state.projects.length < 2;
+  // o seletor de vários projetos fica sempre à vista (com 2 projetos ou mais); escolher um leva para a Linha única
+  const lm = $('#lpMenu'); lm.hidden = state.projects.length < 2;
   if (!lm.hidden) {
-    const n = lineProjects().length; $('#lpN').textContent = n > 1 ? n : '';
-    $('#lpPop').innerHTML = `<div class="lp-h">Mostrar na Linha única</div>` + state.projects.map(p => {
+    const n = state.view === 'line' ? lineProjects().length : 0; $('#lpN').textContent = n > 1 ? n : '';
+    $('#lpPop').innerHTML = `<div class="lp-h">Ver juntos na Linha única</div>` + state.projects.map(p => {
       const on = p.id === state.currentId || state.lineSel.includes(p.id), here = p.id === state.currentId;
       return `<label class="lp-i"><input type="checkbox" data-lp="${p.id}"${on ? ' checked' : ''}${here ? ' disabled' : ''}><span>${esc(p.name)}${here ? ' <em>aberto</em>' : ''}</span></label>`;
     }).join('') + `<div class="lp-f"><button data-lpall="1">Todos</button><button data-lpall="0">Só o aberto</button></div>`;
@@ -2671,6 +2733,13 @@ const ACT = {
   hol: () => { state.hlHol = !state.hlHol; if (state.hlHol) state.showHol = true; if (!RO) persist(); renderLegend(); renderGantt(); },
   crit: () => { state.showCrit = !state.showCrit; if (!RO) persist(); renderLegend(); renderGantt(); },
   dm: () => openDm(null),
+  // atalho da barra lateral: abre a Linha única com a lista de projetos para escolher
+  lpOpen: () => {
+    if (state.projects.length < 2) return toast('Crie ou abra outro projeto para ver os dois juntos na Linha única.');
+    if (state.view !== 'line') { state.view = 'line'; persist(); renderTop(); renderGantt('zoom'); }
+    // depois do clique: o mesmo clique fecharia os menus abertos fora dele
+    setTimeout(() => { const m = $('#lpMenu'); m.open = true; m.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); m.querySelector('summary').focus({ preventScroll: true }); });
+  },
   dmRe: () => openDm(cur()),
   load: () => { renderLoad(); const d = $('#dlgLoad'); d.returnValue = ''; d.showModal(); },
   marks: () => { renderMarks(); const d = $('#dlgMarks'); d.returnValue = ''; d.showModal(); },
@@ -2736,11 +2805,13 @@ document.querySelectorAll('#drawer [data-close]').forEach(b => b.addEventListene
 $('#lpPop').addEventListener('change', e => {
   const c = e.target.closest('[data-lp]'); if (!c) return;
   state.lineSel = state.lineSel.filter(id => id !== c.dataset.lp); if (c.checked) state.lineSel.push(c.dataset.lp);
+  if (c.checked && state.view !== 'line') state.view = 'line';
   if (!RO) persist(); renderTop(); renderGantt('zoom'); $('#lpMenu').open = true;
 });
 $('#lpPop').addEventListener('click', e => {
   const b = e.target.closest('[data-lpall]'); if (!b) return;
   state.lineSel = b.dataset.lpall === '1' ? state.projects.map(p => p.id).filter(id => id !== state.currentId) : [];
+  if (b.dataset.lpall === '1') state.view = 'line';
   if (!RO) persist(); renderTop(); renderGantt('zoom'); $('#lpMenu').open = true;
 });
 $('#view').addEventListener('click', e => {
@@ -2753,6 +2824,10 @@ $('#zoom').addEventListener('click', e => {
 });
 $('#pTitle').addEventListener('input', e => { cur().name = e.target.value.trim() || 'Sem nome'; save(); renderSide(); document.title = cur().name + ' | Roadmap'; });
 $('#pSub').addEventListener('input', e => { cur().area = e.target.value; save(); });
+// Menu do celular: abre e fecha o resto da barra lateral; escolher algo nela fecha o menu
+const sideOpen = on => { $('.side').classList.toggle('open', on); $('#sideTog').setAttribute('aria-expanded', on); };
+$('#sideTog').addEventListener('click', () => sideOpen(!$('.side').classList.contains('open')));
+$('#sideMore').addEventListener('click', e => { if (e.target.closest('button:not(.x):not([data-team])')) sideOpen(false); });
 $('#plist').addEventListener('click', e => {
   const b = e.target.closest('[data-p]'); if (!b || b.dataset.p === state.currentId) return;
   state.currentId = b.dataset.p; save(); closeDrawer(); render('load');
@@ -2773,7 +2848,7 @@ $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
 // Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
 // A cada versão nova, troque a data e a lista abaixo.
-const NOVIDADES = { versao: '2026-11-24', secoes: ['Planejar D− (de trás para frente)'] };
+const NOVIDADES = { versao: '2026-11-25', secoes: ['Onde fica cada coisa', 'Ler o cronograma', 'Planejar D− (de trás para frente)'] };
 {
   const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
   sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
