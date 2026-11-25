@@ -1242,12 +1242,13 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>A engrenagem ao lado do seletor abre <b>Cenários</b>: renomear, <b>Copiar</b> um cenário inteiro (para montar uma alternativa e mudar as datas) e <b>Excluir</b> um cenário com os projetos dele (Desfazer volta atrás).</li>
         <li><b>Comparar cenários</b>, na barra lateral em Todos os projetos (ou em Exportar), monta a apresentação de orçamento. Marque os cenários e o mês de início (por exemplo nov/26). Para cada cenário saem dois slides: a <b>visão geral</b> (um projeto por linha, sem % e sem situação, com a cor das fases e os marcos) e os <b>recursos necessários</b> (por função, o pico de atividades ao mesmo tempo em cada mês, a equipe atual e quantas pessoas contratar). Com dois cenários ou mais, o último slide traz as <b>principais diferenças</b> e <b>o que é igual</b>: contratações, pico, projetos só em um cenário, projetos que mudaram de data e funções com necessidade diferente.</li>
         <li>A área vem do campo <b>Responsável</b> das tarefas: <b>Projetos</b>, <b>Análise de Produtos</b>, <b>Pricing</b> ou <b>Sustentação</b> (acento, maiúscula e espaços não importam; "Analise de produtos" conta como Análise de Produtos). Tarefa com duas áreas ("Projetos / Pricing") conta 1 pessoa em cada. Cada atividade aberta conta como 1 pessoa da área enquanto dura.</li>
-        <li>Informe a <b>Equipe atual por área</b> na janela: <b>Contratar</b> é o pico menos a equipe. As quatro áreas sempre aparecem nos slides, nesta ordem, mesmo sem atividade no cenário; responsável fora da lista aparece depois. Para mudar a lista, edite <b>Áreas da equipe</b> na mesma janela. O tamanho da equipe de cada área é o mesmo usado em <b>Recursos e conflitos › Por responsável</b>: mudar num lugar muda no outro.</li>
+        <li>Informe a <b>Equipe atual por área</b> na janela: <b>Contratar</b> é o pico menos a equipe, <b>área por área</b>, porque uma área não cobre a outra (gente sobrando em Sustentação não reduz a falta em Pricing). <b>Pessoas necessárias</b> é a soma do maior pico de cada área, e a linha <b>Total</b> soma as áreas mês a mês. As quatro áreas sempre aparecem nos slides, nesta ordem, mesmo sem atividade no cenário; responsável fora da lista aparece depois. Para mudar a lista, edite <b>Áreas da equipe</b> na mesma janela. O tamanho da equipe de cada área é o mesmo usado em <b>Recursos e conflitos › Por responsável</b>: mudar num lugar muda no outro.</li>
       </ul></div></details>
       <details><summary>Recursos e conflitos</summary><div><ul>
         <li>Na barra lateral, em <b>Todos os projetos</b>, clique em <b>Recursos e conflitos</b>. Cada atividade aberta conta como 1 pessoa ocupada enquanto dura.</li>
         <li>Escolha como agrupar: <b>Por atividade</b> junta as atividades de mesmo nome de todos os projetos (por exemplo, todas as "Especificação" do D−), <b>Por grupo</b>, <b>Por responsável</b> ou <b>Tudo junto</b>.</li>
         <li>Em <b>Pessoas</b>, informe quantas você tem em cada linha (em <b>Por responsável</b>, é o tamanho da equipe da área, o mesmo de Comparar cenários). As semanas mostram o pico de atividades ao mesmo tempo: amarelo falta 1 pessoa, vermelho faltam 2 ou mais. A coluna <b>Pico</b> diz quantas faltam no pior momento.</li>
+        <li>A falta é calculada linha a linha: em <b>Por responsável</b>, uma área não cobre a outra. A linha <b>Total (referência)</b> e o modo <b>Tudo junto</b> somam tudo como se qualquer pessoa pudesse fazer qualquer atividade; servem só de referência.</li>
         <li>Os cartões do topo resumem o pico total, quantas pessoas a mais cobririam todos os picos e quantos períodos estão em conflito. A lista <b>Onde vão faltar pessoas</b> traz cada período, quantas pessoas precisa, quantas tem e os projetos envolvidos.</li>
         <li>Clique numa semana para ver as atividades dela. <b>Baixar Excel</b> gera a planilha com a necessidade por semana, a lista de conflitos e as férias consideradas. As pessoas informadas ficam salvas neste navegador.</li>
               <li><b>Férias e ausências</b>, no fim da janela: informe a pessoa, de quando a quando e, se quiser, a atividade ou o grupo em que ela trabalha. Cada dia de férias tira 1 pessoa da conta. Em <b>Por responsável</b>, se a pessoa tem atividade nas férias, aparece como falta para cobrir; em <b>Por atividade</b> ou <b>Por grupo</b>, a férias tira 1 pessoa da linha informada; o <b>Total</b> e <b>Tudo junto</b> contam todas. As semanas com férias ficam listradas, e a lista de conflitos diz de quem são. As férias ficam salvas neste navegador e vão no backup.</li>
@@ -1459,7 +1460,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
   <form method="dialog" class="dlg-in">
     <h2 id="rsT">Recursos e conflitos</h2>
     <p class="muted">Cada atividade aberta conta como <b>1 pessoa ocupada</b> enquanto dura. Informe quantas pessoas você tem em cada linha: as semanas em amarelo ou vermelho são onde as atividades ao mesmo tempo passam disso, e a lista abaixo diz quando e quantas pessoas vão faltar. Clique numa semana para ver as atividades.</p>
-    <div class="rs-bar"><div class="seg" id="rsMode" role="group" aria-label="Agrupar por"><button type="button" data-rm="act" title="Atividades com o mesmo nome em projetos diferentes ficam na mesma linha (ideal para o D−)">Por atividade</button><button type="button" data-rm="group" title="Uma linha por grupo (fase)">Por grupo</button><button type="button" data-rm="owner" title="Uma linha por responsável">Por responsável</button><button type="button" data-rm="all" title="Uma linha só, somando tudo">Tudo junto</button></div>
+    <div class="rs-bar"><div class="seg" id="rsMode" role="group" aria-label="Agrupar por"><button type="button" data-rm="act" title="Atividades com o mesmo nome em projetos diferentes ficam na mesma linha (ideal para o D−)">Por atividade</button><button type="button" data-rm="group" title="Uma linha por grupo (fase)">Por grupo</button><button type="button" data-rm="owner" title="Uma linha por responsável">Por responsável</button><button type="button" data-rm="all" title="Uma linha só, somando tudo: supõe que qualquer pessoa cobre qualquer atividade">Tudo junto</button></div>
       <label class="fld rs-sc"><span class="vh">Projetos</span><select id="rsScope"></select></label><label class="chk"><input type="checkbox" id="rsFrom" checked> Só de hoje em diante</label></div>
     <div class="rs-kpi" id="rsKpi"></div>
     <div class="ld-wrap rs-wrap" id="rsGrid"></div>
@@ -4105,7 +4106,7 @@ function renderRes() {
   const cellH = (r, i, c, j) => { const o = r.over[j], lv = o >= 2 ? 3 : o === 1 ? 2 : c ? 1 : 0, fv = r.fv[j];
     return `<td class="${RG.weeks[j] === now ? 'now' : ''}${fv ? ' fv' : ''}"${fv ? ` title="Férias nesta semana: ${esc([...new Set(r.vacs.filter(v => d2n(v.start) <= RG.weeks[j] + 6 && d2n(v.end) >= RG.weeks[j]).map(v => v.name))].join(', '))}"` : ''}><button type="button" class="r${lv}" data-rs="${i}:${j}"${c || fv ? ` aria-label="${esc(r.name)}, semana de ${fmtCurto(RG.weeks[j])}: ${c} ao mesmo tempo${o > 0 ? `, ${o === 1 ? 'falta 1 pessoa' : `faltam ${o} pessoas`}` : ''}${fv ? ', com férias' : ''}"` : ' disabled aria-label="nada"'}>${c ? `<i>${c}</i>` : ''}</button></td>`; };
   const body = RG.rows.map((r, i) => `<tr><th class="ld-p" scope="row" title="${esc(r.name)}">${esc(r.name)}</th><td class="rs-cap">${mode === 'all' ? `<b>${r.cap}</b>` : `<input type="number" min="0" max="999" value="${r.cap}" data-cap="${esc(r.key)}" aria-label="Pessoas disponíveis para ${esc(r.name)}">`}</td><td class="rs-pk${r.miss ? ' bad' : ''}">${r.max}${r.miss ? `<small>${r.miss === 1 ? 'falta 1' : `faltam ${r.miss}`}</small>` : ''}</td>${r.cells.map((c, j) => cellH(r, i, c, j)).join('')}</tr>`).join('');
-  const foot = mode === 'all' ? '' : `<tfoot><tr><th class="ld-p" scope="row">Total</th><td class="rs-cap"><b>${T.cap}</b></td><td class="rs-pk${T.miss ? ' bad' : ''}">${T.max}${T.miss ? `<small>${T.miss === 1 ? 'falta 1' : `faltam ${T.miss}`}</small>` : ''}</td>${T.cells.map((c, j) => cellH(T, 't', c, j)).join('')}</tr></tfoot>`;
+  const foot = mode === 'all' ? '' : `<tfoot><tr><th class="ld-p" scope="row" title="Referência: soma tudo como se qualquer pessoa pudesse fazer qualquer atividade. A falta de verdade é a das linhas acima.">Total (referência)</th><td class="rs-cap"><b>${T.cap}</b></td><td class="rs-pk${T.miss ? ' bad' : ''}">${T.max}${T.miss ? `<small>${T.miss === 1 ? 'falta 1' : `faltam ${T.miss}`}</small>` : ''}</td>${T.cells.map((c, j) => cellH(T, 't', c, j)).join('')}</tr></tfoot>`;
   $('#rsGrid').innerHTML = `<table class="ld rs"><thead>${head}</thead><tbody>${body}</tbody>${foot}</table>`;
   const th = $('#rsGrid thead th.now'); if (th) $('#rsGrid').scrollLeft = th.offsetLeft - 320;
   $('#rsGaps').innerHTML = gaps.length ? `<h3>Onde vão faltar pessoas</h3><ul>${gaps.slice(0, 40).map(g => `<li><b>${esc(g.r.name)}</b><span>${g.a === g.b ? fmtLong(g.a) : `${fmtLong(g.a)} a ${fmtLong(g.b)}`}</span><span>precisa de até <b>${g.need}</b>, tem ${g.have}${g.vac.length ? ' (com férias)' : ''}: <em>${g.miss === 1 ? 'falta 1' : `faltam ${g.miss}`}</em></span><small>${g.ps.map(esc).join(', ')}${g.vac.length ? ` · <b class="rs-fv">Férias: ${g.vac.map(esc).join(', ')}</b>` : ''}</small></li>`).join('')}</ul>${gaps.length > 40 ? `<p class="muted">E mais ${gaps.length - 40} períodos (veja na planilha).</p>` : ''}`
@@ -4187,7 +4188,7 @@ function cenRes(ps, from) {
   const d1 = Math.min(Math.max(...items.map(x => x.e)), from + 366 * 5), N = d1 - from + 1, m0 = mOfN(from), m1 = mOfN(d1);
   const months = []; for (let m = m0; m <= m1; m++) months.push(m);
   const mk = (key, name) => ({ key, name, day: new Int16Array(N), items: [] });
-  const rows = new Map(), total = mk('*', 'Total ao mesmo tempo');
+  const rows = new Map(), total = mk('*', 'Total (soma das áreas)');
   const add = (r, x) => { r.items.push(x); for (let d = x.s; d <= Math.min(x.e, d1); d++) r.day[d - from]++; };
   for (const x of items) { add(total, x); for (const o of owns(x.t).length ? owns(x.t) : ['']) { const key = norm(o).replace(/\s+/g, ' '); if (!rows.has(key)) rows.set(key, mk(key, o.trim().replace(/\s+/g, ' ') || 'Sem responsável')); add(rows.get(key), x); } }
   const fin = r => {
@@ -4198,7 +4199,11 @@ function cenRes(ps, from) {
   AR.forEach(([k, a]) => { if (!rows.has(k)) rows.set(k, mk(k, a)); else rows.get(k).name = a; });
   const ord = k => { const i = AR.findIndex(x => x[0] === k); return i < 0 ? 1e3 : i; };
   const list = [...rows.values()].map(fin).sort((a, b) => ord(a.key) - ord(b.key) || b.need - a.need || a.name.localeCompare(b.name, 'pt-BR'));
-  fin(total); total.have = list.reduce((a, r) => a + r.have, 0); total.hire = list.reduce((a, r) => a + r.hire, 0);
+  // uma área não cobre a outra: o total é a soma das áreas. Por mês, a soma do pico de cada área;
+  // pessoas necessárias = soma do maior pico de cada área; contratar = soma do que falta em cada área
+  fin(total); total.cells = months.map((m, j) => list.reduce((a, r) => a + r.cells[j], 0));
+  total.need = list.reduce((a, r) => a + r.need, 0); total.peakM = months[total.cells.indexOf(Math.max(0, ...total.cells))];
+  total.have = list.reduce((a, r) => a + r.have, 0); total.hire = list.reduce((a, r) => a + r.hire, 0);
   return { months, rows: list, total, from, end: d1 };
 }
 // um cenário pronto para a apresentação
@@ -4217,10 +4222,11 @@ function cenDiff(P) {
   const hires = P.map(c => c.R.total ? c.R.total.hire : 0), peaks = P.map(c => c.R.total ? c.R.total.need : 0);
   if (P.length > 1) {
     const hi = hires.indexOf(Math.max(...hires)), lo = hires.indexOf(Math.min(...hires));
+    // (peaks = pessoas necessárias, soma do pico de cada área)
     if (hires[hi] !== hires[lo]) diff.push(`Contratações: ${P.map((c, i) => `+${hires[i]} em ${c.name}`).join(', ')}; ${P[hi].name} pede ${hires[hi] - hires[lo]} ${hires[hi] - hires[lo] === 1 ? 'pessoa' : 'pessoas'} a mais.`);
     else same.push(`Mesmo número de contratações: +${hires[0]} ${hires[0] === 1 ? 'pessoa' : 'pessoas'} em cada cenário.`);
-    if (new Set(peaks).size > 1) diff.push(`Pico de pessoas ao mesmo tempo: ${P.map((c, i) => `${c.name} ${peaks[i]}${c.R.total ? ` (${mLbl(c.R.total.peakM)})` : ''}`).join(', ')}.`);
-    else same.push(`Mesmo pico de pessoas ao mesmo tempo: ${peaks[0]}.`);
+    if (new Set(peaks).size > 1) diff.push(`Pessoas necessárias (soma do pico de cada área): ${P.map((c, i) => `${peaks[i]} em ${c.name}`).join(', ')}.`);
+    else same.push(`Mesmo número de pessoas necessárias: ${peaks[0]} (soma do pico de cada área).`);
     P.forEach((c, i) => { const only = [...sets[i].keys()].filter(k => !common.includes(k)).map(k => sets[i].get(k).p.name); if (only.length) diff.push(`Só em ${c.name} (${only.length}): ${only.slice(0, 6).join(', ')}${only.length > 6 ? ` e mais ${only.length - 6}` : ''}.`); });
     if (common.length) same.push(`${common.length} ${common.length === 1 ? 'projeto aparece' : 'projetos aparecem'} em todos os cenários.`);
     const moved = common.map(k => { const ends = sets.map(m => m.get(k).per ? m.get(k).per[1] : null); if (ends.some(x => x == null)) return null; const dd = Math.max(...ends) - Math.min(...ends); return dd > 6 ? { name: sets[0].get(k).p.name, ends, dd } : null; }).filter(Boolean).sort((a, b) => b.dd - a.dd);
@@ -4265,9 +4271,9 @@ function slCenVisao(c, from, pg) {
 }
 function slCenRes(c, pg) {
   const s = pSlide(), R = c.R;
-  sHead(s, `${c.name}: recursos necessários`, `Pico de atividades ao mesmo tempo, por área e por mês (cada atividade = 1 pessoa da área responsável)`, pg);
+  sHead(s, `${c.name}: recursos necessários`, `Pico de atividades ao mesmo tempo, por área e por mês (cada atividade = 1 pessoa da área responsável; uma área não cobre a outra)`, pg);
   if (!R.total) { s.sp({ x: SM, y: 120, w: 600, h: 20, paras: [['Nenhuma atividade no período.', { sz: 12, c: '46606F' }]], ins: 0 }); return s.xml(); }
-  const T = R.total, kp = [[`${T.need}`, 'pessoas ao mesmo tempo no pico', mLbl(T.peakM), '003960'], [`${T.have}`, 'na equipe atual', 'soma das áreas', '46606F'], [`+${T.hire}`, 'a contratar', T.hire ? 'para cobrir os picos' : 'a equipe atual dá conta', T.hire ? 'E60018' : '006729']];
+  const T = R.total, kp = [[`${T.need}`, 'pessoas necessárias', 'soma do pico de cada área', '003960'], [`${T.have}`, 'na equipe atual', 'soma das áreas', '46606F'], [`+${T.hire}`, 'a contratar', T.hire ? 'para cobrir os picos' : 'a equipe atual dá conta', T.hire ? 'E60018' : '006729']];
   kp.forEach(([v, l, sub, col], i) => { const x = SM + i * 210; s.sp({ x, y: 80, w: 200, h: 52, g: 'roundRect', f: 'F5F8F6', ln: ['DCE4DF', 0.75] }); s.sp({ x: x + 10, y: 84, w: 70, h: 44, paras: [[v, { sz: 24, b: 1, c: col }]], ins: 0 }); s.sp({ x: x + 78, y: 86, w: 118, h: 40, paras: [[l, { sz: 9, b: 1, c: '0B2A3C' }], [sub, { sz: 8, c: '5B6770' }]], ins: 0, an: 'ctr' }); });
   // colunas: meses (ou trimestres, se forem muitos)
   let cols = R.months.map((m, i) => ({ l: mLbl(m), idx: [i] }));
@@ -4292,7 +4298,7 @@ function slCenRes(c, pg) {
 function slCenCmp(P, D, pg) {
   const s = pSlide();
   sHead(s, 'Comparação dos cenários', P.map(c => c.name).join('  ×  '), pg);
-  const metr = [['Projetos', c => String(c.ps.length)], ['Período', c => c.s ? `${mLbl(mOfN(c.s))} a ${mLbl(mOfN(c.e))}` : '—'], ['Pico ao mesmo tempo', c => c.R.total ? `${c.R.total.need} (${mLbl(c.R.total.peakM)})` : '0'], ['Equipe atual', c => c.R.total ? String(c.R.total.have) : '0'], ['A contratar', c => c.R.total ? `+${c.R.total.hire}` : '+0']];
+  const metr = [['Projetos', c => String(c.ps.length)], ['Período', c => c.s ? `${mLbl(mOfN(c.s))} a ${mLbl(mOfN(c.e))}` : '—'], ['Pessoas necessárias', c => c.R.total ? String(c.R.total.need) : '0'], ['Equipe atual', c => c.R.total ? String(c.R.total.have) : '0'], ['A contratar', c => c.R.total ? `+${c.R.total.hire}` : '+0']];
   const top = 84, nw = 170, cw = Math.min(200, (SW - 2 * SM - nw) / P.length), rh = 20;
   s.sp({ x: SM, y: top, w: nw, h: rh, paras: [['', {}]], ins: 0 });
   P.forEach((c, j) => s.sp({ x: SM + nw + j * cw, y: top, w: cw - 4, h: rh, f: '003960', paras: [[cut(c.name, 28), { sz: 10, b: 1, c: 'FFFFFF' }]], al: 'ctr', ins: 2 }));
@@ -4319,7 +4325,7 @@ function renderCmp() {
   $('#cmTeam').innerHTML = roles.size ? `<div class="cm-tg">${[...roles].slice(0, nA).concat(other.sort((a, b) => a[1].localeCompare(b[1], 'pt-BR'))).map(([k, n]) => `<label class="cm-ti"><span title="${esc(n)}">${esc(n)}</span><input type="number" min="0" max="999" value="${teamOf(k)}" data-team="${esc(k)}" aria-label="Equipe atual de ${esc(n)}"></label>`).join('')}</div>` : '<p class="muted">Marque um cenário para ver as funções.</p>';
   if (!P.length) { $('#cmPrev').innerHTML = ''; $('#cmOk').disabled = true; return; }
   const D = cenDiff(P);
-  const card = c => { const T = c.R.total; return `<div class="cm-c"><h4>${esc(c.name)}</h4><dl><div><dt>Projetos</dt><dd>${c.ps.length}</dd></div><div><dt>Período</dt><dd>${c.s ? `${mLbl(mOfN(c.s))} a ${mLbl(mOfN(c.e))}` : '—'}</dd></div><div><dt>Pico ao mesmo tempo</dt><dd>${T ? `${T.need} <small>${mLbl(T.peakM)}</small>` : 0}</dd></div><div><dt>A contratar</dt><dd class="${T && T.hire ? 'bad' : 'good'}">+${T ? T.hire : 0}</dd></div></dl>
+  const card = c => { const T = c.R.total; return `<div class="cm-c"><h4>${esc(c.name)}</h4><dl><div><dt>Projetos</dt><dd>${c.ps.length}</dd></div><div><dt>Período</dt><dd>${c.s ? `${mLbl(mOfN(c.s))} a ${mLbl(mOfN(c.e))}` : '—'}</dd></div><div><dt>Pessoas necessárias</dt><dd>${T ? T.need : 0} <small>soma das áreas</small></dd></div><div><dt>Equipe atual</dt><dd>${T ? T.have : 0}</dd></div><div><dt>A contratar</dt><dd class="${T && T.hire ? 'bad' : 'good'}">+${T ? T.hire : 0}</dd></div></dl>
     ${T ? `<table class="cm-t"><thead><tr><th>Área</th><th>Pico</th><th>Equipe</th><th>Contratar</th></tr></thead><tbody>${c.R.rows.map(r => `<tr><td>${esc(r.name)}</td><td>${r.need} <small>${mLbl(r.peakM)}</small></td><td>${r.have}</td><td class="${r.hire ? 'bad' : ''}">${r.hire ? '+' + r.hire : '0'}</td></tr>`).join('')}</tbody></table>` : ''}</div>`; };
   $('#cmPrev').innerHTML = `<div class="cm-cards">${P.map(card).join('')}</div>` + (P.length > 1 ? `<div class="cm-d"><div><h4 class="bad">Principais diferenças</h4><ul>${(D.diff.length ? D.diff : ['Nada a destacar.']).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div><div><h4 class="good">O que é igual</h4><ul>${(D.same.length ? D.same : ['Nada a destacar.']).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div></div>` : '<p class="muted">Marque dois cenários ou mais para ver as diferenças.</p>');
   const n = P.length * 2 + (P.length > 1 ? 1 : 0); $('#cmOk').disabled = false; $('#cmOk').textContent = `Baixar PowerPoint (${n} ${n === 1 ? 'slide' : 'slides'})`;
@@ -5024,10 +5030,10 @@ async function selfTest() {
     ok(mkc('a', ' Orç  A ', '2027-01-04', '2027-01-08', 'Dev').cen === 'Orç A' && !normP({ name: 'x', groups: [], tasks: [] }).cen, 'cenário: guardado no projeto');
     const from = d2n('2027-01-01'), A = [mkc('P1', 'A', '2027-01-04', '2027-02-26', 'Dev'), mkc('P2', 'A', '2027-02-01', '2027-03-31', 'Dev'), mkc('P3', 'A', '2026-12-01', '2027-01-15', 'QA')];
     const R = cenRes(A, from), dev = R.rows.find(r => r.name === 'Dev');
-    ok(R.months.length === 3 && dev.need === 2 && dev.cells.join() === '1,2,1' && R.rows.find(r => r.name === 'QA').cells.join() === '1,0,0' && R.total.need === 2, 'cenário: pico por função e por mês, cortado no início');
+    ok(R.months.length === 3 && dev.need === 2 && dev.cells.join() === '1,2,1' && R.rows.find(r => r.name === 'QA').cells.join() === '1,0,0' && R.total.need === 3, 'cenário: pico por função e por mês, cortado no início');
     const RA = cenRes([mkc('X', 'A', '2027-01-04', '2027-01-29', 'analise de produtos'), mkc('Y', 'A', '2027-01-04', '2027-01-29', 'PRICING ')], from);
     ok(RA.rows.slice(0, 4).map(r => r.name).join() === AREAS_DEF.join() && RA.rows[1].need === 1 && RA.rows[2].need === 1 && RA.rows[0].need === 0 && RA.rows[3].need === 0, 'cenário: as 4 áreas sempre aparecem, com o nome oficial');
-    const st = state.team; try { state.team = { dev: 1 }; const RT = cenRes(A, from); ok(RT.rows.find(r => r.name === 'Dev').hire === 1 && RT.rows.find(r => r.name === 'QA').hire === 1 && RT.total.hire === 2 && RT.total.have === 1, 'cenário: contratar = pico − equipe, por função'); } finally { state.team = st; }
+    const st = state.team; try { state.team = { dev: 1 }; const RT = cenRes(A, from); ok(RT.rows.find(r => r.name === 'Dev').hire === 1 && RT.rows.find(r => r.name === 'QA').hire === 1 && RT.total.hire === 2 && RT.total.have === 1 && RT.total.need === 3 && RT.total.cells.join() === '2,2,1', 'cenário: contratar e necessárias somam área por área (uma não cobre a outra)'); } finally { state.team = st; }
     const sv = state.projects; try {
       state.projects = [...A, mkc('P1', 'B', '2027-01-04', '2027-05-28', 'Dev'), mkc('P9', 'B', '2027-02-01', '2027-03-31', 'Dev'), mkc('P8', 'B', '2027-02-01', '2027-03-31', 'Dev')];
       const D = cenDiff(['A', 'B'].map(n => cenPack(n, from)));
