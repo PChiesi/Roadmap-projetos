@@ -756,6 +756,13 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 /* visão geral dos projetos */
 #dlgAll{width:min(1000px,calc(100vw - 32px))}
 #dlgDelMany{width:min(640px,calc(100vw - 32px))}
+.pf-tb{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
+.pf-so select{height:34px;border:1px solid var(--line);border-radius:9px;padding:0 10px;background:var(--surface);font-size:13px;color:var(--ink)}
+.pf-fl{display:flex;gap:6px;flex-wrap:wrap}
+.pf-fl button{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border:1px solid var(--line);border-radius:99px;background:var(--surface);font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer}
+.pf-fl button b{font-weight:700;color:var(--ink)}
+.pf-fl button[aria-pressed=true]{background:var(--title);border-color:var(--title);color:#fff}.pf-fl button[aria-pressed=true] b{color:#fff}
+.pf-fl .hd{width:8px;height:8px}
 /* logo: caixa de tamanho fixo em cada lugar; a imagem encaixa dentro (contain), nunca estica nem empurra o layout */
 .lg-box{flex:none;display:inline-grid;place-items:center;overflow:hidden;background:#fff;border-radius:6px;box-sizing:border-box}
 .lg-box img{display:block;width:100%;height:100%;min-width:0;min-height:0;object-fit:contain}
@@ -1229,6 +1236,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ul></div></details>
       <details><summary>Visão geral dos projetos</summary><div><ul>
         <li><b>Visão geral</b>, na barra lateral em <b>Todos os projetos</b>, mostra todos os projetos lado a lado: situação, % concluído, período, atrasadas e próximo marco.</li>
+        <li>No topo da Visão geral, <b>Ordenar por</b> põe os projetos por situação (atrasados primeiro), início, fim, nome ou na ordem da lista, e os botões <b>Todos, Atrasados, Atenção, No prazo, Concluídos</b> mostram só aquele grupo, com a contagem de cada um. A escolha fica salva e vale também para imprimir, Baixar Excel e PowerPoint (1 slide).</li>
         <li><b>PowerPoint (1 slide)</b>, dentro da Visão geral ou em <b>Exportar › PowerPoint: visão geral em 1 slide</b>, põe todos os projetos num slide só, no mesmo modelo: um por linha, na mesma régua de meses, com a cor da situação, o % concluído, os marcos, o traço de hoje e a legenda. Com muitos projetos, as linhas e as letras encolhem para caber; tudo continua editável.</li>
         <li><b>Imprimir ou salvar PDF</b>, dentro da Visão geral, gera uma página limpa em paisagem com a legenda das cores. <b>Baixar Excel</b> gera uma planilha com a tabela dos projetos (situação, tendência, %, datas, atrasadas, próximo marco) e uma aba com a linha do tempo pintada por mês.</li>
         <li>Cada projeto ocupa uma linha, e todos usam a mesma régua de meses e anos no topo. O traço vermelho é hoje e os losangos são os marcos.</li>
@@ -1343,6 +1351,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
   <form method="dialog" class="dlg-in">
     <h2 id="pfT">Visão geral dos projetos</h2>
     <p class="muted">Todos os projetos na mesma régua de datas. Passe o mouse para ver a data exata e onde os projetos se sobrepõem. Clique em um projeto para abrir.</p>
+    <div class="pf-tb" id="pfBar"></div>
     <div class="pf" id="pfList"></div>
     <div class="dlg-foot"><button class="btn" type="button" data-act="pptx1">PowerPoint (1 slide)</button><button class="btn" type="button" id="btnPfXlsx">Baixar Excel</button><button class="btn" type="button" id="btnPfPrint">Imprimir ou salvar PDF</button><button class="btn primary" value="">Fechar</button></div>
   </form>
@@ -3167,31 +3176,7 @@ const ACT = {
     delete p.baseAt;
     save(); render();
   },
-  all: () => {
-    const ps = state.projects, days = ps.flatMap(p => p.tasks.flatMap(t => [d2n(t.start), d2n(t.end)]));
-    // régua em meses inteiros, do mês do começo mais cedo ao do fim mais tarde, com hoje sempre dentro
-    const da = new Date(Math.min(todayN, ...days) * DAY), db = new Date(Math.max(todayN, ...days) * DAY);
-    const a = Math.round(Date.UTC(da.getUTCFullYear(), da.getUTCMonth(), 1) / DAY), b = Math.round(Date.UTC(db.getUTCFullYear(), db.getUTCMonth() + 1, 1) / DAY) - 1;
-    const W = b - a + 1, pos = n => ((n - a) / W * 100).toFixed(3) + '%', wd = (s, e) => ((e - s + 1) / W * 100).toFixed(3) + '%';
-    pfR = { a, W };
-    const months = monthsIn(a, b), yrs = {};
-    months.forEach(m => { (yrs[m.y] = yrs[m.y] || { s: m.s, e: m.e }).e = m.e; });
-    const head = `<div class="pf-head"><span class="pf-corner">Projeto</span><div class="pf-scale">
-      <div class="pf-yr">${Object.keys(yrs).map(y => `<span style="left:${pos(yrs[y].s)};width:${wd(yrs[y].s, yrs[y].e)}">${y}</span>`).join('')}</div>
-      <div class="pf-mo">${months.map(m => `<span style="left:${pos(m.s)};width:${wd(m.s, m.e)}">${MES[m.m]}</span>`).join('')}</div>
-      <b class="pf-today" style="left:${pos(todayN + .5)}">hoje</b></div></div>`;
-    const grid = `<div class="pf-grid">${marksIn(a, b).map(k => `<b class="mk mk-${k.kind}" style="left:${pos(Math.max(k.s, a))};width:${wd(Math.max(k.s, a), Math.min(k.e, b))}">${k.kind === 'eq' ? `<span>${esc(k.name)}</span>` : ''}</b>`).join('')}${months.map(m => `<i style="left:${pos(m.s)}"></i>`).join('')}<s style="left:${pos(todayN + .5)}"></s></div><em class="pf-guide" hidden><b></b></em>`;
-    const rows = ps.map((p, k) => {
-      const n = p.tasks.length, pct = pctOf(p), late = p.tasks.filter(t => status(t) === 'late').length;
-      const s = n ? Math.min(...p.tasks.map(t => d2n(t.start))) : 0, e = n ? Math.max(...p.tasks.map(t => d2n(t.end))) : 0;
-      const per = n ? `${fmtCurto(s)} a ${fmtLong(e)}` : 'Sem tarefas';
-      return `<button class="pf-row" value="${p.id}" style="--k:${k}">
-        <span class="pf-name"><span class="pf-nt">${logoBox(p, 'lg-pf')}<b title="${esc(p.name)}">${esc(p.name)}</b></span><span class="pf-sub">${hb(p)}${tb(p)}<small>${pct}%, ${per}${late ? `, <em class="bad">${late} ${late === 1 ? 'atrasada' : 'atrasadas'}</em>` : ''}</small></span></span>
-        <span class="pf-lane" style="--k:${k}">${n ? `<i class="pf-bar hb-${health(p)[0]}" style="left:${pos(s)};width:${wd(s, e)}" title="${esc(p.name)}: ${per}"><u style="width:${pct}%"></u></i>` : ''}${p.tasks.filter(t => t.milestone).map(t => `<i class="pf-ms" style="left:${pos(d2n(t.start) + .5)}" title="${esc(t.name)}, ${fmtLong(d2n(t.start))}"></i>`).join('')}</span></button>`;
-    }).join('');
-    $('#pfList').innerHTML = head + `<div class="pf-body">${grid}${rows}</div>`;
-    const d = $('#dlgAll'); d.returnValue = ''; d.showModal();
-  },
+  all: () => { renderPf(); const d = $('#dlgAll'); d.returnValue = ''; d.showModal(); },
   hoje: () => { const t = G.querySelector('.today'); if (t) G.scrollTo({ left: t.offsetLeft - (G.clientWidth - G.querySelector('.g-canvas').offsetLeft) / 2, behavior: 'smooth' }); },
   undo, redo,
   fClear: () => { flt.q = flt.owner = flt.st = ''; renderTools(); renderGantt(); },
@@ -3242,8 +3227,9 @@ const ACT = {
     toast('PowerPoint gerado. Tudo nele é editável: textos, barras e cores.');
   },
   pptx1: () => {
-    download(buildPptx(state.projects, true), `visao-geral-1-slide-${n2d(todayN)}.pptx`);
-    toast(`Slide da visão geral gerado com ${state.projects.length} ${state.projects.length === 1 ? 'projeto' : 'projetos'}. Tudo nele é editável.`);
+    const ps = pfProjects(); if (!ps.length) return toast('Nenhum projeto com esse filtro.');
+    download(buildPptx(ps, true), `visao-geral-1-slide-${n2d(todayN)}.pptx`);
+    toast(`Slide da visão geral gerado com ${ps.length} ${ps.length === 1 ? 'projeto' : 'projetos'}${state.pfFlt ? ' (com o filtro da Visão geral)' : ''}. Tudo nele é editável.`);
   }
 };
 
@@ -3267,6 +3253,48 @@ document.addEventListener('keydown', e => {
 $('#tools').addEventListener('input', () => { flt.q = $('#fQ').value.trim(); flt.owner = $('#fOwner').value; flt.st = $('#fSt').value; renderGantt(); });
 // linha tracejada que segue o mouse na visão geral, com a data: mostra onde os projetos se cruzam
 let pfR = null;
+// Visão geral: ordem e filtro escolhidos na própria janela (valem também para imprimir, Excel e PowerPoint de 1 slide)
+const PF_SORT = { sev: 'Situação', start: 'Início', end: 'Fim', name: 'Nome', list: 'Ordem da lista' };
+function pfProjects() {
+  const f = state.pfFlt || '', so = state.pfSort in PF_SORT ? state.pfSort : 'list';
+  const per = p => p.tasks.length ? [Math.min(...p.tasks.map(t => d2n(t.start))), Math.max(...p.tasks.map(t => d2n(t.end)))] : [1e9, 1e9];
+  let ps = state.projects.filter(p => !f || health(p)[0] === f);
+  if (so === 'sev') ps = ps.slice().sort((a, b) => SEV[health(a)[0]] - SEV[health(b)[0]] || per(a)[1] - per(b)[1]);
+  else if (so === 'start') ps = ps.slice().sort((a, b) => per(a)[0] - per(b)[0]);
+  else if (so === 'end') ps = ps.slice().sort((a, b) => per(a)[1] - per(b)[1]);
+  else if (so === 'name') ps = ps.slice().sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+  return ps;
+}
+function renderPf() {
+  const so = state.pfSort in PF_SORT ? state.pfSort : 'list', f = state.pfFlt || '', cnt = k => state.projects.filter(p => health(p)[0] === k).length;
+  $('#pfBar').innerHTML = `<label class="fld pf-so">Ordenar por<select id="pfSort">${Object.entries(PF_SORT).map(([k, l]) => `<option value="${k}"${k === so ? ' selected' : ''}>${l}</option>`).join('')}</select></label>`
+    + `<div class="pf-fl" role="group" aria-label="Mostrar só"><button type="button" data-pff="" aria-pressed="${!f}">Todos <b>${state.projects.length}</b></button>${[['late', 'Atrasados'], ['risk', 'Atenção'], ['ok', 'No prazo'], ['done', 'Concluídos']].filter(([k]) => cnt(k) || f === k).map(([k, l]) => `<button type="button" data-pff="${k}" aria-pressed="${f === k}"><i class="hd hb-${k}"></i>${l} <b>${cnt(k)}</b></button>`).join('')}</div>`;
+    const ps = pfProjects(), days = ps.flatMap(p => p.tasks.flatMap(t => [d2n(t.start), d2n(t.end)]));
+    // régua em meses inteiros, do mês do começo mais cedo ao do fim mais tarde, com hoje sempre dentro
+    const da = new Date(Math.min(todayN, ...days) * DAY), db = new Date(Math.max(todayN, ...days) * DAY);
+    const a = Math.round(Date.UTC(da.getUTCFullYear(), da.getUTCMonth(), 1) / DAY), b = Math.round(Date.UTC(db.getUTCFullYear(), db.getUTCMonth() + 1, 1) / DAY) - 1;
+    const W = b - a + 1, pos = n => ((n - a) / W * 100).toFixed(3) + '%', wd = (s, e) => ((e - s + 1) / W * 100).toFixed(3) + '%';
+    pfR = { a, W };
+    const months = monthsIn(a, b), yrs = {};
+    months.forEach(m => { (yrs[m.y] = yrs[m.y] || { s: m.s, e: m.e }).e = m.e; });
+    const head = `<div class="pf-head"><span class="pf-corner">Projeto</span><div class="pf-scale">
+      <div class="pf-yr">${Object.keys(yrs).map(y => `<span style="left:${pos(yrs[y].s)};width:${wd(yrs[y].s, yrs[y].e)}">${y}</span>`).join('')}</div>
+      <div class="pf-mo">${months.map(m => `<span style="left:${pos(m.s)};width:${wd(m.s, m.e)}">${MES[m.m]}</span>`).join('')}</div>
+      <b class="pf-today" style="left:${pos(todayN + .5)}">hoje</b></div></div>`;
+    const grid = `<div class="pf-grid">${marksIn(a, b).map(k => `<b class="mk mk-${k.kind}" style="left:${pos(Math.max(k.s, a))};width:${wd(Math.max(k.s, a), Math.min(k.e, b))}">${k.kind === 'eq' ? `<span>${esc(k.name)}</span>` : ''}</b>`).join('')}${months.map(m => `<i style="left:${pos(m.s)}"></i>`).join('')}<s style="left:${pos(todayN + .5)}"></s></div><em class="pf-guide" hidden><b></b></em>`;
+    const rows = ps.map((p, k) => {
+      const n = p.tasks.length, pct = pctOf(p), late = p.tasks.filter(t => status(t) === 'late').length;
+      const s = n ? Math.min(...p.tasks.map(t => d2n(t.start))) : 0, e = n ? Math.max(...p.tasks.map(t => d2n(t.end))) : 0;
+      const per = n ? `${fmtCurto(s)} a ${fmtLong(e)}` : 'Sem tarefas';
+      return `<button class="pf-row" value="${p.id}" style="--k:${k}">
+        <span class="pf-name"><span class="pf-nt">${logoBox(p, 'lg-pf')}<b title="${esc(p.name)}">${esc(p.name)}</b></span><span class="pf-sub">${hb(p)}${tb(p)}<small>${pct}%, ${per}${late ? `, <em class="bad">${late} ${late === 1 ? 'atrasada' : 'atrasadas'}</em>` : ''}</small></span></span>
+        <span class="pf-lane" style="--k:${k}">${n ? `<i class="pf-bar hb-${health(p)[0]}" style="left:${pos(s)};width:${wd(s, e)}" title="${esc(p.name)}: ${per}"><u style="width:${pct}%"></u></i>` : ''}${p.tasks.filter(t => t.milestone).map(t => `<i class="pf-ms" style="left:${pos(d2n(t.start) + .5)}" title="${esc(t.name)}, ${fmtLong(d2n(t.start))}"></i>`).join('')}</span></button>`;
+    }).join('');
+    $('#pfList').innerHTML = ps.length ? head + `<div class="pf-body">${grid}${rows}</div>` : '<div class="ld-0">Nenhum projeto com esse filtro.</div>';
+}
+$('#pfBar').addEventListener('change', e => { if (e.target.id !== 'pfSort') return; state.pfSort = e.target.value; if (!RO) persist(); renderPf(); });
+$('#pfBar').addEventListener('click', e => { const b = e.target.closest('[data-pff]'); if (!b) return; state.pfFlt = b.dataset.pff; if (!RO) persist(); renderPf(); });
+
 $('#pfList').addEventListener('pointermove', e => {
   const g = $('#pfList .pf-guide'), grid = $('#pfList .pf-grid'); if (!g || !pfR) return;
   const r = grid.getBoundingClientRect(), x = e.clientX - r.left;
@@ -3734,7 +3762,7 @@ function pfData(ps = state.projects) {
   });
 }
 function buildPfXlsx() {
-  const D = pfData(), HK = ['ok', 'risk', 'late', 'done', 'none'], fills = HK.map(k => '#' + HC[k]).concat(['#003960']);
+  const D = pfData(pfProjects()), HK = ['ok', 'risk', 'late', 'done', 'none'], fills = HK.map(k => '#' + HC[k]).concat(['#003960']);
   const rows1 = [[{ v: 'Visão geral dos projetos', st: 't' }], [`Atualizado em ${fmtLong(todayN)}, ${D.length} ${D.length === 1 ? 'projeto' : 'projetos'}`], [],
     ['Projeto', 'Área', 'Situação', 'Tendência (7 dias)', '% concluído', 'Início', 'Fim', 'Tarefas', 'Atrasadas', 'Em risco', 'Próximo marco', 'Data do próximo marco'].map(v => ({ v, st: 'h' })),
     ...D.map(d => [{ v: d.p.name, st: 'b' }, d.p.area || '', { v: d.hl, st: HK.indexOf(d.hk) }, d.trend, { v: d.pct / 100, st: 'p' }, d.s == null ? '' : { v: d.s, st: 'd' }, d.e == null ? '' : { v: d.e, st: 'd' },
@@ -3757,7 +3785,7 @@ function buildPfXlsx() {
 function printPf() {
   const box = document.createElement('div'), el = document.documentElement, th = el.dataset.theme;
   box.id = 'pfPrint';
-  box.innerHTML = `<header class="pp-h"><div><h1>Visão geral dos projetos</h1><p>Atualizado em ${fmtLong(todayN)}, ${state.projects.length} ${state.projects.length === 1 ? 'projeto' : 'projetos'}</p></div><div class="pp-k"><span><i class="hb-ok"></i>No prazo</span><span><i class="hb-risk"></i>Atenção</span><span><i class="hb-late"></i>Atrasado</span><span><i class="hb-done"></i>Concluído</span><span><i class="pp-ms"></i>Marco</span></div></header>` + `<div class="pf">${$('#pfList').innerHTML}</div>`;
+  box.innerHTML = `<header class="pp-h"><div><h1>Visão geral dos projetos</h1><p>Atualizado em ${fmtLong(todayN)}, ${pfProjects().length} ${pfProjects().length === 1 ? 'projeto' : 'projetos'}${state.pfFlt ? ` (${{ late: 'só atrasados', risk: 'só em atenção', ok: 'só no prazo', done: 'só concluídos' }[state.pfFlt]})` : ''}</p></div><div class="pp-k"><span><i class="hb-ok"></i>No prazo</span><span><i class="hb-risk"></i>Atenção</span><span><i class="hb-late"></i>Atrasado</span><span><i class="hb-done"></i>Concluído</span><span><i class="pp-ms"></i>Marco</span></div></header>` + `<div class="pf">${$('#pfList').innerHTML}</div>`;
   document.body.appendChild(box);
   $('#dlgAll').close(); el.dataset.theme = 'light'; document.body.classList.add('pf-print');
   try { print(); } finally { document.body.classList.remove('pf-print'); el.dataset.theme = th; box.remove(); }
@@ -4139,7 +4167,7 @@ function slProj(p, ts, part, parts, pg) {
 // one = true: só o slide da visão geral, com todos os projetos
 function buildPptx(ps, one) {
   const ix = p => { const i = state.projects.indexOf(p); return i < 0 ? 1e9 : i; }, byTime = ps.slice().sort((a, b) => ix(a) - ix(b)), gi = p => t => p.groups.findIndex(g => g.id === t.groupId);
-  const mk = one ? [pg => slVisao(byTime, pg)] : [...chunk(ps, 7).map(c => pg => slResumo(c, pg, ps)), ...chunk(byTime, 8).map(c => pg => slTempo(c, pg))];
+  const mk = one ? [pg => slVisao(ps, pg)] : [...chunk(ps, 7).map(c => pg => slResumo(c, pg, ps)), ...chunk(byTime, 8).map(c => pg => slTempo(c, pg))];
   if (!one) byTime.filter(p => p.tasks.length).forEach(p => {
     const g = gi(p), ts = p.tasks.slice().sort((a, b) => g(a) - g(b) || (a.start < b.start ? -1 : a.start > b.start ? 1 : 0)), parts = chunk(ts, 15);
     parts.forEach((c, i) => mk.push(pg => slProj(p, c, i + 1, parts.length, pg)));

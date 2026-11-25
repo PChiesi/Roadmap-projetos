@@ -20,6 +20,7 @@ Ferramenta para montar cronogramas e roadmaps de projetos no navegador. É um ú
 - A situação considera o ritmo: tarefa que já começou e está 3 dias úteis atrás do previsto deixa o projeto em Atenção, e 10 dias ou mais conta como atrasada (limites ajustáveis em Critério das cores, para todos os projetos).
 - Ao lado da situação aparece a tendência (melhorou, piorou ou estável em relação a 7 dias atrás), e o critério das cores pode ter tolerância em dias por projeto.
 - **Recursos e conflitos** soma as atividades que acontecem ao mesmo tempo em todos os projetos (por atividade, grupo ou responsável), compara com as pessoas que você tem em cada linha (descontando as férias cadastradas) e mostra onde e quantas vão faltar. Exporta para Excel.
+- A Visão geral ordena por situação, início, fim ou nome e filtra por situação (atrasados, atenção, no prazo, concluídos); a impressão, o Excel e o slide seguem a mesma escolha.
 - A Visão geral pode ser impressa (ou salva em PDF) numa página limpa e exportada para Excel (tabela dos projetos e linha do tempo pintada por mês) ou para um PowerPoint de 1 slide com todos os projetos.
 - Dá para excluir vários projetos de uma vez pela lixeira ao lado de Projetos, na barra lateral.
 - A carga da equipe mostra, por pessoa e por semana, quantas tarefas abertas ela tem somando todos os projetos, com amarelo para duas ao mesmo tempo e vermelho para três ou mais.
