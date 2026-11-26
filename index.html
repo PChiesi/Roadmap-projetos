@@ -657,6 +657,8 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 .di-wt input{width:96px;height:32px;border:1px solid var(--line);border-radius:8px;padding:0 8px;text-align:center;font-weight:700;background:var(--surface);color:var(--ink)}
 .di-wt input:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18)}
 .di-wx{color:var(--ink-3);font-size:12.5px}
+.di-wt input.di-wn{width:100%;min-width:180px;text-align:left;font-weight:500}
+.di-wb{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:12.5px}
 #dlgPes{width:min(880px,calc(100vw - 32px))}
 .pe-prev h4{margin:10px 0 6px;font:700 14px var(--f-d);color:var(--title)}.pe-prev .di-t{font-size:13px}
 .dm-q{display:block;font-size:11.5px;color:var(--ink-3);font-style:normal}
@@ -1258,7 +1260,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ul><p><b>Vários projetos de uma vez</b></p><ul>
         <li>Para criar vários projetos de uma vez, clique em <b>Importar vários projetos</b>, dentro do Planejar D−. A planilha tem uma linha por projeto: a <b>primeira coluna</b> é o nome do projeto, as <b>colunas do meio</b> são as atividades (com os dias úteis de cada uma) e a <b>última coluna</b> é a data do marco. Opcional: depois do marco, uma coluna com o título <b>Responsável</b>; o nome vale para todas as atividades daquele projeto (vários nomes separados por /, vírgula ou ;) e entra na Carga da equipe e em Recursos por responsável. Os nomes das atividades e do marco ficam na linha de títulos. Escolha o arquivo (.xlsx ou .csv) ou cole as células copiadas do Excel: a tabela mostra quando cada projeto começa e o que fica de fora antes de criar. Valores como "10***" contam como 10; célula vazia ou 0 tira a atividade daquele projeto; linha sem data do marco fica de fora, com o motivo na prévia. <b>Baixar modelo (.csv)</b> traz uma planilha pronta com as atividades do seu modelo padrão. Importar de novo a mesma planilha replaneja os projetos com o mesmo nome e mantém o % concluído; responsável em branco mantém o que já estava.</li>
         <li>Os projetos importados abrem juntos na Linha única.</li>
-              <li><b>Quantidade de produtos:</b> na importação, escolha <b>Os números das atividades são › Quantidade de produtos</b>. O jeito mais simples é uma planilha com 4 colunas: <b>Projeto</b>, <b>Quantidade de produtos</b>, a data do <b>marco</b> e <b>Responsável</b> (opcional). A quantidade vale para todas as atividades, que aparecem na tabela de pesos (as do cenário de destino ou, na primeira vez, as do modelo padrão do Planejar D−); peso 0 e 0 tira uma atividade. Também dá para usar uma coluna por atividade, cada uma com a sua quantidade. Cada célula passa a ser quantos produtos aquela atividade tem no projeto, e aparece a tabela <b>Pesos por produto</b>: os dias úteis do <b>1º produto</b> e de <b>cada um dos demais</b>. O prazo da atividade é 1º produto + (quantidade − 1) × demais produtos. Exemplo: Especificar com 10 produtos, pesos 10 e 5 = 10 + 9 × 5 = 55 dias úteis. Com 0 produtos, a atividade fica de fora daquele projeto.</li>
+              <li><b>Quantidade de produtos:</b> na importação, escolha <b>Os números das atividades são › Quantidade de produtos</b>. O jeito mais simples é uma planilha com 4 colunas: <b>Projeto</b>, <b>Quantidade de produtos</b>, a data do <b>marco</b> e <b>Responsável</b> (opcional). A quantidade vale para todas as atividades, que aparecem na tabela de pesos (as do cenário de destino ou, na primeira vez, as do modelo padrão do Planejar D−); dá para renomear, mudar a ordem, tirar (×) ou incluir atividades ali mesmo, e a lista fica guardada para o cenário. Também dá para usar uma coluna por atividade, cada uma com a sua quantidade. Cada célula passa a ser quantos produtos aquela atividade tem no projeto, e aparece a tabela <b>Pesos por produto</b>: os dias úteis do <b>1º produto</b> e de <b>cada um dos demais</b>. O prazo da atividade é 1º produto + (quantidade − 1) × demais produtos. Exemplo: Especificar com 10 produtos, pesos 10 e 5 = 10 + 9 × 5 = 55 dias úteis. Com 0 produtos, a atividade fica de fora daquele projeto.</li>
         <li>Escolha também o <b>Cenário de destino</b>: os projetos entram nele, e os pesos ficam guardados como os desse cenário (na próxima importação para o mesmo cenário, eles já vêm preenchidos). A quantidade e os pesos ficam gravados em cada atividade, e o <b>Replanejar D−</b> mostra a conta ao lado das datas. Mudar os dias de uma atividade à mão faz ela deixar de seguir os pesos.</li>
       </ul></div></details>
       <details><summary>Cenários e orçamento</summary><div><ul>
@@ -3738,7 +3740,7 @@ async function diSheet() {
   try { const g = await xlsxGrid(DI_BUF.buf, () => +$('#diAba').value); diSet(dmParseGrid(g.rows, g.base1904)); } catch (e) { diSet(null, e.message); }
 }
 function openDmImp() {
-  DI_RAW = null; DI_W = []; document.querySelectorAll('#diMode [data-dmode]').forEach(x => x.setAttribute('aria-pressed', x.dataset.dmode === diMode())); diEx();
+  DI_RAW = null; DI_W = []; DI_ONE = false; document.querySelectorAll('#diMode [data-dmode]').forEach(x => x.setAttribute('aria-pressed', x.dataset.dmode === diMode())); diEx();
   $('#cenList').innerHTML = cenNames().map(c => `<option value="${esc(c)}">`).join('');
   $('#diCen').value = CEN() !== '*' ? CEN() : cenOf(cur());
   $('#diTxt').value = ''; $('#diFile').value = ''; $('#diAbaL').hidden = true; DI_BUF.buf = null; diShow(null);
@@ -3757,14 +3759,14 @@ function cenWSave(cen, list) {
   state.cenW[cen || ''] = m;
 }
 // importação em quantidade de produtos: os números das atividades são quantidades; os dias saem dos pesos
-let DI_RAW = null, DI_W = [];
+let DI_RAW = null, DI_W = [], DI_ONE = false;
 const diMode = () => state.diMode === 'qty' ? 'qty' : 'days';
 // uma coluna só de quantidade: a mesma quantidade vale para todas as atividades, que vêm dos pesos do cenário
 // (ou, se o cenário ainda não tem pesos, do modelo padrão do Planejar D−)
 const qtyActs = () => { const w = Object.values(cenWOf(diCenV())); return w.length ? w.map(x => x.name) : dmModel(DMS.def).rows.map(r => r.name).filter(Boolean); };
 function diExpand(raw) {
   if (!raw || diMode() !== 'qty' || raw.acts.length !== 1) return raw;
-  const acts = qtyActs();
+  const acts = DI_W.length && DI_ONE ? DI_W.map(w => w.name.trim() || 'Atividade') : qtyActs();
   return { ...raw, one: raw.acts[0], acts, items: raw.items.map(it => ({ ...it, days: acts.map(() => it.days[0]) })) };
 }
 function diCompute(raw0) {
@@ -3786,12 +3788,14 @@ function diCompute(raw0) {
 function diWRender() {
   const box = $('#diW');
   if (!DI_RAW || diMode() !== 'qty') { box.innerHTML = ''; box.hidden = true; return; }
-  const base = cenWOf(diCenV()), RX = diExpand(DI_RAW);
+  const base = cenWOf(diCenV());
+  if (DI_RAW.acts.length === 1 && !DI_ONE) { DI_W = []; DI_ONE = true; } else if (DI_RAW.acts.length !== 1 && DI_ONE) { DI_W = []; DI_ONE = false; }
+  const RX = diExpand(DI_RAW);
   DI_W = RX.acts.map((n, j) => { const o = DI_W[j] && DI_W[j].p1 != null && wKey(DI_W[j].name) === wKey(n) ? DI_W[j] : base[wKey(n)] || {}; return { name: n, p1: o.p1 ?? null, pn: o.pn ?? null }; });
   const cn = diCenV() ? `cenário ${diCenV()}` : 'sem cenário';
   box.hidden = false;
-  box.innerHTML = `<p class="di-wh"><b>Pesos por produto</b> (dias úteis) do ${esc(cn)}. Prazo da atividade = 1º produto + (quantidade − 1) × demais produtos.${RX.one ? ` A coluna <b>${esc(RX.one)}</b> vale para todas as atividades abaixo; peso 0 e 0 tira a atividade.` : ''}</p>
-    <table class="di-wt"><thead><tr><th>Atividade</th><th>1º produto</th><th>Demais produtos</th><th>Exemplo: 10 produtos</th></tr></thead><tbody>${DI_W.map((w, j) => `<tr><td>${esc(w.name)}</td><td><input type="number" min="0" max="365" step="0.5" data-w="${j}" data-k="p1" value="${w.p1 ?? ''}" aria-label="Dias úteis do primeiro produto em ${esc(w.name)}"></td><td><input type="number" min="0" max="365" step="0.5" data-w="${j}" data-k="pn" value="${w.pn ?? ''}" aria-label="Dias úteis de cada um dos demais produtos em ${esc(w.name)}"></td><td class="di-wx">${w.p1 != null && w.pn != null ? `${qtyDays(10, w.p1, w.pn)} dias úteis` : '—'}</td></tr>`).join('')}</tbody></table>`;
+  box.innerHTML = `<p class="di-wh"><b>${DI_ONE ? 'Atividades e pesos por produto' : 'Pesos por produto'}</b> (dias úteis) do ${esc(cn)}. Prazo da atividade = 1º produto + (quantidade − 1) × demais produtos.${RX.one ? ` A coluna <b>${esc(RX.one)}</b> vale para todas as atividades abaixo. Renomeie, mude a ordem, tire ou inclua atividades.` : ''}</p>
+    <table class="di-wt"><thead><tr><th>Atividade</th><th>1º produto</th><th>Demais produtos</th><th>Exemplo: 10 produtos</th>${DI_ONE ? '<th><span class="vh">Ordem</span></th>' : ''}</tr></thead><tbody>${DI_W.map((w, j) => `<tr><td>${DI_ONE ? `<input class="di-wn" data-wn="${j}" value="${esc(w.name)}" maxlength="200" aria-label="Nome da atividade ${j + 1}">` : esc(w.name)}</td><td><input type="number" min="0" max="365" step="0.5" data-w="${j}" data-k="p1" value="${w.p1 ?? ''}" aria-label="Dias úteis do primeiro produto em ${esc(w.name)}"></td><td><input type="number" min="0" max="365" step="0.5" data-w="${j}" data-k="pn" value="${w.pn ?? ''}" aria-label="Dias úteis de cada um dos demais produtos em ${esc(w.name)}"></td><td class="di-wx">${w.p1 != null && w.pn != null ? `${qtyDays(10, w.p1, w.pn)} dias úteis` : '—'}</td>${DI_ONE ? `<td class="dm-act"><button type="button" data-wm="up:${j}" aria-label="Subir ${esc(w.name)}"${j ? '' : ' disabled'}><svg viewBox="0 0 16 16" aria-hidden="true"><path d="${DMI.up}"/></svg></button><button type="button" data-wm="down:${j}" aria-label="Descer ${esc(w.name)}"${j < DI_W.length - 1 ? '' : ' disabled'}><svg viewBox="0 0 16 16" aria-hidden="true"><path d="${DMI.down}"/></svg></button><button type="button" data-wm="del:${j}" aria-label="Tirar ${esc(w.name)}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="${DMI.del}"/></svg></button></td>` : ''}</tr>`).join('')}</tbody></table>${DI_ONE ? `<div class="di-wb"><button type="button" class="btn slim" id="btnDiWAdd">+ Adicionar atividade</button><span class="muted">Estas atividades entram em todos os projetos, na ordem da tabela, e ficam guardadas para o ${esc(cn)}.</span></div>` : ''}`;
 }
 function diSet(raw, err) { DI_RAW = err ? null : raw; diWRender(); diShow(err ? null : diCompute(raw), err); }
 $('#diW').addEventListener('input', e => {
@@ -3799,7 +3803,14 @@ $('#diW').addEventListener('input', e => {
   const x = i.closest('tr').querySelector('.di-wx'); x.textContent = w.p1 != null && w.pn != null ? `${qtyDays(10, w.p1, w.pn)} dias úteis` : '—';
   diShow(diCompute(DI_RAW));
 });
-$('#diCen').addEventListener('change', () => { DI_W = []; diWRender(); diShow(diCompute(DI_RAW)); });
+$('#diW').addEventListener('change', e => { const i = e.target.closest('[data-wn]'); if (!i) return; DI_W[+i.dataset.wn].name = i.value.trim().replace(/\s+/g, ' ') || 'Atividade'; diShow(diCompute(DI_RAW)); });
+$('#diW').addEventListener('click', e => {
+  if (e.target.closest('#btnDiWAdd')) { if (DI_W.length >= 30) return toast('Até 30 atividades.'); DI_W.push({ name: 'Nova atividade', p1: null, pn: null }); diWRender(); diShow(diCompute(DI_RAW)); const n = $('#diW').querySelectorAll('[data-wn]'); const l = n[n.length - 1]; if (l) { l.focus(); l.select(); } return; }
+  const b = e.target.closest('[data-wm]'); if (!b) return; const [k, j0] = b.dataset.wm.split(':'), j = +j0;
+  if (k === 'del') DI_W.splice(j, 1); else { const t = k === 'up' ? j - 1 : j + 1; [DI_W[j], DI_W[t]] = [DI_W[t], DI_W[j]]; }
+  diWRender(); diShow(diCompute(DI_RAW));
+});
+$('#diCen').addEventListener('change', () => { DI_W = []; DI_ONE = false; diWRender(); diShow(diCompute(DI_RAW)); });
 $('#diMode').addEventListener('click', e => {
   const b = e.target.closest('[data-dmode]'); if (!b) return; state.diMode = b.dataset.dmode; if (!RO) persist();
   document.querySelectorAll('#diMode [data-dmode]').forEach(x => x.setAttribute('aria-pressed', x.dataset.dmode === diMode()));
@@ -3869,7 +3880,7 @@ $('#btnDiModelo').addEventListener('click', () => {
 });
 $('#dlgDmImp').addEventListener('close', () => {
   if ($('#dlgDmImp').returnValue !== 'ok' || !DI) return;
-  const cenT = diCenV(); if (DI.w) cenWSave(cenT, DI.w);
+  const cenT = diCenV(); if (DI.w) { if (DI.one) { state.cenW = state.cenW && typeof state.cenW === 'object' ? state.cenW : {}; state.cenW[cenT || ''] = {}; } cenWSave(cenT, DI.w); }
   const { made, upd } = dmImportApply(DI, $('#diUpd').checked, cenT);
   if (CEN() !== '*' && CEN() !== cenT) state.cen = cenT;
   const all = made.concat(upd); if (!all.length) return;
@@ -5255,6 +5266,9 @@ async function selfTest() {
       let c = diCompute(raw); ok(/faltam os pesos de Validar/.test(c.items[0].err) && /nenhuma atividade com produtos/.test(c.items[1].err), 'produtos: avisa peso faltando e projeto sem produtos');
       DI_W[1].pn = 1; c = diCompute(raw); ok(!c.items[0].err && c.items[0].days.join() === '55,4' && c.items[0].qty.join() === '10,2', 'produtos: dias saem dos pesos');
       const one = dmParseText('Projeto\tQuantidade de produtos\tMarco\tResponsável\nZ\t3\t01/06/2027\tPricing'), ex = diExpand(one);
+      DI_ONE = true; DI_W = [{ name: 'X1', p1: 2, pn: 1 }, { name: 'X2', p1: 1, pn: 1 }];
+      const ex2 = diCompute(one); ok(ex2.acts.join() === 'X1,X2' && ex2.items[0].days.join() === '4,3', 'produtos: lista de atividades editável na importação');
+      DI_ONE = false; DI_W = [];
       ok(ex.one === 'Quantidade de produtos' && ex.acts.length === qtyActs().length && ex.items[0].days.every(v => v === 3) && ex.items[0].owner === 'Pricing', 'produtos: uma coluna de quantidade vale para todas as atividades');
       const pp = normP({ id: 'qq', name: 'A', groups: [], tasks: [] }); applyDPlan(pp, d2n('2027-06-01'), c.acts.map((n, i) => ({ name: n, days: c.items[0].days[i], owner: '', qty: c.items[0].qty[i], p1: c.w[i].p1, pn: c.w[i].pn, tid: '' })), 'Marco');
       ok(normP(pp).dplan.rows[0].qty === 10 && normP(pp).dplan.rows[0].p1 === 10 && normP(pp).dplan.rows[0].days === 55, 'produtos: quantidade e pesos ficam no projeto');
