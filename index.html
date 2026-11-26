@@ -799,6 +799,8 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 .cm-top{display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
 .cm-f{flex:1;border:1px solid var(--line);border-radius:12px;padding:6px 12px 10px;margin:0;min-width:0}
 .cm-f legend{font-weight:700;font-size:13px;color:var(--title);padding:0 4px}
+.cm-op{flex:none;width:100%;display:flex;gap:6px 22px;flex-wrap:wrap}.cm-op legend{width:100%}
+.cm-cf dd{color:#7A4FA0}:root[data-theme=dark] .cm-cf dd{color:#C9A6EA}
 .cm-l{display:flex;gap:6px 18px;flex-wrap:wrap}.cm-l small{color:var(--ink-3)}
 .cm-from input{height:36px;border:1px solid var(--line);border-radius:10px;padding:0 10px;background:var(--surface);font-size:14px;color:var(--ink)}
 .cm-eq{border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--surface)}
@@ -1288,6 +1290,8 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li><b>Pesos</b> (ou <b>Projeto › Pesos por produto do cenário</b>) mostra os dias úteis do 1º produto e dos demais de cada atividade. Mudar um peso <b>replaneja de uma vez todos os projetos do cenário</b> importados com quantidade de produtos, de trás para frente a partir do marco de cada um, mantendo o % concluído. Antes de aplicar, a tabela <b>O que muda</b> mostra o início atual e o novo de cada projeto e avisa quem não cabe. Depois, o aviso traz <b>Desfazer</b>. Para comparar alternativas, copie o cenário e mude só os pesos da cópia.</li>
         <li>Na mesma janela, <b>Pesos por projeto</b> mostra uma linha por projeto e, para cada atividade, os campos 1º e demais. Vazio (com o peso do grupo em cinza) usa o do grupo; preenchido vale só para aquele projeto e não muda quando você mexer no peso do grupo. Apague o campo para voltar ao do grupo. Projetos com peso próprio ficam marcados.</li>
         <li><b>Comparar cenários</b>, na barra lateral em Todos os projetos (ou em Exportar), monta a apresentação de orçamento. Marque os cenários e o mês de início (por exemplo nov/26). Para cada cenário saem dois slides: a <b>visão geral</b> (um projeto por linha, sem % e sem situação, com a cor das fases e os marcos) e os <b>recursos necessários</b> (por função, o pico de atividades ao mesmo tempo em cada mês, a equipe atual e quantas pessoas contratar). Com dois cenários ou mais, o último slide compara os cenários de forma visual: um cartão por cenário com o número de <b>projetos</b> e de <b>pessoas a contratar</b> em destaque (o cenário com mais ganha o selo "+N projetos" e "+N pessoas a mais"), um gráfico de <b>Contratar por equipe</b> com uma barra por cenário em cada área (e quanto cada um precisa e tem) e, embaixo, os projetos que só existem em cada cenário e os em comum. A janela mostra a mesma tabela de contratação por equipe, e as diferenças e igualdades em texto.</li>
+        <li>Cada cartão do slide de comparação mostra também os <b>dias úteis de feriado</b> e os <b>dias úteis de férias</b> (soma das pessoas cadastradas em Recursos e conflitos) dentro do período do cenário, separados, para justificar o pedido de recursos.</li>
+        <li><b>Opções do PowerPoint</b>, na janela, ligam e desligam: <b>Destacar em laranja claro o que fica antes de hoje</b> (a parte das barras e os marcos que já deviam ter acontecido) e <b>Marcar o período com mais conflitos</b> (uma faixa roxa no slide de visão geral de cada cenário, nos dias em que a soma das faltas das áreas é a maior, com quantas pessoas faltam na legenda). A escolha fica salva.</li>
         <li>A área vem do campo <b>Responsável</b> das tarefas: <b>Projetos</b>, <b>Análise de Produtos</b>, <b>Pricing</b> ou <b>Sustentação</b> (acento, maiúscula e espaços não importam; "Analise de produtos" conta como Análise de Produtos). Tarefa com duas áreas ("Projetos / Pricing") conta 1 pessoa em cada. Cada atividade aberta conta como 1 pessoa da área enquanto dura.</li>
         <li>Informe a <b>Equipe atual por área</b> na janela: <b>Contratar</b> é o pico menos a equipe, <b>área por área</b>, porque uma área não cobre a outra (gente sobrando em Sustentação não reduz a falta em Pricing). <b>Pessoas necessárias</b> é a soma do maior pico de cada área, e a linha <b>Total</b> soma as áreas mês a mês. As quatro áreas sempre aparecem nos slides, nesta ordem, mesmo sem atividade no cenário; responsável fora da lista aparece depois. Para mudar a lista, edite <b>Áreas da equipe</b> na mesma janela. O tamanho da equipe de cada área é o mesmo usado em <b>Recursos e conflitos › Por responsável</b>: mudar num lugar muda no outro.</li>
       </ul></div></details>
@@ -1476,6 +1480,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
     <h2 id="cmT">Comparar cenários</h2>
     <p class="muted">Monta a apresentação de orçamento: para cada cenário marcado, um slide com a <b>visão geral</b> dos projetos (sem % e sem situação, com a cor das fases) e um slide com os <b>recursos necessários por área</b> (pico de atividades ao mesmo tempo, mês a mês, e quantas pessoas contratar); no fim, um slide com as <b>diferenças e igualdades</b>. Tudo a partir do mês escolhido.</p>
     <div class="cm-top"><fieldset class="cm-f"><legend>Cenários</legend><div class="cm-l" id="cmList"></div></fieldset><label class="fld cm-from">A partir de<input type="month" id="cmFrom"></label></div>
+    <fieldset class="cm-f cm-op"><legend>Opções do PowerPoint</legend><label class="chk"><input type="checkbox" id="cmLate"> Destacar em laranja claro o que fica antes de hoje</label><label class="chk"><input type="checkbox" id="cmPeak"> Marcar o período com mais conflitos (falta de pessoas)</label></fieldset>
     <details class="cm-eq" open><summary>Equipe atual por área <small>(quantas pessoas cada área tem hoje; Contratar = pico − equipe)</small></summary><div id="cmTeam"></div>
       <label class="fld cm-ar">Áreas da equipe <small>(sempre aparecem nos slides, nesta ordem; separe por vírgula)</small><input id="cmAreas" maxlength="400" autocomplete="off"></label></details>
     <div id="cmPrev" class="cm-prev"></div>
@@ -4437,14 +4442,21 @@ function cenRes(ps, from) {
   fin(total); total.cells = months.map((m, j) => list.reduce((a, r) => a + r.cells[j], 0));
   total.need = list.reduce((a, r) => a + r.need, 0); total.peakM = months[total.cells.indexOf(Math.max(0, ...total.cells))];
   total.have = list.reduce((a, r) => a + r.have, 0); total.hire = list.reduce((a, r) => a + r.hire, 0);
-  return { months, rows: list, total, from, end: d1 };
+  // período com mais conflito: os dias seguidos em que a soma das faltas das áreas é a maior
+  let best = 0, conf = null;
+  for (let i = 0; i < N; i++) { let m = 0; for (const r of list) m += Math.max(0, r.day[i] - r.have); if (m > best) { best = m; conf = { a: from + i, b: from + i, miss: m }; } else if (m === best && m > 0 && conf && conf.b === from + i - 1) conf.b = from + i; }
+  return { months, rows: list, total, from, end: d1, conf };
 }
 // um cenário pronto para a apresentação
 function cenPack(name, from) {
   const ps = state.projects.filter(p => cenOf(p) === name), R = cenRes(ps, from);
   const per = ps.map(p => { const ts = p.tasks.filter(t => d2n(t.end) >= from); return ts.length ? [Math.max(from, Math.min(...ts.map(t => d2n(t.start)))), Math.max(...ts.map(t => d2n(t.end)))] : null; });
   const ok = per.filter(Boolean);
-  return { name, ps, R, s: ok.length ? Math.min(...ok.map(x => x[0])) : null, e: ok.length ? Math.max(...ok.map(x => x[1])) : null, per };
+  const s0 = ok.length ? Math.min(...ok.map(x => x[0])) : null, e0 = ok.length ? Math.max(...ok.map(x => x[1])) : null;
+  let hol = 0, vac = 0;
+  if (s0 != null) { for (let n = s0; n <= e0; n++) { const w = dow(n); if (w && w !== 6 && !isWork(n)) hol++; }
+    vacList().forEach(v => { vac += wdIn(Math.max(s0, d2n(v.start)), Math.min(e0, d2n(v.end))); }); }
+  return { name, ps, R, s: s0, e: e0, per, hol, vac };
 }
 // diferenças e igualdades entre os cenários (texto pronto para a tela e o slide)
 function cenDiff(P) {
@@ -4480,16 +4492,21 @@ function cenDiff(P) {
   return { diff, same, common: common.length, only: onlyL, movedN };
 }
 // ---- slides ----
-function slCenVisao(c, from, pg) {
+function slCenVisao(c, from, pg, opt = {}) {
   const s = pSlide(), n = c.ps.length;
   sHead(s, `${c.name}: visão geral dos projetos`, `${n} ${n === 1 ? 'projeto' : 'projetos'}${c.s ? `  ·  ${mLbl(mOfN(c.s))} a ${mLbl(mOfN(c.e))}` : ''}  ·  a partir de ${mLbl(mOfN(from))}`, pg);
   if (!c.s) return s.xml();
   // legenda: as fases (grupos) com a cor de cada uma
   const gc = new Map(); c.ps.forEach(p => p.groups.forEach(g => { if (!gc.has(norm(g.name)) && p.tasks.some(t => t.groupId === g.id && d2n(t.end) >= from)) gc.set(norm(g.name), [g.name, g.color]); }));
-  let lx = SM; [...gc.values()].slice(0, 8).forEach(([nm, col]) => { s.sp({ x: lx, y: SH - 22, w: 14, h: 8, f: col.slice(1).toUpperCase() }); s.sp({ x: lx + 18, y: SH - 26, w: 92, h: 14, paras: [[cut(nm, 18), { sz: 8, c: '46606F' }]], ins: 0 }); lx += 112; });
+  const leg = [...gc.values()].slice(0, 8).map(([nm, col]) => [nm, col.slice(1).toUpperCase()]), CF = opt.peak && c.R.conf;
+  if (opt.late && c.s < todayN) leg.push(['Antes de hoje (alerta)', 'F9C98F']);
+  if (CF) leg.push([`Mais conflitos: ${CF.a === CF.b ? fmtBR(CF.a) : `${fmtBR(CF.a).slice(0, 5)} a ${fmtBR(CF.b)}`} (faltam ${CF.miss})`, '7A4FA0']);
+  let lx = SM; leg.forEach(([nm, col]) => { const w = Math.min(230, 26 + nm.length * 4.6); s.sp({ x: lx, y: SH - 22, w: 14, h: 8, f: col }); s.sp({ x: lx + 18, y: SH - 26, w: w - 18, h: 14, paras: [[cut(nm, 60), { sz: 8, c: col === '7A4FA0' ? '5B3A7A' : '46606F', b: col === '7A4FA0' }]], ins: 0 }); lx += w + 10; });
   const y0 = 112, rh = Math.min(40, (SH - 36 - y0) / Math.max(1, n)), nw = n > 24 ? 170 : 214, x0 = SM + nw, x1 = SW - SM;
   c.ps.forEach((p, i) => { if (i % 2) s.sp({ x: SM, y: y0 + i * rh, w: SW - 2 * SM, h: rh, f: 'F5F8F6' }); });
   const X = sRuler(s, x0, x1, 80, mOfN(c.s), mOfN(c.e), y0 + n * rh);
+  // período com mais conflitos: faixa roxa clara com bordas, como a linha do hoje
+  if (CF) { const l = X(CF.a), r = X(CF.b + 1); s.sp({ x: l, y: 110, w: Math.max(1.5, r - l), h: y0 + n * rh - 110, f: 'EFE6F7' }); [l, r].forEach(x => s.sp({ x: x - 0.75, y: 110, w: 1.5, h: y0 + n * rh - 110, f: '7A4FA0' })); }
   const two = rh >= 22, fz = Math.max(5.5, Math.min(11, rh * 0.42)), bh = Math.max(3, Math.min(16, rh * 0.45));
   c.ps.forEach((p, i) => {
     const y = y0 + i * rh, per = c.per[i];
@@ -4499,9 +4516,11 @@ function slCenVisao(c, from, pg) {
     // uma barra por fase (grupo), do começo ao fim das tarefas dela, cortada no início do período
     p.groups.forEach(g => { const ts = p.tasks.filter(t => t.groupId === g.id && !t.milestone && d2n(t.end) >= from); if (!ts.length) return;
       const a = Math.max(from, Math.min(...ts.map(t => d2n(t.start)))), e = Math.max(...ts.map(t => d2n(t.end))), bx = X(a);
-      s.sp({ x: bx, y: by, w: Math.max(2, X(e + 1) - bx), h: bh, f: g.color.slice(1).toUpperCase(), ln: ['FFFFFF', 0.5] }); });
+      s.sp({ x: bx, y: by, w: Math.max(2, X(e + 1) - bx), h: bh, f: g.color.slice(1).toUpperCase(), ln: ['FFFFFF', 0.5] });
+      // o que já devia ter acontecido (antes de hoje) em laranja claro de alerta
+      if (opt.late && a < todayN) { const le = Math.min(e, todayN - 1); s.sp({ x: bx, y: by, w: Math.max(2, X(le + 1) - bx), h: bh, f: 'F9C98F', ln: ['E8A317', 0.5] }); } });
     const md = Math.max(4, Math.min(10, rh * 0.5));
-    p.tasks.filter(t => t.milestone && d2n(t.start) >= from).forEach(t => s.sp({ x: X(d2n(t.start)) + 0.5, y: y + rh / 2 - md / 2, w: md, h: md, g: 'diamond', f: '003960', ln: ['FFFFFF', 0.5] }));
+    p.tasks.filter(t => t.milestone && d2n(t.start) >= from).forEach(t => s.sp({ x: X(d2n(t.start)) + 0.5, y: y + rh / 2 - md / 2, w: md, h: md, g: 'diamond', f: opt.late && d2n(t.start) < todayN ? 'E8A317' : '003960', ln: ['FFFFFF', 0.5] }));
   });
   return s.xml();
 }
@@ -4539,11 +4558,11 @@ function slCenCmp(P, D, pg) {
   const T = c => c.R.total || { need: 0, have: 0, hire: 0 }, nP = P.map(c => c.ps.length), hP = P.map(c => T(c).hire);
   const minP = Math.min(...nP), minH = Math.min(...hP);
   // 1) cartões
-  const gap = 12, cw = (SW - 2 * SM - gap * (n - 1)) / n, y0 = 82, ch = 104, big = n > 3 ? 22 : 30;
+  const gap = 12, cw = (SW - 2 * SM - gap * (n - 1)) / n, y0 = 82, ch = 132, big = n > 3 ? 22 : 30;
   P.forEach((c, i) => {
     const x = SM + i * (cw + gap);
     s.sp({ x, y: y0, w: cw, h: ch, f: 'FFFFFF', ln: [col(i), 1.25] });
-    s.sp({ x, y: y0, w: cw, h: 22, f: col(i), paras: [[cut(c.name, n > 3 ? 22 : 36), { sz: 11, b: 1, c: 'FFFFFF' }]], al: 'ctr', ins: 4 });
+    s.sp({ x, y: y0, w: cw, h: 22, f: col(i), paras: [[cut(c.name, n > 3 ? 22 : 36) + (c.s && n < 4 ? `  ·  ${mLbl(mOfN(c.s))} a ${mLbl(mOfN(c.e))}` : ''), { sz: 11, b: 1, c: 'FFFFFF' }]], al: 'ctr', ins: 4 });
     const half = cw / 2;
     s.sp({ x: x + 8, y: y0 + 26, w: half - 12, h: 40, paras: [[String(nP[i]), { sz: big, b: 1, c: '003960' }]], ins: 0 });
     s.sp({ x: x + 8, y: y0 + 64, w: half - 12, h: 14, paras: [['projetos', { sz: 9, c: '46606F' }]], ins: 0 });
@@ -4551,6 +4570,10 @@ function slCenCmp(P, D, pg) {
     s.sp({ x: x + half, y: y0 + 26, w: half - 8, h: 40, paras: [[`+${hP[i]}`, { sz: big, b: 1, c: hP[i] ? 'C80015' : '006729' }]], ins: 0 });
     s.sp({ x: x + half, y: y0 + 62, w: half - 8, h: 12, paras: [['a contratar', { sz: 9, c: '46606F' }]], ins: 0 });
     s.sp({ x: x + half, y: y0 + 73, w: half - 8, h: 12, paras: [[`${T(c).need} necessárias · ${T(c).have} na equipe`, { sz: 7.5, c: '5B6770' }]], ins: 0 });
+    // dias úteis perdidos no período do cenário (justificam o pedido de recursos)
+    s.sp({ x: x + 1, y: y0 + 104, w: cw - 2, h: 27, f: 'F5F8F6' });
+    s.sp({ x: x + 8, y: y0 + 105, w: half - 12, h: 25, paras: [[`${c.hol} ${c.hol === 1 ? 'dia útil' : 'dias úteis'} de feriado`, { sz: 9.5, b: 1, c: '0B2A3C' }], ['feriados nacionais em dias de semana', { sz: 7, c: '5B6770' }]], ins: 0 });
+    s.sp({ x: x + half, y: y0 + 105, w: half - 8, h: 25, paras: [[`${c.vac} ${c.vac === 1 ? 'dia útil' : 'dias úteis'} de férias`, { sz: 9.5, b: 1, c: '0B2A3C' }], ['soma das férias cadastradas', { sz: 7, c: '5B6770' }]], ins: 0 });
     if (n > 1 && hP[i] > minH) s.sp({ x: x + half, y: y0 + 86, w: Math.min(half - 8, 110), h: 14, f: 'FCE4E6', paras: [[`+${hP[i] - minH} ${hP[i] - minH === 1 ? 'pessoa' : 'pessoas'} a mais`, { sz: 8, b: 1, c: 'C80015' }]], al: 'ctr', ins: 2 });
   });
   // 2) contratar por equipe: uma barra por cenário em cada área
@@ -4597,7 +4620,7 @@ function renderCmp() {
   $('#cmTeam').innerHTML = roles.size ? `<div class="cm-tg">${[...roles].slice(0, nA).concat(other.sort((a, b) => a[1].localeCompare(b[1], 'pt-BR'))).map(([k, n]) => `<label class="cm-ti"><span title="${esc(n)}">${esc(n)}</span><input type="number" min="0" max="999" value="${teamOf(k)}" data-team="${esc(k)}" aria-label="Equipe atual de ${esc(n)}"></label>`).join('')}</div>` : '<p class="muted">Marque um cenário para ver as funções.</p>';
   if (!P.length) { $('#cmPrev').innerHTML = ''; $('#cmOk').disabled = true; return; }
   const D = cenDiff(P);
-  const card = c => { const T = c.R.total; return `<div class="cm-c"><h4>${esc(c.name)}</h4><dl><div><dt>Projetos</dt><dd>${c.ps.length}</dd></div><div><dt>Período</dt><dd>${c.s ? `${mLbl(mOfN(c.s))} a ${mLbl(mOfN(c.e))}` : '—'}</dd></div><div><dt>Pessoas necessárias</dt><dd>${T ? T.need : 0} <small>soma das áreas</small></dd></div><div><dt>Equipe atual</dt><dd>${T ? T.have : 0}</dd></div><div><dt>A contratar</dt><dd class="${T && T.hire ? 'bad' : 'good'}">+${T ? T.hire : 0}</dd></div></dl>
+  const card = c => { const T = c.R.total; return `<div class="cm-c"><h4>${esc(c.name)}</h4><dl><div><dt>Projetos</dt><dd>${c.ps.length}</dd></div><div><dt>Período</dt><dd>${c.s ? `${mLbl(mOfN(c.s))} a ${mLbl(mOfN(c.e))}` : '—'}</dd></div><div><dt>Pessoas necessárias</dt><dd>${T ? T.need : 0} <small>soma das áreas</small></dd></div><div><dt>Equipe atual</dt><dd>${T ? T.have : 0}</dd></div><div><dt>A contratar</dt><dd class="${T && T.hire ? 'bad' : 'good'}">+${T ? T.hire : 0}</dd></div><div><dt>Feriados no período</dt><dd>${c.hol} <small>dias úteis</small></dd></div><div><dt>Férias no período</dt><dd>${c.vac} <small>dias úteis</small></dd></div>${T && c.R.conf ? `<div class="cm-cf"><dt>Mais conflitos</dt><dd>${fmtBR(c.R.conf.a)}${c.R.conf.b !== c.R.conf.a ? ` a ${fmtBR(c.R.conf.b)}` : ''} <small>faltam ${c.R.conf.miss}</small></dd></div>` : ''}</dl>
     ${T ? `<table class="cm-t"><thead><tr><th>Área</th><th>Pico</th><th>Equipe</th><th>Contratar</th></tr></thead><tbody>${c.R.rows.map(r => `<tr><td>${esc(r.name)}</td><td>${r.need} <small>${mLbl(r.peakM)}</small></td><td>${r.have}</td><td class="${r.hire ? 'bad' : ''}">${r.hire ? '+' + r.hire : '0'}</td></tr>`).join('')}</tbody></table>` : ''}</div>`; };
   const nms = [...new Set(P.flatMap(c => c.R.rows.map(r => r.name)))], rw = (c, nm) => c.R.rows.find(r => r.name === nm) || { need: 0, have: 0, hire: 0 };
   const hireT = P.length > 1 ? `<div class="cm-h"><h4>Contratar por equipe</h4><table class="cm-t"><thead><tr><th>Equipe</th>${P.map(c => `<th>${esc(c.name)}</th>`).join('')}</tr></thead><tbody>${nms.filter(nm => P.some(c => rw(c, nm).need || rw(c, nm).have)).map(nm => `<tr><td>${esc(nm)}</td>${P.map(c => { const r = rw(c, nm); return `<td class="${r.hire ? 'bad' : ''}"><b>${r.hire ? '+' + r.hire : '0'}</b> <small>precisa ${r.need}, tem ${r.have}</small></td>`; }).join('')}</tr>`).join('')}<tr class="cm-tt"><td>Total</td>${P.map(c => `<td class="${c.R.total && c.R.total.hire ? 'bad' : ''}"><b>+${c.R.total ? c.R.total.hire : 0}</b> <small>${c.ps.length} projetos</small></td>`).join('')}</tr></tbody></table></div>` : '';
@@ -4610,6 +4633,7 @@ function openCmp() {
   const prev = Array.isArray(state.cmpSel) ? state.cmpSel.filter(c => cs.includes(c)) : [], on = prev.length ? prev : cs.slice(0, 3);
   $('#cmList').innerHTML = cs.map(c => `<label class="chk"><input type="checkbox" value="${esc(c)}"${on.includes(c) ? ' checked' : ''}> ${esc(c)} <small>(${state.projects.filter(p => p.cen === c).length})</small></label>`).join('');
   $('#cmFrom').value = state.cmpFrom || n2d(mFirst(mOfN(todayN))).slice(0, 7);
+  const O = state.cmpOpt || {}; $('#cmLate').checked = !!O.late; $('#cmPeak').checked = !!O.peak;
   renderCmp(); const d = $('#dlgCmp'); d.returnValue = ''; d.showModal();
 }
 $('#cmList').addEventListener('change', () => { state.cmpSel = cmpSel(); if (!RO) persist(); renderCmp(); });
@@ -4619,10 +4643,11 @@ $('#cmAreas').addEventListener('change', () => {
 });
 $('#cmFrom').addEventListener('change', () => { state.cmpFrom = $('#cmFrom').value; if (!RO) persist(); renderCmp(); });
 $('#cmTeam').addEventListener('change', e => { const i = e.target.closest('[data-team]'); if (!i) return; state.team = state.team && typeof state.team === 'object' ? state.team : {}; state.team[i.dataset.team] = Math.max(0, Math.min(999, Math.floor(+i.value || 0))); if (!RO) persist(); const k = i.dataset.team; renderCmp(); const ni = $('#cmTeam').querySelector(`[data-team="${CSS.escape(k)}"]`); if (ni) ni.focus(); });
+['cmLate', 'cmPeak'].forEach(id => $('#' + id).addEventListener('change', () => { state.cmpOpt = { late: $('#cmLate').checked, peak: $('#cmPeak').checked }; if (!RO) persist(); }));
 $('#cmOk').addEventListener('click', () => {
   const sel = cmpSel(), from = cmpFrom(); if (!sel.length) return;
-  const P = sel.map(n => cenPack(n, from)), D = cenDiff(P);
-  const mk = [...P.flatMap(c => [pg => slCenVisao(c, from, pg), pg => slCenRes(c, pg)]), ...(P.length > 1 ? [pg => slCenCmp(P, D, pg)] : [])];
+  const P = sel.map(n => cenPack(n, from)), D = cenDiff(P), opt = { late: $('#cmLate').checked, peak: $('#cmPeak').checked };
+  const mk = [...P.flatMap(c => [pg => slCenVisao(c, from, pg, opt), pg => slCenRes(c, pg)]), ...(P.length > 1 ? [pg => slCenCmp(P, D, pg)] : [])];
   download(buildPptx(state.projects, mk), `cenarios-${slug(sel.join('-x-')).slice(0, 60)}.pptx`);
   toast(`Apresentação gerada com ${mk.length} slides. Tudo nela é editável.`);
 });
@@ -5346,6 +5371,8 @@ async function selfTest() {
       state.projects = state.projects.filter(p => p.cen !== 'C');
       const z = await unzip(await buildPptx(state.projects, [pg => slCenVisao(cenPack('A', from), from, pg), pg => slCenRes(cenPack('A', from), pg), pg => slCenCmp(['A', 'B'].map(n => cenPack(n, from)), D, pg)]).arrayBuffer());
       ok(Object.keys(z).filter(k => /slides\/slide\d+\.xml$/.test(k)).length === 3, 'cenário: apresentação com 3 slides');
+      const pa = cenPack('B', from); ok(pa.R.conf && pa.R.conf.miss === 3 && pa.R.conf.a === d2n('2027-02-01') && pa.hol >= 0 && pa.vac === 0, 'cenário: período com mais conflitos');
+      const xo = slCenVisao(pa, from, '1', { late: true, peak: true }); ok(/7A4FA0/.test(xo) && /Mais conflitos/.test(xo), 'cenário: opções do PowerPoint');
     } finally { state.projects = sv; } }
   { // ritmo: dias úteis atrás do previsto
     const T0 = todayN, back = k => { let n = T0; for (let i = 0; i < k; i++) n = prevWork(n); return n; };
