@@ -659,7 +659,24 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 .di-wx{color:var(--ink-3);font-size:12.5px}
 .di-wt input.di-wn{width:100%;min-width:180px;text-align:left;font-weight:500}
 .di-wb{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:12.5px}
-#dlgPes{width:min(880px,calc(100vw - 32px))}
+#dlgPes{width:min(1180px,calc(100vw - 32px))}
+.pe-h{margin:12px 0 2px;font:700 14px var(--f-d);color:var(--title)}.pe-h:first-child{margin-top:0}.pe-s{margin:0 0 8px;font-size:12.5px}
+.pe-wrap{max-height:42vh;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.pe-m{border-collapse:separate;border-spacing:0;font-size:12.5px;min-width:100%}
+.pe-m th,.pe-m td{padding:4px 6px;border-bottom:1px solid var(--line-2);white-space:nowrap}
+.pe-m thead th{position:sticky;top:0;z-index:2;background:var(--surface);font-weight:600;color:var(--ink-2);text-align:center}
+.pe-m thead tr+tr th{top:27px;font-size:11.5px;font-weight:500;color:var(--ink-3)}
+.pe-m .pe-ah{border-left:1px solid var(--line)}
+.pe-m .pe-pn{position:sticky;left:0;z-index:1;background:var(--surface);text-align:left;font-weight:600;color:var(--ink);min-width:180px;max-width:240px;overflow:hidden;text-overflow:ellipsis;border-right:1px solid var(--line)}
+.pe-m thead .pe-pn{z-index:3}
+.pe-m .pe-pn small{display:block;font-weight:600;font-size:11px;color:var(--title)}
+.pe-m td{text-align:center}.pe-m td:nth-child(2n){border-left:1px solid var(--line-2)}
+.pe-m td small{display:block;font-size:10.5px;color:var(--ink-3)}
+.pe-m input{width:58px;height:30px;border:1px solid var(--line);border-radius:7px;text-align:center;font-weight:700;background:var(--surface);color:var(--ink)}
+.pe-m input::placeholder{color:var(--ink-3);font-weight:400;opacity:1}
+.pe-m input:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18)}
+.pe-m td.on input{border-color:var(--title);background:color-mix(in srgb,var(--title) 8%,var(--surface))}
+.pe-m .pe-na{color:var(--ink-3)}
 .pe-prev h4{margin:10px 0 6px;font:700 14px var(--f-d);color:var(--title)}.pe-prev .di-t{font-size:13px}
 .dm-q{display:block;font-size:11.5px;color:var(--ink-3);font-style:normal}
 .di-ex{overflow:auto;border:1px dashed var(--line);border-radius:10px;padding:6px 8px;background:color-mix(in srgb,var(--title) 4%,var(--surface))}
@@ -1269,6 +1286,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li>Com cenários, aparece o seletor <b>Cenário</b> na barra lateral, acima da lista de projetos. A lista e todos os painéis (Visão geral, Linha única, Recursos e conflitos, Carga da equipe, Relatório e PowerPoint) passam a olhar só o cenário escolhido. <b>Todos os projetos</b> volta a mostrar tudo. Projeto novo entra no cenário aberto.</li>
         <li>A engrenagem ao lado do seletor abre <b>Cenários</b>: renomear, <b>Pesos</b>, <b>Copiar</b> um cenário inteiro (para montar uma alternativa e mudar as datas ou os pesos) e <b>Excluir</b> um cenário com os projetos dele (Desfazer volta atrás).</li>
         <li><b>Pesos</b> (ou <b>Projeto › Pesos por produto do cenário</b>) mostra os dias úteis do 1º produto e dos demais de cada atividade. Mudar um peso <b>replaneja de uma vez todos os projetos do cenário</b> importados com quantidade de produtos, de trás para frente a partir do marco de cada um, mantendo o % concluído. Antes de aplicar, a tabela <b>O que muda</b> mostra o início atual e o novo de cada projeto e avisa quem não cabe. Depois, o aviso traz <b>Desfazer</b>. Para comparar alternativas, copie o cenário e mude só os pesos da cópia.</li>
+        <li>Na mesma janela, <b>Pesos por projeto</b> mostra uma linha por projeto e, para cada atividade, os campos 1º e demais. Vazio (com o peso do grupo em cinza) usa o do grupo; preenchido vale só para aquele projeto e não muda quando você mexer no peso do grupo. Apague o campo para voltar ao do grupo. Projetos com peso próprio ficam marcados.</li>
         <li><b>Comparar cenários</b>, na barra lateral em Todos os projetos (ou em Exportar), monta a apresentação de orçamento. Marque os cenários e o mês de início (por exemplo nov/26). Para cada cenário saem dois slides: a <b>visão geral</b> (um projeto por linha, sem % e sem situação, com a cor das fases e os marcos) e os <b>recursos necessários</b> (por função, o pico de atividades ao mesmo tempo em cada mês, a equipe atual e quantas pessoas contratar). Com dois cenários ou mais, o último slide compara os cenários de forma visual: um cartão por cenário com o número de <b>projetos</b> e de <b>pessoas a contratar</b> em destaque (o cenário com mais ganha o selo "+N projetos" e "+N pessoas a mais"), um gráfico de <b>Contratar por equipe</b> com uma barra por cenário em cada área (e quanto cada um precisa e tem) e, embaixo, os projetos que só existem em cada cenário e os em comum. A janela mostra a mesma tabela de contratação por equipe, e as diferenças e igualdades em texto.</li>
         <li>A área vem do campo <b>Responsável</b> das tarefas: <b>Projetos</b>, <b>Análise de Produtos</b>, <b>Pricing</b> ou <b>Sustentação</b> (acento, maiúscula e espaços não importam; "Analise de produtos" conta como Análise de Produtos). Tarefa com duas áreas ("Projetos / Pricing") conta 1 pessoa em cada. Cada atividade aberta conta como 1 pessoa da área enquanto dura.</li>
         <li>Informe a <b>Equipe atual por área</b> na janela: <b>Contratar</b> é o pico menos a equipe, <b>área por área</b>, porque uma área não cobre a outra (gente sobrando em Sustentação não reduz a falta em Pricing). <b>Pessoas necessárias</b> é a soma do maior pico de cada área, e a linha <b>Total</b> soma as áreas mês a mês. As quatro áreas sempre aparecem nos slides, nesta ordem, mesmo sem atividade no cenário; responsável fora da lista aparece depois. Para mudar a lista, edite <b>Áreas da equipe</b> na mesma janela. O tamanho da equipe de cada área é o mesmo usado em <b>Recursos e conflitos › Por responsável</b>: mudar num lugar muda no outro.</li>
@@ -1533,7 +1551,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 
 <dialog id="dlgPes" aria-labelledby="peT">
   <form method="dialog" class="dlg-in">
-    <div class="dm-head"><span class="dm-ic" aria-hidden="true">D−</span><div><h2 id="peT">Pesos por produto</h2><p class="muted">Dias úteis que cada atividade leva no <b>1º produto</b> e em <b>cada um dos demais</b>. Mudar aqui replaneja de uma vez todos os projetos do cenário que foram importados com quantidade de produtos, de trás para frente a partir do marco de cada um (o % concluído e as observações ficam).</p></div></div>
+    <div class="dm-head"><span class="dm-ic" aria-hidden="true">D−</span><div><h2 id="peT">Pesos por produto</h2><p class="muted">Dias úteis que cada atividade leva no <b>1º produto</b> e em <b>cada um dos demais</b>. Os <b>pesos do grupo</b> valem para todos os projetos do cenário; em <b>pesos por projeto</b>, preencha só o que for diferente para um projeto. Ao salvar, os projetos são replanejados de trás para frente a partir do marco de cada um (o % concluído e as observações ficam).</p></div></div>
     <div id="peBody"></div>
     <div id="pePrev" class="pe-prev"></div>
     <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok" id="peOk" disabled>Replanejar</button></div>
@@ -1887,7 +1905,7 @@ function dminus(anchor, days) {
 // Produtos: a atividade pode ter uma quantidade de produtos e dois pesos em dias úteis (1º produto e demais).
 // Prazo = 1º + (quantidade − 1) × demais, arredondado para cima; 0 produtos = a atividade fica de fora.
 const qN = (v, mx) => { if (v === '' || v == null) return null; const n = +String(v).replace(',', '.'); return Number.isFinite(n) && n >= 0 ? Math.min(mx, n) : null; };
-const qtyOf = r => { const q = qN(r && r.qty, 999), a = qN(r && r.p1, 365), b = qN(r && r.pn, 365); return q == null || a == null || b == null ? {} : { qty: Math.floor(q), p1: Math.round(a * 10) / 10, pn: Math.round(b * 10) / 10 }; };
+const qtyOf = r => { const q = qN(r && r.qty, 999), a = qN(r && r.p1, 365), b = qN(r && r.pn, 365); if (q == null || a == null || b == null) return {}; const o = { qty: Math.floor(q), p1: Math.round(a * 10) / 10, pn: Math.round(b * 10) / 10 }, x = qN(r.o1, 365), y = qN(r.on, 365); if (x != null) o.o1 = Math.round(x * 10) / 10; if (y != null) o.on = Math.round(y * 10) / 10; return o; };
 const qtyDays = (q, p1, pn) => !q ? 0 : Math.min(999, Math.ceil(p1 + (q - 1) * pn - 1e-9));
 const DM_ROWS = ['Discovery', 'Escrita da especificação', 'Validação da especificação com negócio', 'Refinamento com TI + Negócio', 'Ajustes da especificação do refinamento anterior', 'Validação final com TI'];
 // Modelos do D−: listas de atividades (com dias úteis e responsáveis) que a pessoa guarda para reaproveitar.
@@ -3562,7 +3580,7 @@ $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
 // Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
 // A cada versão nova, troque a data e a lista abaixo.
-const NOVIDADES = { versao: '2026-11-26', secoes: ['Planejar D− (de trás para frente)', 'Onde fica cada coisa', 'Cenários e orçamento', 'Situação do projeto', 'Recursos e conflitos', 'Ler o cronograma', 'Visão geral dos projetos', 'Relatório executivo e PowerPoint', 'Logo do projeto', 'Planejar D− (de trás para frente)'] };
+const NOVIDADES = { versao: '2026-11-26', secoes: ['Cenários e orçamento', 'Planejar D− (de trás para frente)', 'Onde fica cada coisa', 'Situação do projeto', 'Recursos e conflitos', 'Ler o cronograma', 'Visão geral dos projetos', 'Relatório executivo e PowerPoint', 'Logo do projeto'] };
 {
   const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
   sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
@@ -3623,12 +3641,12 @@ const DMI = { up: 'M8 13V3M3.5 7.5 8 3l4.5 4.5', down: 'M8 3v10M3.5 8.5 8 13l4.5
 let dmFor = null; // projeto sendo replanejado (null = projeto novo)
 const fmtDia = n => `${DSEM[dow(n)]} ${fmtBR(n).slice(0, 5)}`;
 function dmRow(r) {
-  const Q = qtyOf(r), qa = Q.qty != null ? ` data-q="${Q.qty}" data-p1="${Q.p1}" data-pn="${Q.pn}"` : '';
+  const Q = qtyOf(r), qa = Q.qty != null ? ` data-q="${Q.qty}" data-p1="${Q.p1}" data-pn="${Q.pn}"${Q.o1 != null ? ` data-o1="${Q.o1}"` : ''}${Q.on != null ? ` data-on="${Q.on}"` : ''}` : '';
   const b = (k, l) => `<button type="button" data-dm="${k}" aria-label="${l}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="${DMI[k]}"/></svg></button>`;
   return `<tr data-tid="${esc(r.tid || '')}"${qa}><td class="dm-n"></td><td><input class="dm-a" value="${esc(r.name)}" maxlength="200" aria-label="Atividade"></td><td><input class="dm-d" type="number" min="0" max="999" step="1" inputmode="numeric" value="${r.days || ''}" placeholder="0" aria-label="Dias úteis de ${esc(r.name)}"></td><td><input class="dm-o" value="${esc(r.owner || '')}" list="owners" maxlength="120" aria-label="Responsável" placeholder="Opcional"></td><td class="dm-dt"></td><td class="dm-act">${b('up', 'Subir')}${b('down', 'Descer')}${b('del', 'Tirar a atividade')}</td></tr>`;
 }
 const dmRows = () => [...$('#dmBody').children].map(tr => { const r = { name: tr.querySelector('.dm-a').value, days: tr.querySelector('.dm-d').value, owner: tr.querySelector('.dm-o').value, tid: tr.dataset.tid }, d = tr.dataset;
-  if (d.q != null && Math.floor(+r.days || 0) === qtyDays(+d.q, +d.p1, +d.pn)) Object.assign(r, { qty: +d.q, p1: +d.p1, pn: +d.pn });
+  if (d.q != null && Math.floor(+r.days || 0) === qtyDays(+d.q, +d.p1, +d.pn)) Object.assign(r, { qty: +d.q, p1: +d.p1, pn: +d.pn, ...(d.o1 != null ? { o1: +d.o1 } : {}), ...(d.on != null ? { on: +d.on } : {}) });
   return r; });
 // recalcula as datas na tela a cada tecla
 function dmCalc() {
@@ -3823,37 +3841,64 @@ function diEx() { $('#diIntro').innerHTML = diMode() === 'qty' ? 'Uma linha por 
 let PES = null;
 function pesActs(cen) {
   const ps = state.projects.filter(p => cenOf(p) === cen && p.dplan), acts = new Map(), base = cenWOf(cen);
-  ps.forEach(p => p.dplan.rows.forEach(r => { if (r.qty == null) return; const k = wKey(r.name); if (!acts.has(k)) acts.set(k, { name: r.name, p1: (base[k] || r).p1, pn: (base[k] || r).pn, n: 0 }); acts.get(k).n++; }));
-  return { ps: ps.filter(p => p.dplan.rows.some(r => r.qty != null)), acts: [...acts.values()] };
+  // peso do grupo: o guardado no cenário; sem ele, o de um projeto que não tem peso próprio
+  ps.forEach(p => p.dplan.rows.forEach(r => { if (r.qty == null) return; const k = wKey(r.name), own = r.o1 != null || r.on != null;
+    if (!acts.has(k)) acts.set(k, { name: r.name, p1: base[k] ? base[k].p1 : own ? null : r.p1, pn: base[k] ? base[k].pn : own ? null : r.pn, n: 0 });
+    const a = acts.get(k); if (!base[k] && !own && a.p1 == null) { a.p1 = r.p1; a.pn = r.pn; } a.n++; }));
+  const qps = ps.filter(p => p.dplan.rows.some(r => r.qty != null));
+  // pesos próprios de cada projeto (vazio = usa o do grupo)
+  const ov = {}; qps.forEach(p => { ov[p.id] = {}; p.dplan.rows.forEach(r => { if (r.qty != null) ov[p.id][wKey(r.name)] = { o1: r.o1 ?? null, on: r.on ?? null }; }); });
+  return { ps: qps, acts: [...acts.values()], ov };
 }
+// peso que vale para a atividade de um projeto: o próprio, se preenchido; senão, o do grupo
+const pesEff = (w, o) => ({ p1: o && o.o1 != null ? o.o1 : w.p1, pn: o && o.on != null ? o.on : w.pn });
 function pesPreview() {
   const W = new Map(PES.acts.map(a => [wKey(a.name), a])), rows = PES.ps.map(p => {
-    const nr = p.dplan.rows.map(r => { const w = r.qty != null && W.get(wKey(r.name)); return w && w.p1 != null && w.pn != null ? { ...r, p1: w.p1, pn: w.pn, days: qtyDays(r.qty, w.p1, w.pn) } : r; });
+    const ovp = PES.ov[p.id] || {};
+    const nr = p.dplan.rows.map(r => { const k = wKey(r.name), w = r.qty != null && W.get(k); if (!w) return r;
+      const o = ovp[k] || {}, e = pesEff(w, o), out = { ...r }; delete out.o1; delete out.on;
+      if (o.o1 != null) out.o1 = o.o1; if (o.on != null) out.on = o.on;
+      if (e.p1 == null || e.pn == null) return { ...out, p1: r.p1, pn: r.pn };
+      return { ...out, p1: e.p1, pn: e.pn, days: qtyDays(r.qty, e.p1, e.pn) }; });
     const a = d2n(p.dplan.anchor), sp0 = dminus(a, p.dplan.rows.map(r => r.days)).find(Boolean), sp1 = dminus(a, nr.map(r => r.days)).find(Boolean);
-    return { p, nr, s0: sp0 && sp0.s, s1: sp1 && sp1.s, ch: nr.some((r, i) => r.days !== p.dplan.rows[i].days) };
+    const ch = nr.some((r, i) => { const o = p.dplan.rows[i]; return r.days !== o.days || (r.o1 ?? null) !== (o.o1 ?? null) || (r.on ?? null) !== (o.on ?? null) || r.p1 !== o.p1 || r.pn !== o.pn; });
+    return { p, nr, s0: sp0 && sp0.s, s1: sp1 && sp1.s, ch, moved: nr.some((r, i) => r.days !== p.dplan.rows[i].days) };
   });
   return rows;
 }
+const pIn = (attrs, v, ph, label) => `<input type="number" min="0" max="365" step="0.5" ${attrs} value="${v ?? ''}"${ph != null ? ` placeholder="${ph}"` : ''} aria-label="${esc(label)}">`;
 function renderPes() {
   const { cen } = PES, R = pesPreview(), nch = R.filter(x => x.ch).length;
   $('#peT').textContent = `Pesos por produto: ${cen || 'sem cenário'}`;
-  $('#peBody').innerHTML = PES.acts.length ? `<table class="di-wt"><thead><tr><th>Atividade</th><th>1º produto</th><th>Demais produtos</th><th>Projetos</th></tr></thead><tbody>${PES.acts.map((a, j) => `<tr><td>${esc(a.name)}</td><td><input type="number" min="0" max="365" step="0.5" data-pe="${j}" data-k="p1" value="${a.p1 ?? ''}" aria-label="Dias úteis do primeiro produto em ${esc(a.name)}"></td><td><input type="number" min="0" max="365" step="0.5" data-pe="${j}" data-k="pn" value="${a.pn ?? ''}" aria-label="Dias úteis de cada um dos demais produtos em ${esc(a.name)}"></td><td>${a.n}</td></tr>`).join('')}</tbody></table>`
+  $('#peBody').innerHTML = PES.acts.length ? `<h4 class="pe-h">Pesos do grupo</h4><p class="muted pe-s">Valem para todos os projetos do cenário que não têm peso próprio.</p><table class="di-wt"><thead><tr><th>Atividade</th><th>1º produto</th><th>Demais produtos</th><th>Projetos</th></tr></thead><tbody>${PES.acts.map((a, j) => `<tr><td>${esc(a.name)}</td><td>${pIn(`data-pe="${j}" data-k="p1"`, a.p1, null, `Dias úteis do primeiro produto em ${a.name}`)}</td><td>${pIn(`data-pe="${j}" data-k="pn"`, a.pn, null, `Dias úteis de cada um dos demais produtos em ${a.name}`)}</td><td>${a.n}</td></tr>`).join('')}</tbody></table>`
+    + `<h4 class="pe-h">Pesos por projeto</h4><p class="muted pe-s">Preencha só onde um projeto foge da regra: o peso preenchido vale para aquele projeto e ignora o do grupo. Vazio (em cinza, o peso do grupo) usa o do grupo; apague para voltar a ele.</p>
+      <div class="pe-wrap"><table class="pe-m"><thead><tr><th rowspan="2" class="pe-pn">Projeto</th>${PES.acts.map(a => `<th colspan="2" class="pe-ah">${esc(a.name)}</th>`).join('')}</tr><tr>${PES.acts.map(() => '<th>1º</th><th>demais</th>').join('')}</tr></thead><tbody>${PES.ps.map(p => {
+        const q = new Map(p.dplan.rows.filter(r => r.qty != null).map(r => [wKey(r.name), r.qty])), ovp = PES.ov[p.id] || {}, own = PES.acts.some(a => { const o = ovp[wKey(a.name)]; return o && (o.o1 != null || o.on != null); });
+        return `<tr${own ? ' class="own"' : ''}><th class="pe-pn" scope="row">${esc(p.name)}${own ? ' <small>peso próprio</small>' : ''}</th>${PES.acts.map(a => { const k = wKey(a.name); if (!q.has(k)) return '<td colspan="2" class="pe-na">—</td>'; const o = ovp[k] || {};
+          return `<td class="${o.o1 != null ? 'on' : ''}">${pIn(`data-po="${p.id}" data-a="${esc(k)}" data-k="o1"`, o.o1, a.p1 ?? '', `${p.name}, ${a.name}: dias úteis do primeiro produto (vazio usa o do grupo)`)}<small>${q.get(k)} prod.</small></td><td class="${o.on != null ? 'on' : ''}">${pIn(`data-po="${p.id}" data-a="${esc(k)}" data-k="on"`, o.on, a.pn ?? '', `${p.name}, ${a.name}: dias úteis de cada um dos demais produtos (vazio usa o do grupo)`)}<small aria-hidden="true">&nbsp;</small></td>`; }).join('')}</tr>`; }).join('')}</tbody></table></div>`
     : '<p class="muted">Nenhum projeto deste cenário foi importado com quantidade de produtos. Use <b>Planejar D− › Importar vários projetos</b> e escolha <b>Quantidade de produtos</b>.</p>';
   $('#pePrev').innerHTML = R.length ? `<h4>O que muda</h4><table class="di-t"><thead><tr><th>Projeto</th><th>Marco</th><th>Começa hoje em</th><th>Passa a começar em</th><th></th></tr></thead><tbody>${R.map(x => { const dd = x.s1 != null && x.s0 != null ? wdIn(Math.min(x.s0, x.s1), Math.max(x.s0, x.s1)) - 1 : 0, late = x.s1 != null && x.s1 < todayN;
-    return `<tr${x.ch ? '' : ' class="err"'}><td>${esc(x.p.name)}</td><td>${fmtBR(d2n(x.p.dplan.anchor))}</td><td>${x.s0 != null ? fmtBR(x.s0) : '—'}</td><td>${x.s1 != null ? `<b>${fmtBR(x.s1)}</b>` : '—'}</td><td>${!x.ch ? 'sem mudança' : `<span class="di-st ${x.s1 < x.s0 ? 'late' : 'new'}">${x.s1 < x.s0 ? `${dd} d úteis antes` : `${dd} d úteis depois`}</span>`}${late ? ' <span class="di-st late">não cabe</span>' : ''}</td></tr>`; }).join('')}</tbody></table>` : '';
-  $('#peOk').disabled = !nch; $('#peOk').textContent = nch ? `Replanejar ${nch} ${nch === 1 ? 'projeto' : 'projetos'}` : 'Nada a replanejar';
+    return `<tr${x.ch ? '' : ' class="err"'}><td>${esc(x.p.name)}</td><td>${fmtBR(d2n(x.p.dplan.anchor))}</td><td>${x.s0 != null ? fmtBR(x.s0) : '—'}</td><td>${x.s1 != null ? `<b>${fmtBR(x.s1)}</b>` : '—'}</td><td>${!x.ch ? 'sem mudança' : !x.moved ? 'mesmas datas' : `<span class="di-st ${x.s1 < x.s0 ? 'late' : 'new'}">${x.s1 < x.s0 ? `${dd} d úteis antes` : `${dd} d úteis depois`}</span>`}${late ? ' <span class="di-st late">não cabe</span>' : ''}</td></tr>`; }).join('')}</tbody></table>` : '';
+  $('#peOk').disabled = !nch; $('#peOk').textContent = nch ? `Salvar e replanejar ${nch} ${nch === 1 ? 'projeto' : 'projetos'}` : 'Nada mudou';
 }
 function openPes(cen) {
   PES = { cen, ...pesActs(cen) }; renderPes(); const d = $('#dlgPes'); d.returnValue = ''; d.showModal();
 }
-$('#peBody').addEventListener('input', e => { const i = e.target.closest('[data-pe]'); if (!i) return; PES.acts[+i.dataset.pe][i.dataset.k] = qN(i.value, 365); const k = i.dataset.pe, kk = i.dataset.k; renderPes(); const ni = $('#peBody').querySelector(`[data-pe="${k}"][data-k="${kk}"]`); if (ni) { ni.focus(); const v = ni.value; ni.value = ''; ni.value = v; } });
+// redesenha mantendo o cursor no campo que estava sendo digitado
+const pesKeep = sel => { renderPes(); const ni = $('#peBody').querySelector(sel); if (ni) { ni.focus(); const v = ni.value; ni.value = ''; ni.value = v; } };
+$('#peBody').addEventListener('input', e => {
+  const g = e.target.closest('[data-pe]'), o = e.target.closest('[data-po]');
+  if (g) { PES.acts[+g.dataset.pe][g.dataset.k] = qN(g.value, 365); return pesKeep(`[data-pe="${g.dataset.pe}"][data-k="${g.dataset.k}"]`); }
+  if (o) { const m = (PES.ov[o.dataset.po] = PES.ov[o.dataset.po] || {}), c = (m[o.dataset.a] = m[o.dataset.a] || { o1: null, on: null }); c[o.dataset.k] = qN(o.value, 365);
+    return pesKeep(`[data-po="${o.dataset.po}"][data-a="${CSS.escape(o.dataset.a)}"][data-k="${o.dataset.k}"]`); }
+});
 $('#dlgPes').addEventListener('close', () => {
   if ($('#dlgPes').returnValue !== 'ok' || !PES) return;
   const R = pesPreview().filter(x => x.ch); if (!R.length) return;
   R.forEach(x => applyDPlan(x.p, d2n(x.p.dplan.anchor), x.nr, x.p.dplan.msName));
   cenWSave(PES.cen, PES.acts);
   save(); closeDrawer(); render('load');
-  undoToast(`${R.length} ${R.length === 1 ? 'projeto replanejado' : 'projetos replanejados'} com os pesos novos.`);
+  undoToast(`Pesos salvos: ${R.length} ${R.length === 1 ? 'projeto atualizado' : 'projetos atualizados'}.`);
 });
 $('#btnDmImp').addEventListener('click', () => { $('#dlgDm').close(); openDmImp(); });
 $('#btnDiFile').addEventListener('click', () => $('#diFile').click());
@@ -5257,6 +5302,15 @@ async function selfTest() {
     const g = await xlsxGrid(await xlsxBook([{ name: 'A', rows: [['x', 2, { v: d2n('2027-01-05'), st: 'd' }]] }, { name: 'B/2', rows: [[{ v: 'y', st: 0 }]] }], ['#E60018']).arrayBuffer(), n => n.indexOf('A'));
     ok(g.rows[0][0] === 'x' && g.rows[0][1] === 2 && g.rows[0][2] === d2n('2027-01-05') + 25569 && g.sheets.join() === 'A,B 2', 'planilha genérica: ida e volta');
     ok(pfData([mkp('A', '2027-03-01', '2027-03-12')])[0].pct === 0 && (await buildPfXlsx().arrayBuffer()).byteLength > 500, 'visão geral: planilha'); }
+  { // peso próprio do projeto vence o do grupo; vazio usa o do grupo
+    const w = { p1: 10, pn: 5 }; ok(pesEff(w, { o1: 20, on: null }).p1 === 20 && pesEff(w, { o1: 20, on: null }).pn === 5 && pesEff(w, {}).p1 === 10, 'produtos: peso próprio × grupo');
+    ok(qtyOf({ qty: 2, p1: 1, pn: 1, o1: 3 }).o1 === 3 && qtyOf({ qty: 2, p1: 1, pn: 1 }).o1 === undefined, 'produtos: peso próprio guardado');
+    const sp = state.projects, sw = state.cenW; try {
+      const mk = (id, q) => { const p = normP({ id, name: id, cen: 'PW', groups: [], tasks: [] }); applyDPlan(p, d2n('2027-06-01'), [{ name: 'Esp', days: qtyDays(q, 10, 5), qty: q, p1: 10, pn: 5, owner: '', tid: '' }], 'M'); return normP(p); };
+      state.projects = [mk('pa', 10), mk('pb', 10)]; state.cenW = { PW: { esp: { name: 'Esp', p1: 10, pn: 5 } } };
+      PES = { cen: 'PW', ...pesActs('PW') }; PES.ov.pa.esp.o1 = 20; PES.acts[0].pn = 6;
+      const R = pesPreview(); ok(R[0].nr[0].days === 74 && R[0].nr[0].o1 === 20 && R[1].nr[0].days === 64 && R[1].nr[0].o1 === undefined, 'produtos: grupo muda só onde não há peso próprio');
+    } finally { state.projects = sp; state.cenW = sw; PES = null; } }
   { // produtos: prazo = 1º + (quantidade − 1) × demais; pesos gravados na atividade
     ok(qtyDays(10, 10, 5) === 55 && qtyDays(1, 10, 5) === 10 && qtyDays(0, 10, 5) === 0 && qtyDays(3, 2.5, 1.5) === 6, 'produtos: conta do prazo');
     ok(qtyOf({ qty: '10', p1: '10', pn: '5' }).qty === 10 && qtyOf({ qty: 4 }).qty === undefined && qtyOf({ qty: '', p1: 1, pn: 1 }).qty === undefined, 'produtos: só guarda com quantidade e os dois pesos');
