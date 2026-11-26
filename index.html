@@ -643,6 +643,20 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 #dlgAbas{width:min(620px,calc(100vw - 32px))}
 #dlgDmImp{width:min(980px,calc(100vw - 32px))}
 .dm-bar-l{display:flex;gap:8px;flex-wrap:wrap}
+.di-cen{max-width:420px}.di-cen small{font-weight:400;color:var(--ink-3)}
+.di-cen input{height:36px;border:1px solid var(--line);border-radius:10px;padding:0 10px;background:var(--surface);font-size:14px;color:var(--ink)}
+.di-mode{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13.5px}
+.di-w{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface)}
+.di-wh{margin:0 0 8px;font-size:13px;color:var(--ink-2)}.di-wh b{color:var(--ink)}
+.di-wt{width:100%;border-collapse:collapse;font-size:13px}
+.di-wt th{text-align:left;font-size:12px;font-weight:600;color:var(--ink-2);padding:6px 8px;border-bottom:1px solid var(--line)}
+.di-wt td{padding:4px 8px;border-bottom:1px solid var(--line-2)}
+.di-wt input{width:96px;height:32px;border:1px solid var(--line);border-radius:8px;padding:0 8px;text-align:center;font-weight:700;background:var(--surface);color:var(--ink)}
+.di-wt input:focus{outline:none;border-color:var(--green-l);box-shadow:0 0 0 3px rgba(101,165,24,.18)}
+.di-wx{color:var(--ink-3);font-size:12.5px}
+#dlgPes{width:min(880px,calc(100vw - 32px))}
+.pe-prev h4{margin:10px 0 6px;font:700 14px var(--f-d);color:var(--title)}.pe-prev .di-t{font-size:13px}
+.dm-q{display:block;font-size:11.5px;color:var(--ink-3);font-style:normal}
 .di-ex{overflow:auto;border:1px dashed var(--line);border-radius:10px;padding:6px 8px;background:color-mix(in srgb,var(--title) 4%,var(--surface))}
 .di-ex table{border-collapse:collapse;font-size:12.5px;white-space:nowrap}
 .di-ex th,.di-ex td{padding:3px 10px;border-right:1px solid var(--line);text-align:left;color:var(--ink-2)}
@@ -665,7 +679,7 @@ dialog h2{font:700 22px var(--f-d);margin:0;color:var(--title);letter-spacing:-.
 .di-t td{padding:6px 10px;border-bottom:1px solid var(--line-2);white-space:nowrap}
 .di-t td:first-child{white-space:normal;font-weight:600;color:var(--ink)}
 .di-st{display:inline-block;padding:1px 8px;border-radius:99px;font-size:11.5px;font-weight:700}
-.di-st.new{background:color-mix(in srgb,var(--green) 14%,var(--surface));color:var(--green)}
+.di-st.new{background:color-mix(in srgb,var(--green) 14%,var(--surface));color:var(--green-txt)}
 .di-st.upd{background:color-mix(in srgb,var(--title) 12%,var(--surface));color:var(--title)}
 .di-st.late{background:color-mix(in srgb,var(--amber) 20%,var(--surface));color:var(--ink)}
 .di-st.err{background:color-mix(in srgb,var(--red) 12%,var(--surface));color:var(--red-txt)}
@@ -792,7 +806,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 @media (max-width:720px){.cm-d{grid-template-columns:1fr}}
 
 .cn-list{display:flex;flex-direction:column;gap:6px}
-.cn-i{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.cn-i{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto auto;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
 .cn-i input{height:34px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--surface);font-size:14px;font-weight:600;color:var(--ink);min-width:0}
 .cn-i small{font-size:12px;color:var(--ink-3);white-space:nowrap}
 @media (max-width:560px){.cn-i{grid-template-columns:1fr 1fr}.cn-i input{grid-column:1/-1}}
@@ -1060,6 +1074,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
             <div class="mp-h">Acompanhar o plano</div>
             <button data-act="baseSet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4h12l-2.5 4L17 12H5"/></svg><span>Salvar linha de base</span></button>
             <button data-act="baseDel" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4h12l-2.5 4L17 12H5"/></svg><span>Remover linha de base</span></button>
+            <button data-act="pes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M5 7h14M5 7l-3 7a3 3 0 0 0 6 0zM19 7l-3 7a3 3 0 0 0 6 0z"/></svg><span>Pesos por produto do cenário</span></button>
             <button data-act="dmRe" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M15 15.5h-6M11.5 13 9 15.5l2.5 2.5"/></svg><span>Replanejar D−</span></button>
             <div class="mp-h">Reaproveitar</div>
             <button data-act="cenMove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg><span>Mover para cenário</span></button>
@@ -1239,12 +1254,15 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
       </ul><p><b>Vários projetos de uma vez</b></p><ul>
         <li>Para criar vários projetos de uma vez, clique em <b>Importar vários projetos</b>, dentro do Planejar D−. A planilha tem uma linha por projeto: a <b>primeira coluna</b> é o nome do projeto, as <b>colunas do meio</b> são as atividades (com os dias úteis de cada uma) e a <b>última coluna</b> é a data do marco. Opcional: depois do marco, uma coluna com o título <b>Responsável</b>; o nome vale para todas as atividades daquele projeto (vários nomes separados por /, vírgula ou ;) e entra na Carga da equipe e em Recursos por responsável. Os nomes das atividades e do marco ficam na linha de títulos. Escolha o arquivo (.xlsx ou .csv) ou cole as células copiadas do Excel: a tabela mostra quando cada projeto começa e o que fica de fora antes de criar. Valores como "10***" contam como 10; célula vazia ou 0 tira a atividade daquele projeto; linha sem data do marco fica de fora, com o motivo na prévia. <b>Baixar modelo (.csv)</b> traz uma planilha pronta com as atividades do seu modelo padrão. Importar de novo a mesma planilha replaneja os projetos com o mesmo nome e mantém o % concluído; responsável em branco mantém o que já estava.</li>
         <li>Os projetos importados abrem juntos na Linha única.</li>
+              <li><b>Quantidade de produtos:</b> na importação, escolha <b>Os números das atividades são › Quantidade de produtos</b>. Cada célula passa a ser quantos produtos aquela atividade tem no projeto, e aparece a tabela <b>Pesos por produto</b>: os dias úteis do <b>1º produto</b> e de <b>cada um dos demais</b>. O prazo da atividade é 1º produto + (quantidade − 1) × demais produtos. Exemplo: Especificar com 10 produtos, pesos 10 e 5 = 10 + 9 × 5 = 55 dias úteis. Com 0 produtos, a atividade fica de fora daquele projeto.</li>
+        <li>Escolha também o <b>Cenário de destino</b>: os projetos entram nele, e os pesos ficam guardados como os desse cenário (na próxima importação para o mesmo cenário, eles já vêm preenchidos). A quantidade e os pesos ficam gravados em cada atividade, e o <b>Replanejar D−</b> mostra a conta ao lado das datas. Mudar os dias de uma atividade à mão faz ela deixar de seguir os pesos.</li>
       </ul></div></details>
       <details><summary>Cenários e orçamento</summary><div><ul>
         <li>Um <b>cenário</b> é um grupo de projetos guardado à parte, por exemplo "Orçamento 2027 – A" e "Orçamento 2027 – B". Cada projeto fica em um cenário ou em nenhum, e pode haver quantos cenários você quiser.</li>
         <li>Para criar: use <b>Abrir backup ou planilha</b> com o .json do cenário. O programa pergunta <b>em qual cenário</b> os projetos entram: dê um nome novo. Também dá para mover um projeto em <b>Projeto › Mover para cenário</b>. Importar o mesmo projeto em outro cenário cria uma cópia, sem mexer no original.</li>
         <li>Com cenários, aparece o seletor <b>Cenário</b> na barra lateral, acima da lista de projetos. A lista e todos os painéis (Visão geral, Linha única, Recursos e conflitos, Carga da equipe, Relatório e PowerPoint) passam a olhar só o cenário escolhido. <b>Todos os projetos</b> volta a mostrar tudo. Projeto novo entra no cenário aberto.</li>
-        <li>A engrenagem ao lado do seletor abre <b>Cenários</b>: renomear, <b>Copiar</b> um cenário inteiro (para montar uma alternativa e mudar as datas) e <b>Excluir</b> um cenário com os projetos dele (Desfazer volta atrás).</li>
+        <li>A engrenagem ao lado do seletor abre <b>Cenários</b>: renomear, <b>Pesos</b>, <b>Copiar</b> um cenário inteiro (para montar uma alternativa e mudar as datas ou os pesos) e <b>Excluir</b> um cenário com os projetos dele (Desfazer volta atrás).</li>
+        <li><b>Pesos</b> (ou <b>Projeto › Pesos por produto do cenário</b>) mostra os dias úteis do 1º produto e dos demais de cada atividade. Mudar um peso <b>replaneja de uma vez todos os projetos do cenário</b> importados com quantidade de produtos, de trás para frente a partir do marco de cada um, mantendo o % concluído. Antes de aplicar, a tabela <b>O que muda</b> mostra o início atual e o novo de cada projeto e avisa quem não cabe. Depois, o aviso traz <b>Desfazer</b>. Para comparar alternativas, copie o cenário e mude só os pesos da cópia.</li>
         <li><b>Comparar cenários</b>, na barra lateral em Todos os projetos (ou em Exportar), monta a apresentação de orçamento. Marque os cenários e o mês de início (por exemplo nov/26). Para cada cenário saem dois slides: a <b>visão geral</b> (um projeto por linha, sem % e sem situação, com a cor das fases e os marcos) e os <b>recursos necessários</b> (por função, o pico de atividades ao mesmo tempo em cada mês, a equipe atual e quantas pessoas contratar). Com dois cenários ou mais, o último slide compara os cenários de forma visual: um cartão por cenário com o número de <b>projetos</b> e de <b>pessoas a contratar</b> em destaque (o cenário com mais ganha o selo "+N projetos" e "+N pessoas a mais"), um gráfico de <b>Contratar por equipe</b> com uma barra por cenário em cada área (e quanto cada um precisa e tem) e, embaixo, os projetos que só existem em cada cenário e os em comum. A janela mostra a mesma tabela de contratação por equipe, e as diferenças e igualdades em texto.</li>
         <li>A área vem do campo <b>Responsável</b> das tarefas: <b>Projetos</b>, <b>Análise de Produtos</b>, <b>Pricing</b> ou <b>Sustentação</b> (acento, maiúscula e espaços não importam; "Analise de produtos" conta como Análise de Produtos). Tarefa com duas áreas ("Projetos / Pricing") conta 1 pessoa em cada. Cada atividade aberta conta como 1 pessoa da área enquanto dura.</li>
         <li>Informe a <b>Equipe atual por área</b> na janela: <b>Contratar</b> é o pico menos a equipe, <b>área por área</b>, porque uma área não cobre a outra (gente sobrando em Sustentação não reduz a falta em Pricing). <b>Pessoas necessárias</b> é a soma do maior pico de cada área, e a linha <b>Total</b> soma as áreas mês a mês. As quatro áreas sempre aparecem nos slides, nesta ordem, mesmo sem atividade no cenário; responsável fora da lista aparece depois. Para mudar a lista, edite <b>Áreas da equipe</b> na mesma janela. O tamanho da equipe de cada área é o mesmo usado em <b>Recursos e conflitos › Por responsável</b>: mudar num lugar muda no outro.</li>
@@ -1494,13 +1512,25 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
 
 <dialog id="dlgDmImp" aria-labelledby="diT">
   <form method="dialog" class="dlg-in" id="fDmImp">
-    <div class="dm-head"><span class="dm-ic" aria-hidden="true">D−</span><div><h2 id="diT">Importar vários projetos no D−</h2><p class="muted">Uma linha por projeto. A <b>primeira coluna</b> é o nome do projeto, as <b>colunas do meio</b> são as atividades com os dias úteis de cada uma, e a <b>última coluna</b> é a data do marco. Opcional: depois do marco, uma coluna <b>Responsável</b> (vale para todas as atividades do projeto; vários nomes separados por / , ou ;). Os nomes das atividades e do marco vêm da linha de títulos. Célula vazia ou 0: a atividade fica de fora daquele projeto.</p></div></div>
+    <div class="dm-head"><span class="dm-ic" aria-hidden="true">D−</span><div><h2 id="diT">Importar vários projetos no D−</h2><p class="muted">Uma linha por projeto. A <b>primeira coluna</b> é o nome do projeto, as <b>colunas do meio</b> são as atividades com os dias úteis de cada uma (ou a <b>quantidade de produtos</b>, se escolher essa opção abaixo), e a <b>última coluna</b> é a data do marco. Opcional: depois do marco, uma coluna <b>Responsável</b> (vale para todas as atividades do projeto; vários nomes separados por / , ou ;). Os nomes das atividades e do marco vêm da linha de títulos. Célula vazia ou 0: a atividade fica de fora daquele projeto.</p></div></div>
     <div class="di-ex" aria-hidden="true"><table><tr><th>Projeto</th><th>Discovery</th><th>Especificação</th><th>Refinamento com TI</th><th>Início do desenvolvimento</th><th class="di-opt">Responsável <small>(opcional)</small></th></tr><tr><td>Patrimonial</td><td>5</td><td>8</td><td>5</td><td>01/03/2027</td><td class="di-opt">Ana Ribeiro</td></tr><tr><td>RD e Rural</td><td>11</td><td>17</td><td>8</td><td>15/03/2027</td><td class="di-opt">Bruno / Carla</td></tr></table></div>
     <div class="di-src"><button class="btn" type="button" id="btnDiFile">Escolher planilha (.xlsx ou .csv)</button><input type="file" id="diFile" accept=".xlsx,.csv,.txt" hidden><label class="fld di-aba" id="diAbaL" hidden>Aba<select id="diAba"></select></label><button class="btn" type="button" id="btnDiModelo">Baixar modelo (.csv)</button></div>
+    <div class="di-mode"><span>Os números das atividades são</span><div class="seg" id="diMode" role="group" aria-label="O que os números das atividades significam"><button type="button" data-dmode="days" title="Cada número é o prazo da atividade, em dias úteis">Dias úteis</button><button type="button" data-dmode="qty" title="Cada número é a quantidade de produtos; o prazo sai dos pesos do 1º produto e dos demais">Quantidade de produtos</button></div></div>
+    <label class="fld di-cen">Cenário de destino <small>(os pesos por produto são os deste cenário)</small><input id="diCen" list="cenList" maxlength="80" autocomplete="off" placeholder="Sem cenário"></label>
     <label class="fld">Ou cole aqui as células copiadas do Excel, com a linha de títulos<textarea id="diTxt" rows="4" spellcheck="false" placeholder="Projeto&#9;Discovery&#9;Especificação&#9;…&#9;Início do desenvolvimento&#9;Responsável (opcional)"></textarea></label>
+    <div id="diW" class="di-w" hidden></div>
     <div id="diPrev" class="di-prev" aria-live="polite"></div>
     <label class="chk" id="diUpdL" hidden><input type="checkbox" id="diUpd" checked> Replanejar os projetos D− que já existem com o mesmo nome (mantém o % concluído e as observações)</label>
     <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok" id="diOk" disabled>Criar projetos</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgPes" aria-labelledby="peT">
+  <form method="dialog" class="dlg-in">
+    <div class="dm-head"><span class="dm-ic" aria-hidden="true">D−</span><div><h2 id="peT">Pesos por produto</h2><p class="muted">Dias úteis que cada atividade leva no <b>1º produto</b> e em <b>cada um dos demais</b>. Mudar aqui replaneja de uma vez todos os projetos do cenário que foram importados com quantidade de produtos, de trás para frente a partir do marco de cada um (o % concluído e as observações ficam).</p></div></div>
+    <div id="peBody"></div>
+    <div id="pePrev" class="pe-prev"></div>
+    <div class="dlg-foot"><button class="btn" value="cancel" formnovalidate>Cancelar</button><button class="btn primary" value="ok" id="peOk" disabled>Replanejar</button></div>
   </form>
 </dialog>
 
@@ -1732,7 +1762,7 @@ function normP(p) {
   { const L = okLogo(p.logo); if (L) out.logo = L; }
   { const c = String(p.cen ?? '').trim().replace(/\s+/g, ' ').slice(0, 80); if (c) out.cen = c; }
   if (p.dplan && okd(p.dplan.anchor) && Array.isArray(p.dplan.rows)) out.dplan = { anchor: p.dplan.anchor, msName: String(p.dplan.msName || '').slice(0, 120), ms: sid(p.dplan.ms), gp: sid(p.dplan.gp), gt: sid(p.dplan.gt),
-    rows: p.dplan.rows.slice(0, 30).filter(r => r && typeof r === 'object').map(r => ({ name: String(r.name || '').slice(0, 200), days: Math.max(0, Math.min(365, Math.floor(+r.days || 0))), owner: String(r.owner || '').slice(0, 120), tid: sid(r.tid) })) };
+    rows: p.dplan.rows.slice(0, 30).filter(r => r && typeof r === 'object').map(r => ({ name: String(r.name || '').slice(0, 200), days: Math.max(0, Math.min(999, Math.floor(+r.days || 0))), owner: String(r.owner || '').slice(0, 120), tid: sid(r.tid), ...qtyOf(r) })) };
   return out;
 }
 // Logo do projeto: imagem já reduzida pelo programa (PNG ou JPEG em base64, no máximo ~300 KB) e o tamanho dela
@@ -1842,19 +1872,24 @@ const DSEM = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
 function dminus(anchor, days) {
   const out = []; let next = anchor;
   for (let i = days.length - 1; i >= 0; i--) {
-    const d = Math.max(0, Math.min(365, Math.floor(+days[i] || 0))); if (!d) { out[i] = null; continue; }
+    const d = Math.max(0, Math.min(999, Math.floor(+days[i] || 0))); if (!d) { out[i] = null; continue; }
     const e = prevWork(next); let a = e; for (let k = 1; k < d; k++) a = prevWork(a);
     out[i] = { s: a, e }; next = a;
   }
   return out;
 }
+// Produtos: a atividade pode ter uma quantidade de produtos e dois pesos em dias úteis (1º produto e demais).
+// Prazo = 1º + (quantidade − 1) × demais, arredondado para cima; 0 produtos = a atividade fica de fora.
+const qN = (v, mx) => { if (v === '' || v == null) return null; const n = +String(v).replace(',', '.'); return Number.isFinite(n) && n >= 0 ? Math.min(mx, n) : null; };
+const qtyOf = r => { const q = qN(r && r.qty, 999), a = qN(r && r.p1, 365), b = qN(r && r.pn, 365); return q == null || a == null || b == null ? {} : { qty: Math.floor(q), p1: Math.round(a * 10) / 10, pn: Math.round(b * 10) / 10 }; };
+const qtyDays = (q, p1, pn) => !q ? 0 : Math.min(999, Math.ceil(p1 + (q - 1) * pn - 1e-9));
 const DM_ROWS = ['Discovery', 'Escrita da especificação', 'Validação da especificação com negócio', 'Refinamento com TI + Negócio', 'Ajustes da especificação do refinamento anterior', 'Validação final com TI'];
 // Modelos do D−: listas de atividades (com dias úteis e responsáveis) que a pessoa guarda para reaproveitar.
 // Ficam numa chave própria do navegador, fora dos projetos: valem no modo local, na equipe e na nuvem, e vão no backup.
 const DMK = 'roadmap-hdi-dm-modelos', DM_BUILTIN = { id: '', name: 'Lista do programa (Produto)', msName: '', rows: DM_ROWS.map(name => ({ name, days: 0, owner: '' })) };
 function normDmModel(m) {
   if (!m || typeof m !== 'object' || !Array.isArray(m.rows)) return null;
-  const rows = m.rows.slice(0, 30).map(r => r && typeof r === 'object' ? { name: String(r.name ?? '').trim().slice(0, 200), days: Math.max(0, Math.min(365, Math.floor(+r.days || 0))), owner: String(r.owner ?? '').trim().slice(0, 120) } : null).filter(r => r && (r.name || r.days));
+  const rows = m.rows.slice(0, 30).map(r => r && typeof r === 'object' ? { name: String(r.name ?? '').trim().slice(0, 200), days: Math.max(0, Math.min(999, Math.floor(+r.days || 0))), owner: String(r.owner ?? '').trim().slice(0, 120) } : null).filter(r => r && (r.name || r.days));
   if (!rows.length) return null;
   return { id: String(m.id ?? '').replace(/[^\w-]/g, '').slice(0, 40) || uid(), name: String(m.name || '').trim().slice(0, 80) || 'Modelo sem nome', msName: String(m.msName || '').trim().slice(0, 120), rows };
 }
@@ -1877,11 +1912,11 @@ function applyDPlan(p, anchor, rows, msName) {
   let prev = null; const saved = [];
   rows.forEach((r, i) => {
     let t = p.tasks.find(x => x.id === r.tid);
-    if (!span[i]) { saved.push({ name: r.name, days: 0, owner: r.owner, tid: '' }); return; }
+    if (!span[i]) { saved.push({ name: r.name, days: 0, owner: r.owner, tid: '', ...qtyOf(r) }); return; }
     if (!t) { t = { id: uid(), groupId: gP.id, progress: 0, milestone: false, risk: false, deps: [], note: '' }; p.tasks.push(t); }
     const outside = (t.deps || []).filter(id => !old.has(id));
     Object.assign(t, { name: r.name.trim() || 'Atividade', owner: r.owner.trim(), start: n2d(span[i].s), end: n2d(span[i].e), milestone: false, deps: [...(prev ? [prev] : []), ...outside] });
-    keep.add(t.id); planIds.add(t.id); prev = t.id; saved.push({ name: t.name, days: Math.floor(+r.days), owner: t.owner, tid: t.id });
+    keep.add(t.id); planIds.add(t.id); prev = t.id; saved.push({ name: t.name, days: Math.floor(+r.days), owner: t.owner, tid: t.id, ...qtyOf(r) });
   });
   let ms = p.tasks.find(x => x.id === p.dplan?.ms);
   if (!ms) { ms = { id: uid(), name: '', groupId: gT.id, owner: '', progress: 0, milestone: true, risk: false, deps: [], note: '' }; p.tasks.push(ms); }
@@ -1897,7 +1932,7 @@ function applyDPlan(p, anchor, rows, msName) {
 // Os nomes das atividades e do marco vêm do cabeçalho (a primeira linha com 3 ou mais células preenchidas).
 const dmCell = v => v == null ? '' : typeof v === 'string' ? v.trim() : v;
 // "10***" ou "5 dias" contam como 10 e 5; vazio é 0 (a atividade fica de fora desse projeto)
-const dmDays = v => { if (typeof v === 'number') return Math.max(0, Math.min(365, Math.round(v))); const m = String(v ?? '').trim().match(/^\d+([.,]\d+)?/); return m ? Math.max(0, Math.min(365, Math.round(+m[0].replace(',', '.')))) : 0; };
+const dmDays = v => { if (typeof v === 'number') return Math.max(0, Math.min(999, Math.round(v))); const m = String(v ?? '').trim().match(/^\d+([.,]\d+)?/); return m ? Math.max(0, Math.min(999, Math.round(+m[0].replace(',', '.')))) : 0; };
 function dmDate(v, base1904 = 0) {
   if (typeof v === 'number') return v > 20000 && v < 80000 ? Math.floor(v) - 25569 + base1904 : NaN;
   const t = String(v ?? '').trim().split(/[ T]/)[0], d = ltDate(t);
@@ -1933,14 +1968,15 @@ function dmParseText(txt) {
   return dmParseGrid(lines.map(l => l.split(sep).map(c => c.trim().replace(/^"(.*)"$/, '$1'))));
 }
 // cria ou replaneja (mesmo nome de um projeto D− que já existe) cada linha válida
-function dmImportApply(parsed, update) {
+function dmImportApply(parsed, update, cen) {
+  const inC = p => { if (cen == null) return inCen(p); if (cen) p.cen = cen; else delete p.cen; return p; }, pool = () => cen == null ? scopeP() : state.projects.filter(p => cenOf(p) === cen);
   const made = [], upd = [];
   for (const it of parsed.items) {
     if (it.err) continue;
-    const old = update ? scopeP().find(p => p.dplan && norm(p.name) === norm(it.name)) : null;
-    const rows = parsed.acts.map((name, i) => ({ name, days: it.days[i], owner: it.owner || '', tid: old ? (old.dplan.rows.find(r => norm(r.name) === norm(name)) || {}).tid || '' : '' }));
+    const old = update ? pool().find(p => p.dplan && norm(p.name) === norm(it.name)) : null;
+    const rows = parsed.acts.map((name, i) => ({ name, days: it.days[i], owner: it.owner || '', ...(it.qty && parsed.w ? { qty: it.qty[i], p1: parsed.w[i].p1, pn: parsed.w[i].pn } : {}), tid: old ? (old.dplan.rows.find(r => norm(r.name) === norm(name)) || {}).tid || '' : '' }));
     if (old) { rows.forEach(r => { const o = old.dplan.rows.find(x => x.tid === r.tid); if (o && !r.owner) r.owner = o.owner || ''; }); applyDPlan(old, it.anchor, rows, parsed.msName); upd.push(old); }
-    else { const p = { id: uid(), name: it.name, area: `Planejado em D− a partir do marco ${parsed.msName}`, groups: [], tasks: [] }; applyDPlan(p, it.anchor, rows, parsed.msName); state.projects.push(inCen(normP(p))); made.push(state.projects[state.projects.length - 1]); }
+    else { const p = { id: uid(), name: it.name, area: `Planejado em D− a partir do marco ${parsed.msName}`, groups: [], tasks: [] }; applyDPlan(p, it.anchor, rows, parsed.msName); state.projects.push(inC(normP(p))); made.push(state.projects[state.projects.length - 1]); }
   }
   return { made, upd };
 }
@@ -3321,6 +3357,7 @@ const ACT = {
   },
   dmRe: () => openDm(cur()),
   res: () => openRes(),
+  pes: () => openPes(cenOf(cur())),
   cmp: () => openCmp(),
   cenMng: () => { renderCen(); const d = $('#dlgCen'); d.returnValue = ''; d.showModal(); },
   cenMove: async () => {
@@ -3518,7 +3555,7 @@ $('#btnOpen').addEventListener('click', () => $('#fileOpen').click());
 $('#btnManual').addEventListener('click', () => $('#dlgManual').showModal());
 // Novidades: as seções do Manual que mudaram nesta versão ganham um selo, e o botão Manual avisa quem ainda não abriu desde então.
 // A cada versão nova, troque a data e a lista abaixo.
-const NOVIDADES = { versao: '2026-11-25', secoes: ['Onde fica cada coisa', 'Cenários e orçamento', 'Situação do projeto', 'Recursos e conflitos', 'Ler o cronograma', 'Visão geral dos projetos', 'Relatório executivo e PowerPoint', 'Logo do projeto', 'Planejar D− (de trás para frente)'] };
+const NOVIDADES = { versao: '2026-11-26', secoes: ['Planejar D− (de trás para frente)', 'Onde fica cada coisa', 'Cenários e orçamento', 'Situação do projeto', 'Recursos e conflitos', 'Ler o cronograma', 'Visão geral dos projetos', 'Relatório executivo e PowerPoint', 'Logo do projeto', 'Planejar D− (de trás para frente)'] };
 {
   const sums = [...document.querySelectorAll('#dlgManual summary')].filter(x => NOVIDADES.secoes.includes(x.textContent.trim()));
   sums.forEach(x => x.insertAdjacentHTML('beforeend', '<span class="man-new">Novo nesta versão</span>'));
@@ -3579,10 +3616,13 @@ const DMI = { up: 'M8 13V3M3.5 7.5 8 3l4.5 4.5', down: 'M8 3v10M3.5 8.5 8 13l4.5
 let dmFor = null; // projeto sendo replanejado (null = projeto novo)
 const fmtDia = n => `${DSEM[dow(n)]} ${fmtBR(n).slice(0, 5)}`;
 function dmRow(r) {
+  const Q = qtyOf(r), qa = Q.qty != null ? ` data-q="${Q.qty}" data-p1="${Q.p1}" data-pn="${Q.pn}"` : '';
   const b = (k, l) => `<button type="button" data-dm="${k}" aria-label="${l}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="${DMI[k]}"/></svg></button>`;
-  return `<tr data-tid="${esc(r.tid || '')}"><td class="dm-n"></td><td><input class="dm-a" value="${esc(r.name)}" maxlength="200" aria-label="Atividade"></td><td><input class="dm-d" type="number" min="0" max="365" step="1" inputmode="numeric" value="${r.days || ''}" placeholder="0" aria-label="Dias úteis de ${esc(r.name)}"></td><td><input class="dm-o" value="${esc(r.owner || '')}" list="owners" maxlength="120" aria-label="Responsável" placeholder="Opcional"></td><td class="dm-dt"></td><td class="dm-act">${b('up', 'Subir')}${b('down', 'Descer')}${b('del', 'Tirar a atividade')}</td></tr>`;
+  return `<tr data-tid="${esc(r.tid || '')}"${qa}><td class="dm-n"></td><td><input class="dm-a" value="${esc(r.name)}" maxlength="200" aria-label="Atividade"></td><td><input class="dm-d" type="number" min="0" max="999" step="1" inputmode="numeric" value="${r.days || ''}" placeholder="0" aria-label="Dias úteis de ${esc(r.name)}"></td><td><input class="dm-o" value="${esc(r.owner || '')}" list="owners" maxlength="120" aria-label="Responsável" placeholder="Opcional"></td><td class="dm-dt"></td><td class="dm-act">${b('up', 'Subir')}${b('down', 'Descer')}${b('del', 'Tirar a atividade')}</td></tr>`;
 }
-const dmRows = () => [...$('#dmBody').children].map(tr => ({ name: tr.querySelector('.dm-a').value, days: tr.querySelector('.dm-d').value, owner: tr.querySelector('.dm-o').value, tid: tr.dataset.tid }));
+const dmRows = () => [...$('#dmBody').children].map(tr => { const r = { name: tr.querySelector('.dm-a').value, days: tr.querySelector('.dm-d').value, owner: tr.querySelector('.dm-o').value, tid: tr.dataset.tid }, d = tr.dataset;
+  if (d.q != null && Math.floor(+r.days || 0) === qtyDays(+d.q, +d.p1, +d.pn)) Object.assign(r, { qty: +d.q, p1: +d.p1, pn: +d.pn });
+  return r; });
 // recalcula as datas na tela a cada tecla
 function dmCalc() {
   const F = $('#fDm').elements, a = F.anchor.value ? d2n(F.anchor.value) : NaN, rows = dmRows(), trs = [...$('#dmBody').children];
@@ -3590,8 +3630,8 @@ function dmCalc() {
   trs.forEach((tr, i) => { tr.querySelector('.dm-n').textContent = i + 1; tr.querySelector('[data-dm=up]').disabled = i === 0; tr.querySelector('[data-dm=down]').disabled = i === trs.length - 1; });
   const w = $('#dmWarn'), sum = $('#dmSum'); sum.classList.remove('bad');
   if (isNaN(a)) { trs.forEach(tr => { const c = tr.querySelector('.dm-dt'); c.className = 'dm-dt off'; c.textContent = 'informe a data do marco'; }); $('#dmMsD').textContent = ''; w.hidden = true; sum.textContent = 'Comece pelo nome e pela data do marco.'; return; }
-  const sp = dminus(a, rows.map(r => r.days)), total = rows.reduce((t, r) => t + Math.max(0, Math.min(365, Math.floor(+r.days || 0))), 0);
-  sp.forEach((x, i) => { const c = trs[i].querySelector('.dm-dt'); c.className = 'dm-dt' + (x ? '' : ' off'); c.innerHTML = x ? `<b>${fmtDia(x.s)}</b> a <b>${fmtDia(x.e)}</b>` : 'sem dias, fica de fora'; });
+  const sp = dminus(a, rows.map(r => r.days)), total = rows.reduce((t, r) => t + Math.max(0, Math.min(999, Math.floor(+r.days || 0))), 0);
+  sp.forEach((x, i) => { const c = trs[i].querySelector('.dm-dt'), q = rows[i].qty; c.className = 'dm-dt' + (x ? '' : ' off'); c.innerHTML = (x ? `<b>${fmtDia(x.s)}</b> a <b>${fmtDia(x.e)}</b>` : 'sem dias, fica de fora') + (q != null ? `<i class="dm-q">${q} ${q === 1 ? 'produto' : 'produtos'}: ${rows[i].p1} + ${Math.max(0, q - 1)} × ${rows[i].pn}</i>` : ''); });
   $('#dmMsD').innerHTML = `<b>${DSEM[dow(a)]} ${fmtBR(a)}</b>`;
   const hol = holidays(new Date(a * DAY).getUTCFullYear()).find(h => a >= h.s && a <= h.e);
   w.hidden = isWork(a);
@@ -3671,7 +3711,7 @@ function diShow(parsed, err) {
   const box = $('#diPrev'), ok = $('#diOk');
   if (err) { box.innerHTML = `<p class="dm-sum bad">Não consegui ler: ${esc(err)}.</p>`; ok.disabled = true; $('#diUpdL').hidden = true; return; }
   if (!parsed) { box.innerHTML = '<p class="muted">Escolha a planilha ou cole as células acima: a prévia aparece aqui e o botão Criar projetos é liberado.</p>'; ok.disabled = true; $('#diUpdL').hidden = true; return; }
-  const upd = $('#diUpd').checked, ex = new Set(scopeP().filter(p => p.dplan).map(p => norm(p.name)));
+  const upd = $('#diUpd').checked, cT = diCenV(), ex = new Set(state.projects.filter(p => p.dplan && cenOf(p) === cT).map(p => norm(p.name)));
   let nNew = 0, nUpd = 0, nLate = 0;
   const body = parsed.items.map(it => {
     if (it.err) return `<tr class="err"><td>${esc(it.name)}</td><td>—</td><td>—</td><td>—</td>${parsed.ownCol ? '<td>—</td>' : ''}<td><span class="di-st err">Fica de fora: ${esc(it.err)}</span> <small>linha ${it.line}</small></td></tr>`;
@@ -3688,14 +3728,106 @@ function diShow(parsed, err) {
   const n = nNew + nUpd; ok.disabled = !n || !parsed.acts.length;
   ok.textContent = !n ? 'Criar projetos' : nUpd && !nNew ? `Replanejar ${nUpd}` : nUpd ? `Criar ${nNew} e replanejar ${nUpd}` : nNew === 1 ? 'Criar 1 projeto' : `Criar ${nNew} projetos`;
 }
-const diText = () => { const t = $('#diTxt').value; if (!t.trim()) return diShow(null); try { diShow(dmParseText(t)); } catch (e) { diShow(null, e.message); } };
+const diText = () => { const t = $('#diTxt').value; if (!t.trim()) return diSet(null); try { diSet(dmParseText(t)); } catch (e) { diSet(null, e.message); } };
 async function diSheet() {
-  try { const g = await xlsxGrid(DI_BUF.buf, () => +$('#diAba').value); diShow(dmParseGrid(g.rows, g.base1904)); } catch (e) { diShow(null, e.message); }
+  try { const g = await xlsxGrid(DI_BUF.buf, () => +$('#diAba').value); diSet(dmParseGrid(g.rows, g.base1904)); } catch (e) { diSet(null, e.message); }
 }
 function openDmImp() {
+  DI_RAW = null; DI_W = []; document.querySelectorAll('#diMode [data-dmode]').forEach(x => x.setAttribute('aria-pressed', x.dataset.dmode === diMode()));
+  $('#cenList').innerHTML = cenNames().map(c => `<option value="${esc(c)}">`).join('');
+  $('#diCen').value = CEN() !== '*' ? CEN() : cenOf(cur());
   $('#diTxt').value = ''; $('#diFile').value = ''; $('#diAbaL').hidden = true; DI_BUF.buf = null; diShow(null);
   const d = $('#dlgDmImp'); d.returnValue = ''; d.showModal(); $('#btnDiFile').focus();
 }
+/* ---------- produtos e pesos (D−) ---------- */
+// Pesos por cenário: state.cenW[cenário][atividade] = { name, p1, pn } (dias úteis do 1º produto e dos demais).
+// São o ponto de partida de cada importação; os pesos que valem ficam gravados em cada atividade do projeto.
+const wKey = n => norm(n).replace(/\s+/g, ' ');
+const cenWOf = cen => (state.cenW && state.cenW[cen || '']) || {};
+const diCenV = () => ($('#diCen').value || '').trim().replace(/\s+/g, ' ').slice(0, 80);
+function cenWSave(cen, list) {
+  state.cenW = state.cenW && typeof state.cenW === 'object' ? state.cenW : {};
+  const m = { ...(state.cenW[cen || ''] || {}) };
+  list.forEach(w => { if (w.p1 != null && w.pn != null) m[wKey(w.name)] = { name: w.name, p1: w.p1, pn: w.pn }; });
+  state.cenW[cen || ''] = m;
+}
+// importação em quantidade de produtos: os números das atividades são quantidades; os dias saem dos pesos
+let DI_RAW = null, DI_W = [];
+const diMode = () => state.diMode === 'qty' ? 'qty' : 'days';
+function diCompute(raw) {
+  if (!raw || diMode() !== 'qty') return raw;
+  const W = raw.acts.map((n, j) => DI_W[j] || { name: n, p1: null, pn: null });
+  const items = raw.items.map(it => {
+    if (it.err && !/nenhuma atividade/.test(it.err)) return it;
+    const qty = it.days.slice(), miss = raw.acts.filter((n, j) => qty[j] > 0 && (W[j].p1 == null || W[j].pn == null));
+    const days = qty.map((q, j) => W[j].p1 == null || W[j].pn == null ? 0 : qtyDays(q, W[j].p1, W[j].pn));
+    const o = { ...it, qty, days, err: undefined };
+    if (!qty.some(Boolean)) o.err = 'nenhuma atividade com produtos';
+    else if (miss.length) o.err = `faltam os pesos de ${miss.slice(0, 3).join(', ')}`;
+    else if (!days.some(Boolean)) o.err = 'os pesos dão 0 dia';
+    return o;
+  });
+  return { ...raw, items, w: W };
+}
+function diWRender() {
+  const box = $('#diW');
+  if (!DI_RAW || diMode() !== 'qty') { box.innerHTML = ''; box.hidden = true; return; }
+  const base = cenWOf(diCenV());
+  DI_W = DI_RAW.acts.map((n, j) => { const o = DI_W[j] && DI_W[j].p1 != null && wKey(DI_W[j].name) === wKey(n) ? DI_W[j] : base[wKey(n)] || {}; return { name: n, p1: o.p1 ?? null, pn: o.pn ?? null }; });
+  const cn = diCenV() ? `cenário ${diCenV()}` : 'sem cenário';
+  box.hidden = false;
+  box.innerHTML = `<p class="di-wh"><b>Pesos por produto</b> (dias úteis) do ${esc(cn)}. Prazo da atividade = 1º produto + (quantidade − 1) × demais produtos.</p>
+    <table class="di-wt"><thead><tr><th>Atividade</th><th>1º produto</th><th>Demais produtos</th><th>Exemplo: 10 produtos</th></tr></thead><tbody>${DI_W.map((w, j) => `<tr><td>${esc(w.name)}</td><td><input type="number" min="0" max="365" step="0.5" data-w="${j}" data-k="p1" value="${w.p1 ?? ''}" aria-label="Dias úteis do primeiro produto em ${esc(w.name)}"></td><td><input type="number" min="0" max="365" step="0.5" data-w="${j}" data-k="pn" value="${w.pn ?? ''}" aria-label="Dias úteis de cada um dos demais produtos em ${esc(w.name)}"></td><td class="di-wx">${w.p1 != null && w.pn != null ? `${qtyDays(10, w.p1, w.pn)} dias úteis` : '—'}</td></tr>`).join('')}</tbody></table>`;
+}
+function diSet(raw, err) { DI_RAW = err ? null : raw; diWRender(); diShow(err ? null : diCompute(raw), err); }
+$('#diW').addEventListener('input', e => {
+  const i = e.target.closest('[data-w]'); if (!i) return; const w = DI_W[+i.dataset.w]; w[i.dataset.k] = qN(i.value, 365);
+  const x = i.closest('tr').querySelector('.di-wx'); x.textContent = w.p1 != null && w.pn != null ? `${qtyDays(10, w.p1, w.pn)} dias úteis` : '—';
+  diShow(diCompute(DI_RAW));
+});
+$('#diCen').addEventListener('change', () => { DI_W = DI_W.map(w => ({ ...w, p1: null, pn: null })); diWRender(); diShow(diCompute(DI_RAW)); });
+$('#diMode').addEventListener('click', e => {
+  const b = e.target.closest('[data-dmode]'); if (!b) return; state.diMode = b.dataset.dmode; if (!RO) persist();
+  document.querySelectorAll('#diMode [data-dmode]').forEach(x => x.setAttribute('aria-pressed', x.dataset.dmode === diMode()));
+  diWRender(); diShow(diCompute(DI_RAW));
+});
+
+// pesos de um cenário inteiro: mudar aqui replaneja todos os projetos D− dele que usam quantidade de produtos
+let PES = null;
+function pesActs(cen) {
+  const ps = state.projects.filter(p => cenOf(p) === cen && p.dplan), acts = new Map(), base = cenWOf(cen);
+  ps.forEach(p => p.dplan.rows.forEach(r => { if (r.qty == null) return; const k = wKey(r.name); if (!acts.has(k)) acts.set(k, { name: r.name, p1: (base[k] || r).p1, pn: (base[k] || r).pn, n: 0 }); acts.get(k).n++; }));
+  return { ps: ps.filter(p => p.dplan.rows.some(r => r.qty != null)), acts: [...acts.values()] };
+}
+function pesPreview() {
+  const W = new Map(PES.acts.map(a => [wKey(a.name), a])), rows = PES.ps.map(p => {
+    const nr = p.dplan.rows.map(r => { const w = r.qty != null && W.get(wKey(r.name)); return w && w.p1 != null && w.pn != null ? { ...r, p1: w.p1, pn: w.pn, days: qtyDays(r.qty, w.p1, w.pn) } : r; });
+    const a = d2n(p.dplan.anchor), sp0 = dminus(a, p.dplan.rows.map(r => r.days)).find(Boolean), sp1 = dminus(a, nr.map(r => r.days)).find(Boolean);
+    return { p, nr, s0: sp0 && sp0.s, s1: sp1 && sp1.s, ch: nr.some((r, i) => r.days !== p.dplan.rows[i].days) };
+  });
+  return rows;
+}
+function renderPes() {
+  const { cen } = PES, R = pesPreview(), nch = R.filter(x => x.ch).length;
+  $('#peT').textContent = `Pesos por produto: ${cen || 'sem cenário'}`;
+  $('#peBody').innerHTML = PES.acts.length ? `<table class="di-wt"><thead><tr><th>Atividade</th><th>1º produto</th><th>Demais produtos</th><th>Projetos</th></tr></thead><tbody>${PES.acts.map((a, j) => `<tr><td>${esc(a.name)}</td><td><input type="number" min="0" max="365" step="0.5" data-pe="${j}" data-k="p1" value="${a.p1 ?? ''}" aria-label="Dias úteis do primeiro produto em ${esc(a.name)}"></td><td><input type="number" min="0" max="365" step="0.5" data-pe="${j}" data-k="pn" value="${a.pn ?? ''}" aria-label="Dias úteis de cada um dos demais produtos em ${esc(a.name)}"></td><td>${a.n}</td></tr>`).join('')}</tbody></table>`
+    : '<p class="muted">Nenhum projeto deste cenário foi importado com quantidade de produtos. Use <b>Planejar D− › Importar vários projetos</b> e escolha <b>Quantidade de produtos</b>.</p>';
+  $('#pePrev').innerHTML = R.length ? `<h4>O que muda</h4><table class="di-t"><thead><tr><th>Projeto</th><th>Marco</th><th>Começa hoje em</th><th>Passa a começar em</th><th></th></tr></thead><tbody>${R.map(x => { const dd = x.s1 != null && x.s0 != null ? wdIn(Math.min(x.s0, x.s1), Math.max(x.s0, x.s1)) - 1 : 0, late = x.s1 != null && x.s1 < todayN;
+    return `<tr${x.ch ? '' : ' class="err"'}><td>${esc(x.p.name)}</td><td>${fmtBR(d2n(x.p.dplan.anchor))}</td><td>${x.s0 != null ? fmtBR(x.s0) : '—'}</td><td>${x.s1 != null ? `<b>${fmtBR(x.s1)}</b>` : '—'}</td><td>${!x.ch ? 'sem mudança' : `<span class="di-st ${x.s1 < x.s0 ? 'late' : 'new'}">${x.s1 < x.s0 ? `${dd} d úteis antes` : `${dd} d úteis depois`}</span>`}${late ? ' <span class="di-st late">não cabe</span>' : ''}</td></tr>`; }).join('')}</tbody></table>` : '';
+  $('#peOk').disabled = !nch; $('#peOk').textContent = nch ? `Replanejar ${nch} ${nch === 1 ? 'projeto' : 'projetos'}` : 'Nada a replanejar';
+}
+function openPes(cen) {
+  PES = { cen, ...pesActs(cen) }; renderPes(); const d = $('#dlgPes'); d.returnValue = ''; d.showModal();
+}
+$('#peBody').addEventListener('input', e => { const i = e.target.closest('[data-pe]'); if (!i) return; PES.acts[+i.dataset.pe][i.dataset.k] = qN(i.value, 365); const k = i.dataset.pe, kk = i.dataset.k; renderPes(); const ni = $('#peBody').querySelector(`[data-pe="${k}"][data-k="${kk}"]`); if (ni) { ni.focus(); const v = ni.value; ni.value = ''; ni.value = v; } });
+$('#dlgPes').addEventListener('close', () => {
+  if ($('#dlgPes').returnValue !== 'ok' || !PES) return;
+  const R = pesPreview().filter(x => x.ch); if (!R.length) return;
+  R.forEach(x => applyDPlan(x.p, d2n(x.p.dplan.anchor), x.nr, x.p.dplan.msName));
+  cenWSave(PES.cen, PES.acts);
+  save(); closeDrawer(); render('load');
+  undoToast(`${R.length} ${R.length === 1 ? 'projeto replanejado' : 'projetos replanejados'} com os pesos novos.`);
+});
 $('#btnDmImp').addEventListener('click', () => { $('#dlgDm').close(); openDmImp(); });
 $('#btnDiFile').addEventListener('click', () => $('#diFile').click());
 $('#diFile').addEventListener('change', async e => {
@@ -3720,7 +3852,9 @@ $('#btnDiModelo').addEventListener('click', () => {
 });
 $('#dlgDmImp').addEventListener('close', () => {
   if ($('#dlgDmImp').returnValue !== 'ok' || !DI) return;
-  const { made, upd } = dmImportApply(DI, $('#diUpd').checked);
+  const cenT = diCenV(); if (DI.w) cenWSave(cenT, DI.w);
+  const { made, upd } = dmImportApply(DI, $('#diUpd').checked, cenT);
+  if (CEN() !== '*' && CEN() !== cenT) state.cen = cenT;
   const all = made.concat(upd); if (!all.length) return;
   state.currentId = all[0].id;
   // mostra os importados juntos na Linha única
@@ -3987,7 +4121,7 @@ $('#dlgLogo').addEventListener('paste', e => { const f = [...(e.clipboardData?.f
 function renderCen() {
   const cs = cenNames();
   $('#cnList').innerHTML = cs.length ? cs.map(c => { const n = state.projects.filter(p => p.cen === c).length;
-    return `<div class="cn-i" data-cen="${esc(c)}"><input value="${esc(c)}" maxlength="80" aria-label="Nome do cenário ${esc(c)}"><small>${n} ${n === 1 ? 'projeto' : 'projetos'}</small><button type="button" class="btn slim" data-cn="copy">Copiar</button><button type="button" class="btn slim quiet" data-cn="del">Excluir</button></div>`; }).join('')
+    return `<div class="cn-i" data-cen="${esc(c)}"><input value="${esc(c)}" maxlength="80" aria-label="Nome do cenário ${esc(c)}"><small>${n} ${n === 1 ? 'projeto' : 'projetos'}</small><button type="button" class="btn slim" data-cn="pes" title="Pesos do 1º produto e dos demais, para replanejar o cenário inteiro">Pesos</button><button type="button" class="btn slim" data-cn="copy">Copiar</button><button type="button" class="btn slim quiet" data-cn="del">Excluir</button></div>`; }).join('')
     : '<p class="muted">Ainda não há cenários. Para criar um, abra um backup (.json) e dê um nome de cenário, ou use <b>Projeto › Mover para cenário</b>.</p>';
 }
 $('#cnList').addEventListener('change', e => {
@@ -3998,6 +4132,7 @@ $('#cnList').addEventListener('change', e => {
 });
 $('#cnList').addEventListener('click', async e => {
   const b = e.target.closest('[data-cn]'); if (!b) return; const c = b.closest('.cn-i').dataset.cen, ps = state.projects.filter(p => p.cen === c);
+  if (b.dataset.cn === 'pes') { $('#dlgCen').close(); return openPes(c); }
   if (b.dataset.cn === 'copy') {
     let nm = c + ' (cópia)'; while (cenNames().includes(nm)) nm += '+';
     const v = await ask({ title: 'Copiar cenário', text: `Os ${ps.length} projetos de "${c}" serão copiados para um cenário novo, para você ajustar datas e projetos sem mexer no original.`, label: 'Nome do cenário novo', value: nm, ok: 'Copiar' });
@@ -5094,6 +5229,17 @@ async function selfTest() {
     const g = await xlsxGrid(await xlsxBook([{ name: 'A', rows: [['x', 2, { v: d2n('2027-01-05'), st: 'd' }]] }, { name: 'B/2', rows: [[{ v: 'y', st: 0 }]] }], ['#E60018']).arrayBuffer(), n => n.indexOf('A'));
     ok(g.rows[0][0] === 'x' && g.rows[0][1] === 2 && g.rows[0][2] === d2n('2027-01-05') + 25569 && g.sheets.join() === 'A,B 2', 'planilha genérica: ida e volta');
     ok(pfData([mkp('A', '2027-03-01', '2027-03-12')])[0].pct === 0 && (await buildPfXlsx().arrayBuffer()).byteLength > 500, 'visão geral: planilha'); }
+  { // produtos: prazo = 1º + (quantidade − 1) × demais; pesos gravados na atividade
+    ok(qtyDays(10, 10, 5) === 55 && qtyDays(1, 10, 5) === 10 && qtyDays(0, 10, 5) === 0 && qtyDays(3, 2.5, 1.5) === 6, 'produtos: conta do prazo');
+    ok(qtyOf({ qty: '10', p1: '10', pn: '5' }).qty === 10 && qtyOf({ qty: 4 }).qty === undefined && qtyOf({ qty: '', p1: 1, pn: 1 }).qty === undefined, 'produtos: só guarda com quantidade e os dois pesos');
+    const raw = dmParseText('Projeto\tEspecificar\tValidar\tMarco\nA\t10\t2\t01/06/2027\nB\t0\t0\t01/06/2027');
+    const sm = state.diMode; try {
+      state.diMode = 'qty'; DI_W = [{ name: 'Especificar', p1: 10, pn: 5 }, { name: 'Validar', p1: 3, pn: null }];
+      let c = diCompute(raw); ok(/faltam os pesos de Validar/.test(c.items[0].err) && /nenhuma atividade com produtos/.test(c.items[1].err), 'produtos: avisa peso faltando e projeto sem produtos');
+      DI_W[1].pn = 1; c = diCompute(raw); ok(!c.items[0].err && c.items[0].days.join() === '55,4' && c.items[0].qty.join() === '10,2', 'produtos: dias saem dos pesos');
+      const pp = normP({ id: 'qq', name: 'A', groups: [], tasks: [] }); applyDPlan(pp, d2n('2027-06-01'), c.acts.map((n, i) => ({ name: n, days: c.items[0].days[i], owner: '', qty: c.items[0].qty[i], p1: c.w[i].p1, pn: c.w[i].pn, tid: '' })), 'Marco');
+      ok(normP(pp).dplan.rows[0].qty === 10 && normP(pp).dplan.rows[0].p1 === 10 && normP(pp).dplan.rows[0].days === 55, 'produtos: quantidade e pesos ficam no projeto');
+    } finally { state.diMode = sm; DI_W = []; } }
   { // cenários: recursos por função e comparação
     const mkc = (nm, cen, a, b, ow) => normP({ id: 'c' + nm + cen, name: nm, cen, groups: [{ id: 'g', name: 'Fase', color: '#006729' }], tasks: [{ id: 't', name: 'X', groupId: 'g', owner: ow, start: a, end: b, progress: 0, milestone: false, risk: false, deps: [], note: '' }] });
     ok(mkc('a', ' Orç  A ', '2027-01-04', '2027-01-08', 'Dev').cen === 'Orç A' && !normP({ name: 'x', groups: [], tasks: [] }).cen, 'cenário: guardado no projeto');
@@ -5161,7 +5307,7 @@ async function selfTest() {
     ok(dp.tasks.length === 7 && t2.progress === 50 && t2.note === 'nota' && !dp.tasks.some(t => t.id === ts[3].id) && dp.tasks.some(t => t.id === 'manual') && dp.tasks.find(t => t.milestone).start === '2027-03-05' && dp.tasks.find(t => t.milestone).name === 'Go-live', 'D−: replanejar mantém progresso e tira a linha removida');
     ok(dp.tasks.find(t => t.id === ts[4].id).deps[0] === ts[2].id, 'D−: dependências refeitas sem a linha removida');
     const mm = normDmModel({ id: '<x>', name: ' Meu ', msName: 'Go-live', rows: [{ name: 'A', days: '3.7', owner: 'Ana' }, { name: '', days: 0 }, { name: 'B', days: 999 }] });
-    ok(mm.id === 'x' && mm.name === 'Meu' && mm.rows.length === 2 && mm.rows[0].days === 3 && mm.rows[1].days === 365 && normDmModel({ rows: [] }) === null && normDmModel(null) === null, 'D−: modelo validado');
+    ok(mm.id === 'x' && mm.name === 'Meu' && mm.rows.length === 2 && mm.rows[0].days === 3 && mm.rows[1].days === 999 && normDmModel({ rows: [] }) === null && normDmModel(null) === null, 'D−: modelo validado');
     const st = normDmStore({ models: [mm, mm, { rows: 'x' }], def: 'x' });
     const gi = dmParseGrid([['', 'Teses'], ['Projeto', 'Discovery', 'Espec', 'Refino', 'Início TI'], ['A', 5, '10***', '', 46447], ['B', 2, 3, 0, '05/03/2027'], ['', 1], ['C', 1, 1, 1, 'x'], ['A', 1, 1, 1, 46447], ['D', 0, '', 0, 46447]]);
     ok(gi.msName === 'Início TI' && gi.acts.join() === 'Discovery,Espec,Refino' && gi.items.length === 5 && gi.items[0].days.join() === '5,10,0' && gi.items[0].anchor === 46447 - 25569 && gi.items[1].anchor === d2n('2027-03-05'), 'D−: importar várias linhas');
