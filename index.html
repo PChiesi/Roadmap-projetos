@@ -1290,6 +1290,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
         <li><b>Pesos</b> (ou <b>Projeto › Pesos por produto do cenário</b>) mostra os dias úteis do 1º produto e dos demais de cada atividade. Mudar um peso <b>replaneja de uma vez todos os projetos do cenário</b> importados com quantidade de produtos, de trás para frente a partir do marco de cada um, mantendo o % concluído. Antes de aplicar, a tabela <b>O que muda</b> mostra o início atual e o novo de cada projeto e avisa quem não cabe. Depois, o aviso traz <b>Desfazer</b>. Para comparar alternativas, copie o cenário e mude só os pesos da cópia.</li>
         <li>Na mesma janela, <b>Pesos por projeto</b> mostra uma linha por projeto e, para cada atividade, os campos 1º e demais. Vazio (com o peso do grupo em cinza) usa o do grupo; preenchido vale só para aquele projeto e não muda quando você mexer no peso do grupo. Apague o campo para voltar ao do grupo. Projetos com peso próprio ficam marcados.</li>
         <li><b>Comparar cenários</b>, na barra lateral em Todos os projetos (ou em Exportar), monta a apresentação de orçamento. Marque os cenários e o mês de início (por exemplo nov/26). Para cada cenário saem dois slides: a <b>visão geral</b> (um projeto por linha, sem % e sem situação, com a cor das fases e os marcos) e os <b>recursos necessários</b> (por função, o pico de atividades ao mesmo tempo em cada mês, a equipe atual e quantas pessoas contratar). Com dois cenários ou mais, o último slide compara os cenários de forma visual: um cartão por cenário com o número de <b>projetos</b> e de <b>pessoas a contratar</b> em destaque (o cenário com mais ganha o selo "+N projetos" e "+N pessoas a mais"), um gráfico de <b>Contratar por equipe</b> com uma barra por cenário em cada área (e quanto cada um precisa e tem) e, embaixo, os projetos que só existem em cada cenário e os em comum. A janela mostra a mesma tabela de contratação por equipe, e as diferenças e igualdades em texto.</li>
+        <li><b>Baixar leitura executiva (Word)</b>, na mesma janela, gera um documento à parte para o gestor levar à reunião: resumo em poucas linhas, quadro-resumo dos cenários, contratação por equipe, principais diferenças e o que é igual, <b>como ler cada slide</b> (com o número de cada slide do PowerPoint e os destaques daquele cenário), premissas de cálculo e decisões a tomar. Gere o PowerPoint e a leitura com as mesmas opções para os números de slide baterem. O Word é editável.</li>
         <li>Cada cartão do slide de comparação mostra também os <b>dias úteis de feriado</b> e os <b>dias úteis de férias</b> (soma das pessoas cadastradas em Recursos e conflitos) dentro do período do cenário, separados, para justificar o pedido de recursos.</li>
         <li><b>Opções do PowerPoint</b>, na janela, ligam e desligam: <b>Destacar em laranja claro o que fica antes de hoje</b> (a parte das barras e os marcos que já deviam ter acontecido) e <b>Marcar o período com mais conflitos</b> (uma faixa roxa no slide de visão geral de cada cenário, nos dias em que a soma das faltas das áreas é a maior, com quantas pessoas faltam na legenda). A escolha fica salva.</li>
         <li>A área vem do campo <b>Responsável</b> das tarefas: <b>Projetos</b>, <b>Análise de Produtos</b>, <b>Pricing</b> ou <b>Sustentação</b> (acento, maiúscula e espaços não importam; "Analise de produtos" conta como Análise de Produtos). Tarefa com duas áreas ("Projetos / Pricing") conta 1 pessoa em cada. Cada atividade aberta conta como 1 pessoa da área enquanto dura.</li>
@@ -1484,7 +1485,7 @@ body::after{right:-20vmax;bottom:-32vmax;background:radial-gradient(circle,var(-
     <details class="cm-eq" open><summary>Equipe atual por área <small>(quantas pessoas cada área tem hoje; Contratar = pico − equipe)</small></summary><div id="cmTeam"></div>
       <label class="fld cm-ar">Áreas da equipe <small>(sempre aparecem nos slides, nesta ordem; separe por vírgula)</small><input id="cmAreas" maxlength="400" autocomplete="off"></label></details>
     <div id="cmPrev" class="cm-prev"></div>
-    <div class="dlg-foot"><button class="btn" value="">Fechar</button><button class="btn primary" type="button" id="cmOk">Baixar PowerPoint</button></div>
+    <div class="dlg-foot"><button class="btn" value="">Fechar</button><button class="btn" type="button" id="cmDoc" title="Documento Word à parte, para levar à reunião: resumo, quadros e como ler cada slide">Baixar leitura executiva (Word)</button><button class="btn primary" type="button" id="cmOk">Baixar PowerPoint</button></div>
   </form>
 </dialog>
 
@@ -4652,6 +4653,111 @@ $('#cmOk').addEventListener('click', () => {
   toast(`Apresentação gerada com ${mk.length} slides. Tudo nela é editável.`);
 });
 
+/* ---------- leitura executiva (Word) de apoio ao PowerPoint de cenários ---------- */
+// Documento .docx simples (títulos, parágrafos, listas e tabelas), editável no Word, para o gestor levar à reunião
+function docxBook(body) {
+  const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main', R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
+  const st = (id, name, o) => `<w:style w:type="paragraph" w:styleId="${id}"><w:name w:val="${name}"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:keepNext/><w:spacing w:before="${o.b}" w:after="${o.a}"/><w:outlineLvl w:val="${o.l}"/></w:pPr><w:rPr><w:b/><w:color w:val="${o.c}"/><w:sz w:val="${o.s}"/></w:rPr></w:style>`;
+  const styles = `${XHEAD}<w:styles xmlns:w="${W}"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/><w:sz w:val="21"/><w:lang w:val="pt-BR"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="100" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>
+<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style>
+<w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:spacing w:after="60"/></w:pPr><w:rPr><w:b/><w:color w:val="003960"/><w:sz w:val="40"/></w:rPr></w:style>
+${st('Heading1', 'heading 1', { b: 300, a: 100, l: 0, c: '003960', s: 28 })}${st('Heading2', 'heading 2', { b: 200, a: 80, l: 1, c: '006729', s: 23 })}
+<w:style w:type="table" w:default="1" w:styleId="TableNormal"><w:name w:val="Normal Table"/><w:tblPr><w:tblCellMar><w:top w:w="40" w:type="dxa"/><w:left w:w="90" w:type="dxa"/><w:bottom w:w="40" w:type="dxa"/><w:right w:w="90" w:type="dxa"/></w:tblCellMar></w:tblPr></w:style></w:styles>`;
+  const doc = `${XHEAD}<w:document xmlns:w="${W}" xmlns:r="${R}"><w:body>${body}<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/></w:sectPr></w:body></w:document>`;
+  return new Blob([zip([
+    ['[Content_Types].xml', `${XHEAD}<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>`],
+    ['_rels/.rels', `${XHEAD}<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="${R}/officeDocument" Target="word/document.xml"/></Relationships>`],
+    ['word/_rels/document.xml.rels', `${XHEAD}<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="${R}/styles" Target="styles.xml"/></Relationships>`],
+    ['word/styles.xml', styles], ['word/document.xml', doc]
+  ])], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+}
+// pedaços de texto: string simples, ou [texto, { b, c, i }]
+const wRun = x => { const [t, o] = Array.isArray(x) ? x : [x, {}]; return `<w:r>${o.b || o.c || o.i ? `<w:rPr>${o.b ? '<w:b/>' : ''}${o.i ? '<w:i/>' : ''}${o.c ? `<w:color w:val="${o.c}"/>` : ''}</w:rPr>` : ''}<w:t xml:space="preserve">${xq(t)}</w:t></w:r>`; };
+const wP = (runs, o = {}) => `<w:p>${o.st || o.ind || o.keep ? `<w:pPr>${o.st ? `<w:pStyle w:val="${o.st}"/>` : ''}${o.keep ? '<w:keepNext/>' : ''}${o.ind ? `<w:ind w:left="${o.ind}" w:hanging="220"/>` : ''}</w:pPr>` : ''}${(Array.isArray(runs) && !(runs.length === 2 && typeof runs[1] === 'object' && !Array.isArray(runs[1])) ? runs : [runs]).map(wRun).join('')}</w:p>`;
+const wH = (t, l = 1) => wP(t, { st: 'Heading' + l });
+const wLi = runs => wP(['•  ', ...(Array.isArray(runs) ? runs : [runs])], { ind: 360 });
+function wTable(head, rows, widths) {
+  const tot = widths.reduce((a, b) => a + b, 0), B = '<w:top w:val="single" w:sz="4" w:color="DCE4DF"/><w:left w:val="single" w:sz="4" w:color="DCE4DF"/><w:bottom w:val="single" w:sz="4" w:color="DCE4DF"/><w:right w:val="single" w:sz="4" w:color="DCE4DF"/><w:insideH w:val="single" w:sz="4" w:color="DCE4DF"/><w:insideV w:val="single" w:sz="4" w:color="DCE4DF"/>';
+  const cell = (x, w, hd, k) => { const o = x && typeof x === 'object' && !Array.isArray(x) ? x : { t: x }; return `<w:tc><w:tcPr><w:tcW w:w="${Math.round(w / tot * 9638)}" w:type="dxa"/>${hd ? '<w:shd w:val="clear" w:color="auto" w:fill="003960"/>' : o.fill ? `<w:shd w:val="clear" w:color="auto" w:fill="${o.fill}"/>` : k % 2 ? '<w:shd w:val="clear" w:color="auto" w:fill="F5F8F6"/>' : ''}</w:tcPr><w:p><w:pPr><w:spacing w:after="0"/>${o.r ? '<w:jc w:val="right"/>' : ''}</w:pPr>${wRun([String(o.t ?? ''), hd ? { b: 1, c: 'FFFFFF' } : { b: o.b, c: o.c }])}</w:p></w:tc>`; };
+  return `<w:tbl><w:tblPr><w:tblW w:w="9638" w:type="dxa"/><w:tblBorders>${B}</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>${widths.map(w => `<w:gridCol w:w="${Math.round(w / tot * 9638)}"/>`).join('')}</w:tblGrid>`
+    + `<w:tr><w:trPr><w:tblHeader/></w:trPr>${head.map((h, j) => cell(h, widths[j], true, 0)).join('')}</w:tr>` + rows.map((r, k) => `<w:tr><w:trPr><w:cantSplit/></w:trPr>${r.map((x, j) => cell(x, widths[j], false, k)).join('')}</w:tr>`).join('') + '</w:tbl>' + wP('');
+}
+function buildLeitura(P, D, from, opt = {}) {
+  const T = c => c.R.total || { need: 0, have: 0, hire: 0 }, per = c => c.s ? `${mLbl(mOfN(c.s))} a ${mLbl(mOfN(c.e))}` : '—', pl = (n, a, b) => `${n} ${n === 1 ? a : b}`;
+  const cf = c => c.R.conf ? `${fmtBR(c.R.conf.a)}${c.R.conf.b !== c.R.conf.a ? ` a ${fmtBR(c.R.conf.b)}` : ''} (faltam ${c.R.conf.miss})` : 'sem falta de pessoas';
+  const nS = P.length * 2 + (P.length > 1 ? 1 : 0), out = [];
+  out.push(wP(P.length > 1 ? 'Leitura executiva: comparação de cenários' : `Leitura executiva: ${P[0].name}`, { st: 'Title' }));
+  out.push(wP([[`${P.map(c => c.name).join(' × ')}`, { b: 1 }], `  ·  a partir de ${mLbl(mOfN(from))}  ·  gerado em ${fmtLong(todayN)}`]));
+  out.push(wP([['Documento de apoio à apresentação em PowerPoint (' + pl(nS, 'slide', 'slides') + '). Resume os números e explica como ler cada slide.', { i: 1, c: '46606F' }]]));
+  // resumo
+  out.push(wH('Resumo'));
+  const hs = P.map(c => T(c).hire), lo = hs.indexOf(Math.min(...hs)), hi = hs.indexOf(Math.max(...hs));
+  if (P.length > 1) {
+    out.push(wP([`Os ${P.length} cenários pedem entre `, [`+${hs[lo]}`, { b: 1 }], ' e ', [`+${hs[hi]}`, { b: 1 }], ` contratações. `, ...(hs[hi] !== hs[lo] ? [[P[lo].name, { b: 1 }], ` é o que exige menos pessoas novas; `, [P[hi].name, { b: 1 }], ` pede ${pl(hs[hi] - hs[lo], 'pessoa', 'pessoas')} a mais.`] : ['Todos pedem o mesmo número de pessoas novas.'])]));
+  }
+  P.forEach(c => out.push(wLi([[c.name + ': ', { b: 1 }], `${pl(c.ps.length, 'projeto', 'projetos')} de ${per(c)}; precisa de ${pl(T(c).need, 'pessoa', 'pessoas')} (soma do pico de cada área), tem ${T(c).have} e `, [`contrata +${T(c).hire}`, { b: 1, c: T(c).hire ? 'C80015' : '006729' }], `. Maior conflito: ${cf(c)}.`])));
+  // quadro
+  out.push(wH('Quadro-resumo'));
+  const met = [['Projetos', c => c.ps.length], ['Período', per], ['Pessoas necessárias', c => T(c).need], ['Equipe atual', c => T(c).have], ['A contratar', c => ({ t: `+${T(c).hire}`, b: 1, c: T(c).hire ? 'C80015' : '006729' })], ['Dias úteis de feriado', c => c.hol], ['Dias úteis de férias', c => c.vac], ['Período com mais conflitos', cf]];
+  out.push(wTable(['', ...P.map(c => c.name)], met.map(([l, f]) => [{ t: l, b: 1 }, ...P.map(c => f(c))]), [3, ...P.map(() => 3)]));
+  // contratar por equipe
+  out.push(wH('Contratar por equipe'));
+  out.push(wP('Cada área é contada separadamente: gente sobrando numa área não cobre a falta de outra. Contratar = maior pico de atividades ao mesmo tempo − equipe atual da área.'));
+  const areasN = [...new Set(P.flatMap(c => c.R.rows.map(r => r.name)))], rw = (c, n) => c.R.rows.find(r => r.name === n) || { need: 0, have: 0, hire: 0, peakM: null };
+  out.push(wTable(['Área', ...P.map(c => c.name)], [...areasN.map(n => [{ t: n, b: 1 }, ...P.map(c => { const r = rw(c, n); return { t: `${r.hire ? '+' + r.hire : '0'}  (precisa ${r.need}${r.need && r.peakM != null ? ` em ${mLbl(r.peakM)}` : ''}, tem ${r.have})`, c: r.hire ? 'C80015' : undefined, b: !!r.hire }; })]),
+    [{ t: 'Total', b: 1 }, ...P.map(c => ({ t: `+${T(c).hire}  (precisa ${T(c).need}, tem ${T(c).have})`, b: 1 }))]], [3, ...P.map(() => 4)]));
+  // diferenças
+  if (P.length > 1) {
+    out.push(wH('Principais diferenças')); (D.diff.length ? D.diff : ['Nada a destacar.']).forEach(t => out.push(wLi(t)));
+    out.push(wH('O que é igual')); (D.same.length ? D.same : ['Nada a destacar.']).forEach(t => out.push(wLi(t)));
+  }
+  // guia dos slides
+  out.push(wH('Como ler cada slide'));
+  let k = 1;
+  P.forEach(c => {
+    const first = c.ps.map((p, i) => [p, c.per[i]]).filter(x => x[1]).sort((a, b) => a[1][0] - b[1][0]), last = first.slice().sort((a, b) => b[1][1] - a[1][1]);
+    out.push(wH(`Slide ${k++}: ${c.name}, visão geral dos projetos`, 2));
+    out.push(wLi(`Uma linha por projeto (${c.ps.length}), na mesma régua de meses, só de ${mLbl(mOfN(from))} em diante. Não mostra % concluído nem situação: o foco é o calendário.`));
+    out.push(wLi('Cada barra é dividida pelas fases do projeto, na cor de cada fase (legenda no rodapé). Os losangos são os marcos (por exemplo, o início do desenvolvimento). A linha vermelha é o dia de hoje.'));
+    if (first.length) out.push(wLi(`O primeiro a começar é ${first[0][0].name} (${fmtBR(first[0][1][0])}) e o último a terminar é ${last[0][0].name} (${fmtBR(last[0][1][1])}). Onde as barras se sobrepõem na vertical, os projetos acontecem ao mesmo tempo e disputam as mesmas pessoas.`));
+    if (opt.late) out.push(wLi('Em laranja claro: o que, pelo plano, já devia ter acontecido antes de hoje. É um alerta de atraso ou de início que precisa ser antecipado.'));
+    if (opt.peak) out.push(wLi(c.R.conf ? `Faixa roxa: o período com mais conflitos, ${cf(c)}. É onde a soma das faltas de pessoas das áreas é a maior.` : 'Faixa roxa: não aparece neste cenário, porque a equipe atual cobre todos os períodos.'));
+    out.push(wH(`Slide ${k++}: ${c.name}, recursos necessários`, 2));
+    out.push(wLi(`Os três números do topo: ${pl(T(c).need, 'pessoa necessária', 'pessoas necessárias')} (soma do maior pico de cada área), ${T(c).have} na equipe atual e +${T(c).hire} a contratar.`));
+    out.push(wLi('A tabela tem uma linha por área e uma coluna por mês (ou trimestre). O número é o pico de atividades ao mesmo tempo naquele mês; cada atividade conta 1 pessoa da área responsável. Vermelho: o mês pede mais pessoas do que a área tem; verde: a equipe atual cobre.'));
+    out.push(wLi('As colunas Pico, Equipe e Contratar resumem cada área. A linha Total soma as áreas mês a mês.'));
+    const top = c.R.rows.filter(r => r.hire).sort((a, b) => b.hire - a.hire)[0];
+    if (top) out.push(wLi([`Destaque: `, [`${top.name}`, { b: 1 }], ` é a área com mais falta (+${top.hire}), com pico de ${top.need} em ${mLbl(top.peakM)}.`]));
+  });
+  if (P.length > 1) {
+    out.push(wH(`Slide ${k}: comparação dos cenários`, 2));
+    out.push(wLi('No topo, um cartão por cenário com o número de projetos e de pessoas a contratar em destaque. O cenário com mais projetos ou mais contratações ganha os selos "+N projetos" e "+N pessoas a mais", sempre em relação ao menor.'));
+    out.push(wLi('No mesmo cartão: os dias úteis de feriado (feriados nacionais em dias de semana) e os dias úteis de férias (soma das férias cadastradas) no período do cenário. São dias em que a equipe não produz e ajudam a justificar o pedido de recursos.'));
+    out.push(wLi('"Contratar por equipe": para cada área, uma barra por cenário com quantas pessoas contratar; à direita, quanto cada cenário precisa e quanto a área tem hoje.'));
+    out.push(wLi(`Embaixo: os projetos que só existem em cada cenário e os ${D.common} em comum${D.movedN ? `, dos quais ${D.movedN} mudaram de data` : ''}.`));
+  }
+  // premissas
+  out.push(wH('Premissas e regras de cálculo'));
+  [`Período considerado: de ${mLbl(mOfN(from))} em diante; o que terminou antes fica de fora.`,
+    'Cada atividade aberta ocupa 1 pessoa da área do campo Responsável enquanto dura. Atividade com duas áreas conta 1 pessoa em cada.',
+    'Uma área não cobre a outra: a falta é calculada área por área, e "a contratar" é a soma do que falta em cada uma, no pior momento de cada área.',
+    'Prazos em dias úteis: sem sábado, domingo e feriados nacionais. Nos projetos planejados por quantidade de produtos, prazo da atividade = peso do 1º produto + (quantidade − 1) × peso dos demais; o peso próprio de um projeto, quando existe, vale no lugar do peso do grupo.',
+    'Os projetos são planejados de trás para frente a partir do marco: se o marco mudar, as datas e a necessidade de pessoas mudam juntas.',
+    'Férias consideradas: as cadastradas em Recursos e conflitos. Equipe atual: o número informado para cada área.'].forEach(t => out.push(wLi(t)));
+  // decisões
+  out.push(wH('Decisões para a reunião'));
+  if (P.length > 1) out.push(wLi(`Escolher o cenário: ${P.map(c => `${c.name} (+${T(c).hire})`).join(', ')}.`));
+  const mx = P[hi]; mx.R.rows.filter(r => r.hire).forEach(r => out.push(wLi(`${r.name}: aprovar até +${r.hire} ${r.hire === 1 ? 'pessoa' : 'pessoas'}${P.length > 1 ? ` (no cenário ${mx.name}; ${P.filter(c => c !== mx).map(c => `${c.name}: +${rw(c, r.name).hire}`).join(', ')})` : ''}, com pico em ${mLbl(r.peakM)}.`)));
+  if (P.some(c => c.R.conf)) out.push(wLi('Se não houver contratação, rever datas de marcos ou a quantidade de produtos dos projetos no período de mais conflitos.'));
+  return docxBook(out.join(''));
+}
+$('#cmDoc').addEventListener('click', () => {
+  const sel = cmpSel(), from = cmpFrom(); if (!sel.length) return toast('Marque pelo menos um cenário.');
+  const P = sel.map(n => cenPack(n, from)), D = cenDiff(P), opt = { late: $('#cmLate').checked, peak: $('#cmPeak').checked };
+  download(buildLeitura(P, D, from, opt), `leitura-executiva-${slug(sel.join('-x-')).slice(0, 50)}.docx`);
+  toast('Leitura executiva gerada (Word). Os números de slide batem com o PowerPoint gerado com as mesmas opções.');
+});
+
 /* ---------- PowerPoint (.pptx) editável ---------- */
 // Formas nativas do PowerPoint (retângulos, losangos, caixas de texto), não imagem: dá para mexer em tudo depois.
 // Medidas em pontos; o slide é 16:9 (960 x 540 pt).
@@ -5372,6 +5478,8 @@ async function selfTest() {
       const z = await unzip(await buildPptx(state.projects, [pg => slCenVisao(cenPack('A', from), from, pg), pg => slCenRes(cenPack('A', from), pg), pg => slCenCmp(['A', 'B'].map(n => cenPack(n, from)), D, pg)]).arrayBuffer());
       ok(Object.keys(z).filter(k => /slides\/slide\d+\.xml$/.test(k)).length === 3, 'cenário: apresentação com 3 slides');
       const pa = cenPack('B', from); ok(pa.R.conf && pa.R.conf.miss === 3 && pa.R.conf.a === d2n('2027-02-01') && pa.hol >= 0 && pa.vac === 0, 'cenário: período com mais conflitos');
+      const zd = await unzip(await buildLeitura(['A', 'B'].map(n => cenPack(n, from)), D, from, { peak: true }).arrayBuffer()), dx = new TextDecoder().decode(zd['word/document.xml']);
+      ok(/Como ler cada slide/.test(dx) && /Slide 5: comparação dos cenários/.test(dx) && /Contratar por equipe/.test(dx) && zd['word/styles.xml'], 'cenário: leitura executiva em Word');
       const xo = slCenVisao(pa, from, '1', { late: true, peak: true }); ok(/7A4FA0/.test(xo) && /Mais conflitos/.test(xo), 'cenário: opções do PowerPoint');
     } finally { state.projects = sv; } }
   { // ritmo: dias úteis atrás do previsto
